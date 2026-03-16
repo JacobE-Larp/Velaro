@@ -1,10 +1,10 @@
 {
-  "name": "@openclaw/firecrawl-plugin",
+  "name": "@vilaro/firecrawl-plugin",
   "version": "2026.3.14",
   "private": true,
-  "description": "OpenClaw Firecrawl plugin",
+  "description": "Vilaro Firecrawl plugin",
   "type": "module",
-  "openclaw": {
+  "vilaro": {
     "extensions": [
       "./index.ts"
     ]

@@ -1,4 +1,4 @@
-import type { ClawdbotConfig, RuntimeEnv } from "openclaw/plugin-sdk/feishu";
+import type { VilaroConfig, RuntimeEnv } from "vilaro/plugin-sdk/feishu";
 import { createFeishuCardInteractionEnvelope } from "./card-interaction.js";
 import { FEISHU_APPROVAL_REQUEST_ACTION } from "./card-ux-approval.js";
 import { buildFeishuCardButton, buildFeishuCardInteractionContext } from "./card-ux-shared.js";
@@ -84,7 +84,7 @@ export function createQuickActionLauncherCard(params: {
 }
 
 export async function maybeHandleFeishuQuickActionMenu(params: {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   eventKey: string;
   operatorOpenId: string;
   runtime?: RuntimeEnv;

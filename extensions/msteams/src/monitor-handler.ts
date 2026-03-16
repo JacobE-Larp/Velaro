@@ -1,4 +1,4 @@
-import type { OpenClawConfig, RuntimeEnv } from "openclaw/plugin-sdk/msteams";
+import type { VilaroConfig, RuntimeEnv } from "vilaro/plugin-sdk/msteams";
 import type { MSTeamsConversationStore } from "./conversation-store.js";
 import { buildFileInfoCard, parseFileConsentInvoke, uploadToConsentUrl } from "./file-consent.js";
 import { normalizeMSTeamsConversationId } from "./inbound.js";
@@ -25,7 +25,7 @@ export type MSTeamsActivityHandler = {
 };
 
 export type MSTeamsMessageHandlerDeps = {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   runtime: RuntimeEnv;
   appId: string;
   adapter: MSTeamsAdapter;

@@ -76,8 +76,8 @@ async function runBrowserToggle(
   if (printJsonResult(parent, status)) {
     return;
   }
-  const name = status.profile ?? "openclaw";
-  defaultRuntime.log(info(`🦞 browser [${name}] running: ${status.running}`));
+  const name = status.profile ?? "vilaro";
+  defaultRuntime.log(info(`browser [${name}] running: ${status.running}`));
 }
 
 function runBrowserCommand(action: () => Promise<void>) {
@@ -105,14 +105,14 @@ function logBrowserTabs(tabs: BrowserTab[], json?: boolean) {
 
 function usesChromeMcpTransport(params: {
   transport?: BrowserTransport;
-  driver?: "openclaw" | "existing-session";
+  driver?: "vilaro" | "existing-session";
 }): boolean {
   return params.transport === "chrome-mcp" || params.driver === "existing-session";
 }
 
 function formatBrowserConnectionSummary(params: {
   transport?: BrowserTransport;
-  driver?: "openclaw" | "existing-session";
+  driver?: "vilaro" | "existing-session";
   isRemote?: boolean;
   cdpPort?: number | null;
   cdpUrl?: string | null;
@@ -144,7 +144,7 @@ export function registerBrowserManageCommands(
         const detectedDisplay = detectedPath ? shortenHomePath(detectedPath) : "auto";
         defaultRuntime.log(
           [
-            `profile: ${status.profile ?? "openclaw"}`,
+            `profile: ${status.profile ?? "vilaro"}`,
             `enabled: ${status.enabled}`,
             `running: ${status.running}`,
             `transport: ${
@@ -208,11 +208,11 @@ export function registerBrowserManageCommands(
           return;
         }
         if (!result.moved) {
-          defaultRuntime.log(info(`🦞 browser profile already missing.`));
+          defaultRuntime.log(info(`browser profile already missing.`));
           return;
         }
         const dest = result.to ?? result.from;
-        defaultRuntime.log(info(`🦞 browser profile moved to Trash (${dest})`));
+        defaultRuntime.log(info(`browser profile moved to Trash (${dest})`));
       });
     });
 
@@ -441,7 +441,7 @@ export function registerBrowserManageCommands(
               const def = p.isDefault ? " [default]" : "";
               const loc = formatBrowserConnectionSummary(p);
               const remote = p.isRemote ? " [remote]" : "";
-              const driver = p.driver !== "openclaw" ? ` [${p.driver}]` : "";
+              const driver = p.driver !== "vilaro" ? ` [${p.driver}]` : "";
               return `${p.name}: ${status}${tabs}${def}${remote}${driver}\n  ${loc}, color: ${p.color}`;
             })
             .join("\n"),
@@ -455,7 +455,7 @@ export function registerBrowserManageCommands(
     .requiredOption("--name <name>", "Profile name (lowercase, numbers, hyphens)")
     .option("--color <hex>", "Profile color (hex format, e.g. #0066CC)")
     .option("--cdp-url <url>", "CDP URL for remote Chrome (http/https)")
-    .option("--driver <driver>", "Profile driver (openclaw|existing-session). Default: openclaw")
+    .option("--driver <driver>", "Profile driver (vilaro|existing-session). Default: vilaro")
     .action(
       async (opts: { name: string; color?: string; cdpUrl?: string; driver?: string }, cmd) => {
         const parent = parentOpts(cmd);
@@ -480,7 +480,7 @@ export function registerBrowserManageCommands(
           const loc = `  ${formatBrowserConnectionSummary(result)}`;
           defaultRuntime.log(
             info(
-              `🦞 Created profile "${result.profile}"\n${loc}\n  color: ${result.color}${
+              `Created profile "${result.profile}"\n${loc}\n  color: ${result.color}${
                 opts.driver === "existing-session" ? "\n  driver: existing-session" : ""
               }`,
             ),
@@ -508,8 +508,8 @@ export function registerBrowserManageCommands(
           return;
         }
         const msg = result.deleted
-          ? `🦞 Deleted profile "${result.profile}" (user data removed)`
-          : `🦞 Deleted profile "${result.profile}" (no user data found)`;
+          ? `Deleted profile "${result.profile}" (user data removed)`
+          : `Deleted profile "${result.profile}" (no user data found)`;
         defaultRuntime.log(info(msg));
       });
     });

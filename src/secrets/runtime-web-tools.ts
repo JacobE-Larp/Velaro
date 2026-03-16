@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { VilaroConfig } from "../config/config.js";
 import { resolveSecretInputRef } from "../config/types.secrets.js";
 import { resolvePluginWebSearchProviders } from "../plugins/web-search-providers.js";
 import { normalizeSecretInput } from "../utils/normalize-secret-input.js";
@@ -34,7 +34,7 @@ export type {
   RuntimeWebToolsMetadata,
 };
 
-type FetchConfig = NonNullable<OpenClawConfig["tools"]>["web"] extends infer Web
+type FetchConfig = NonNullable<VilaroConfig["tools"]>["web"] extends infer Web
   ? Web extends { fetch?: infer Fetch }
     ? Fetch
     : undefined
@@ -95,7 +95,7 @@ function buildUnresolvedReason(params: {
 }
 
 async function resolveSecretInputWithEnvFallback(params: {
-  sourceConfig: OpenClawConfig;
+  sourceConfig: VilaroConfig;
   context: ResolverContext;
   defaults: SecretDefaults | undefined;
   value: unknown;
@@ -263,10 +263,10 @@ function ensureObject(target: Record<string, unknown>, key: string): Record<stri
 }
 
 function setResolvedWebSearchApiKey(params: {
-  resolvedConfig: OpenClawConfig;
+  resolvedConfig: VilaroConfig;
   provider: WebSearchProvider;
   value: string;
-  sourceConfig: OpenClawConfig;
+  sourceConfig: VilaroConfig;
   env: NodeJS.ProcessEnv;
 }): void {
   const tools = ensureObject(params.resolvedConfig as Record<string, unknown>, "tools");
@@ -280,10 +280,7 @@ function setResolvedWebSearchApiKey(params: {
   provider?.setCredentialValue(search, params.value);
 }
 
-function setResolvedFirecrawlApiKey(params: {
-  resolvedConfig: OpenClawConfig;
-  value: string;
-}): void {
+function setResolvedFirecrawlApiKey(params: { resolvedConfig: VilaroConfig; value: string }): void {
   const tools = ensureObject(params.resolvedConfig as Record<string, unknown>, "tools");
   const web = ensureObject(tools, "web");
   const fetch = ensureObject(web, "fetch");
@@ -305,8 +302,8 @@ function hasConfiguredSecretRef(value: unknown, defaults: SecretDefaults | undef
 }
 
 export async function resolveRuntimeWebTools(params: {
-  sourceConfig: OpenClawConfig;
-  resolvedConfig: OpenClawConfig;
+  sourceConfig: VilaroConfig;
+  resolvedConfig: VilaroConfig;
   context: ResolverContext;
 }): Promise<RuntimeWebToolsMetadata> {
   const defaults = params.sourceConfig.secrets?.defaults;

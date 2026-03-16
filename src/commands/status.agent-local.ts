@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveAgentWorkspaceDir } from "../agents/agent-scope.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { VilaroConfig } from "../config/config.js";
 import { loadConfig } from "../config/config.js";
 import { loadSessionStore, resolveStorePath } from "../config/sessions.js";
 import { listGatewayAgentsBasic } from "../gateway/agent-list.js";
@@ -34,7 +34,7 @@ async function fileExists(p: string): Promise<boolean> {
 }
 
 export async function getAgentLocalStatuses(
-  cfg: OpenClawConfig = loadConfig(),
+  cfg: VilaroConfig = loadConfig(),
 ): Promise<AgentLocalStatusesResult> {
   const agentList = listGatewayAgentsBasic(cfg);
   const now = Date.now();

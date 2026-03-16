@@ -1,10 +1,10 @@
 {
-  "name": "@openclaw/perplexity-plugin",
+  "name": "@vilaro/perplexity-plugin",
   "version": "2026.3.14",
   "private": true,
-  "description": "OpenClaw Perplexity plugin",
+  "description": "Vilaro Perplexity plugin",
   "type": "module",
-  "openclaw": {
+  "vilaro": {
     "extensions": [
       "./index.ts"
     ]

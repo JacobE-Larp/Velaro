@@ -7,7 +7,7 @@ import {
   DEFAULT_PLUGIN_ENTRY_CANDIDATES,
   getPackageManifestMetadata,
   resolvePackageExtensionEntries,
-  type OpenClawPackageManifest,
+  type VilaroPackageManifest,
   type PackageManifest,
 } from "./manifest.js";
 import { formatPosixMode, isPathInside, safeRealpathSync, safeStatSync } from "./path-safety.js";
@@ -29,7 +29,7 @@ export type PluginCandidate = {
   packageVersion?: string;
   packageDescription?: string;
   packageDir?: string;
-  packageManifest?: OpenClawPackageManifest;
+  packageManifest?: VilaroPackageManifest;
 };
 
 export type PluginDiscoveryResult = {
@@ -47,7 +47,7 @@ export function clearPluginDiscoveryCache(): void {
 }
 
 function resolveDiscoveryCacheMs(env: NodeJS.ProcessEnv): number {
-  const raw = env.OPENCLAW_PLUGIN_DISCOVERY_CACHE_MS?.trim();
+  const raw = env.VILARO_PLUGIN_DISCOVERY_CACHE_MS?.trim();
   if (raw === "" || raw === "0") {
     return 0;
   }
@@ -62,7 +62,7 @@ function resolveDiscoveryCacheMs(env: NodeJS.ProcessEnv): number {
 }
 
 function shouldUseDiscoveryCache(env: NodeJS.ProcessEnv): boolean {
-  const disabled = env.OPENCLAW_DISABLE_PLUGIN_DISCOVERY_CACHE?.trim();
+  const disabled = env.VILARO_DISABLE_PLUGIN_DISCOVERY_CACHE?.trim();
   if (disabled) {
     return false;
   }
@@ -333,7 +333,7 @@ function deriveIdHint(params: {
   }
 
   // Prefer the unscoped name so config keys stay stable even when the npm
-  // package is scoped (example: @openclaw/voice-call -> voice-call).
+  // package is scoped (example: @vilaro/voice-call -> voice-call).
   const unscoped = rawPackageName.includes("/")
     ? (rawPackageName.split("/").pop() ?? rawPackageName)
     : rawPackageName;
@@ -390,7 +390,7 @@ function addCandidate(params: {
     setupSource: params.setupSource,
     rootDir: resolvedRoot,
     origin: params.origin,
-    format: params.format ?? "openclaw",
+    format: params.format ?? "vilaro",
     bundleFormat: params.bundleFormat,
     workspaceDir: params.workspaceDir,
     packageName: manifest?.name?.trim() || undefined,
@@ -747,7 +747,7 @@ function discoverFromPath(params: {
   }
 }
 
-export function discoverOpenClawPlugins(params: {
+export function discoverVilaroPlugins(params: {
   workspaceDir?: string;
   extraPaths?: string[];
   ownershipUid?: number | null;

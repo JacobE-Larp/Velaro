@@ -17,7 +17,7 @@ import type {
   ChannelSetupWizardAllowFromEntry,
 } from "../../../src/channels/plugins/setup-wizard.js";
 import type { ChannelSetupAdapter } from "../../../src/channels/plugins/types.adapters.js";
-import type { OpenClawConfig } from "../../../src/config/config.js";
+import type { VilaroConfig } from "../../../src/config/config.js";
 import { hasConfiguredSecretInput } from "../../../src/config/types.secrets.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../../../src/routing/session-key.js";
 import { formatDocsLink } from "../../../src/terminal/links.js";
@@ -27,11 +27,11 @@ import { listSlackAccountIds, resolveSlackAccount, type ResolvedSlackAccount } f
 const channel = "slack" as const;
 
 function buildSlackManifest(botName: string) {
-  const safeName = botName.trim() || "OpenClaw";
+  const safeName = botName.trim() || "Vilaro";
   const manifest = {
     display_information: {
       name: safeName,
-      description: `${safeName} connector for OpenClaw`,
+      description: `${safeName} connector for Vilaro`,
     },
     features: {
       bot_user: {
@@ -44,8 +44,8 @@ function buildSlackManifest(botName: string) {
       },
       slash_commands: [
         {
-          command: "/openclaw",
-          description: "Send a message to OpenClaw",
+          command: "/vilaro",
+          description: "Send a message to Vilaro",
           should_escape: false,
         },
       ],
@@ -95,7 +95,7 @@ function buildSlackManifest(botName: string) {
   return JSON.stringify(manifest, null, 2);
 }
 
-function buildSlackSetupLines(botName = "OpenClaw"): string[] {
+function buildSlackSetupLines(botName = "Vilaro"): string[] {
   return [
     "1) Slack API -> Create App -> From scratch or From manifest (with the JSON below)",
     "2) Add Socket Mode + enable it to get the app-level token (xapp-...)",
@@ -110,7 +110,7 @@ function buildSlackSetupLines(botName = "OpenClaw"): string[] {
   ];
 }
 
-function enableSlackAccount(cfg: OpenClawConfig, accountId: string): OpenClawConfig {
+function enableSlackAccount(cfg: VilaroConfig, accountId: string): VilaroConfig {
   return patchChannelConfigForAccount({
     cfg,
     channel,
@@ -120,10 +120,10 @@ function enableSlackAccount(cfg: OpenClawConfig, accountId: string): OpenClawCon
 }
 
 function setSlackChannelAllowlist(
-  cfg: OpenClawConfig,
+  cfg: VilaroConfig,
   accountId: string,
   channelKeys: string[],
-): OpenClawConfig {
+): VilaroConfig {
   const channels = Object.fromEntries(channelKeys.map((key) => [key, { allow: true }]));
   return patchChannelConfigForAccount({
     cfg,
@@ -221,9 +221,9 @@ export function createSlackSetupWizardProxy(
     channel,
     policyKey: "channels.slack.dmPolicy",
     allowFromKey: "channels.slack.allowFrom",
-    getCurrent: (cfg: OpenClawConfig) =>
+    getCurrent: (cfg: VilaroConfig) =>
       cfg.channels?.slack?.dmPolicy ?? cfg.channels?.slack?.dm?.policy ?? "pairing",
-    setPolicy: (cfg: OpenClawConfig, policy) =>
+    setPolicy: (cfg: VilaroConfig, policy) =>
       setLegacyChannelDmPolicyWithAllowFrom({
         cfg,
         channel,
@@ -279,7 +279,7 @@ export function createSlackSetupWizardProxy(
         keepPrompt: "Slack bot token already configured. Keep it?",
         inputPrompt: "Enter Slack bot token (xoxb-...)",
         allowEnv: ({ accountId }: { accountId: string }) => accountId === DEFAULT_ACCOUNT_ID,
-        inspect: ({ cfg, accountId }: { cfg: OpenClawConfig; accountId: string }) => {
+        inspect: ({ cfg, accountId }: { cfg: VilaroConfig; accountId: string }) => {
           const resolved = resolveSlackAccount({ cfg, accountId });
           return {
             accountConfigured:
@@ -290,14 +290,14 @@ export function createSlackSetupWizardProxy(
               accountId === DEFAULT_ACCOUNT_ID ? process.env.SLACK_BOT_TOKEN?.trim() : undefined,
           };
         },
-        applyUseEnv: ({ cfg, accountId }: { cfg: OpenClawConfig; accountId: string }) =>
+        applyUseEnv: ({ cfg, accountId }: { cfg: VilaroConfig; accountId: string }) =>
           enableSlackAccount(cfg, accountId),
         applySet: ({
           cfg,
           accountId,
           value,
         }: {
-          cfg: OpenClawConfig;
+          cfg: VilaroConfig;
           accountId: string;
           value: unknown;
         }) =>
@@ -320,7 +320,7 @@ export function createSlackSetupWizardProxy(
         keepPrompt: "Slack app token already configured. Keep it?",
         inputPrompt: "Enter Slack app token (xapp-...)",
         allowEnv: ({ accountId }: { accountId: string }) => accountId === DEFAULT_ACCOUNT_ID,
-        inspect: ({ cfg, accountId }: { cfg: OpenClawConfig; accountId: string }) => {
+        inspect: ({ cfg, accountId }: { cfg: VilaroConfig; accountId: string }) => {
           const resolved = resolveSlackAccount({ cfg, accountId });
           return {
             accountConfigured:
@@ -331,14 +331,14 @@ export function createSlackSetupWizardProxy(
               accountId === DEFAULT_ACCOUNT_ID ? process.env.SLACK_APP_TOKEN?.trim() : undefined,
           };
         },
-        applyUseEnv: ({ cfg, accountId }: { cfg: OpenClawConfig; accountId: string }) =>
+        applyUseEnv: ({ cfg, accountId }: { cfg: VilaroConfig; accountId: string }) =>
           enableSlackAccount(cfg, accountId),
         applySet: ({
           cfg,
           accountId,
           value,
         }: {
-          cfg: OpenClawConfig;
+          cfg: VilaroConfig;
           accountId: string;
           value: unknown;
         }) =>
@@ -382,7 +382,7 @@ export function createSlackSetupWizardProxy(
         credentialValues,
         entries,
       }: {
-        cfg: OpenClawConfig;
+        cfg: VilaroConfig;
         accountId: string;
         credentialValues: { botToken?: string };
         entries: string[];
@@ -403,7 +403,7 @@ export function createSlackSetupWizardProxy(
         accountId,
         allowFrom,
       }: {
-        cfg: OpenClawConfig;
+        cfg: VilaroConfig;
         accountId: string;
         allowFrom: string[];
       }) =>
@@ -417,20 +417,20 @@ export function createSlackSetupWizardProxy(
     groupAccess: {
       label: "Slack channels",
       placeholder: "#general, #private, C123",
-      currentPolicy: ({ cfg, accountId }: { cfg: OpenClawConfig; accountId: string }) =>
+      currentPolicy: ({ cfg, accountId }: { cfg: VilaroConfig; accountId: string }) =>
         resolveSlackAccount({ cfg, accountId }).config.groupPolicy ?? "allowlist",
-      currentEntries: ({ cfg, accountId }: { cfg: OpenClawConfig; accountId: string }) =>
+      currentEntries: ({ cfg, accountId }: { cfg: VilaroConfig; accountId: string }) =>
         Object.entries(resolveSlackAccount({ cfg, accountId }).config.channels ?? {})
           .filter(([, value]) => value?.allow !== false && value?.enabled !== false)
           .map(([key]) => key),
-      updatePrompt: ({ cfg, accountId }: { cfg: OpenClawConfig; accountId: string }) =>
+      updatePrompt: ({ cfg, accountId }: { cfg: VilaroConfig; accountId: string }) =>
         Boolean(resolveSlackAccount({ cfg, accountId }).config.channels),
       setPolicy: ({
         cfg,
         accountId,
         policy,
       }: {
-        cfg: OpenClawConfig;
+        cfg: VilaroConfig;
         accountId: string;
         policy: "open" | "allowlist" | "disabled";
       }) =>
@@ -447,7 +447,7 @@ export function createSlackSetupWizardProxy(
         entries,
         prompter,
       }: {
-        cfg: OpenClawConfig;
+        cfg: VilaroConfig;
         accountId: string;
         credentialValues: { botToken?: string };
         entries: string[];
@@ -485,11 +485,11 @@ export function createSlackSetupWizardProxy(
         accountId,
         resolved,
       }: {
-        cfg: OpenClawConfig;
+        cfg: VilaroConfig;
         accountId: string;
         resolved: unknown;
       }) => setSlackChannelAllowlist(cfg, accountId, resolved as string[]),
     },
-    disable: (cfg: OpenClawConfig) => setSetupChannelEnabled(cfg, channel, false),
+    disable: (cfg: VilaroConfig) => setSetupChannelEnabled(cfg, channel, false),
   } satisfies ChannelSetupWizard;
 }

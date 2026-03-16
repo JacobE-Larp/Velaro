@@ -1,10 +1,10 @@
 {
-  "name": "@openclaw/nvidia-provider",
+  "name": "@vilaro/nvidia-provider",
   "version": "2026.3.14",
   "private": true,
-  "description": "OpenClaw NVIDIA provider plugin",
+  "description": "Vilaro NVIDIA provider plugin",
   "type": "module",
-  "openclaw": {
+  "vilaro": {
     "extensions": [
       "./index.ts"
     ]

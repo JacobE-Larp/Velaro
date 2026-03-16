@@ -32,7 +32,7 @@ async function withTempDir<T>(
 
 describe("ensureDir", () => {
   it("creates nested directory", async () => {
-    await withTempDir("openclaw-test-", async (tmp) => {
+    await withTempDir("vilaro-test-", async (tmp) => {
       const target = path.join(tmp, "nested", "dir");
       await ensureDir(target);
       expect(fs.existsSync(target)).toBe(true);
@@ -88,7 +88,7 @@ describe("jidToE164", () => {
   });
 
   it("maps @lid from authDir mapping files", async () => {
-    await withTempDir("openclaw-auth-", (authDir) => {
+    await withTempDir("vilaro-auth-", (authDir) => {
       const mappingPath = path.join(authDir, "lid-mapping-456_reverse.json");
       fs.writeFileSync(mappingPath, JSON.stringify("5559876"));
       expect(jidToE164("456@lid", { authDir })).toBe("+5559876");
@@ -96,7 +96,7 @@ describe("jidToE164", () => {
   });
 
   it("maps @hosted.lid from authDir mapping files", async () => {
-    await withTempDir("openclaw-auth-", (authDir) => {
+    await withTempDir("vilaro-auth-", (authDir) => {
       const mappingPath = path.join(authDir, "lid-mapping-789_reverse.json");
       fs.writeFileSync(mappingPath, JSON.stringify(4440001));
       expect(jidToE164("789@hosted.lid", { authDir })).toBe("+4440001");
@@ -108,8 +108,8 @@ describe("jidToE164", () => {
   });
 
   it("falls back through lidMappingDirs in order", async () => {
-    await withTempDir("openclaw-lid-a-", async (first) => {
-      await withTempDir("openclaw-lid-b-", (second) => {
+    await withTempDir("vilaro-lid-a-", async (first) => {
+      await withTempDir("vilaro-lid-b-", (second) => {
         const mappingPath = path.join(second, "lid-mapping-321_reverse.json");
         fs.writeFileSync(mappingPath, JSON.stringify("123321"));
         expect(jidToE164("321@lid", { lidMappingDirs: [first, second] })).toBe("+123321");
@@ -119,10 +119,10 @@ describe("jidToE164", () => {
 });
 
 describe("resolveConfigDir", () => {
-  it("prefers ~/.openclaw when legacy dir is missing", async () => {
-    const root = await fs.promises.mkdtemp(path.join(os.tmpdir(), "openclaw-config-dir-"));
+  it("prefers ~/.vilaro when legacy dir is missing", async () => {
+    const root = await fs.promises.mkdtemp(path.join(os.tmpdir(), "vilaro-config-dir-"));
     try {
-      const newDir = path.join(root, ".openclaw");
+      const newDir = path.join(root, ".vilaro");
       await fs.promises.mkdir(newDir, { recursive: true });
       const resolved = resolveConfigDir({} as NodeJS.ProcessEnv, () => root);
       expect(resolved).toBe(newDir);
@@ -131,34 +131,34 @@ describe("resolveConfigDir", () => {
     }
   });
 
-  it("expands OPENCLAW_STATE_DIR using the provided env", () => {
+  it("expands VILARO_STATE_DIR using the provided env", () => {
     const env = {
-      HOME: "/tmp/openclaw-home",
-      OPENCLAW_STATE_DIR: "~/state",
+      HOME: "/tmp/vilaro-home",
+      VILARO_STATE_DIR: "~/state",
     } as NodeJS.ProcessEnv;
 
-    expect(resolveConfigDir(env)).toBe(path.resolve("/tmp/openclaw-home", "state"));
+    expect(resolveConfigDir(env)).toBe(path.resolve("/tmp/vilaro-home", "state"));
   });
 });
 
 describe("resolveHomeDir", () => {
-  it("prefers OPENCLAW_HOME over HOME", () => {
-    vi.stubEnv("OPENCLAW_HOME", "/srv/openclaw-home");
+  it("prefers VILARO_HOME over HOME", () => {
+    vi.stubEnv("VILARO_HOME", "/srv/vilaro-home");
     vi.stubEnv("HOME", "/home/other");
 
-    expect(resolveHomeDir()).toBe(path.resolve("/srv/openclaw-home"));
+    expect(resolveHomeDir()).toBe(path.resolve("/srv/vilaro-home"));
 
     vi.unstubAllEnvs();
   });
 });
 
 describe("shortenHomePath", () => {
-  it("uses $OPENCLAW_HOME prefix when OPENCLAW_HOME is set", () => {
-    vi.stubEnv("OPENCLAW_HOME", "/srv/openclaw-home");
+  it("uses $VILARO_HOME prefix when VILARO_HOME is set", () => {
+    vi.stubEnv("VILARO_HOME", "/srv/vilaro-home");
     vi.stubEnv("HOME", "/home/other");
 
-    expect(shortenHomePath(`${path.resolve("/srv/openclaw-home")}/.openclaw/openclaw.json`)).toBe(
-      "$OPENCLAW_HOME/.openclaw/openclaw.json",
+    expect(shortenHomePath(`${path.resolve("/srv/vilaro-home")}/.vilaro/vilaro.json`)).toBe(
+      "$VILARO_HOME/.vilaro/vilaro.json",
     );
 
     vi.unstubAllEnvs();
@@ -166,13 +166,13 @@ describe("shortenHomePath", () => {
 });
 
 describe("shortenHomeInString", () => {
-  it("uses $OPENCLAW_HOME replacement when OPENCLAW_HOME is set", () => {
-    vi.stubEnv("OPENCLAW_HOME", "/srv/openclaw-home");
+  it("uses $VILARO_HOME replacement when VILARO_HOME is set", () => {
+    vi.stubEnv("VILARO_HOME", "/srv/vilaro-home");
     vi.stubEnv("HOME", "/home/other");
 
     expect(
-      shortenHomeInString(`config: ${path.resolve("/srv/openclaw-home")}/.openclaw/openclaw.json`),
-    ).toBe("config: $OPENCLAW_HOME/.openclaw/openclaw.json");
+      shortenHomeInString(`config: ${path.resolve("/srv/vilaro-home")}/.vilaro/vilaro.json`),
+    ).toBe("config: $VILARO_HOME/.vilaro/vilaro.json");
 
     vi.unstubAllEnvs();
   });
@@ -210,8 +210,8 @@ describe("resolveUserPath", () => {
   });
 
   it("expands ~/ to home dir", () => {
-    expect(resolveUserPath("~/openclaw", {}, () => "/Users/thoffman")).toBe(
-      path.resolve("/Users/thoffman", "openclaw"),
+    expect(resolveUserPath("~/vilaro", {}, () => "/Users/thoffman")).toBe(
+      path.resolve("/Users/thoffman", "vilaro"),
     );
   });
 
@@ -219,22 +219,22 @@ describe("resolveUserPath", () => {
     expect(resolveUserPath("tmp/dir")).toBe(path.resolve("tmp/dir"));
   });
 
-  it("prefers OPENCLAW_HOME for tilde expansion", () => {
-    vi.stubEnv("OPENCLAW_HOME", "/srv/openclaw-home");
+  it("prefers VILARO_HOME for tilde expansion", () => {
+    vi.stubEnv("VILARO_HOME", "/srv/vilaro-home");
     vi.stubEnv("HOME", "/home/other");
 
-    expect(resolveUserPath("~/openclaw")).toBe(path.resolve("/srv/openclaw-home", "openclaw"));
+    expect(resolveUserPath("~/vilaro")).toBe(path.resolve("/srv/vilaro-home", "vilaro"));
 
     vi.unstubAllEnvs();
   });
 
   it("uses the provided env for tilde expansion", () => {
     const env = {
-      HOME: "/tmp/openclaw-home",
-      OPENCLAW_HOME: "/srv/openclaw-home",
+      HOME: "/tmp/vilaro-home",
+      VILARO_HOME: "/srv/vilaro-home",
     } as NodeJS.ProcessEnv;
 
-    expect(resolveUserPath("~/openclaw", env)).toBe(path.resolve("/srv/openclaw-home", "openclaw"));
+    expect(resolveUserPath("~/vilaro", env)).toBe(path.resolve("/srv/vilaro-home", "vilaro"));
   });
 
   it("keeps blank paths blank", () => {

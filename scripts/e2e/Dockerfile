@@ -23,10 +23,10 @@ COPY --chown=appuser:appuser ui/package.json ./ui/package.json
 COPY --chown=appuser:appuser extensions/memory-core/package.json ./extensions/memory-core/package.json
 COPY --chown=appuser:appuser patches ./patches
 
-RUN --mount=type=cache,id=openclaw-pnpm-store,target=/home/appuser/.local/share/pnpm/store,sharing=locked \
+RUN --mount=type=cache,id=vilaro-pnpm-store,target=/home/appuser/.local/share/pnpm/store,sharing=locked \
     pnpm install --frozen-lockfile
 
-COPY --chown=appuser:appuser tsconfig.json tsconfig.plugin-sdk.dts.json tsdown.config.ts vitest.config.ts vitest.e2e.config.ts openclaw.mjs ./
+COPY --chown=appuser:appuser tsconfig.json tsconfig.plugin-sdk.dts.json tsdown.config.ts vitest.config.ts vitest.e2e.config.ts vilaro.mjs ./
 COPY --chown=appuser:appuser src ./src
 COPY --chown=appuser:appuser test ./test
 COPY --chown=appuser:appuser scripts ./scripts
@@ -35,8 +35,8 @@ COPY --chown=appuser:appuser skills ./skills
 COPY --chown=appuser:appuser ui ./ui
 COPY --chown=appuser:appuser extensions ./extensions
 COPY --chown=appuser:appuser vendor/a2ui/renderers/lit ./vendor/a2ui/renderers/lit
-COPY --chown=appuser:appuser apps/shared/OpenClawKit/Sources/OpenClawKit/Resources ./apps/shared/OpenClawKit/Sources/OpenClawKit/Resources
-COPY --chown=appuser:appuser apps/shared/OpenClawKit/Tools/CanvasA2UI ./apps/shared/OpenClawKit/Tools/CanvasA2UI
+COPY --chown=appuser:appuser apps/shared/VilaroKit/Sources/VilaroKit/Resources ./apps/shared/VilaroKit/Sources/VilaroKit/Resources
+COPY --chown=appuser:appuser apps/shared/VilaroKit/Tools/CanvasA2UI ./apps/shared/VilaroKit/Tools/CanvasA2UI
 
 RUN pnpm build
 RUN pnpm ui:build

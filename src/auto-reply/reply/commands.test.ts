@@ -9,7 +9,7 @@ import {
   resetSubagentRegistryForTests,
 } from "../../agents/subagent-registry.js";
 import { setDefaultChannelPluginRegistryForTests } from "../../commands/channel-test-helpers.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { VilaroConfig } from "../../config/config.js";
 import { updateSessionStore, type SessionEntry } from "../../config/sessions.js";
 import * as internalHooks from "../../hooks/internal-hooks.js";
 import { clearPluginCommands, registerPluginCommand } from "../../plugins/commands.js";
@@ -126,7 +126,7 @@ vi.mock("./commands-context-report.js", () => ({
 let testWorkspaceDir = os.tmpdir();
 
 beforeAll(async () => {
-  testWorkspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-commands-"));
+  testWorkspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "vilaro-commands-"));
   await fs.writeFile(path.join(testWorkspaceDir, "AGENTS.md"), "# Agents\n", "utf-8");
 });
 
@@ -137,7 +137,7 @@ afterAll(async () => {
 beforeEach(() => {
   setDefaultChannelPluginRegistryForTests();
   readConfigFileSnapshotMock.mockImplementation(async () => {
-    const configPath = process.env.OPENCLAW_CONFIG_PATH;
+    const configPath = process.env.VILARO_CONFIG_PATH;
     if (!configPath) {
       return { valid: false, parsed: null };
     }
@@ -149,7 +149,7 @@ beforeEach(() => {
     config,
   }));
   writeConfigFileMock.mockImplementation(async (config: unknown) => {
-    const configPath = process.env.OPENCLAW_CONFIG_PATH;
+    const configPath = process.env.VILARO_CONFIG_PATH;
     if (!configPath) {
       return;
     }
@@ -164,18 +164,18 @@ async function withTempConfigPath<T>(
   initialConfig: Record<string, unknown>,
   run: (configPath: string) => Promise<T>,
 ): Promise<T> {
-  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-commands-config-"));
-  const configPath = path.join(dir, "openclaw.json");
-  const previous = process.env.OPENCLAW_CONFIG_PATH;
-  process.env.OPENCLAW_CONFIG_PATH = configPath;
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "vilaro-commands-config-"));
+  const configPath = path.join(dir, "vilaro.json");
+  const previous = process.env.VILARO_CONFIG_PATH;
+  process.env.VILARO_CONFIG_PATH = configPath;
   await fs.writeFile(configPath, JSON.stringify(initialConfig, null, 2), "utf-8");
   try {
     return await run(configPath);
   } finally {
     if (previous === undefined) {
-      delete process.env.OPENCLAW_CONFIG_PATH;
+      delete process.env.VILARO_CONFIG_PATH;
     } else {
-      process.env.OPENCLAW_CONFIG_PATH = previous;
+      process.env.VILARO_CONFIG_PATH = previous;
     }
     await fs.rm(dir, { recursive: true, force: true });
   }
@@ -185,7 +185,7 @@ async function readJsonFile<T>(filePath: string): Promise<T> {
   return JSON.parse(await fs.readFile(filePath, "utf-8")) as T;
 }
 
-function buildParams(commandBody: string, cfg: OpenClawConfig, ctxOverrides?: Partial<MsgContext>) {
+function buildParams(commandBody: string, cfg: VilaroConfig, ctxOverrides?: Partial<MsgContext>) {
   return buildCommandTestParams(commandBody, cfg, ctxOverrides, { workspaceDir: testWorkspaceDir });
 }
 
@@ -194,7 +194,7 @@ describe("handleCommands gating", () => {
     const cases = typedCases<{
       name: string;
       commandBody: string;
-      makeCfg: () => OpenClawConfig;
+      makeCfg: () => VilaroConfig;
       applyParams?: (params: ReturnType<typeof buildParams>) => void;
       expectedText: string;
     }>([
@@ -205,7 +205,7 @@ describe("handleCommands gating", () => {
           ({
             commands: { bash: false, text: true },
             whatsapp: { allowFrom: ["*"] },
-          }) as OpenClawConfig,
+          }) as VilaroConfig,
         expectedText: "bash is disabled",
       },
       {
@@ -215,7 +215,7 @@ describe("handleCommands gating", () => {
           ({
             commands: { bash: true, text: true },
             whatsapp: { allowFrom: ["*"] },
-          }) as OpenClawConfig,
+          }) as VilaroConfig,
         applyParams: (params: ReturnType<typeof buildParams>) => {
           params.elevated = {
             enabled: true,
@@ -232,7 +232,7 @@ describe("handleCommands gating", () => {
           ({
             commands: { config: false, debug: false, text: true },
             channels: { whatsapp: { allowFrom: ["*"] } },
-          }) as OpenClawConfig,
+          }) as VilaroConfig,
         applyParams: (params: ReturnType<typeof buildParams>) => {
           params.command.senderIsOwner = true;
         },
@@ -245,7 +245,7 @@ describe("handleCommands gating", () => {
           ({
             commands: { config: false, debug: false, text: true },
             channels: { whatsapp: { allowFrom: ["*"] } },
-          }) as OpenClawConfig,
+          }) as VilaroConfig,
         applyParams: (params: ReturnType<typeof buildParams>) => {
           params.command.senderIsOwner = true;
         },
@@ -263,7 +263,7 @@ describe("handleCommands gating", () => {
           return {
             commands: inheritedCommands as never,
             channels: { whatsapp: { allowFrom: ["*"] } },
-          } as OpenClawConfig;
+          } as VilaroConfig;
         },
         expectedText: "bash is disabled",
       },
@@ -279,7 +279,7 @@ describe("handleCommands gating", () => {
           return {
             commands: inheritedCommands as never,
             channels: { whatsapp: { allowFrom: ["*"] } },
-          } as OpenClawConfig;
+          } as VilaroConfig;
         },
         applyParams: (params: ReturnType<typeof buildParams>) => {
           params.command.senderIsOwner = true;
@@ -298,7 +298,7 @@ describe("handleCommands gating", () => {
           return {
             commands: inheritedCommands as never,
             channels: { whatsapp: { allowFrom: ["*"] } },
-          } as OpenClawConfig;
+          } as VilaroConfig;
         },
         applyParams: (params: ReturnType<typeof buildParams>) => {
           params.command.senderIsOwner = true;
@@ -327,7 +327,7 @@ describe("/approve command", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/approve", cfg);
     const result = await handleCommands(params);
     expect(result.shouldContinue).toBe(false);
@@ -338,7 +338,7 @@ describe("/approve command", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/approve abc allow-once", cfg, { SenderId: "123" });
 
     callGatewayMock.mockResolvedValue({ ok: true });
@@ -363,7 +363,7 @@ describe("/approve command", () => {
           execApprovals: { enabled: true, approvers: ["123"], target: "dm" },
         },
       },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/approve@bot abc12345 allow-once", cfg, {
       BotUsername: "bot",
       Provider: "telegram",
@@ -393,7 +393,7 @@ describe("/approve command", () => {
           execApprovals: { enabled: true, approvers: ["123"], target: "dm" },
         },
       },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/approve@otherbot abc12345 allow-once", cfg, {
       BotUsername: "bot",
       Provider: "telegram",
@@ -417,7 +417,7 @@ describe("/approve command", () => {
           execApprovals: { enabled: true, approvers: ["123"], target: "dm" },
         },
       },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/approve abc12345 allow-once", cfg, {
       Provider: "telegram",
       Surface: "telegram",
@@ -435,7 +435,7 @@ describe("/approve command", () => {
     const cfg = {
       commands: { text: true },
       channels: { telegram: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/approve abc12345 allow-once", cfg, {
       Provider: "telegram",
       Surface: "telegram",
@@ -457,7 +457,7 @@ describe("/approve command", () => {
           execApprovals: { enabled: true, approvers: ["999"], target: "dm" },
         },
       },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/approve abc12345 allow-once", cfg, {
       Provider: "telegram",
       Surface: "telegram",
@@ -473,7 +473,7 @@ describe("/approve command", () => {
   it("rejects gateway clients without approvals scope", async () => {
     const cfg = {
       commands: { text: true },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/approve abc allow-once", cfg, {
       Provider: "webchat",
       Surface: "webchat",
@@ -491,7 +491,7 @@ describe("/approve command", () => {
   it("allows gateway clients with approvals or admin scopes", async () => {
     const cfg = {
       commands: { text: true },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const scopeCases = [["operator.approvals"], ["operator.admin"]];
     for (const scopes of scopeCases) {
       callGatewayMock.mockResolvedValue({ ok: true });
@@ -523,7 +523,7 @@ describe("/compact command", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/status", cfg);
 
     const result = await handleCompactCommand(
@@ -541,7 +541,7 @@ describe("/compact command", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/compact", cfg);
 
     const result = await handleCompactCommand(
@@ -564,13 +564,13 @@ describe("/compact command", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-      session: { store: "/tmp/openclaw-session-store.json" },
-    } as OpenClawConfig;
+      session: { store: "/tmp/vilaro-session-store.json" },
+    } as VilaroConfig;
     const params = buildParams("/compact: focus on decisions", cfg, {
       From: "+15550001",
       To: "+15550002",
     });
-    const agentDir = "/tmp/openclaw-agent-compact";
+    const agentDir = "/tmp/vilaro-agent-compact";
     vi.mocked(compactEmbeddedPiSession).mockResolvedValueOnce({
       ok: true,
       compacted: false,
@@ -621,7 +621,7 @@ describe("abort trigger command", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("stop", cfg);
     const sessionEntry: SessionEntry = {
       sessionId: "session-1",
@@ -739,7 +739,7 @@ describe("handleCommands /config owner gating", () => {
     const cfg = {
       commands: { config: true, text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/config show", cfg);
     params.command.senderIsOwner = false;
     const result = await handleCommands(params);
@@ -751,7 +751,7 @@ describe("handleCommands /config owner gating", () => {
     const cfg = {
       commands: { config: true, text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     readConfigFileSnapshotMock.mockResolvedValueOnce({
       valid: true,
       parsed: { messages: { ackReaction: ":)" } },
@@ -769,7 +769,7 @@ describe("handleCommands /config configWrites gating", () => {
     const cfg = {
       commands: { config: true, text: true },
       channels: { whatsapp: { allowFrom: ["*"], configWrites: false } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams('/config set messages.ackReaction=":)"', cfg);
     params.command.senderIsOwner = true;
     const result = await handleCommands(params);
@@ -789,7 +789,7 @@ describe("handleCommands /config configWrites gating", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildPolicyParams(
       "/config set channels.telegram.accounts.work.enabled=false",
       cfg,
@@ -811,7 +811,7 @@ describe("handleCommands /config configWrites gating", () => {
     const cfg = {
       commands: { config: true, text: true },
       channels: { telegram: { configWrites: true } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildPolicyParams('/config set channels.telegram={"enabled":false}', cfg, {
       Provider: "telegram",
       Surface: "telegram",
@@ -828,7 +828,7 @@ describe("handleCommands /config configWrites gating", () => {
   it("blocks /config set from gateway clients without operator.admin", async () => {
     const cfg = {
       commands: { config: true, text: true },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams('/config set messages.ackReaction=":)"', cfg, {
       Provider: INTERNAL_MESSAGE_CHANNEL,
       Surface: INTERNAL_MESSAGE_CHANNEL,
@@ -844,7 +844,7 @@ describe("handleCommands /config configWrites gating", () => {
   it("keeps /config show available to gateway operator.write clients", async () => {
     const cfg = {
       commands: { config: true, text: true },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     readConfigFileSnapshotMock.mockResolvedValueOnce({
       valid: true,
       parsed: { messages: { ackReaction: ":)" } },
@@ -865,7 +865,7 @@ describe("handleCommands /config configWrites gating", () => {
     await withTempConfigPath({ messages: { ackReaction: ":)" } }, async (configPath) => {
       const cfg = {
         commands: { config: true, text: true },
-      } as OpenClawConfig;
+      } as VilaroConfig;
       readConfigFileSnapshotMock.mockResolvedValueOnce({
         valid: true,
         parsed: { messages: { ackReaction: ":)" } },
@@ -884,7 +884,7 @@ describe("handleCommands /config configWrites gating", () => {
       const result = await handleCommands(params);
       expect(result.shouldContinue).toBe(false);
       expect(result.reply?.text).toContain("Config updated");
-      const written = await readJsonFile<OpenClawConfig>(configPath);
+      const written = await readJsonFile<VilaroConfig>(configPath);
       expect(written.messages?.ackReaction).toBe(":D");
     });
   });
@@ -919,7 +919,7 @@ describe("handleCommands /config configWrites gating", () => {
               },
             },
           },
-        } as OpenClawConfig,
+        } as VilaroConfig,
         {
           Provider: INTERNAL_MESSAGE_CHANNEL,
           Surface: INTERNAL_MESSAGE_CHANNEL,
@@ -931,7 +931,7 @@ describe("handleCommands /config configWrites gating", () => {
       const result = await handleCommands(params);
       expect(result.shouldContinue).toBe(false);
       expect(result.reply?.text).toContain("Config updated");
-      const written = await readJsonFile<OpenClawConfig>(configPath);
+      const written = await readJsonFile<VilaroConfig>(configPath);
       expect(written.channels?.telegram?.accounts?.work?.enabled).toBe(false);
     });
   });
@@ -942,7 +942,7 @@ describe("handleCommands /debug owner gating", () => {
     const cfg = {
       commands: { debug: true, text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/debug show", cfg);
     params.command.senderIsOwner = false;
     const result = await handleCommands(params);
@@ -954,7 +954,7 @@ describe("handleCommands /debug owner gating", () => {
     const cfg = {
       commands: { debug: true, text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/debug show", cfg);
     params.command.senderIsOwner = true;
     const result = await handleCommands(params);
@@ -968,7 +968,7 @@ describe("handleCommands bash alias", () => {
     const cfg = {
       commands: { bash: true, text: true },
       whatsapp: { allowFrom: ["*"] },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     for (const aliasCommand of ["!poll", "!stop"]) {
       resetBashChatCommandForTests();
       const params = buildParams(aliasCommand, cfg);
@@ -981,7 +981,7 @@ describe("handleCommands bash alias", () => {
 
 function buildPolicyParams(
   commandBody: string,
-  cfg: OpenClawConfig,
+  cfg: VilaroConfig,
   ctxOverrides?: Partial<MsgContext>,
 ): HandleCommandsParams {
   const ctx = {
@@ -1034,7 +1034,7 @@ describe("handleCommands /allowlist", () => {
     const cfg = {
       commands: { text: true },
       channels: { telegram: { allowFrom: ["123", "@Alice"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildPolicyParams("/allowlist list dm", cfg);
     const result = await handleCommands(params);
 
@@ -1068,12 +1068,12 @@ describe("handleCommands /allowlist", () => {
         const cfg = {
           commands: { text: true, config: true },
           channels: { telegram: { allowFrom: ["123"] } },
-        } as OpenClawConfig;
+        } as VilaroConfig;
         const params = buildPolicyParams("/allowlist add dm 789", cfg);
         const result = await handleCommands(params);
 
         expect(result.shouldContinue).toBe(false);
-        const written = await readJsonFile<OpenClawConfig>(configPath);
+        const written = await readJsonFile<VilaroConfig>(configPath);
         expect(written.channels?.telegram?.allowFrom).toEqual(["123", "789"]);
         expect(addChannelAllowFromStoreEntryMock).toHaveBeenCalledWith({
           channel: "telegram",
@@ -1104,7 +1104,7 @@ describe("handleCommands /allowlist", () => {
     const cfg = {
       commands: { text: true, config: true },
       channels: { telegram: { accounts: { work: { allowFrom: ["123"] } } } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildPolicyParams("/allowlist add dm --account work 789", cfg, {
       AccountId: "work",
     });
@@ -1130,7 +1130,7 @@ describe("handleCommands /allowlist", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     readConfigFileSnapshotMock.mockResolvedValueOnce({
       valid: true,
       parsed: structuredClone(cfg),
@@ -1161,7 +1161,7 @@ describe("handleCommands /allowlist", () => {
     const cfg = {
       commands: { text: true, config: true },
       channels: { telegram: { allowFrom: ["123"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildPolicyParams("/allowlist remove dm --store 789", cfg);
     const result = await handleCommands(params);
 
@@ -1183,7 +1183,7 @@ describe("handleCommands /allowlist", () => {
     const cfg = {
       commands: { text: true, config: true },
       channels: { telegram: { allowFrom: ["123"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildPolicyParams("/allowlist add dm --account __proto__ 789", cfg);
     const result = await handleCommands(params);
 
@@ -1238,7 +1238,7 @@ describe("handleCommands /allowlist", () => {
               configWrites: true,
             },
           },
-        } as OpenClawConfig;
+        } as VilaroConfig;
 
         const params = buildPolicyParams(`/allowlist remove dm ${testCase.removeId}`, cfg, {
           Provider: testCase.provider,
@@ -1247,7 +1247,7 @@ describe("handleCommands /allowlist", () => {
         const result = await handleCommands(params);
 
         expect(result.shouldContinue).toBe(false);
-        const written = await readJsonFile<OpenClawConfig>(configPath);
+        const written = await readJsonFile<VilaroConfig>(configPath);
         const channelConfig = written.channels?.[testCase.provider];
         expect(channelConfig?.allowFrom).toEqual(testCase.expectedAllowFrom);
         expect(channelConfig?.dm?.allowFrom).toBeUndefined();
@@ -1261,7 +1261,7 @@ describe("/models command", () => {
   const cfg = {
     commands: { text: true },
     agents: { defaults: { model: { primary: "anthropic/claude-opus-4-5" } } },
-  } as unknown as OpenClawConfig;
+  } as unknown as VilaroConfig;
 
   it.each(["discord", "whatsapp"])("lists providers on %s (text)", async (surface) => {
     const params = buildPolicyParams("/models", cfg, { Provider: surface, Surface: surface });
@@ -1360,7 +1360,7 @@ describe("/models command", () => {
           imageModel: "visionpro/studio-v1",
         },
       },
-    } as unknown as OpenClawConfig;
+    } as unknown as VilaroConfig;
 
     // Use discord surface for text-based output tests
     const providerList = await handleCommands(
@@ -1385,7 +1385,7 @@ describe("/models command", () => {
         defaults: { model: { primary: "anthropic/claude-opus-4-5" } },
         list: [{ id: "support", model: "localai/ultra-chat" }],
       },
-    } as unknown as OpenClawConfig;
+    } as unknown as VilaroConfig;
     const params = buildPolicyParams("/models", scopedCfg, {
       Provider: "discord",
       Surface: "discord",
@@ -1414,7 +1414,7 @@ describe("handleCommands plugin commands", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/card", cfg);
     const commandResult = await handleCommands(params);
 
@@ -1429,7 +1429,7 @@ describe("handleCommands identity", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/whoami", cfg, {
       SenderId: "12345",
       SenderUsername: "TestUser",
@@ -1449,7 +1449,7 @@ describe("handleCommands hooks", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/new take notes", cfg);
     const spy = vi.spyOn(internalHooks, "triggerInternalHook").mockResolvedValue();
 
@@ -1463,7 +1463,7 @@ describe("handleCommands hooks", () => {
     const cfg = {
       commands: { text: true },
       channels: { telegram: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/new", cfg, {
       Provider: "telegram",
       Surface: "telegram",
@@ -1499,7 +1499,7 @@ describe("handleCommands context", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const cases = [
       {
         commandBody: "/context",
@@ -1535,7 +1535,7 @@ describe("handleCommands subagents", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/subagents list", cfg);
     const result = await handleCommands(params);
     expect(result.shouldContinue).toBe(false);
@@ -1560,7 +1560,7 @@ describe("handleCommands subagents", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/subagents list", cfg);
     const result = await handleCommands(params);
     expect(result.shouldContinue).toBe(false);
@@ -1595,7 +1595,7 @@ describe("handleCommands subagents", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/subagents list", cfg, {
       CommandSource: "native",
       CommandTargetSessionKey: "agent:main:main",
@@ -1636,7 +1636,7 @@ describe("handleCommands subagents", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/subagents list", cfg);
     const result = await handleCommands(params);
 
@@ -1673,7 +1673,7 @@ describe("handleCommands subagents", () => {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
       session: { store: storePath },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/subagents list", cfg);
     const result = await handleCommands(params);
     expect(result.shouldContinue).toBe(false);
@@ -1744,7 +1744,7 @@ describe("handleCommands subagents", () => {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
       session: { mainKey: "main", scope: "per-sender" },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/status", cfg);
     if (verboseLevel === "on") {
       params.resolvedVerboseLevel = "on";
@@ -1763,7 +1763,7 @@ describe("handleCommands subagents", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const cases = [
       { commandBody: "/subagents foo", expectedText: "/subagents" },
       { commandBody: "/subagents info", expectedText: "/subagents info" },
@@ -1794,7 +1794,7 @@ describe("handleCommands subagents", () => {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
       session: { mainKey: "main", scope: "per-sender" },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/subagents info 1", cfg);
     const result = await handleCommands(params);
     expect(result.shouldContinue).toBe(false);
@@ -1817,7 +1817,7 @@ describe("handleCommands subagents", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/kill 1", cfg);
     const result = await handleCommands(params);
     expect(result.shouldContinue).toBe(false);
@@ -1851,7 +1851,7 @@ describe("handleCommands subagents", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/kill 1", cfg);
     const result = await handleCommands(params);
     expect(result.shouldContinue).toBe(false);
@@ -1888,7 +1888,7 @@ describe("handleCommands subagents", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/subagents send 1 continue with follow-up details", cfg);
     const result = await handleCommands(params);
     expect(result.shouldContinue).toBe(false);
@@ -1951,7 +1951,7 @@ describe("handleCommands subagents", () => {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
       session: { store: storePath },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/subagents send 1 continue with follow-up details", cfg);
     params.sessionKey = leafKey;
 
@@ -1991,7 +1991,7 @@ describe("handleCommands subagents", () => {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
       session: { store: storePath },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/steer 1 check timer.ts instead", cfg);
     const result = await handleCommands(params);
     expect(result.shouldContinue).toBe(false);
@@ -2050,7 +2050,7 @@ describe("handleCommands subagents", () => {
     const cfg = {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/steer 1 check timer.ts instead", cfg);
     const result = await handleCommands(params);
     expect(result.shouldContinue).toBe(false);
@@ -2069,7 +2069,7 @@ describe("handleCommands /tts", () => {
       commands: { text: true },
       channels: { whatsapp: { allowFrom: ["*"] } },
       messages: { tts: { prefsPath: path.join(testWorkspaceDir, "tts.json") } },
-    } as OpenClawConfig;
+    } as VilaroConfig;
     const params = buildParams("/tts", cfg);
     const result = await handleCommands(params);
     expect(result.shouldContinue).toBe(false);

@@ -3,7 +3,7 @@ import {
   readBrowserVersion,
   resolveGoogleChromeExecutableForPlatform,
 } from "../browser/chrome.executables.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { VilaroConfig } from "../config/config.js";
 import { note } from "../terminal/note.js";
 
 const CHROME_MCP_MIN_MAJOR = 144;
@@ -14,7 +14,7 @@ function asRecord(value: unknown): Record<string, unknown> | null {
     : null;
 }
 
-function collectChromeMcpProfileNames(cfg: OpenClawConfig): string[] {
+function collectChromeMcpProfileNames(cfg: VilaroConfig): string[] {
   const browser = asRecord(cfg.browser);
   if (!browser) {
     return [];
@@ -44,7 +44,7 @@ function collectChromeMcpProfileNames(cfg: OpenClawConfig): string[] {
 }
 
 export async function noteChromeMcpBrowserReadiness(
-  cfg: OpenClawConfig,
+  cfg: VilaroConfig,
   deps?: {
     platform?: NodeJS.Platform;
     noteFn?: typeof note;
@@ -69,10 +69,10 @@ export async function noteChromeMcpBrowserReadiness(
     noteFn(
       [
         `- Chrome MCP existing-session is configured for profile(s): ${profileLabel}.`,
-        "- Google Chrome was not found on this host. OpenClaw does not bundle Chrome.",
+        "- Google Chrome was not found on this host. Vilaro does not bundle Chrome.",
         `- Install Google Chrome ${CHROME_MCP_MIN_MAJOR}+ on the same host as the Gateway or node.`,
         "- In Chrome, enable remote debugging at chrome://inspect/#remote-debugging.",
-        "- Keep Chrome running and accept the attach consent prompt the first time OpenClaw connects.",
+        "- Keep Chrome running and accept the attach consent prompt the first time Vilaro connects.",
         "- Docker, headless, and sandbox browser flows stay on raw CDP; this check only applies to host-local Chrome MCP attach.",
       ].join("\n"),
       "Browser",
@@ -101,7 +101,7 @@ export async function noteChromeMcpBrowserReadiness(
 
   lines.push("- In Chrome, enable remote debugging at chrome://inspect/#remote-debugging.");
   lines.push(
-    "- Keep Chrome running and accept the attach consent prompt the first time OpenClaw connects.",
+    "- Keep Chrome running and accept the attach consent prompt the first time Vilaro connects.",
   );
 
   noteFn(lines.join("\n"), "Browser");

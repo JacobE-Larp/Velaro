@@ -1,10 +1,10 @@
 import {
   buildOauthProviderAuthResult,
   emptyPluginConfigSchema,
-  type OpenClawPluginApi,
+  type VilaroPluginApi,
   type ProviderAuthContext,
   type ProviderCatalogContext,
-} from "openclaw/plugin-sdk/qwen-portal-auth";
+} from "vilaro/plugin-sdk/qwen-portal-auth";
 import { ensureAuthProfileStore, listProfilesForProvider } from "../../src/agents/auth-profiles.js";
 import { QWEN_OAUTH_MARKER } from "../../src/agents/model-auth-markers.js";
 import { refreshQwenPortalCredentials } from "../../src/providers/qwen-portal-oauth.js";
@@ -89,7 +89,7 @@ const qwenPortalPlugin = {
   name: "Qwen OAuth",
   description: "OAuth flow for Qwen (free-tier) models",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: PROVIDER_LABEL,

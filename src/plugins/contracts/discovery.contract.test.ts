@@ -7,7 +7,7 @@ import { QWEN_OAUTH_MARKER } from "../../agents/model-auth-markers.js";
 import type { ModelDefinitionConfig } from "../../config/types.models.js";
 import { createCapturedPluginRegistration } from "../../test-utils/plugin-registration.js";
 import { runProviderCatalog } from "../provider-discovery.js";
-import type { OpenClawPluginApi, ProviderPlugin } from "../types.js";
+import type { VilaroPluginApi, ProviderPlugin } from "../types.js";
 
 const resolveCopilotApiTokenMock = vi.hoisted(() => vi.fn());
 const buildOllamaProviderMock = vi.hoisted(() => vi.fn());
@@ -22,8 +22,8 @@ vi.mock("../../../extensions/github-copilot/token.js", async () => {
   };
 });
 
-vi.mock("openclaw/plugin-sdk/core", async () => {
-  const actual = await vi.importActual<object>("openclaw/plugin-sdk/core");
+vi.mock("vilaro/plugin-sdk/core", async () => {
+  const actual = await vi.importActual<object>("vilaro/plugin-sdk/core");
   return {
     ...actual,
     buildOllamaProvider: (...args: unknown[]) => buildOllamaProviderMock(...args),
@@ -43,7 +43,7 @@ const cloudflareAiGatewayPlugin = (
   await import("../../../extensions/cloudflare-ai-gateway/index.js")
 ).default;
 
-function registerProviders(...plugins: Array<{ register(api: OpenClawPluginApi): void }>) {
+function registerProviders(...plugins: Array<{ register(api: VilaroPluginApi): void }>) {
   const captured = createCapturedPluginRegistration();
   for (const plugin of plugins) {
     plugin.register(captured.api);

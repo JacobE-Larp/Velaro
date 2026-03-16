@@ -1,10 +1,10 @@
 import {
   emptyPluginConfigSchema,
-  type OpenClawPluginApi,
+  type VilaroPluginApi,
   type ProviderAuthContext,
   type ProviderResolveDynamicModelContext,
   type ProviderRuntimeModel,
-} from "openclaw/plugin-sdk/core";
+} from "vilaro/plugin-sdk/core";
 import {
   CLAUDE_CLI_PROFILE_ID,
   listProfilesForProvider,
@@ -167,7 +167,7 @@ function buildAnthropicAuthDoctorHint(params: {
     }`,
     `- auth store oauth profiles: ${storeOauthProfiles || "(none)"}`,
     `- suggested profile: ${suggested}`,
-    `Fix: run "${formatCliCommand("openclaw doctor --yes")}"`,
+    `Fix: run "${formatCliCommand("vilaro doctor --yes")}"`,
   ].join("\n");
 }
 
@@ -314,7 +314,7 @@ const anthropicPlugin = {
   name: "Anthropic Provider",
   description: "Bundled Anthropic provider plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: "Anthropic",

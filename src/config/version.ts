@@ -1,4 +1,4 @@
-export type OpenClawVersion = {
+export type VilaroVersion = {
   major: number;
   minor: number;
   patch: number;
@@ -7,7 +7,7 @@ export type OpenClawVersion = {
 
 const VERSION_RE = /^v?(\d+)\.(\d+)\.(\d+)(?:-(\d+))?/;
 
-export function parseOpenClawVersion(raw: string | null | undefined): OpenClawVersion | null {
+export function parseVilaroVersion(raw: string | null | undefined): VilaroVersion | null {
   if (!raw) {
     return null;
   }
@@ -24,12 +24,12 @@ export function parseOpenClawVersion(raw: string | null | undefined): OpenClawVe
   };
 }
 
-export function compareOpenClawVersions(
+export function compareVilaroVersions(
   a: string | null | undefined,
   b: string | null | undefined,
 ): number | null {
-  const parsedA = parseOpenClawVersion(a);
-  const parsedB = parseOpenClawVersion(b);
+  const parsedA = parseVilaroVersion(a);
+  const parsedB = parseVilaroVersion(b);
   if (!parsedA || !parsedB) {
     return null;
   }

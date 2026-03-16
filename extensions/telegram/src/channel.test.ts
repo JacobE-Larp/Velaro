@@ -1,16 +1,16 @@
 import type {
   ChannelAccountSnapshot,
   ChannelGatewayContext,
-  OpenClawConfig,
+  VilaroConfig,
   PluginRuntime,
-} from "openclaw/plugin-sdk/telegram";
+} from "vilaro/plugin-sdk/telegram";
 import { describe, expect, it, vi } from "vitest";
 import { createRuntimeEnv } from "../../test-utils/runtime-env.js";
 import type { ResolvedTelegramAccount } from "./accounts.js";
 import { telegramPlugin } from "./channel.js";
 import { setTelegramRuntime } from "./runtime.js";
 
-function createCfg(): OpenClawConfig {
+function createCfg(): VilaroConfig {
   return {
     channels: {
       telegram: {
@@ -22,11 +22,11 @@ function createCfg(): OpenClawConfig {
         },
       },
     },
-  } as OpenClawConfig;
+  } as VilaroConfig;
 }
 
 function createStartAccountCtx(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   accountId: string;
   runtime: ReturnType<typeof createRuntimeEnv>;
 }): ChannelGatewayContext<ResolvedTelegramAccount> {
@@ -91,7 +91,7 @@ function installGatewayRuntime(params?: { probeOk?: boolean; botUsername?: strin
   };
 }
 
-function configureOpsProxyNetwork(cfg: OpenClawConfig) {
+function configureOpsProxyNetwork(cfg: VilaroConfig) {
   cfg.channels!.telegram!.accounts!.ops = {
     ...cfg.channels!.telegram!.accounts!.ops,
     proxy: "http://127.0.0.1:8888",

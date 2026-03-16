@@ -1,4 +1,4 @@
-import OpenClawKit
+import VilaroKit
 import SwiftUI
 
 struct ScreenTab: View {

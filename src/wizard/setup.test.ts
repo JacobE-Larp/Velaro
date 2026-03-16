@@ -70,7 +70,7 @@ const ensureWorkspaceAndSessions = vi.hoisted(() => vi.fn(async () => {}));
 const writeConfigFile = vi.hoisted(() => vi.fn(async () => {}));
 const readConfigFileSnapshot = vi.hoisted(() =>
   vi.fn(async () => ({
-    path: "/tmp/.openclaw/openclaw.json",
+    path: "/tmp/.vilaro/vilaro.json",
     exists: false,
     raw: null as string | null,
     parsed: {},
@@ -136,7 +136,7 @@ vi.mock("../config/config.js", () => ({
 }));
 
 vi.mock("../commands/onboard-helpers.js", () => ({
-  DEFAULT_WORKSPACE: "/tmp/openclaw-workspace",
+  DEFAULT_WORKSPACE: "/tmp/vilaro-workspace",
   applyWizardMetadata: (cfg: unknown) => cfg,
   summarizeExistingConfig: () => "summary",
   handleReset: async () => {},
@@ -219,7 +219,7 @@ describe("runSetupWizard", () => {
   let suiteCase = 0;
 
   beforeAll(async () => {
-    suiteRoot = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-onboard-suite-"));
+    suiteRoot = await fs.mkdtemp(path.join(os.tmpdir(), "vilaro-onboard-suite-"));
   });
 
   afterAll(async () => {
@@ -236,7 +236,7 @@ describe("runSetupWizard", () => {
 
   it("exits when config is invalid", async () => {
     readConfigFileSnapshot.mockResolvedValueOnce({
-      path: "/tmp/.openclaw/openclaw.json",
+      path: "/tmp/.vilaro/vilaro.json",
       exists: true,
       raw: "{}",
       parsed: {},
@@ -399,11 +399,11 @@ describe("runSetupWizard", () => {
   });
 
   it("resolves gateway.auth.password SecretRef for local setup probe", async () => {
-    const previous = process.env.OPENCLAW_GATEWAY_PASSWORD;
-    process.env.OPENCLAW_GATEWAY_PASSWORD = "gateway-ref-password"; // pragma: allowlist secret
+    const previous = process.env.VILARO_GATEWAY_PASSWORD;
+    process.env.VILARO_GATEWAY_PASSWORD = "gateway-ref-password"; // pragma: allowlist secret
     probeGatewayReachable.mockClear();
     readConfigFileSnapshot.mockResolvedValueOnce({
-      path: "/tmp/.openclaw/openclaw.json",
+      path: "/tmp/.vilaro/vilaro.json",
       exists: true,
       raw: "{}",
       parsed: {},
@@ -416,7 +416,7 @@ describe("runSetupWizard", () => {
             password: {
               source: "env",
               provider: "default",
-              id: "OPENCLAW_GATEWAY_PASSWORD",
+              id: "VILARO_GATEWAY_PASSWORD",
             },
           },
         },
@@ -453,9 +453,9 @@ describe("runSetupWizard", () => {
       );
     } finally {
       if (previous === undefined) {
-        delete process.env.OPENCLAW_GATEWAY_PASSWORD;
+        delete process.env.VILARO_GATEWAY_PASSWORD;
       } else {
-        process.env.OPENCLAW_GATEWAY_PASSWORD = previous;
+        process.env.VILARO_GATEWAY_PASSWORD = previous;
       }
     }
 

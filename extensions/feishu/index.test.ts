@@ -1,4 +1,4 @@
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk/feishu";
+import type { VilaroPluginApi } from "vilaro/plugin-sdk/feishu";
 import { describe, expect, it, vi } from "vitest";
 
 const registerFeishuDocToolsMock = vi.hoisted(() => vi.fn());
@@ -52,7 +52,7 @@ describe("feishu plugin register", () => {
       on: vi.fn(),
       config: {},
       registrationMode: "full",
-    } as unknown as OpenClawPluginApi;
+    } as unknown as VilaroPluginApi;
 
     plugin.register(api);
 

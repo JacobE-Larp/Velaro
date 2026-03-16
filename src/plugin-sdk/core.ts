@@ -1,7 +1,7 @@
 export type {
   AnyAgentTool,
-  OpenClawPluginApi,
-  OpenClawPluginConfigSchema,
+  VilaroPluginApi,
+  VilaroPluginConfigSchema,
   ProviderDiscoveryContext,
   ProviderCatalogContext,
   ProviderCatalogResult,
@@ -24,7 +24,7 @@ export type {
   ProviderRuntimeModel,
   ProviderThinkingPolicyContext,
   ProviderWrapStreamFnContext,
-  OpenClawPluginService,
+  VilaroPluginService,
   ProviderAuthContext,
   ProviderAuthDoctorHintContext,
   ProviderAuthMethodNonInteractiveContext,
@@ -54,7 +54,7 @@ export type {
 } from "../agents/sandbox.js";
 export type { ChannelPlugin } from "../channels/plugins/types.plugin.js";
 export type { PluginRuntime } from "../plugins/runtime/types.js";
-export type { OpenClawConfig } from "../config/config.js";
+export type { VilaroConfig } from "../config/config.js";
 export type { GatewayRequestHandlerOptions } from "../gateway/server-methods/types.js";
 export type {
   ProviderUsageSnapshot,
@@ -128,7 +128,7 @@ export {
   type PluginCommandRunOptions,
   type PluginCommandRunResult,
 } from "./run-command.js";
-export { resolvePreferredOpenClawTmpDir } from "../infra/tmp-openclaw-dir.js";
+export { resolvePreferredVilaroTmpDir } from "../infra/tmp-vilaro-dir.js";
 
 export { resolveGatewayBindUrl } from "../shared/gateway-bind-url.js";
 export type { GatewayBindUrlResult } from "../shared/gateway-bind-url.js";

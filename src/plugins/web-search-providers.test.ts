@@ -1,16 +1,16 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resolvePluginWebSearchProviders } from "./web-search-providers.js";
 
-const loadOpenClawPluginsMock = vi.fn();
+const loadVilaroPluginsMock = vi.fn();
 
 vi.mock("./loader.js", () => ({
-  loadOpenClawPlugins: (...args: unknown[]) => loadOpenClawPluginsMock(...args),
+  loadVilaroPlugins: (...args: unknown[]) => loadVilaroPluginsMock(...args),
 }));
 
 describe("resolvePluginWebSearchProviders", () => {
   beforeEach(() => {
-    loadOpenClawPluginsMock.mockReset();
-    loadOpenClawPluginsMock.mockReturnValue({
+    loadVilaroPluginsMock.mockReset();
+    loadVilaroPluginsMock.mockReturnValue({
       webSearchProviders: [
         {
           pluginId: "google",
@@ -41,7 +41,7 @@ describe("resolvePluginWebSearchProviders", () => {
   });
 
   it("forwards an explicit env to plugin loading", () => {
-    const env = { OPENCLAW_HOME: "/srv/openclaw-home" } as NodeJS.ProcessEnv;
+    const env = { VILARO_HOME: "/srv/vilaro-home" } as NodeJS.ProcessEnv;
 
     const providers = resolvePluginWebSearchProviders({
       workspaceDir: "/workspace/explicit",
@@ -49,7 +49,7 @@ describe("resolvePluginWebSearchProviders", () => {
     });
 
     expect(providers.map((provider) => provider.id)).toEqual(["brave", "gemini"]);
-    expect(loadOpenClawPluginsMock).toHaveBeenCalledWith(
+    expect(loadVilaroPluginsMock).toHaveBeenCalledWith(
       expect.objectContaining({
         workspaceDir: "/workspace/explicit",
         env,
@@ -67,7 +67,7 @@ describe("resolvePluginWebSearchProviders", () => {
       bundledAllowlistCompat: true,
     });
 
-    expect(loadOpenClawPluginsMock).toHaveBeenCalledWith(
+    expect(loadVilaroPluginsMock).toHaveBeenCalledWith(
       expect.objectContaining({
         config: expect.objectContaining({
           plugins: expect.objectContaining({
@@ -89,7 +89,7 @@ describe("resolvePluginWebSearchProviders", () => {
       },
     });
 
-    expect(loadOpenClawPluginsMock).toHaveBeenCalledWith(
+    expect(loadVilaroPluginsMock).toHaveBeenCalledWith(
       expect.objectContaining({
         config: expect.objectContaining({
           plugins: expect.objectContaining({
@@ -119,7 +119,7 @@ describe("resolvePluginWebSearchProviders", () => {
       },
     });
 
-    expect(loadOpenClawPluginsMock).toHaveBeenCalledWith(
+    expect(loadVilaroPluginsMock).toHaveBeenCalledWith(
       expect.objectContaining({
         config: expect.objectContaining({
           plugins: expect.objectContaining({

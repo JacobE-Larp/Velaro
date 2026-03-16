@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
-vi.mock("openclaw/extension-api", () => {
+vi.mock("vilaro/extension-api", () => {
   return {
     runEmbeddedPiAgent: vi.fn(async () => ({
       meta: { startedAt: Date.now() },
@@ -9,7 +9,7 @@ vi.mock("openclaw/extension-api", () => {
   };
 });
 
-import { runEmbeddedPiAgent } from "openclaw/extension-api";
+import { runEmbeddedPiAgent } from "vilaro/extension-api";
 import { createLlmTaskTool } from "./llm-task-tool.js";
 
 // oxlint-disable-next-line typescript/no-explicit-any

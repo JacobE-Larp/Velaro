@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { VilaroConfig } from "../../../config/config.js";
 import type { SecretInput } from "../../../config/types.secrets.js";
 import type { RuntimeEnv } from "../../../runtime.js";
 import {
@@ -19,14 +19,14 @@ type ResolvedNonInteractiveApiKey = {
 
 export async function applySimpleNonInteractiveApiKeyChoice(params: {
   authChoice: AuthChoice;
-  nextConfig: OpenClawConfig;
-  baseConfig: OpenClawConfig;
+  nextConfig: VilaroConfig;
+  baseConfig: VilaroConfig;
   opts: OnboardOptions;
   runtime: RuntimeEnv;
   apiKeyStorageOptions?: ApiKeyStorageOptions;
   resolveApiKey: (input: {
     provider: string;
-    cfg: OpenClawConfig;
+    cfg: VilaroConfig;
     flagValue?: string;
     flagName: `--${string}`;
     envVar: string;
@@ -36,7 +36,7 @@ export async function applySimpleNonInteractiveApiKeyChoice(params: {
     resolved: ResolvedNonInteractiveApiKey,
     setter: (value: SecretInput) => Promise<void> | void,
   ) => Promise<boolean>;
-}): Promise<OpenClawConfig | null | undefined> {
+}): Promise<VilaroConfig | null | undefined> {
   if (params.authChoice !== "litellm-api-key") {
     return undefined;
   }

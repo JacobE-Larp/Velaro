@@ -1,10 +1,7 @@
 import type { App } from "@slack/bolt";
 import type { HistoryEntry } from "../../../../src/auto-reply/reply/history.js";
 import { formatAllowlistMatchMeta } from "../../../../src/channels/allowlist-match.js";
-import type {
-  OpenClawConfig,
-  SlackReactionNotificationMode,
-} from "../../../../src/config/config.js";
+import type { VilaroConfig, SlackReactionNotificationMode } from "../../../../src/config/config.js";
 import { resolveSessionKey, type SessionScope } from "../../../../src/config/sessions.js";
 import type { DmPolicy, GroupPolicy } from "../../../../src/config/types.js";
 import { logVerbose } from "../../../../src/globals.js";
@@ -22,7 +19,7 @@ import { isSlackChannelAllowedByPolicy } from "./policy.js";
 export { inferSlackChannelType, normalizeSlackChannelType } from "./channel-type.js";
 
 export type SlackMonitorContext = {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   accountId: string;
   botToken: string;
   app: App;
@@ -88,7 +85,7 @@ export type SlackMonitorContext = {
 };
 
 export function createSlackMonitorContext(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   accountId: string;
   botToken: string;
   app: App;

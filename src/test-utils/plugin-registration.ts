@@ -1,12 +1,12 @@
 import type {
   AnyAgentTool,
-  OpenClawPluginApi,
+  VilaroPluginApi,
   ProviderPlugin,
   WebSearchProviderPlugin,
 } from "../plugins/types.js";
 
 export type CapturedPluginRegistration = {
-  api: OpenClawPluginApi;
+  api: VilaroPluginApi;
   providers: ProviderPlugin[];
   webSearchProviders: WebSearchProviderPlugin[];
   tools: AnyAgentTool[];
@@ -31,12 +31,12 @@ export function createCapturedPluginRegistration(): CapturedPluginRegistration {
       registerTool(tool: AnyAgentTool) {
         tools.push(tool);
       },
-    } as OpenClawPluginApi,
+    } as VilaroPluginApi,
   };
 }
 
 export function registerSingleProviderPlugin(params: {
-  register(api: OpenClawPluginApi): void;
+  register(api: VilaroPluginApi): void;
 }): ProviderPlugin {
   const captured = createCapturedPluginRegistration();
   params.register(captured.api);

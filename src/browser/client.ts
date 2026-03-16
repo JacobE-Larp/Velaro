@@ -5,7 +5,7 @@ export type BrowserTransport = "cdp" | "chrome-mcp";
 export type BrowserStatus = {
   enabled: boolean;
   profile?: string;
-  driver?: "openclaw" | "existing-session";
+  driver?: "vilaro" | "existing-session";
   transport?: BrowserTransport;
   running: boolean;
   cdpReady?: boolean;
@@ -31,7 +31,7 @@ export type ProfileStatus = {
   cdpPort: number | null;
   cdpUrl: string | null;
   color: string;
-  driver: "openclaw" | "existing-session";
+  driver: "vilaro" | "existing-session";
   running: boolean;
   tabCount: number;
   isDefault: boolean;
@@ -172,7 +172,7 @@ export async function browserCreateProfile(
     name: string;
     color?: string;
     cdpUrl?: string;
-    driver?: "openclaw" | "existing-session";
+    driver?: "vilaro" | "existing-session";
   },
 ): Promise<BrowserCreateProfileResult> {
   return await fetchBrowserJson<BrowserCreateProfileResult>(

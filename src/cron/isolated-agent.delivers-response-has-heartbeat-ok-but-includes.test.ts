@@ -10,7 +10,7 @@ import { makeCfg, makeJob, writeSessionStore } from "./isolated-agent.test-harne
 import { setupIsolatedAgentTurnMocks } from "./isolated-agent.test-setup.js";
 
 async function withTempHome<T>(fn: (home: string) => Promise<T>): Promise<T> {
-  return withTempHomeBase(fn, { prefix: "openclaw-cron-heartbeat-suite-" });
+  return withTempHomeBase(fn, { prefix: "vilaro-cron-heartbeat-suite-" });
 }
 
 async function createTelegramDeliveryFixture(home: string): Promise<{
@@ -164,7 +164,7 @@ describe("runCronIsolatedAgentTurn", () => {
 
       vi.mocked(runSubagentAnnounceFlow).mockClear();
       vi.mocked(deps.sendMessageTelegram as (...args: unknown[]) => unknown).mockClear();
-      mockEmbeddedAgentPayloads([{ text: "HEARTBEAT_OK 🦞" }]);
+      mockEmbeddedAgentPayloads([{ text: "HEARTBEAT_OK " }]);
 
       const cfg = makeCfg(home, storePath);
       cfg.agents = {
@@ -196,7 +196,7 @@ describe("runCronIsolatedAgentTurn", () => {
       expect(deps.sendMessageTelegram).toHaveBeenCalledTimes(1);
       expect(deps.sendMessageTelegram).toHaveBeenCalledWith(
         "123",
-        "HEARTBEAT_OK 🦞",
+        "HEARTBEAT_OK ",
         expect.objectContaining({ accountId: undefined }),
       );
     });
@@ -206,7 +206,7 @@ describe("runCronIsolatedAgentTurn", () => {
     await withTempHome(async (home) => {
       const { storePath, deps } = await createTelegramDeliveryFixture(home);
 
-      mockEmbeddedAgentPayloads([{ text: "HEARTBEAT_OK 🦞" }]);
+      mockEmbeddedAgentPayloads([{ text: "HEARTBEAT_OK " }]);
 
       const cfg = makeCfg(home, storePath);
       cfg.agents = {
@@ -243,7 +243,7 @@ describe("runCronIsolatedAgentTurn", () => {
       expect(deps.sendMessageTelegram).toHaveBeenCalledTimes(1);
       expect(deps.sendMessageTelegram).toHaveBeenCalledWith(
         "123",
-        "HEARTBEAT_OK 🦞",
+        "HEARTBEAT_OK ",
         expect.objectContaining({ accountId: undefined }),
       );
       expect(callGateway).toHaveBeenCalledTimes(1);

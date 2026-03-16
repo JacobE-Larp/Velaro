@@ -1,4 +1,4 @@
-import { emptyPluginConfigSchema, type OpenClawPluginApi } from "openclaw/plugin-sdk/core";
+import { emptyPluginConfigSchema, type VilaroPluginApi } from "vilaro/plugin-sdk/core";
 import { buildKimiCodingProvider } from "../../src/agents/models-config.providers.static.js";
 import { applyKimiCodeConfig, KIMI_CODING_MODEL_REF } from "../../src/commands/onboard-auth.js";
 import { createProviderApiKeyAuthMethod } from "../../src/plugins/provider-api-key-auth.js";
@@ -11,7 +11,7 @@ const kimiCodingPlugin = {
   name: "Kimi Coding Provider",
   description: "Bundled Kimi Coding provider plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: "Kimi Coding",

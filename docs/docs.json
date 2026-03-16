@@ -1,14 +1,14 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "name": "OpenClaw",
+  "name": "Vilaro",
   "description": "Self-hosted gateway that connects WhatsApp, Telegram, Discord, iMessage, and more to AI coding agents. Run a single Gateway process on your own machine and message your AI assistant from anywhere.",
   "theme": "mint",
   "icons": {
     "library": "lucide"
   },
   "logo": {
-    "light": "/assets/pixel-lobster.svg",
-    "dark": "/assets/pixel-lobster.svg"
+    "light": "/assets/pixel-vilaro.svg",
+    "dark": "/assets/pixel-vilaro.svg"
   },
   "fonts": {
     "body": {
@@ -18,7 +18,7 @@
       "family": "DM Sans"
     }
   },
-  "favicon": "/assets/pixel-lobster.svg",
+  "favicon": "/assets/pixel-vilaro.svg",
   "colors": {
     "primary": "#FF5A36",
     "dark": "#FF5A36",
@@ -36,12 +36,12 @@
     "links": [
       {
         "label": "GitHub",
-        "href": "https://github.com/openclaw/openclaw",
+        "href": "https://github.com/vilaro/vilaro",
         "icon": "github"
       },
       {
         "label": "Releases",
-        "href": "https://github.com/openclaw/openclaw/releases",
+        "href": "https://github.com/vilaro/vilaro/releases",
         "icon": "package"
       }
     ]
@@ -268,16 +268,16 @@
       "destination": "/nodes/camera"
     },
     {
-      "source": "/clawd",
-      "destination": "/start/openclaw"
+      "source": "/vilaro",
+      "destination": "/start/vilaro"
     },
     {
-      "source": "/start/clawd",
-      "destination": "/start/openclaw"
+      "source": "/start/vilaro",
+      "destination": "/start/vilaro"
     },
     {
-      "source": "/start/clawd/",
-      "destination": "/start/openclaw"
+      "source": "/start/vilaro/",
+      "destination": "/start/vilaro"
     },
     {
       "source": "/start/pairing",
@@ -288,11 +288,11 @@
       "destination": "/tools/clawhub"
     },
     {
-      "source": "/clawdhub",
+      "source": "/vilarohub",
       "destination": "/tools/clawhub"
     },
     {
-      "source": "/tools/clawdhub",
+      "source": "/tools/vilarohub",
       "destination": "/tools/clawhub"
     },
     {
@@ -844,7 +844,7 @@
               {
                 "group": "Guides",
                 "pages": [
-                  "start/openclaw",
+                  "start/vilaro",
                   "start/wizard-cli-reference",
                   "start/wizard-cli-automation"
                 ]
@@ -1005,7 +1005,7 @@
                   "tools/exec-approvals",
                   "tools/firecrawl",
                   "tools/llm-task",
-                  "tools/lobster",
+                  "tools/vilaro",
                   "tools/loop-detection",
                   "tools/reactions",
                   "tools/thinking",
@@ -1444,7 +1444,7 @@
               },
               {
                 "group": "指南",
-                "pages": ["zh-CN/start/openclaw"]
+                "pages": ["zh-CN/start/vilaro"]
               }
             ]
           },
@@ -1601,7 +1601,7 @@
                   "zh-CN/tools/exec-approvals",
                   "zh-CN/tools/firecrawl",
                   "zh-CN/tools/llm-task",
-                  "zh-CN/tools/lobster",
+                  "zh-CN/tools/vilaro",
                   "zh-CN/tools/reactions",
                   "zh-CN/tools/thinking",
                   "zh-CN/tools/web"

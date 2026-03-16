@@ -1,10 +1,10 @@
-import { MarkdownConfigSchema, ToolPolicySchema } from "openclaw/plugin-sdk/bluebubbles";
+import { MarkdownConfigSchema, ToolPolicySchema } from "vilaro/plugin-sdk/bluebubbles";
 import {
   AllowFromListSchema,
   buildCatchallMultiAccountChannelSchema,
   DmPolicySchema,
   GroupPolicySchema,
-} from "openclaw/plugin-sdk/compat";
+} from "vilaro/plugin-sdk/compat";
 import { z } from "zod";
 import { buildSecretInputSchema, hasConfiguredSecretInput } from "./secret-input.js";
 

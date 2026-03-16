@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+import type { VilaroConfig } from "vilaro/plugin-sdk/feishu";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { monitorFeishuProvider, stopFeishuMonitor } from "./monitor.js";
 
@@ -17,7 +17,7 @@ vi.mock("./runtime.js", async () => {
   return createFeishuRuntimeMockModule();
 });
 
-function buildMultiAccountWebsocketConfig(accountIds: string[]): ClawdbotConfig {
+function buildMultiAccountWebsocketConfig(accountIds: string[]): VilaroConfig {
   return {
     channels: {
       feishu: {
@@ -35,7 +35,7 @@ function buildMultiAccountWebsocketConfig(accountIds: string[]): ClawdbotConfig 
         ),
       },
     },
-  } as ClawdbotConfig;
+  } as VilaroConfig;
 }
 
 async function waitForStartedAccount(started: string[], accountId: string) {

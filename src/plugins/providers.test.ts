@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resolveOwningPluginIdsForProvider, resolvePluginProviders } from "./providers.js";
 
-const loadOpenClawPluginsMock = vi.fn();
+const loadVilaroPluginsMock = vi.fn();
 const loadPluginManifestRegistryMock = vi.fn();
 
 vi.mock("./loader.js", () => ({
-  loadOpenClawPlugins: (...args: unknown[]) => loadOpenClawPluginsMock(...args),
+  loadVilaroPlugins: (...args: unknown[]) => loadVilaroPluginsMock(...args),
 }));
 
 vi.mock("./manifest-registry.js", () => ({
@@ -14,8 +14,8 @@ vi.mock("./manifest-registry.js", () => ({
 
 describe("resolvePluginProviders", () => {
   beforeEach(() => {
-    loadOpenClawPluginsMock.mockReset();
-    loadOpenClawPluginsMock.mockReturnValue({
+    loadVilaroPluginsMock.mockReset();
+    loadVilaroPluginsMock.mockReturnValue({
       providers: [{ pluginId: "google", provider: { id: "demo-provider" } }],
     });
     loadPluginManifestRegistryMock.mockReset();
@@ -32,7 +32,7 @@ describe("resolvePluginProviders", () => {
   });
 
   it("forwards an explicit env to plugin loading", () => {
-    const env = { OPENCLAW_HOME: "/srv/openclaw-home" } as NodeJS.ProcessEnv;
+    const env = { VILARO_HOME: "/srv/vilaro-home" } as NodeJS.ProcessEnv;
 
     const providers = resolvePluginProviders({
       workspaceDir: "/workspace/explicit",
@@ -40,7 +40,7 @@ describe("resolvePluginProviders", () => {
     });
 
     expect(providers).toEqual([{ id: "demo-provider", pluginId: "google" }]);
-    expect(loadOpenClawPluginsMock).toHaveBeenCalledWith(
+    expect(loadVilaroPluginsMock).toHaveBeenCalledWith(
       expect.objectContaining({
         workspaceDir: "/workspace/explicit",
         env,
@@ -60,7 +60,7 @@ describe("resolvePluginProviders", () => {
       bundledProviderAllowlistCompat: true,
     });
 
-    expect(loadOpenClawPluginsMock).toHaveBeenCalledWith(
+    expect(loadVilaroPluginsMock).toHaveBeenCalledWith(
       expect.objectContaining({
         config: expect.objectContaining({
           plugins: expect.objectContaining({
@@ -78,7 +78,7 @@ describe("resolvePluginProviders", () => {
       bundledProviderVitestCompat: true,
     });
 
-    expect(loadOpenClawPluginsMock).toHaveBeenCalledWith(
+    expect(loadVilaroPluginsMock).toHaveBeenCalledWith(
       expect.objectContaining({
         config: expect.objectContaining({
           plugins: expect.objectContaining({
@@ -102,7 +102,7 @@ describe("resolvePluginProviders", () => {
       bundledProviderAllowlistCompat: true,
     });
 
-    const call = loadOpenClawPluginsMock.mock.calls.at(-1)?.[0];
+    const call = loadVilaroPluginsMock.mock.calls.at(-1)?.[0];
     const allow = call?.config?.plugins?.allow;
 
     expect(allow).toContain("google");
@@ -119,7 +119,7 @@ describe("resolvePluginProviders", () => {
       bundledProviderAllowlistCompat: true,
     });
 
-    const call = loadOpenClawPluginsMock.mock.calls.at(-1)?.[0];
+    const call = loadVilaroPluginsMock.mock.calls.at(-1)?.[0];
     const allow = call?.config?.plugins?.allow;
 
     expect(allow).not.toContain("workspace-provider");

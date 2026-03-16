@@ -17,14 +17,14 @@ agent (with a session switcher for other sessions).
 
 ## Launch & debugging
 
-- Manual: Lobster menu → “Open Chat”.
+- Manual: Vilaro menu → “Open Chat”.
 - Auto‑open for testing:
 
   ```bash
-  dist/OpenClaw.app/Contents/MacOS/OpenClaw --webchat
+  dist/Vilaro.app/Contents/MacOS/Vilaro --webchat
   ```
 
-- Logs: `./scripts/clawlog.sh` (subsystem `ai.openclaw`, category `WebChatSwiftUI`).
+- Logs: `./scripts/clawlog.sh` (subsystem `ai.vilaro`, category `WebChatSwiftUI`).
 
 ## How it’s wired
 

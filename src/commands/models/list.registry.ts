@@ -1,6 +1,6 @@
 import type { Api, Model } from "@mariozechner/pi-ai";
 import type { ModelRegistry } from "@mariozechner/pi-coding-agent";
-import { resolveOpenClawAgentDir } from "../../agents/agent-paths.js";
+import { resolveVilaroAgentDir } from "../../agents/agent-paths.js";
 import type { AuthProfileStore } from "../../agents/auth-profiles.js";
 import { listProfilesForProvider } from "../../agents/auth-profiles.js";
 import {
@@ -10,7 +10,7 @@ import {
 } from "../../agents/model-auth.js";
 import { shouldSuppressBuiltInModel } from "../../agents/model-suppression.js";
 import { discoverAuthStorage, discoverModels } from "../../agents/pi-model-discovery.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { VilaroConfig } from "../../config/config.js";
 import {
   formatErrorWithStack,
   MODEL_AVAILABILITY_UNAVAILABLE_CODE,
@@ -19,11 +19,7 @@ import {
 import type { ModelRow } from "./list.types.js";
 import { isLocalBaseUrl, modelKey } from "./shared.js";
 
-const hasAuthForProvider = (
-  provider: string,
-  cfg?: OpenClawConfig,
-  authStore?: AuthProfileStore,
-) => {
+const hasAuthForProvider = (provider: string, cfg?: VilaroConfig, authStore?: AuthProfileStore) => {
   if (!cfg || !authStore) {
     return false;
   }
@@ -97,10 +93,10 @@ function loadAvailableModels(registry: ModelRegistry): Model<Api>[] {
 }
 
 export async function loadModelRegistry(
-  _cfg: OpenClawConfig,
-  _opts?: { sourceConfig?: OpenClawConfig },
+  _cfg: VilaroConfig,
+  _opts?: { sourceConfig?: VilaroConfig },
 ) {
-  const agentDir = resolveOpenClawAgentDir();
+  const agentDir = resolveVilaroAgentDir();
   const authStorage = discoverAuthStorage(agentDir);
   const registry = discoverModels(authStorage, agentDir);
   const models = registry
@@ -133,7 +129,7 @@ export function toModelRow(params: {
   tags: string[];
   aliases?: string[];
   availableKeys?: Set<string>;
-  cfg?: OpenClawConfig;
+  cfg?: VilaroConfig;
   authStore?: AuthProfileStore;
   allowProviderAvailabilityFallback?: boolean;
 }): ModelRow {

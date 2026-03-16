@@ -1,4 +1,4 @@
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk/talk-voice";
+import type { VilaroPluginApi } from "vilaro/plugin-sdk/talk-voice";
 
 type ElevenLabsVoice = {
   voice_id: string;
@@ -81,7 +81,7 @@ function resolveCommandLabel(channel: string): string {
   return channel === "discord" ? "/talkvoice" : "/voice";
 }
 
-export default function register(api: OpenClawPluginApi) {
+export default function register(api: VilaroPluginApi) {
   api.registerCommand({
     name: "voice",
     nativeNames: {

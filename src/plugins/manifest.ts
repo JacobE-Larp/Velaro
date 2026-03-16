@@ -5,7 +5,7 @@ import { openBoundaryFileSync } from "../infra/boundary-file-read.js";
 import { isRecord } from "../utils.js";
 import type { PluginConfigUiHint, PluginKind } from "./types.js";
 
-export const PLUGIN_MANIFEST_FILENAME = "openclaw.plugin.json";
+export const PLUGIN_MANIFEST_FILENAME = "vilaro.plugin.json";
 export const PLUGIN_MANIFEST_FILENAMES = [PLUGIN_MANIFEST_FILENAME] as const;
 
 export type PluginManifest = {
@@ -214,7 +214,7 @@ export function loadPluginManifest(
   };
 }
 
-// package.json "openclaw" metadata (used for setup/catalog)
+// package.json "vilaro" metadata (used for setup/catalog)
 export type PluginPackageChannel = {
   id?: string;
   label?: string;
@@ -242,7 +242,7 @@ export type PluginPackageInstall = {
   defaultChoice?: "npm" | "local";
 };
 
-export type OpenClawPackageManifest = {
+export type VilaroPackageManifest = {
   extensions?: string[];
   setupEntry?: string;
   channel?: PluginPackageChannel;
@@ -267,11 +267,11 @@ export type PackageManifest = {
   name?: string;
   version?: string;
   description?: string;
-} & Partial<Record<ManifestKey, OpenClawPackageManifest>>;
+} & Partial<Record<ManifestKey, VilaroPackageManifest>>;
 
 export function getPackageManifestMetadata(
   manifest: PackageManifest | undefined,
-): OpenClawPackageManifest | undefined {
+): VilaroPackageManifest | undefined {
   if (!manifest) {
     return undefined;
   }

@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `openclaw node` (headless node host)"
+summary: "CLI reference for `vilaro node` (headless node host)"
 read_when:
   - Running the headless node host
   - Pairing a non-macOS node for system.run
 title: "node"
 ---
 
-# `openclaw node`
+# `vilaro node`
 
 Run a **headless node host** that connects to the Gateway WebSocket and exposes
 `system.run` / `system.which` on this machine.
@@ -46,7 +46,7 @@ Disable it on the node if needed:
 ## Run (foreground)
 
 ```bash
-openclaw node run --host <gateway-host> --port 18789
+vilaro node run --host <gateway-host> --port 18789
 ```
 
 Options:
@@ -60,21 +60,21 @@ Options:
 
 ## Gateway auth for node host
 
-`openclaw node run` and `openclaw node install` resolve gateway auth from config/env (no `--token`/`--password` flags on node commands):
+`vilaro node run` and `vilaro node install` resolve gateway auth from config/env (no `--token`/`--password` flags on node commands):
 
-- `OPENCLAW_GATEWAY_TOKEN` / `OPENCLAW_GATEWAY_PASSWORD` are checked first.
+- `VILARO_GATEWAY_TOKEN` / `VILARO_GATEWAY_PASSWORD` are checked first.
 - Then local config fallback: `gateway.auth.token` / `gateway.auth.password`.
 - In local mode, node host intentionally does not inherit `gateway.remote.token` / `gateway.remote.password`.
 - If `gateway.auth.token` / `gateway.auth.password` is explicitly configured via SecretRef and unresolved, node auth resolution fails closed (no remote fallback masking).
 - In `gateway.mode=remote`, remote client fields (`gateway.remote.token` / `gateway.remote.password`) are also eligible per remote precedence rules.
-- Legacy `CLAWDBOT_GATEWAY_*` env vars are ignored for node host auth resolution.
+- Legacy `VILARO_GATEWAY_*` env vars are ignored for node host auth resolution.
 
 ## Service (background)
 
 Install a headless node host as a user service.
 
 ```bash
-openclaw node install --host <gateway-host> --port 18789
+vilaro node install --host <gateway-host> --port 18789
 ```
 
 Options:
@@ -91,13 +91,13 @@ Options:
 Manage the service:
 
 ```bash
-openclaw node status
-openclaw node stop
-openclaw node restart
-openclaw node uninstall
+vilaro node status
+vilaro node stop
+vilaro node restart
+vilaro node uninstall
 ```
 
-Use `openclaw node run` for a foreground node host (no service).
+Use `vilaro node run` for a foreground node host (no service).
 
 Service commands accept `--json` for machine-readable output.
 
@@ -107,17 +107,17 @@ The first connection creates a pending device pairing request (`role: node`) on 
 Approve it via:
 
 ```bash
-openclaw devices list
-openclaw devices approve <requestId>
+vilaro devices list
+vilaro devices approve <requestId>
 ```
 
 The node host stores its node id, token, display name, and gateway connection info in
-`~/.openclaw/node.json`.
+`~/.vilaro/node.json`.
 
 ## Exec approvals
 
 `system.run` is gated by local exec approvals:
 
-- `~/.openclaw/exec-approvals.json`
+- `~/.vilaro/exec-approvals.json`
 - [Exec approvals](/tools/exec-approvals)
-- `openclaw approvals --node <id|name|ip>` (edit from the Gateway)
+- `vilaro approvals --node <id|name|ip>` (edit from the Gateway)

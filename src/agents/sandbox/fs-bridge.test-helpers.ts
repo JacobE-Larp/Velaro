@@ -69,12 +69,12 @@ export function dockerExecResult(stdout: string) {
 export function createSandbox(overrides?: Partial<SandboxContext>): SandboxContext {
   return createSandboxTestContext({
     overrides: {
-      containerName: "moltbot-sbx-test",
+      containerName: "vilaro-sbx-test",
       ...overrides,
     },
     dockerOverrides: {
-      image: "moltbot-sandbox:bookworm-slim",
-      containerPrefix: "moltbot-sbx-",
+      image: "vilaro-sandbox:bookworm-slim",
+      containerPrefix: "vilaro-sbx-",
     },
   });
 }
@@ -135,7 +135,7 @@ export function installDockerReadMock(params?: { canonicalPath?: string }) {
       return dockerExecResult("content");
     }
     if (script.includes("mktemp")) {
-      return dockerExecResult("/workspace/.openclaw-write-b.txt.ABC123\n");
+      return dockerExecResult("/workspace/.vilaro-write-b.txt.ABC123\n");
     }
     return dockerExecResult("");
   });
@@ -154,7 +154,7 @@ export async function createHostEscapeFixture(stateDir: string) {
 export async function expectMkdirpAllowsExistingDirectory(params?: {
   forceBoundaryIoFallback?: boolean;
 }) {
-  await withTempDir("openclaw-fs-bridge-mkdirp-", async (stateDir) => {
+  await withTempDir("vilaro-fs-bridge-mkdirp-", async (stateDir) => {
     const workspaceDir = path.join(stateDir, "workspace");
     const nestedDir = path.join(workspaceDir, "memory", "kemik");
     await fs.mkdir(nestedDir, { recursive: true });

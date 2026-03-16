@@ -3,7 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import type {
   CreateSandboxBackendParams,
-  OpenClawConfig,
+  VilaroConfig,
   RemoteShellSandboxHandle,
   SandboxBackendCommandParams,
   SandboxBackendCommandResult,
@@ -11,13 +11,13 @@ import type {
   SandboxBackendHandle,
   SandboxBackendManager,
   SshSandboxSession,
-} from "openclaw/plugin-sdk/core";
+} from "vilaro/plugin-sdk/core";
 import {
   createRemoteShellSandboxFsBridge,
   disposeSshSandboxSession,
-  resolvePreferredOpenClawTmpDir,
+  resolvePreferredVilaroTmpDir,
   runSshSandboxCommand,
-} from "openclaw/plugin-sdk/core";
+} from "vilaro/plugin-sdk/core";
 import {
   buildExecRemoteCommand,
   buildRemoteCommand,
@@ -269,7 +269,7 @@ class OpenShellSandboxBackendImpl {
           "/bin/sh",
           "-c",
           params.script,
-          "openclaw-openshell-fs",
+          "vilaro-openshell-fs",
           ...(params.args ?? []),
         ]),
         stdin: params.stdin,
@@ -400,9 +400,7 @@ class OpenShellSandboxBackendImpl {
   }
 
   private async syncWorkspaceFromRemote(): Promise<void> {
-    const tmpDir = await fs.mkdtemp(
-      path.join(resolveOpenShellTmpRoot(), "openclaw-openshell-sync-"),
-    );
+    const tmpDir = await fs.mkdtemp(path.join(resolveOpenShellTmpRoot(), "vilaro-openshell-sync-"));
     try {
       const result = await runOpenShellCli({
         context: this.params.execContext,
@@ -460,7 +458,7 @@ class OpenShellSandboxBackendImpl {
 }
 
 function resolveOpenShellPluginConfigFromConfig(
-  config: OpenClawConfig,
+  config: VilaroConfig,
   fallback: ResolvedOpenShellPluginConfig,
 ): ResolvedOpenShellPluginConfig {
   const pluginConfig = config.plugins?.entries?.openshell?.config;
@@ -481,9 +479,9 @@ function buildOpenShellSandboxName(scopeKey: string): string {
     (acc, char) => ((acc * 33) ^ char.charCodeAt(0)) >>> 0,
     5381,
   );
-  return `openclaw-${safe || "session"}-${hash.toString(16).slice(0, 8)}`;
+  return `vilaro-${safe || "session"}-${hash.toString(16).slice(0, 8)}`;
 }
 
 function resolveOpenShellTmpRoot(): string {
-  return path.resolve(resolvePreferredOpenClawTmpDir() ?? os.tmpdir());
+  return path.resolve(resolvePreferredVilaroTmpDir() ?? os.tmpdir());
 }

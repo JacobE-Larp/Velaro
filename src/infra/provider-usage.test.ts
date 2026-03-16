@@ -253,7 +253,7 @@ describe("provider usage loading", () => {
     await withTempHome(
       async (tempHome) => {
         const agentDir = path.join(
-          process.env.OPENCLAW_STATE_DIR ?? path.join(tempHome, ".openclaw"),
+          process.env.VILARO_STATE_DIR ?? path.join(tempHome, ".vilaro"),
           "agents",
           "main",
           "agent",
@@ -311,9 +311,9 @@ describe("provider usage loading", () => {
       },
       {
         env: {
-          OPENCLAW_STATE_DIR: (home) => path.join(home, ".openclaw"),
+          VILARO_STATE_DIR: (home) => path.join(home, ".vilaro"),
         },
-        prefix: "openclaw-provider-usage-",
+        prefix: "vilaro-provider-usage-",
       },
     );
   });

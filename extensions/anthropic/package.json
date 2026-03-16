@@ -1,10 +1,10 @@
 {
-  "name": "@openclaw/anthropic-provider",
+  "name": "@vilaro/anthropic-provider",
   "version": "2026.3.14",
   "private": true,
-  "description": "OpenClaw Anthropic provider plugin",
+  "description": "Vilaro Anthropic provider plugin",
   "type": "module",
-  "openclaw": {
+  "vilaro": {
     "extensions": [
       "./index.ts"
     ]

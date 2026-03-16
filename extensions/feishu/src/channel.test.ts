@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk/feishu";
+import type { VilaroConfig } from "vilaro/plugin-sdk/feishu";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const probeFeishuMock = vi.hoisted(() => vi.fn());
@@ -63,7 +63,7 @@ describe("feishuPlugin.status.probeAccount", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as VilaroConfig;
 
     const account = feishuPlugin.config.resolveAccount(cfg, "main");
     probeFeishuMock.mockResolvedValueOnce({ ok: true, appId: "cli_main" });
@@ -98,7 +98,7 @@ describe("feishuPlugin actions", () => {
         },
       },
     },
-  } as OpenClawConfig;
+  } as VilaroConfig;
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -134,7 +134,7 @@ describe("feishuPlugin actions", () => {
           },
         },
       },
-    } as OpenClawConfig;
+    } as VilaroConfig;
 
     expect(feishuPlugin.actions?.listActions?.({ cfg: disabledCfg })).toEqual([
       "send",

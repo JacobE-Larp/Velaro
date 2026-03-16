@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { installProcessWarningFilter, shouldIgnoreWarning } from "./warning-filter.js";
 
-const warningFilterKey = Symbol.for("openclaw.warning-filter");
+const warningFilterKey = Symbol.for("vilaro.warning-filter");
 const baseEmitWarning = process.emitWarning.bind(process);
 
 function resetWarningFilterInstallState(): void {
@@ -124,18 +124,16 @@ describe("warning filter", () => {
         ),
       ).toBeUndefined();
 
-      emitWarning("Visible warning", { type: "Warning", code: "OPENCLAW_TEST_WARNING" });
+      emitWarning("Visible warning", { type: "Warning", code: "VILARO_TEST_WARNING" });
       emitWarning(
         Object.assign(new Error("The punycode module is deprecated."), {
           name: "DeprecationWarning",
           code: "DEP0040",
         }),
-        { type: "Warning", code: "OPENCLAW_VISIBLE_OVERRIDE" },
+        { type: "Warning", code: "VILARO_VISIBLE_OVERRIDE" },
       );
       await flushWarnings();
-      expect(
-        seenWarnings.find((warning) => warning.code === "OPENCLAW_TEST_WARNING"),
-      ).toBeDefined();
+      expect(seenWarnings.find((warning) => warning.code === "VILARO_TEST_WARNING")).toBeDefined();
       expect(
         seenWarnings.find(
           (warning) =>

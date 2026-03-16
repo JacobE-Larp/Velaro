@@ -5,12 +5,8 @@ import {
   collectOpenProviderGroupPolicyWarnings,
   createAccountStatusSink,
   mapAllowFromEntries,
-} from "openclaw/plugin-sdk/compat";
-import type {
-  ChannelAccountSnapshot,
-  ChannelPlugin,
-  OpenClawConfig,
-} from "openclaw/plugin-sdk/zalo";
+} from "vilaro/plugin-sdk/compat";
+import type { ChannelAccountSnapshot, ChannelPlugin, VilaroConfig } from "vilaro/plugin-sdk/zalo";
 import {
   buildBaseAccountStatusSnapshot,
   buildChannelConfigSchema,
@@ -26,7 +22,7 @@ import {
   resolveOutboundMediaUrls,
   sendPayloadWithChunkedTextAndMedia,
   setAccountEnabledInConfigSection,
-} from "openclaw/plugin-sdk/zalo";
+} from "vilaro/plugin-sdk/zalo";
 import {
   listZaloAccountIds,
   resolveDefaultZaloAccountId,

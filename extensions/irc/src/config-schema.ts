@@ -7,7 +7,7 @@ import {
   ReplyRuntimeConfigSchemaShape,
   ToolPolicySchema,
   requireOpenAllowFrom,
-} from "openclaw/plugin-sdk/irc";
+} from "vilaro/plugin-sdk/irc";
 import { z } from "zod";
 import { requireChannelOpenAllowFrom } from "../../shared/config-schema-helpers.js";
 

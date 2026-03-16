@@ -11,18 +11,18 @@ const localWorkers = Math.max(4, Math.min(16, os.cpus().length));
 const ciWorkers = isWindows ? 2 : 3;
 export default defineConfig({
   resolve: {
-    // Keep this ordered: the base `openclaw/plugin-sdk` alias is a prefix match.
+    // Keep this ordered: the base `vilaro/plugin-sdk` alias is a prefix match.
     alias: [
       {
-        find: "openclaw/extension-api",
+        find: "vilaro/extension-api",
         replacement: path.join(repoRoot, "src", "extensionAPI.ts"),
       },
       ...pluginSdkSubpaths.map((subpath) => ({
-        find: `openclaw/plugin-sdk/${subpath}`,
+        find: `vilaro/plugin-sdk/${subpath}`,
         replacement: path.join(repoRoot, "src", "plugin-sdk", `${subpath}.ts`),
       })),
       {
-        find: "openclaw/plugin-sdk",
+        find: "vilaro/plugin-sdk",
         replacement: path.join(repoRoot, "src", "plugin-sdk", "index.ts"),
       },
     ],
@@ -55,7 +55,7 @@ export default defineConfig({
       "apps/macos/.build/**",
       "**/node_modules/**",
       "**/vendor/**",
-      "dist/OpenClaw.app/**",
+      "dist/Vilaro.app/**",
       "**/*.live.test.ts",
       "**/*.e2e.test.ts",
     ],

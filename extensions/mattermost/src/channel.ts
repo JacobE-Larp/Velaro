@@ -3,7 +3,7 @@ import {
   collectAllowlistProviderRestrictSendersWarnings,
   createScopedAccountConfigAccessors,
   formatNormalizedAllowFromEntries,
-} from "openclaw/plugin-sdk/compat";
+} from "vilaro/plugin-sdk/compat";
 import {
   buildComputedAccountStatusSnapshot,
   buildChannelConfigSchema,
@@ -16,7 +16,7 @@ import {
   type ChannelMessageActionAdapter,
   type ChannelMessageActionName,
   type ChannelPlugin,
-} from "openclaw/plugin-sdk/mattermost";
+} from "vilaro/plugin-sdk/mattermost";
 import { buildPassiveProbedChannelStatusSummary } from "../../shared/channel-status-summary.js";
 import { MattermostConfigSchema } from "./config-schema.js";
 import { resolveMattermostGroupRequireMention } from "./group-mentions.js";

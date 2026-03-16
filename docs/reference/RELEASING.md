@@ -8,7 +8,7 @@ read_when:
 
 # Release Policy
 
-OpenClaw has three public release lanes:
+Vilaro has three public release lanes:
 
 - stable: tagged releases that publish to npm `latest`
 - beta: prerelease tags that publish to npm `beta`
@@ -34,9 +34,9 @@ OpenClaw has three public release lanes:
 
 ## Public references
 
-- [`.github/workflows/openclaw-npm-release.yml`](https://github.com/openclaw/openclaw/blob/main/.github/workflows/openclaw-npm-release.yml)
-- [`scripts/openclaw-npm-release-check.ts`](https://github.com/openclaw/openclaw/blob/main/scripts/openclaw-npm-release-check.ts)
+- [`.github/workflows/vilaro-npm-release.yml`](https://github.com/vilaro/vilaro/blob/main/.github/workflows/vilaro-npm-release.yml)
+- [`scripts/vilaro-npm-release-check.ts`](https://github.com/vilaro/vilaro/blob/main/scripts/vilaro-npm-release-check.ts)
 
 Maintainers use the private release docs in
-[`openclaw/maintainers/release/README.md`](https://github.com/openclaw/maintainers/blob/main/release/README.md)
+[`vilaro/maintainers/release/README.md`](https://github.com/vilaro/maintainers/blob/main/release/README.md)
 for the actual runbook.

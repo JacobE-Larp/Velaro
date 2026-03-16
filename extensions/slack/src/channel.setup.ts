@@ -1,14 +1,14 @@
-import { createScopedChannelConfigBase } from "openclaw/plugin-sdk/compat";
+import { createScopedChannelConfigBase } from "vilaro/plugin-sdk/compat";
 import {
   createScopedAccountConfigAccessors,
   formatAllowFromLowercase,
-} from "openclaw/plugin-sdk/compat";
+} from "vilaro/plugin-sdk/compat";
 import {
   buildChannelConfigSchema,
   getChatChannelMeta,
   SlackConfigSchema,
   type ChannelPlugin,
-} from "openclaw/plugin-sdk/slack";
+} from "vilaro/plugin-sdk/slack";
 import { inspectSlackAccount } from "./account-inspect.js";
 import {
   listSlackAccountIds,

@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk/nostr";
+import type { VilaroConfig } from "vilaro/plugin-sdk/nostr";
 import { describe, expect, it, vi } from "vitest";
 import { buildChannelSetupWizardAdapterFromSetupWizard } from "../../../src/channels/plugins/setup-wizard.js";
 import type { WizardPrompter } from "../../../src/wizard/prompts.js";
@@ -45,7 +45,7 @@ describe("nostr setup wizard", () => {
     });
 
     const result = await nostrConfigureAdapter.configure({
-      cfg: {} as OpenClawConfig,
+      cfg: {} as VilaroConfig,
       runtime: createRuntimeEnv(),
       prompter,
       options: {},

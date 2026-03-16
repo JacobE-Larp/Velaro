@@ -2,8 +2,8 @@ import {
   collectAllowlistProviderRestrictSendersWarnings,
   formatAllowFromLowercase,
   mapAllowFromEntries,
-} from "openclaw/plugin-sdk/compat";
-import type { ChannelMeta, ChannelPlugin, ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+} from "vilaro/plugin-sdk/compat";
+import type { ChannelMeta, ChannelPlugin, VilaroConfig } from "vilaro/plugin-sdk/feishu";
 import {
   buildChannelConfigSchema,
   buildProbeChannelStatusSummary,
@@ -12,8 +12,8 @@ import {
   createDefaultChannelRuntimeState,
   DEFAULT_ACCOUNT_ID,
   PAIRING_APPROVED_MESSAGE,
-} from "openclaw/plugin-sdk/feishu";
-import type { ChannelMessageActionName } from "openclaw/plugin-sdk/feishu";
+} from "vilaro/plugin-sdk/feishu";
+import type { ChannelMessageActionName } from "vilaro/plugin-sdk/feishu";
 import {
   resolveFeishuAccount,
   resolveFeishuCredentials,
@@ -48,10 +48,10 @@ async function loadFeishuChannelRuntime() {
 }
 
 function setFeishuNamedAccountEnabled(
-  cfg: ClawdbotConfig,
+  cfg: VilaroConfig,
   accountId: string,
   enabled: boolean,
-): ClawdbotConfig {
+): VilaroConfig {
   const feishuCfg = cfg.channels?.feishu as FeishuConfig | undefined;
   return {
     ...cfg,
@@ -72,7 +72,7 @@ function setFeishuNamedAccountEnabled(
 }
 
 function isFeishuReactionsActionEnabled(params: {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   account: ResolvedFeishuAccount;
 }): boolean {
   if (!params.account.enabled || !params.account.configured) {
@@ -88,7 +88,7 @@ function isFeishuReactionsActionEnabled(params: {
   return gate("reactions");
 }
 
-function areAnyFeishuReactionActionsEnabled(cfg: ClawdbotConfig): boolean {
+function areAnyFeishuReactionActionsEnabled(cfg: VilaroConfig): boolean {
   for (const account of listEnabledFeishuAccounts(cfg)) {
     if (isFeishuReactionsActionEnabled({ cfg, account })) {
       return true;
@@ -351,7 +351,7 @@ export const feishuPlugin: ChannelPlugin<ResolvedFeishuAccount> = {
 
       if (isDefault) {
         // Delete entire feishu config
-        const next = { ...cfg } as ClawdbotConfig;
+        const next = { ...cfg } as VilaroConfig;
         const nextChannels = { ...cfg.channels };
         delete (nextChannels as Record<string, unknown>).feishu;
         if (Object.keys(nextChannels).length > 0) {

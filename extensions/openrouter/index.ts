@@ -1,10 +1,10 @@
 import type { StreamFn } from "@mariozechner/pi-agent-core";
 import {
   emptyPluginConfigSchema,
-  type OpenClawPluginApi,
+  type VilaroPluginApi,
   type ProviderResolveDynamicModelContext,
   type ProviderRuntimeModel,
-} from "openclaw/plugin-sdk/core";
+} from "vilaro/plugin-sdk/core";
 import { DEFAULT_CONTEXT_TOKENS } from "../../src/agents/defaults.js";
 import { buildOpenrouterProvider } from "../../src/agents/models-config.providers.static.js";
 import {
@@ -84,7 +84,7 @@ const openRouterPlugin = {
   name: "OpenRouter Provider",
   description: "Bundled OpenRouter provider plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: "OpenRouter",

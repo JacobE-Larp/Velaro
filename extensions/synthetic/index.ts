@@ -1,4 +1,4 @@
-import { emptyPluginConfigSchema, type OpenClawPluginApi } from "openclaw/plugin-sdk/core";
+import { emptyPluginConfigSchema, type VilaroPluginApi } from "vilaro/plugin-sdk/core";
 import { buildSyntheticProvider } from "../../src/agents/models-config.providers.static.js";
 import {
   applySyntheticConfig,
@@ -13,7 +13,7 @@ const syntheticPlugin = {
   name: "Synthetic Provider",
   description: "Bundled Synthetic provider plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: "Synthetic",

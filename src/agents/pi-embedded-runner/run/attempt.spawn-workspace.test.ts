@@ -111,7 +111,7 @@ vi.mock("../skills-runtime.js", () => ({
 }));
 
 vi.mock("../../docs-path.js", () => ({
-  resolveOpenClawDocsPath: async () => undefined,
+  resolveVilaroDocsPath: async () => undefined,
 }));
 
 vi.mock("../../pi-project-settings.js", () => ({
@@ -370,11 +370,9 @@ describe("runEmbeddedAttempt sessions_spawn workspace inheritance", () => {
   });
 
   it("passes the real workspace to sessions_spawn when workspaceAccess is ro", async () => {
-    const realWorkspace = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-real-workspace-"));
-    const sandboxWorkspace = await fs.mkdtemp(
-      path.join(os.tmpdir(), "openclaw-sandbox-workspace-"),
-    );
-    const agentDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-agent-dir-"));
+    const realWorkspace = await fs.mkdtemp(path.join(os.tmpdir(), "vilaro-real-workspace-"));
+    const sandboxWorkspace = await fs.mkdtemp(path.join(os.tmpdir(), "vilaro-sandbox-workspace-"));
+    const agentDir = await fs.mkdtemp(path.join(os.tmpdir(), "vilaro-agent-dir-"));
     tempPaths.push(realWorkspace, sandboxWorkspace, agentDir);
 
     hoisted.resolveSandboxContextMock.mockResolvedValue(
@@ -462,8 +460,8 @@ describe("runEmbeddedAttempt cache-ttl tracking after compaction", () => {
   });
 
   async function runAttemptWithCacheTtl(compactionCount: number) {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-cache-ttl-workspace-"));
-    const agentDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-cache-ttl-agent-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "vilaro-cache-ttl-workspace-"));
+    const agentDir = await fs.mkdtemp(path.join(os.tmpdir(), "vilaro-cache-ttl-agent-"));
     const sessionFile = path.join(workspaceDir, "session.jsonl");
     tempPaths.push(workspaceDir, agentDir);
     await fs.writeFile(sessionFile, "", "utf8");
@@ -511,7 +509,7 @@ describe("runEmbeddedAttempt cache-ttl tracking after compaction", () => {
 
     expect(result.promptError).toBeNull();
     expect(hoisted.sessionManager.appendCustomEntry).not.toHaveBeenCalledWith(
-      "openclaw.cache-ttl",
+      "vilaro.cache-ttl",
       expect.anything(),
     );
   });
@@ -521,7 +519,7 @@ describe("runEmbeddedAttempt cache-ttl tracking after compaction", () => {
 
     expect(result.promptError).toBeNull();
     expect(hoisted.sessionManager.appendCustomEntry).toHaveBeenCalledWith(
-      "openclaw.cache-ttl",
+      "vilaro.cache-ttl",
       expect.objectContaining({
         provider: "anthropic",
         modelId: "claude-sonnet-4-20250514",
@@ -599,8 +597,8 @@ describe("runEmbeddedAttempt context engine sessionKey forwarding", () => {
     }) => Promise<CompactResult>;
     info?: Partial<ContextEngineInfo>;
   }) {
-    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-ctx-engine-workspace-"));
-    const agentDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-ctx-engine-agent-"));
+    const workspaceDir = await fs.mkdtemp(path.join(os.tmpdir(), "vilaro-ctx-engine-workspace-"));
+    const agentDir = await fs.mkdtemp(path.join(os.tmpdir(), "vilaro-ctx-engine-agent-"));
     const sessionFile = path.join(workspaceDir, "session.jsonl");
     tempPaths.push(workspaceDir, agentDir);
     await fs.writeFile(sessionFile, "", "utf8");

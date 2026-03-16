@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
-# One-time host setup for rootless OpenClaw in Podman: creates the openclaw
+# One-time host setup for rootless Vilaro in Podman: creates the vilaro
 # user, builds the image, loads it into that user's Podman store, and installs
 # the launch script. Run from repo root with sudo capability.
 #
 # Usage: ./setup-podman.sh [--quadlet|--container]
 #   --quadlet   Install systemd Quadlet so the container runs as a user service
 #   --container Only install user + image + launch script; you start the container manually (default)
-#   Or set OPENCLAW_PODMAN_QUADLET=1 (or 0) to choose without a flag.
+#   Or set VILARO_PODMAN_QUADLET=1 (or 0) to choose without a flag.
 #
 # After this, start the gateway manually:
-#   ./scripts/run-openclaw-podman.sh launch
-#   ./scripts/run-openclaw-podman.sh launch setup   # onboarding wizard
-# Or as the openclaw user: sudo -u openclaw /home/openclaw/run-openclaw-podman.sh
-# If you used --quadlet, you can also: sudo systemctl --machine openclaw@ --user start openclaw.service
+#   ./scripts/run-vilaro-podman.sh launch
+#   ./scripts/run-vilaro-podman.sh launch setup   # onboarding wizard
+# Or as the vilaro user: sudo -u vilaro /home/vilaro/run-vilaro-podman.sh
+# If you used --quadlet, you can also: sudo systemctl --machine vilaro@ --user start vilaro.service
 set -euo pipefail
 
-OPENCLAW_USER="${OPENCLAW_PODMAN_USER:-openclaw}"
-REPO_PATH="${OPENCLAW_REPO_PATH:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
-RUN_SCRIPT_SRC="$REPO_PATH/scripts/run-openclaw-podman.sh"
-QUADLET_TEMPLATE="$REPO_PATH/scripts/podman/openclaw.container.in"
+VILARO_USER="${VILARO_PODMAN_USER:-vilaro}"
+REPO_PATH="${VILARO_REPO_PATH:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
+RUN_SCRIPT_SRC="$REPO_PATH/scripts/run-vilaro-podman.sh"
+QUADLET_TEMPLATE="$REPO_PATH/scripts/podman/vilaro.container.in"
 
 require_cmd() {
   if ! command -v "$1" >/dev/null 2>&1; then
@@ -97,10 +97,10 @@ run_as_user() {
   fi
 }
 
-run_as_openclaw() {
-  # Avoid root writes into $OPENCLAW_HOME (symlink/hardlink/TOCTOU footguns).
+run_as_vilaro() {
+  # Avoid root writes into $VILARO_HOME (symlink/hardlink/TOCTOU footguns).
   # Anything under the target user's home should be created/modified as that user.
-  run_as_user "$OPENCLAW_USER" env HOME="$OPENCLAW_HOME" "$@"
+  run_as_user "$VILARO_USER" env HOME="$VILARO_HOME" "$@"
 }
 
 escape_sed_replacement_pipe_delim() {
@@ -108,7 +108,7 @@ escape_sed_replacement_pipe_delim() {
   printf '%s' "$1" | sed -e 's/[\\&|]/\\&/g'
 }
 
-# Quadlet: opt-in via --quadlet or OPENCLAW_PODMAN_QUADLET=1
+# Quadlet: opt-in via --quadlet or VILARO_PODMAN_QUADLET=1
 INSTALL_QUADLET=false
 for arg in "$@"; do
   case "$arg" in
@@ -116,8 +116,8 @@ for arg in "$@"; do
     --container) INSTALL_QUADLET=false ;;
   esac
 done
-if [[ -n "${OPENCLAW_PODMAN_QUADLET:-}" ]]; then
-  case "${OPENCLAW_PODMAN_QUADLET,,}" in
+if [[ -n "${VILARO_PODMAN_QUADLET:-}" ]]; then
+  case "${VILARO_PODMAN_QUADLET,,}" in
     1|yes|true)  INSTALL_QUADLET=true ;;
     0|no|false) INSTALL_QUADLET=false ;;
   esac
@@ -128,7 +128,7 @@ if ! is_root; then
   require_cmd sudo
 fi
 if [[ ! -f "$REPO_PATH/Dockerfile" ]]; then
-  echo "Dockerfile not found at $REPO_PATH. Set OPENCLAW_REPO_PATH to the repo root." >&2
+  echo "Dockerfile not found at $REPO_PATH. Set VILARO_REPO_PATH to the repo root." >&2
   exit 1
 fi
 if [[ ! -f "$RUN_SCRIPT_SRC" ]]; then
@@ -153,7 +153,7 @@ PY
     od -An -N32 -tx1 /dev/urandom | tr -d " \n"
     return 0
   fi
-  echo "Missing dependency: need openssl or python3 (or od) to generate OPENCLAW_GATEWAY_TOKEN." >&2
+  echo "Missing dependency: need openssl or python3 (or od) to generate VILARO_GATEWAY_TOKEN." >&2
   exit 1
 }
 
@@ -190,109 +190,109 @@ resolve_nologin_shell() {
   printf '%s' "/usr/sbin/nologin"
 }
 
-# Create openclaw user (non-login, with home) if missing
-if ! user_exists "$OPENCLAW_USER"; then
+# Create vilaro user (non-login, with home) if missing
+if ! user_exists "$VILARO_USER"; then
   NOLOGIN_SHELL="$(resolve_nologin_shell)"
-  echo "Creating user $OPENCLAW_USER ($NOLOGIN_SHELL, with home)..."
+  echo "Creating user $VILARO_USER ($NOLOGIN_SHELL, with home)..."
   if command -v useradd >/dev/null 2>&1; then
-    run_root useradd -m -s "$NOLOGIN_SHELL" "$OPENCLAW_USER"
+    run_root useradd -m -s "$NOLOGIN_SHELL" "$VILARO_USER"
   elif command -v adduser >/dev/null 2>&1; then
     # Debian/Ubuntu: adduser supports --disabled-password/--gecos. Busybox adduser differs.
-    run_root adduser --disabled-password --gecos "" --shell "$NOLOGIN_SHELL" "$OPENCLAW_USER"
+    run_root adduser --disabled-password --gecos "" --shell "$NOLOGIN_SHELL" "$VILARO_USER"
   else
-    echo "Neither useradd nor adduser found, cannot create user $OPENCLAW_USER." >&2
+    echo "Neither useradd nor adduser found, cannot create user $VILARO_USER." >&2
     exit 1
   fi
 else
-  echo "User $OPENCLAW_USER already exists."
+  echo "User $VILARO_USER already exists."
 fi
 
-OPENCLAW_HOME="$(resolve_user_home "$OPENCLAW_USER")"
-OPENCLAW_UID="$(id -u "$OPENCLAW_USER" 2>/dev/null || true)"
-OPENCLAW_CONFIG="$OPENCLAW_HOME/.openclaw"
-LAUNCH_SCRIPT_DST="$OPENCLAW_HOME/run-openclaw-podman.sh"
+VILARO_HOME="$(resolve_user_home "$VILARO_USER")"
+VILARO_UID="$(id -u "$VILARO_USER" 2>/dev/null || true)"
+VILARO_CONFIG="$VILARO_HOME/.vilaro"
+LAUNCH_SCRIPT_DST="$VILARO_HOME/run-vilaro-podman.sh"
 
 # Prefer systemd user services (Quadlet) for production. Enable lingering early so rootless Podman can run
 # without an interactive login.
 if command -v loginctl &>/dev/null; then
-  run_root loginctl enable-linger "$OPENCLAW_USER" 2>/dev/null || true
+  run_root loginctl enable-linger "$VILARO_USER" 2>/dev/null || true
 fi
-if [[ -n "${OPENCLAW_UID:-}" && -d /run/user ]] && command -v systemctl &>/dev/null; then
-  run_root systemctl start "user@${OPENCLAW_UID}.service" 2>/dev/null || true
+if [[ -n "${VILARO_UID:-}" && -d /run/user ]] && command -v systemctl &>/dev/null; then
+  run_root systemctl start "user@${VILARO_UID}.service" 2>/dev/null || true
 fi
 
 # Rootless Podman needs subuid/subgid for the run user
-if ! grep -q "^${OPENCLAW_USER}:" /etc/subuid 2>/dev/null; then
-  echo "Warning: $OPENCLAW_USER has no subuid range. Rootless Podman may fail." >&2
-  echo "  Add a line to /etc/subuid and /etc/subgid, e.g.: $OPENCLAW_USER:100000:65536" >&2
+if ! grep -q "^${VILARO_USER}:" /etc/subuid 2>/dev/null; then
+  echo "Warning: $VILARO_USER has no subuid range. Rootless Podman may fail." >&2
+  echo "  Add a line to /etc/subuid and /etc/subgid, e.g.: $VILARO_USER:100000:65536" >&2
 fi
 
-echo "Creating $OPENCLAW_CONFIG and workspace..."
-run_as_openclaw mkdir -p "$OPENCLAW_CONFIG/workspace"
-run_as_openclaw chmod 700 "$OPENCLAW_CONFIG" "$OPENCLAW_CONFIG/workspace" 2>/dev/null || true
+echo "Creating $VILARO_CONFIG and workspace..."
+run_as_vilaro mkdir -p "$VILARO_CONFIG/workspace"
+run_as_vilaro chmod 700 "$VILARO_CONFIG" "$VILARO_CONFIG/workspace" 2>/dev/null || true
 
-ENV_FILE="$OPENCLAW_CONFIG/.env"
-if run_as_openclaw test -f "$ENV_FILE"; then
-  if ! run_as_openclaw grep -q '^OPENCLAW_GATEWAY_TOKEN=' "$ENV_FILE" 2>/dev/null; then
+ENV_FILE="$VILARO_CONFIG/.env"
+if run_as_vilaro test -f "$ENV_FILE"; then
+  if ! run_as_vilaro grep -q '^VILARO_GATEWAY_TOKEN=' "$ENV_FILE" 2>/dev/null; then
     TOKEN="$(generate_token_hex_32)"
-    printf 'OPENCLAW_GATEWAY_TOKEN=%s\n' "$TOKEN" | run_as_openclaw tee -a "$ENV_FILE" >/dev/null
-    echo "Added OPENCLAW_GATEWAY_TOKEN to $ENV_FILE."
+    printf 'VILARO_GATEWAY_TOKEN=%s\n' "$TOKEN" | run_as_vilaro tee -a "$ENV_FILE" >/dev/null
+    echo "Added VILARO_GATEWAY_TOKEN to $ENV_FILE."
   fi
-  run_as_openclaw chmod 600 "$ENV_FILE" 2>/dev/null || true
+  run_as_vilaro chmod 600 "$ENV_FILE" 2>/dev/null || true
 else
   TOKEN="$(generate_token_hex_32)"
-  printf 'OPENCLAW_GATEWAY_TOKEN=%s\n' "$TOKEN" | run_as_openclaw tee "$ENV_FILE" >/dev/null
-  run_as_openclaw chmod 600 "$ENV_FILE" 2>/dev/null || true
+  printf 'VILARO_GATEWAY_TOKEN=%s\n' "$TOKEN" | run_as_vilaro tee "$ENV_FILE" >/dev/null
+  run_as_vilaro chmod 600 "$ENV_FILE" 2>/dev/null || true
   echo "Created $ENV_FILE with new token."
 fi
 
 # The gateway refuses to start unless gateway.mode=local is set in config.
 # Make first-run non-interactive; users can run the wizard later to configure channels/providers.
-OPENCLAW_JSON="$OPENCLAW_CONFIG/openclaw.json"
-if ! run_as_openclaw test -f "$OPENCLAW_JSON"; then
-  printf '%s\n' '{ gateway: { mode: "local" } }' | run_as_openclaw tee "$OPENCLAW_JSON" >/dev/null
-  run_as_openclaw chmod 600 "$OPENCLAW_JSON" 2>/dev/null || true
-  echo "Created $OPENCLAW_JSON (minimal gateway.mode=local)."
+VILARO_JSON="$VILARO_CONFIG/vilaro.json"
+if ! run_as_vilaro test -f "$VILARO_JSON"; then
+  printf '%s\n' '{ gateway: { mode: "local" } }' | run_as_vilaro tee "$VILARO_JSON" >/dev/null
+  run_as_vilaro chmod 600 "$VILARO_JSON" 2>/dev/null || true
+  echo "Created $VILARO_JSON (minimal gateway.mode=local)."
 fi
 
 echo "Building image from $REPO_PATH..."
 BUILD_ARGS=()
-[[ -n "${OPENCLAW_DOCKER_APT_PACKAGES:-}" ]] && BUILD_ARGS+=(--build-arg "OPENCLAW_DOCKER_APT_PACKAGES=${OPENCLAW_DOCKER_APT_PACKAGES}")
-[[ -n "${OPENCLAW_EXTENSIONS:-}" ]] && BUILD_ARGS+=(--build-arg "OPENCLAW_EXTENSIONS=${OPENCLAW_EXTENSIONS}")
-podman build ${BUILD_ARGS[@]+"${BUILD_ARGS[@]}"} -t openclaw:local -f "$REPO_PATH/Dockerfile" "$REPO_PATH"
+[[ -n "${VILARO_DOCKER_APT_PACKAGES:-}" ]] && BUILD_ARGS+=(--build-arg "VILARO_DOCKER_APT_PACKAGES=${VILARO_DOCKER_APT_PACKAGES}")
+[[ -n "${VILARO_EXTENSIONS:-}" ]] && BUILD_ARGS+=(--build-arg "VILARO_EXTENSIONS=${VILARO_EXTENSIONS}")
+podman build ${BUILD_ARGS[@]+"${BUILD_ARGS[@]}"} -t vilaro:local -f "$REPO_PATH/Dockerfile" "$REPO_PATH"
 
-echo "Loading image into $OPENCLAW_USER's Podman store..."
+echo "Loading image into $VILARO_USER's Podman store..."
 TMP_IMAGE_DIR="$(resolve_image_tmp_dir)"
 echo "Using temporary image dir: $TMP_IMAGE_DIR"
-TMP_STAGE_DIR="$(mktemp -d -p "$TMP_IMAGE_DIR" openclaw-image.XXXXXX)"
+TMP_STAGE_DIR="$(mktemp -d -p "$TMP_IMAGE_DIR" vilaro-image.XXXXXX)"
 TMP_IMAGE="$TMP_STAGE_DIR/image.tar"
 chmod 700 "$TMP_STAGE_DIR"
 trap 'rm -rf "$TMP_STAGE_DIR"' EXIT
-podman save openclaw:local -o "$TMP_IMAGE"
+podman save vilaro:local -o "$TMP_IMAGE"
 chmod 600 "$TMP_IMAGE"
 # Stream the image into the target user's podman load so private temp directories
-# do not need to be traversable by $OPENCLAW_USER.
-cat "$TMP_IMAGE" | run_as_user "$OPENCLAW_USER" env HOME="$OPENCLAW_HOME" podman load
+# do not need to be traversable by $VILARO_USER.
+cat "$TMP_IMAGE" | run_as_user "$VILARO_USER" env HOME="$VILARO_HOME" podman load
 rm -rf "$TMP_STAGE_DIR"
 trap - EXIT
 
 echo "Copying launch script to $LAUNCH_SCRIPT_DST..."
-run_root cat "$RUN_SCRIPT_SRC" | run_as_openclaw tee "$LAUNCH_SCRIPT_DST" >/dev/null
-run_as_openclaw chmod 755 "$LAUNCH_SCRIPT_DST"
+run_root cat "$RUN_SCRIPT_SRC" | run_as_vilaro tee "$LAUNCH_SCRIPT_DST" >/dev/null
+run_as_vilaro chmod 755 "$LAUNCH_SCRIPT_DST"
 
-# Optionally install systemd quadlet for openclaw user (rootless Podman + systemd)
-QUADLET_DIR="$OPENCLAW_HOME/.config/containers/systemd"
+# Optionally install systemd quadlet for vilaro user (rootless Podman + systemd)
+QUADLET_DIR="$VILARO_HOME/.config/containers/systemd"
 if [[ "$INSTALL_QUADLET" == true && -f "$QUADLET_TEMPLATE" ]]; then
-  echo "Installing systemd quadlet for $OPENCLAW_USER..."
-  run_as_openclaw mkdir -p "$QUADLET_DIR"
-  OPENCLAW_HOME_SED="$(escape_sed_replacement_pipe_delim "$OPENCLAW_HOME")"
-  sed "s|{{OPENCLAW_HOME}}|$OPENCLAW_HOME_SED|g" "$QUADLET_TEMPLATE" | run_as_openclaw tee "$QUADLET_DIR/openclaw.container" >/dev/null
-  run_as_openclaw chmod 700 "$OPENCLAW_HOME/.config" "$OPENCLAW_HOME/.config/containers" "$QUADLET_DIR" 2>/dev/null || true
-  run_as_openclaw chmod 600 "$QUADLET_DIR/openclaw.container" 2>/dev/null || true
+  echo "Installing systemd quadlet for $VILARO_USER..."
+  run_as_vilaro mkdir -p "$QUADLET_DIR"
+  VILARO_HOME_SED="$(escape_sed_replacement_pipe_delim "$VILARO_HOME")"
+  sed "s|{{VILARO_HOME}}|$VILARO_HOME_SED|g" "$QUADLET_TEMPLATE" | run_as_vilaro tee "$QUADLET_DIR/vilaro.container" >/dev/null
+  run_as_vilaro chmod 700 "$VILARO_HOME/.config" "$VILARO_HOME/.config/containers" "$QUADLET_DIR" 2>/dev/null || true
+  run_as_vilaro chmod 600 "$QUADLET_DIR/vilaro.container" 2>/dev/null || true
   if command -v systemctl &>/dev/null; then
-    run_root systemctl --machine "${OPENCLAW_USER}@" --user daemon-reload 2>/dev/null || true
-    run_root systemctl --machine "${OPENCLAW_USER}@" --user enable openclaw.service 2>/dev/null || true
-    run_root systemctl --machine "${OPENCLAW_USER}@" --user start openclaw.service 2>/dev/null || true
+    run_root systemctl --machine "${VILARO_USER}@" --user daemon-reload 2>/dev/null || true
+    run_root systemctl --machine "${VILARO_USER}@" --user enable vilaro.service 2>/dev/null || true
+    run_root systemctl --machine "${VILARO_USER}@" --user start vilaro.service 2>/dev/null || true
   fi
 fi
 
@@ -300,13 +300,13 @@ echo ""
 echo "Setup complete. Start the gateway:"
 echo "  $RUN_SCRIPT_SRC launch"
 echo "  $RUN_SCRIPT_SRC launch setup   # onboarding wizard"
-echo "Or as $OPENCLAW_USER (e.g. from cron):"
-echo "  sudo -u $OPENCLAW_USER $LAUNCH_SCRIPT_DST"
-echo "  sudo -u $OPENCLAW_USER $LAUNCH_SCRIPT_DST setup"
+echo "Or as $VILARO_USER (e.g. from cron):"
+echo "  sudo -u $VILARO_USER $LAUNCH_SCRIPT_DST"
+echo "  sudo -u $VILARO_USER $LAUNCH_SCRIPT_DST setup"
 if [[ "$INSTALL_QUADLET" == true ]]; then
   echo "Or use systemd (quadlet):"
-  echo "  sudo systemctl --machine ${OPENCLAW_USER}@ --user start openclaw.service"
-  echo "  sudo systemctl --machine ${OPENCLAW_USER}@ --user status openclaw.service"
+  echo "  sudo systemctl --machine ${VILARO_USER}@ --user start vilaro.service"
+  echo "  sudo systemctl --machine ${VILARO_USER}@ --user status vilaro.service"
 else
   echo "To install systemd quadlet later: $0 --quadlet"
 fi

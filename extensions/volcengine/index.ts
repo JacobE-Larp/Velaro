@@ -1,4 +1,4 @@
-import { emptyPluginConfigSchema, type OpenClawPluginApi } from "openclaw/plugin-sdk/core";
+import { emptyPluginConfigSchema, type VilaroPluginApi } from "vilaro/plugin-sdk/core";
 import {
   buildDoubaoCodingProvider,
   buildDoubaoProvider,
@@ -14,7 +14,7 @@ const volcenginePlugin = {
   name: "Volcengine Provider",
   description: "Bundled Volcengine provider plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: "Volcengine",

@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 import { signalOutbound } from "../../../../test/channel-outbounds.js";
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { VilaroConfig } from "../../../config/config.js";
 
 describe("signalOutbound", () => {
-  const cfg: OpenClawConfig = {
+  const cfg: VilaroConfig = {
     channels: {
       signal: {
         mediaMaxMb: 8,

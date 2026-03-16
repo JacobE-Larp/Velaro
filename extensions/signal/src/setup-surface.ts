@@ -9,7 +9,7 @@ import { type ChannelSetupWizard } from "../../../src/channels/plugins/setup-wiz
 import { formatCliCommand } from "../../../src/cli/command-format.js";
 import { detectBinary } from "../../../src/commands/onboard-helpers.js";
 import { installSignalCli } from "../../../src/commands/signal-install.js";
-import type { OpenClawConfig } from "../../../src/config/config.js";
+import type { VilaroConfig } from "../../../src/config/config.js";
 import { DEFAULT_ACCOUNT_ID } from "../../../src/routing/session-key.js";
 import { formatDocsLink } from "../../../src/terminal/links.js";
 import type { WizardPrompter } from "../../../src/wizard/prompts.js";
@@ -29,10 +29,10 @@ const INVALID_SIGNAL_ACCOUNT_ERROR =
   "Invalid E.164 phone number (must start with + and country code, e.g. +15555550123)";
 
 async function promptSignalAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   prompter: WizardPrompter;
   accountId?: string;
-}): Promise<OpenClawConfig> {
+}): Promise<VilaroConfig> {
   return promptParsedAllowFromForScopedChannel({
     cfg: params.cfg,
     channel,
@@ -172,9 +172,9 @@ export const signalSetupWizard: ChannelSetupWizard = {
   completionNote: {
     title: "Signal next steps",
     lines: [
-      'Link device with: signal-cli link -n "OpenClaw"',
+      'Link device with: signal-cli link -n "Vilaro"',
       "Scan QR in Signal -> Linked Devices",
-      `Then run: ${formatCliCommand("openclaw gateway call channels.status --params '{\"probe\":true}'")}`,
+      `Then run: ${formatCliCommand("vilaro gateway call channels.status --params '{\"probe\":true}'")}`,
       `Docs: ${formatDocsLink("/signal", "signal")}`,
     ],
   },

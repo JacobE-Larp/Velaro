@@ -1,18 +1,18 @@
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk/mattermost";
+import type { VilaroPluginApi } from "vilaro/plugin-sdk/mattermost";
 import { describe, expect, it, vi } from "vitest";
 import { createTestPluginApi } from "../test-utils/plugin-api.js";
 import plugin from "./index.js";
 
 function createApi(
-  registrationMode: OpenClawPluginApi["registrationMode"],
+  registrationMode: VilaroPluginApi["registrationMode"],
   registerHttpRoute = vi.fn(),
-): OpenClawPluginApi {
+): VilaroPluginApi {
   return createTestPluginApi({
     id: "mattermost",
     name: "Mattermost",
     source: "test",
     config: {},
-    runtime: {} as OpenClawPluginApi["runtime"],
+    runtime: {} as VilaroPluginApi["runtime"],
     registrationMode,
     registerHttpRoute,
   });

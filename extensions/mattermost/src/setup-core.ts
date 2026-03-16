@@ -5,8 +5,8 @@ import {
   hasConfiguredSecretInput,
   migrateBaseNameToDefaultAccount,
   normalizeAccountId,
-  type OpenClawConfig,
-} from "openclaw/plugin-sdk/mattermost";
+  type VilaroConfig,
+} from "vilaro/plugin-sdk/mattermost";
 import type { ChannelSetupAdapter } from "../../../src/channels/plugins/types.adapters.js";
 import { resolveMattermostAccount, type ResolvedMattermostAccount } from "./mattermost/accounts.js";
 import { normalizeMattermostBaseUrl } from "./mattermost/client.js";
@@ -19,7 +19,7 @@ export function isMattermostConfigured(account: ResolvedMattermostAccount): bool
   return tokenConfigured && Boolean(account.baseUrl);
 }
 
-export function resolveMattermostAccountWithSecrets(cfg: OpenClawConfig, accountId: string) {
+export function resolveMattermostAccountWithSecrets(cfg: VilaroConfig, accountId: string) {
   return resolveMattermostAccount({
     cfg,
     accountId,

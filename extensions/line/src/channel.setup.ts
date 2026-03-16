@@ -2,9 +2,9 @@ import {
   buildChannelConfigSchema,
   LineConfigSchema,
   type ChannelPlugin,
-  type OpenClawConfig,
+  type VilaroConfig,
   type ResolvedLineAccount,
-} from "openclaw/plugin-sdk/line";
+} from "vilaro/plugin-sdk/line";
 import {
   listLineAccountIds,
   resolveDefaultLineAccountId,
@@ -43,10 +43,10 @@ export const lineSetupPlugin: ChannelPlugin<ResolvedLineAccount> = {
   reload: { configPrefixes: ["channels.line"] },
   configSchema: buildChannelConfigSchema(LineConfigSchema),
   config: {
-    listAccountIds: (cfg: OpenClawConfig) => listLineAccountIds(cfg),
-    resolveAccount: (cfg: OpenClawConfig, accountId?: string | null) =>
+    listAccountIds: (cfg: VilaroConfig) => listLineAccountIds(cfg),
+    resolveAccount: (cfg: VilaroConfig, accountId?: string | null) =>
       resolveLineAccount({ cfg, accountId: accountId ?? undefined }),
-    defaultAccountId: (cfg: OpenClawConfig) => resolveDefaultLineAccountId(cfg),
+    defaultAccountId: (cfg: VilaroConfig) => resolveDefaultLineAccountId(cfg),
     isConfigured: (account) =>
       Boolean(account.channelAccessToken?.trim() && account.channelSecret?.trim()),
     describeAccount: (account) => ({

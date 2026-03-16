@@ -1,4 +1,4 @@
-import { runPassiveAccountLifecycle } from "openclaw/plugin-sdk/core";
+import { runPassiveAccountLifecycle } from "vilaro/plugin-sdk/core";
 
 type StoppableMonitor = {
   stop: () => void;

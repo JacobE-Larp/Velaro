@@ -1,10 +1,10 @@
 {
-  "name": "@openclaw/google-plugin",
+  "name": "@vilaro/google-plugin",
   "version": "2026.3.14",
   "private": true,
-  "description": "OpenClaw Google plugin",
+  "description": "Vilaro Google plugin",
   "type": "module",
-  "openclaw": {
+  "vilaro": {
     "extensions": [
       "./index.ts"
     ]

@@ -3,7 +3,7 @@ import {
   hasConfiguredSecretInput,
   normalizeResolvedSecretInputString,
   normalizeSecretInputString,
-} from "openclaw/plugin-sdk/zalo";
+} from "vilaro/plugin-sdk/zalo";
 
 export {
   buildSecretInputSchema,

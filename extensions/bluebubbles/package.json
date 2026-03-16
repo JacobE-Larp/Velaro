@@ -1,12 +1,12 @@
 {
-  "name": "@openclaw/bluebubbles",
+  "name": "@vilaro/bluebubbles",
   "version": "2026.3.14",
-  "description": "OpenClaw BlueBubbles channel plugin",
+  "description": "Vilaro BlueBubbles channel plugin",
   "type": "module",
   "dependencies": {
     "zod": "^4.3.6"
   },
-  "openclaw": {
+  "vilaro": {
     "extensions": [
       "./index.ts"
     ],
@@ -29,7 +29,7 @@
       "order": 75
     },
     "install": {
-      "npmSpec": "@openclaw/bluebubbles",
+      "npmSpec": "@vilaro/bluebubbles",
       "localPath": "extensions/bluebubbles",
       "defaultChoice": "npm"
     }

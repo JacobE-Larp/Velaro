@@ -1,4 +1,4 @@
-import { emptyPluginConfigSchema, type OpenClawPluginApi } from "openclaw/plugin-sdk/core";
+import { emptyPluginConfigSchema, type VilaroPluginApi } from "vilaro/plugin-sdk/core";
 import {
   buildBytePlusCodingProvider,
   buildBytePlusProvider,
@@ -14,7 +14,7 @@ const byteplusPlugin = {
   name: "BytePlus Provider",
   description: "Bundled BytePlus provider plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: "BytePlus",

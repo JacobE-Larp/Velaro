@@ -6,7 +6,7 @@ import {
 } from "../../../src/channels/plugins/setup-wizard-helpers.js";
 import { type ChannelSetupDmPolicy } from "../../../src/channels/plugins/setup-wizard-types.js";
 import { type ChannelSetupWizard } from "../../../src/channels/plugins/setup-wizard.js";
-import type { OpenClawConfig } from "../../../src/config/config.js";
+import type { VilaroConfig } from "../../../src/config/config.js";
 import { hasConfiguredSecretInput } from "../../../src/config/types.secrets.js";
 import { DEFAULT_ACCOUNT_ID } from "../../../src/routing/session-key.js";
 import { inspectTelegramAccount } from "./account-inspect.js";

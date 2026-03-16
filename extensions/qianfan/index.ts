@@ -1,4 +1,4 @@
-import { emptyPluginConfigSchema, type OpenClawPluginApi } from "openclaw/plugin-sdk/core";
+import { emptyPluginConfigSchema, type VilaroPluginApi } from "vilaro/plugin-sdk/core";
 import { buildQianfanProvider } from "../../src/agents/models-config.providers.static.js";
 import { applyQianfanConfig, QIANFAN_DEFAULT_MODEL_REF } from "../../src/commands/onboard-auth.js";
 import { createProviderApiKeyAuthMethod } from "../../src/plugins/provider-api-key-auth.js";
@@ -10,7 +10,7 @@ const qianfanPlugin = {
   name: "Qianfan Provider",
   description: "Bundled Qianfan provider plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: "Qianfan",

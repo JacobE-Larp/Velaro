@@ -1,10 +1,6 @@
 import crypto from "node:crypto";
 import { configureClient } from "@tloncorp/api";
-import type {
-  ChannelOutboundAdapter,
-  ChannelPlugin,
-  OpenClawConfig,
-} from "openclaw/plugin-sdk/tlon";
+import type { ChannelOutboundAdapter, ChannelPlugin, VilaroConfig } from "vilaro/plugin-sdk/tlon";
 import { tlonChannelConfigSchema } from "./config-schema.js";
 import { monitorTlonProvider } from "./monitor/index.js";
 import { tlonSetupAdapter } from "./setup-core.js";
@@ -91,7 +87,7 @@ type ConfiguredTlonAccount = ResolvedTlonAccount & {
 };
 
 function resolveOutboundContext(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   accountId?: string | null;
   to: string;
 }) {
@@ -246,7 +242,7 @@ export const tlonPlugin: ChannelPlugin = {
               enabled,
             },
           },
-        } as OpenClawConfig;
+        } as VilaroConfig;
       }
       return {
         ...cfg,
@@ -263,7 +259,7 @@ export const tlonPlugin: ChannelPlugin = {
             },
           },
         },
-      } as OpenClawConfig;
+      } as VilaroConfig;
     },
     deleteAccount: ({ cfg, accountId }) => {
       const useDefault = !accountId || accountId === "default";
@@ -281,7 +277,7 @@ export const tlonPlugin: ChannelPlugin = {
             ...cfg.channels,
             tlon: rest,
           },
-        } as OpenClawConfig;
+        } as VilaroConfig;
       }
       const { [accountId]: _removed, ...remainingAccounts } = cfg.channels?.tlon?.accounts ?? {};
       return {
@@ -293,7 +289,7 @@ export const tlonPlugin: ChannelPlugin = {
             accounts: remainingAccounts,
           },
         },
-      } as OpenClawConfig;
+      } as VilaroConfig;
     },
     isConfigured: (account) => account.configured,
     describeAccount: (account) => ({
@@ -399,7 +395,7 @@ export const tlonPlugin: ChannelPlugin = {
         lastError: runtime?.lastError ?? null,
         probe,
       };
-      return snapshot as import("openclaw/plugin-sdk/tlon").ChannelAccountSnapshot;
+      return snapshot as import("vilaro/plugin-sdk/tlon").ChannelAccountSnapshot;
     },
   },
   gateway: {
@@ -409,7 +405,7 @@ export const tlonPlugin: ChannelPlugin = {
         accountId: account.accountId,
         ship: account.ship,
         url: account.url,
-      } as import("openclaw/plugin-sdk/tlon").ChannelAccountSnapshot);
+      } as import("vilaro/plugin-sdk/tlon").ChannelAccountSnapshot);
       ctx.log?.info(`[${account.accountId}] starting Tlon provider for ${account.ship ?? "tlon"}`);
       return monitorTlonProvider({
         runtime: ctx.runtime,

@@ -4,7 +4,7 @@ import { ensureApiKeyFromOptionEnvOrPrompt } from "../commands/auth-choice.apply
 import { applyPrimaryModel } from "../commands/model-picker.js";
 import { buildApiKeyCredential } from "../commands/onboard-auth.credentials.js";
 import { applyAuthProfileConfig } from "../commands/onboard-auth.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { VilaroConfig } from "../config/config.js";
 import type { SecretInput } from "../config/types.secrets.js";
 import { normalizeOptionalSecretInput } from "../utils/normalize-secret-input.js";
 import type {
@@ -31,7 +31,7 @@ type ProviderApiKeyAuthMethodOptions = {
   metadata?: Record<string, string>;
   noteMessage?: string;
   noteTitle?: string;
-  applyConfig?: (cfg: OpenClawConfig) => OpenClawConfig;
+  applyConfig?: (cfg: VilaroConfig) => VilaroConfig;
 };
 
 function resolveStringOption(opts: Record<string, unknown> | undefined, optionKey: string) {
@@ -61,7 +61,7 @@ function applyApiKeyConfig(params: {
   providerId: string;
   profileIds: string[];
   defaultModel?: string;
-  applyConfig?: (cfg: OpenClawConfig) => OpenClawConfig;
+  applyConfig?: (cfg: VilaroConfig) => VilaroConfig;
 }) {
   let next = params.ctx.config;
   for (const profileId of params.profileIds) {

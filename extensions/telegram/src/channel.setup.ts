@@ -1,16 +1,16 @@
-import { createScopedChannelConfigBase } from "openclaw/plugin-sdk/compat";
+import { createScopedChannelConfigBase } from "vilaro/plugin-sdk/compat";
 import {
   createScopedAccountConfigAccessors,
   formatAllowFromLowercase,
-} from "openclaw/plugin-sdk/compat";
+} from "vilaro/plugin-sdk/compat";
 import {
   buildChannelConfigSchema,
   getChatChannelMeta,
   normalizeAccountId,
   TelegramConfigSchema,
   type ChannelPlugin,
-  type OpenClawConfig,
-} from "openclaw/plugin-sdk/telegram";
+  type VilaroConfig,
+} from "vilaro/plugin-sdk/telegram";
 import { inspectTelegramAccount } from "./account-inspect.js";
 import {
   listTelegramAccountIds,
@@ -23,7 +23,7 @@ import { telegramSetupAdapter } from "./setup-core.js";
 import { telegramSetupWizard } from "./setup-surface.js";
 
 function findTelegramTokenOwnerAccountId(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   accountId: string;
 }): string | null {
   const normalizedAccountId = normalizeAccountId(params.accountId);

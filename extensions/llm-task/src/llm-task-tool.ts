@@ -2,15 +2,15 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { Type } from "@sinclair/typebox";
 import Ajv from "ajv";
-import { runEmbeddedPiAgent } from "openclaw/extension-api";
+import { runEmbeddedPiAgent } from "vilaro/extension-api";
 import {
   formatThinkingLevels,
   formatXHighModelHint,
   normalizeThinkLevel,
-  resolvePreferredOpenClawTmpDir,
+  resolvePreferredVilaroTmpDir,
   supportsXHighThinking,
-} from "openclaw/plugin-sdk/llm-task";
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk/llm-task";
+} from "vilaro/plugin-sdk/llm-task";
+import type { VilaroPluginApi } from "vilaro/plugin-sdk/llm-task";
 
 function stripCodeFences(s: string): string {
   const trimmed = s.trim();
@@ -46,12 +46,12 @@ type PluginCfg = {
   timeoutMs?: number;
 };
 
-export function createLlmTaskTool(api: OpenClawPluginApi) {
+export function createLlmTaskTool(api: VilaroPluginApi) {
   return {
     name: "llm-task",
     label: "LLM Task",
     description:
-      "Run a generic JSON-only LLM task and return schema-validated JSON. Designed for orchestration from Lobster workflows via openclaw.invoke.",
+      "Run a generic JSON-only LLM task and return schema-validated JSON. Designed for orchestration from Vilaro workflows via vilaro.invoke.",
     parameters: Type.Object({
       prompt: Type.String({ description: "Task instruction for the LLM." }),
       input: Type.Optional(Type.Unknown({ description: "Optional input payload for the task." })),
@@ -173,9 +173,7 @@ export function createLlmTaskTool(api: OpenClawPluginApi) {
 
       let tmpDir: string | null = null;
       try {
-        tmpDir = await fs.mkdtemp(
-          path.join(resolvePreferredOpenClawTmpDir(), "openclaw-llm-task-"),
-        );
+        tmpDir = await fs.mkdtemp(path.join(resolvePreferredVilaroTmpDir(), "vilaro-llm-task-"));
         const sessionId = `llm-task-${Date.now()}`;
         const sessionFile = path.join(tmpDir, "session.json");
 

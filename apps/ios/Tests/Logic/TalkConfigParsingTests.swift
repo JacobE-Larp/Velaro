@@ -1,5 +1,5 @@
 import Foundation
-import OpenClawKit
+import VilaroKit
 import Testing
 
 private let iOSSilenceTimeoutMs = 900

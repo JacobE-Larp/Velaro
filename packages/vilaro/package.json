@@ -1,0 +1,16 @@
+{
+  "name": "vilaro-compat",
+  "version": "2026.2.12",
+  "description": "Compatibility shim that forwards to vilaro",
+  "bin": {
+    "vilaro-compat": "./bin/vilaro.js"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./cli-entry": "./bin/vilaro.js"
+  },
+  "dependencies": {
+    "vilaro": "workspace:*"
+  }
+}

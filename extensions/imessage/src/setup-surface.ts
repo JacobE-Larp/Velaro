@@ -7,7 +7,7 @@ import {
 import type { ChannelSetupDmPolicy } from "../../../src/channels/plugins/setup-wizard-types.js";
 import { type ChannelSetupWizard } from "../../../src/channels/plugins/setup-wizard.js";
 import { detectBinary } from "../../../src/commands/onboard-helpers.js";
-import type { OpenClawConfig } from "../../../src/config/config.js";
+import type { VilaroConfig } from "../../../src/config/config.js";
 import { DEFAULT_ACCOUNT_ID } from "../../../src/routing/session-key.js";
 import { formatDocsLink } from "../../../src/terminal/links.js";
 import type { WizardPrompter } from "../../../src/wizard/prompts.js";
@@ -21,10 +21,10 @@ import { imessageSetupAdapter, parseIMessageAllowFromEntries } from "./setup-cor
 const channel = "imessage" as const;
 
 async function promptIMessageAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   prompter: WizardPrompter;
   accountId?: string;
-}): Promise<OpenClawConfig> {
+}): Promise<VilaroConfig> {
   return promptParsedAllowFromForScopedChannel({
     cfg: params.cfg,
     channel,
@@ -122,7 +122,7 @@ export const imessageSetupWizard: ChannelSetupWizard = {
     title: "iMessage next steps",
     lines: [
       "This is still a work in progress.",
-      "Ensure OpenClaw has Full Disk Access to Messages DB.",
+      "Ensure Vilaro has Full Disk Access to Messages DB.",
       "Grant Automation permission for Messages when prompted.",
       "List chats with: imsg chats --limit 20",
       `Docs: ${formatDocsLink("/imessage", "imessage")}`,

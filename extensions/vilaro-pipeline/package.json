@@ -1,0 +1,14 @@
+{
+  "name": "@vilaro/pipeline",
+  "version": "2026.3.14",
+  "description": "Vilaro workflow tool plugin (typed pipelines + resumable approvals)",
+  "type": "module",
+  "dependencies": {
+    "@sinclair/typebox": "0.34.48"
+  },
+  "vilaro": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

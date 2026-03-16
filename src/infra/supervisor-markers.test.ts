@@ -7,9 +7,9 @@ describe("SUPERVISOR_HINT_ENV_VARS", () => {
       expect.arrayContaining([
         "LAUNCH_JOB_LABEL",
         "INVOCATION_ID",
-        "OPENCLAW_WINDOWS_TASK_NAME",
-        "OPENCLAW_SERVICE_MARKER",
-        "OPENCLAW_SERVICE_KIND",
+        "VILARO_WINDOWS_TASK_NAME",
+        "VILARO_SERVICE_MARKER",
+        "VILARO_SERVICE_KIND",
       ]),
     );
   });
@@ -17,7 +17,7 @@ describe("SUPERVISOR_HINT_ENV_VARS", () => {
 
 describe("detectRespawnSupervisor", () => {
   it("detects launchd and systemd only from non-blank platform-specific hints", () => {
-    expect(detectRespawnSupervisor({ LAUNCH_JOB_LABEL: " ai.openclaw.gateway " }, "darwin")).toBe(
+    expect(detectRespawnSupervisor({ LAUNCH_JOB_LABEL: " ai.vilaro.gateway " }, "darwin")).toBe(
       "launchd",
     );
     expect(detectRespawnSupervisor({ LAUNCH_JOB_LABEL: "   " }, "darwin")).toBeNull();
@@ -27,14 +27,13 @@ describe("detectRespawnSupervisor", () => {
   });
 
   it("detects scheduled-task supervision on Windows from either hint family", () => {
-    expect(
-      detectRespawnSupervisor({ OPENCLAW_WINDOWS_TASK_NAME: "OpenClaw Gateway" }, "win32"),
-    ).toBe("schtasks");
+    expect(detectRespawnSupervisor({ VILARO_WINDOWS_TASK_NAME: "Vilaro Gateway" }, "win32")).toBe(
+      "schtasks",
+    );
     expect(
       detectRespawnSupervisor(
         {
-          OPENCLAW_SERVICE_MARKER: "openclaw",
-          OPENCLAW_SERVICE_KIND: "gateway",
+          VILARO_SERVICE_MARKER: "vilaro",
         },
         "win32",
       ),
@@ -42,8 +41,7 @@ describe("detectRespawnSupervisor", () => {
     expect(
       detectRespawnSupervisor(
         {
-          OPENCLAW_SERVICE_MARKER: "openclaw",
-          OPENCLAW_SERVICE_KIND: "worker",
+          VILARO_SERVICE_MARKER: "vilaro",
         },
         "win32",
       ),
@@ -54,14 +52,13 @@ describe("detectRespawnSupervisor", () => {
     expect(
       detectRespawnSupervisor(
         {
-          OPENCLAW_SERVICE_MARKER: "openclaw",
-          OPENCLAW_SERVICE_KIND: "gateway",
+          VILARO_SERVICE_MARKER: "vilaro",
         },
         "linux",
       ),
     ).toBeNull();
     expect(
-      detectRespawnSupervisor({ LAUNCH_JOB_LABEL: "ai.openclaw.gateway" }, "freebsd"),
+      detectRespawnSupervisor({ LAUNCH_JOB_LABEL: "ai.vilaro.gateway" }, "freebsd"),
     ).toBeNull();
   });
 });

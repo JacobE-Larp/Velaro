@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { VilaroConfig } from "../config/config.js";
 import { sendControlledSubagentMessage } from "./subagent-control.js";
 
 describe("sendControlledSubagentMessage", () => {
@@ -7,7 +7,7 @@ describe("sendControlledSubagentMessage", () => {
     const result = await sendControlledSubagentMessage({
       cfg: {
         channels: { whatsapp: { allowFrom: ["*"] } },
-      } as OpenClawConfig,
+      } as VilaroConfig,
       controller: {
         controllerSessionKey: "agent:main:subagent:leaf",
         callerSessionKey: "agent:main:subagent:leaf",

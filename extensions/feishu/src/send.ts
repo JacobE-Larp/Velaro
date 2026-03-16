@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+import type { VilaroConfig } from "vilaro/plugin-sdk/feishu";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 import type { MentionTarget } from "./mention.js";
@@ -281,7 +281,7 @@ function parseFeishuMessageItem(
  * Useful for fetching quoted/replied message content.
  */
 export async function getMessageFeishu(params: {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   messageId: string;
   accountId?: string;
 }): Promise<FeishuMessageInfo | null> {
@@ -334,7 +334,7 @@ export type FeishuThreadMessageInfo = {
  * which includes both the root message and all replies (including bot replies).
  */
 export async function listFeishuThreadMessages(params: {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   threadId: string;
   currentMessageId?: string;
   /** Exclude the root message (already provided separately as ThreadStarterBody). */
@@ -406,7 +406,7 @@ export async function listFeishuThreadMessages(params: {
 }
 
 export type SendFeishuMessageParams = {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   to: string;
   text: string;
   replyToMessageId?: string;
@@ -472,7 +472,7 @@ export async function sendMessageFeishu(
 }
 
 export type SendFeishuCardParams = {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   to: string;
   card: Record<string, unknown>;
   replyToMessageId?: string;
@@ -499,7 +499,7 @@ export async function sendCardFeishu(params: SendFeishuCardParams): Promise<Feis
 }
 
 export async function editMessageFeishu(params: {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   messageId: string;
   text?: string;
   card?: Record<string, unknown>;
@@ -552,7 +552,7 @@ export async function editMessageFeishu(params: {
 }
 
 export async function updateCardFeishu(params: {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   messageId: string;
   card: Record<string, unknown>;
   accountId?: string;
@@ -648,7 +648,7 @@ export function buildStructuredCard(
  * Send a message as a structured card with optional header and note.
  */
 export async function sendStructuredCardFeishu(params: {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   to: string;
   text: string;
   replyToMessageId?: string;
@@ -674,7 +674,7 @@ export async function sendStructuredCardFeishu(params: {
  * This renders markdown properly in Feishu (code blocks, tables, bold/italic, etc.)
  */
 export async function sendMarkdownCardFeishu(params: {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   to: string;
   text: string;
   replyToMessageId?: string;

@@ -1,9 +1,9 @@
 import fs from "node:fs";
-import type { OpenClawConfig } from "../config/config.js";
+import type { VilaroConfig } from "../config/config.js";
 import { resolveUserPath } from "../utils.js";
 import { loadBundleManifest } from "./bundle-manifest.js";
 import { normalizePluginsConfig, type NormalizedPluginsConfig } from "./config-state.js";
-import { discoverOpenClawPlugins, type PluginCandidate } from "./discovery.js";
+import { discoverVilaroPlugins, type PluginCandidate } from "./discovery.js";
 import { loadPluginManifest, type PluginManifest } from "./manifest.js";
 import { isPathInside, safeRealpathSync } from "./path-safety.js";
 import { resolvePluginCacheInputs } from "./roots.js";
@@ -72,7 +72,7 @@ export function clearPluginManifestRegistryCache(): void {
 }
 
 function resolveManifestCacheMs(env: NodeJS.ProcessEnv): number {
-  const raw = env.OPENCLAW_PLUGIN_MANIFEST_CACHE_MS?.trim();
+  const raw = env.VILARO_PLUGIN_MANIFEST_CACHE_MS?.trim();
   if (raw === "" || raw === "0") {
     return 0;
   }
@@ -87,7 +87,7 @@ function resolveManifestCacheMs(env: NodeJS.ProcessEnv): number {
 }
 
 function shouldUseManifestCache(env: NodeJS.ProcessEnv): boolean {
-  const disabled = env.OPENCLAW_DISABLE_PLUGIN_MANIFEST_CACHE?.trim();
+  const disabled = env.VILARO_DISABLE_PLUGIN_MANIFEST_CACHE?.trim();
   if (disabled) {
     return false;
   }
@@ -153,7 +153,7 @@ function buildRecord(params: {
     description:
       normalizeManifestLabel(params.manifest.description) ?? params.candidate.packageDescription,
     version: normalizeManifestLabel(params.manifest.version) ?? params.candidate.packageVersion,
-    format: params.candidate.format ?? "openclaw",
+    format: params.candidate.format ?? "vilaro",
     bundleFormat: params.candidate.bundleFormat,
     kind: params.manifest.kind,
     channels: params.manifest.channels ?? [],
@@ -216,7 +216,7 @@ function buildBundleRecord(params: {
 function matchesInstalledPluginRecord(params: {
   pluginId: string;
   candidate: PluginCandidate;
-  config?: OpenClawConfig;
+  config?: VilaroConfig;
   env: NodeJS.ProcessEnv;
 }): boolean {
   if (params.candidate.origin !== "global") {
@@ -241,7 +241,7 @@ function matchesInstalledPluginRecord(params: {
 function resolveDuplicatePrecedenceRank(params: {
   pluginId: string;
   candidate: PluginCandidate;
-  config?: OpenClawConfig;
+  config?: VilaroConfig;
   env: NodeJS.ProcessEnv;
 }): number {
   if (params.candidate.origin === "config") {
@@ -269,7 +269,7 @@ function resolveDuplicatePrecedenceRank(params: {
 }
 
 export function loadPluginManifestRegistry(params: {
-  config?: OpenClawConfig;
+  config?: VilaroConfig;
   workspaceDir?: string;
   cache?: boolean;
   env?: NodeJS.ProcessEnv;
@@ -293,7 +293,7 @@ export function loadPluginManifestRegistry(params: {
         candidates: params.candidates,
         diagnostics: params.diagnostics ?? [],
       }
-    : discoverOpenClawPlugins({
+    : discoverVilaroPlugins({
         workspaceDir: params.workspaceDir,
         extraPaths: normalized.loadPaths,
         env,
@@ -306,7 +306,7 @@ export function loadPluginManifestRegistry(params: {
 
   for (const candidate of candidates) {
     const rejectHardlinks = candidate.origin !== "bundled";
-    const isBundleRecord = (candidate.format ?? "openclaw") === "bundle";
+    const isBundleRecord = (candidate.format ?? "vilaro") === "bundle";
     const manifestRes =
       isBundleRecord && candidate.bundleFormat
         ? loadBundleManifest({

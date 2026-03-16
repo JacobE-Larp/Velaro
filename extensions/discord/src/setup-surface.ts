@@ -10,7 +10,7 @@ import {
 } from "../../../src/channels/plugins/setup-wizard-helpers.js";
 import type { ChannelSetupDmPolicy } from "../../../src/channels/plugins/setup-wizard-types.js";
 import type { ChannelSetupWizard } from "../../../src/channels/plugins/setup-wizard.js";
-import type { OpenClawConfig } from "../../../src/config/config.js";
+import type { VilaroConfig } from "../../../src/config/config.js";
 import { DEFAULT_ACCOUNT_ID } from "../../../src/routing/session-key.js";
 import { formatDocsLink } from "../../../src/terminal/links.js";
 import type { WizardPrompter } from "../../../src/wizard/prompts.js";
@@ -55,10 +55,10 @@ async function resolveDiscordAllowFromEntries(params: { token?: string; entries:
 }
 
 async function promptDiscordAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   prompter: WizardPrompter;
   accountId?: string;
-}): Promise<OpenClawConfig> {
+}): Promise<VilaroConfig> {
   const accountId = resolveSetupAccountId({
     accountId: params.accountId,
     defaultAccountId: resolveDefaultDiscordAccountId(params.cfg),

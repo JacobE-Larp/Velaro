@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: openclaw-config
+  name: vilaro-config
   labels:
-    app: openclaw
+    app: vilaro
 data:
-  openclaw.json: |
+  vilaro.json: |
     {
       "gateway": {
         "mode": "local",
@@ -20,19 +20,19 @@ data:
       },
       "agents": {
         "defaults": {
-          "workspace": "~/.openclaw/workspace"
+          "workspace": "~/.vilaro/workspace"
         },
         "list": [
           {
             "id": "default",
-            "name": "OpenClaw Assistant",
-            "workspace": "~/.openclaw/workspace"
+            "name": "Vilaro Assistant",
+            "workspace": "~/.vilaro/workspace"
           }
         ]
       },
       "cron": { "enabled": false }
     }
   AGENTS.md: |
-    # OpenClaw Assistant
+    # Vilaro Assistant
 
     You are a helpful AI assistant running in Kubernetes.

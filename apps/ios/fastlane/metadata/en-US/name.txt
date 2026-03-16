@@ -1,1 +1,1 @@
-OpenClaw - iOS Client
+Vilaro - iOS Client

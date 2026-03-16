@@ -5,7 +5,7 @@ import {
   readStringArrayParam,
   readStringParam,
 } from "../../../src/agents/tools/common.js";
-import type { OpenClawPluginApi } from "../../../src/plugins/types.js";
+import type { VilaroPluginApi } from "../../../src/plugins/types.js";
 import { runFirecrawlSearch } from "./firecrawl-client.js";
 
 const FirecrawlSearchToolSchema = Type.Object(
@@ -43,7 +43,7 @@ const FirecrawlSearchToolSchema = Type.Object(
   { additionalProperties: false },
 );
 
-export function createFirecrawlSearchTool(api: OpenClawPluginApi) {
+export function createFirecrawlSearchTool(api: VilaroPluginApi) {
   return {
     name: "firecrawl_search",
     label: "Firecrawl Search",

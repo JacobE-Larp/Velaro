@@ -4,10 +4,10 @@ import {
   runPluginCommandWithTimeout,
   shellEscape,
   type SshSandboxSession,
-} from "openclaw/plugin-sdk/core";
+} from "vilaro/plugin-sdk/core";
 import type { ResolvedOpenShellPluginConfig } from "./config.js";
 
-export { buildExecRemoteCommand, shellEscape } from "openclaw/plugin-sdk/core";
+export { buildExecRemoteCommand, shellEscape } from "vilaro/plugin-sdk/core";
 
 export type OpenShellExecContext = {
   config: ResolvedOpenShellPluginConfig;

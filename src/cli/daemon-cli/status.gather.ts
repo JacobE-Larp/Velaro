@@ -4,11 +4,7 @@ import {
   resolveGatewayPort,
   resolveStateDir,
 } from "../../config/config.js";
-import type {
-  OpenClawConfig,
-  GatewayBindMode,
-  GatewayControlUiConfig,
-} from "../../config/types.js";
+import type { VilaroConfig, GatewayBindMode, GatewayControlUiConfig } from "../../config/types.js";
 import { readLastGatewayErrorLine } from "../../daemon/diagnostics.js";
 import type { FindExtraGatewayServicesOptions } from "../../daemon/inspect.js";
 import { findExtraGatewayServices } from "../../daemon/inspect.js";
@@ -60,8 +56,8 @@ type PortStatusSummary = {
 
 type DaemonConfigContext = {
   mergedDaemonEnv: Record<string, string | undefined>;
-  cliCfg: OpenClawConfig;
-  daemonCfg: OpenClawConfig;
+  cliCfg: VilaroConfig;
+  daemonCfg: VilaroConfig;
   cliConfigSummary: ConfigSummary;
   daemonConfigSummary: ConfigSummary;
   configMismatch: boolean;
@@ -188,8 +184,8 @@ async function loadDaemonConfigContext(
 }
 
 async function resolveGatewayStatusSummary(params: {
-  daemonCfg: OpenClawConfig;
-  cliCfg: OpenClawConfig;
+  daemonCfg: VilaroConfig;
+  cliCfg: VilaroConfig;
   mergedDaemonEnv: Record<string, string | undefined>;
   commandProgramArguments?: string[];
   rpcUrlOverride?: string;

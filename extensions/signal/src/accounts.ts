@@ -1,6 +1,6 @@
-import { normalizeAccountId, type SignalAccountConfig } from "openclaw/plugin-sdk/signal";
+import { normalizeAccountId, type SignalAccountConfig } from "vilaro/plugin-sdk/signal";
 import { createAccountListHelpers } from "../../../src/channels/plugins/account-helpers.js";
-import type { OpenClawConfig } from "../../../src/config/config.js";
+import type { VilaroConfig } from "../../../src/config/config.js";
 import { resolveAccountEntry } from "../../../src/routing/account-lookup.js";
 
 export type ResolvedSignalAccount = {
@@ -17,13 +17,13 @@ export const listSignalAccountIds = listAccountIds;
 export const resolveDefaultSignalAccountId = resolveDefaultAccountId;
 
 function resolveAccountConfig(
-  cfg: OpenClawConfig,
+  cfg: VilaroConfig,
   accountId: string,
 ): SignalAccountConfig | undefined {
   return resolveAccountEntry(cfg.channels?.signal?.accounts, accountId);
 }
 
-function mergeSignalAccountConfig(cfg: OpenClawConfig, accountId: string): SignalAccountConfig {
+function mergeSignalAccountConfig(cfg: VilaroConfig, accountId: string): SignalAccountConfig {
   const { accounts: _ignored, ...base } = (cfg.channels?.signal ?? {}) as SignalAccountConfig & {
     accounts?: unknown;
   };
@@ -32,7 +32,7 @@ function mergeSignalAccountConfig(cfg: OpenClawConfig, accountId: string): Signa
 }
 
 export function resolveSignalAccount(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   accountId?: string | null;
 }): ResolvedSignalAccount {
   const accountId = normalizeAccountId(params.accountId);
@@ -61,7 +61,7 @@ export function resolveSignalAccount(params: {
   };
 }
 
-export function listEnabledSignalAccounts(cfg: OpenClawConfig): ResolvedSignalAccount[] {
+export function listEnabledSignalAccounts(cfg: VilaroConfig): ResolvedSignalAccount[] {
   return listSignalAccountIds(cfg)
     .map((accountId) => resolveSignalAccount({ cfg, accountId }))
     .filter((account) => account.enabled);

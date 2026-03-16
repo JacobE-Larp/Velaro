@@ -202,10 +202,10 @@
   - changed-files:
       - any-glob-to-any-file:
           - "extensions/llm-task/**"
-"extensions: lobster":
+"extensions: vilaro":
   - changed-files:
       - any-glob-to-any-file:
-          - "extensions/lobster/**"
+          - "extensions/vilaro/**"
 "extensions: memory-core":
   - changed-files:
       - any-glob-to-any-file:

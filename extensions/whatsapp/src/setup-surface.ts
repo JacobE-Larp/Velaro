@@ -7,7 +7,7 @@ import {
 import { setSetupChannelEnabled } from "../../../src/channels/plugins/setup-wizard-helpers.js";
 import type { ChannelSetupWizard } from "../../../src/channels/plugins/setup-wizard.js";
 import { formatCliCommand } from "../../../src/cli/command-format.js";
-import type { OpenClawConfig } from "../../../src/config/config.js";
+import type { VilaroConfig } from "../../../src/config/config.js";
 import { mergeWhatsAppConfig } from "../../../src/config/merge-config.js";
 import type { DmPolicy } from "../../../src/config/types.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../../../src/routing/session-key.js";
@@ -18,19 +18,19 @@ import { whatsappSetupAdapter } from "./setup-core.js";
 
 const channel = "whatsapp" as const;
 
-function setWhatsAppDmPolicy(cfg: OpenClawConfig, dmPolicy: DmPolicy): OpenClawConfig {
+function setWhatsAppDmPolicy(cfg: VilaroConfig, dmPolicy: DmPolicy): VilaroConfig {
   return mergeWhatsAppConfig(cfg, { dmPolicy });
 }
 
-function setWhatsAppAllowFrom(cfg: OpenClawConfig, allowFrom?: string[]): OpenClawConfig {
+function setWhatsAppAllowFrom(cfg: VilaroConfig, allowFrom?: string[]): VilaroConfig {
   return mergeWhatsAppConfig(cfg, { allowFrom }, { unsetOnUndefined: ["allowFrom"] });
 }
 
-function setWhatsAppSelfChatMode(cfg: OpenClawConfig, selfChatMode: boolean): OpenClawConfig {
+function setWhatsAppSelfChatMode(cfg: VilaroConfig, selfChatMode: boolean): VilaroConfig {
   return mergeWhatsAppConfig(cfg, { selfChatMode });
 }
 
-async function detectWhatsAppLinked(cfg: OpenClawConfig, accountId: string): Promise<boolean> {
+async function detectWhatsAppLinked(cfg: VilaroConfig, accountId: string): Promise<boolean> {
   const { authDir } = resolveWhatsAppAuthDir({ cfg, accountId });
   const credsPath = path.join(authDir, "creds.json");
   return await pathExists(credsPath);
@@ -43,7 +43,7 @@ async function promptWhatsAppOwnerAllowFrom(params: {
   const { prompter, existingAllowFrom } = params;
 
   await prompter.note(
-    "We need the sender/owner number so OpenClaw can allowlist you.",
+    "We need the sender/owner number so Vilaro can allowlist you.",
     "WhatsApp number",
   );
   const entry = await prompter.text({
@@ -75,12 +75,12 @@ async function promptWhatsAppOwnerAllowFrom(params: {
 }
 
 async function applyWhatsAppOwnerAllowlist(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   existingAllowFrom: string[];
   messageLines: string[];
   prompter: Parameters<NonNullable<ChannelSetupWizard["finalize"]>>[0]["prompter"];
   title: string;
-}): Promise<OpenClawConfig> {
+}): Promise<VilaroConfig> {
   const { normalized, allowFrom } = await promptWhatsAppOwnerAllowFrom({
     prompter: params.prompter,
     existingAllowFrom: params.existingAllowFrom,
@@ -116,10 +116,10 @@ function parseWhatsAppAllowFromEntries(raw: string): { entries: string[]; invali
 }
 
 async function promptWhatsAppDmAccess(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   forceAllowFrom: boolean;
   prompter: Parameters<NonNullable<ChannelSetupWizard["finalize"]>>[0]["prompter"];
-}): Promise<OpenClawConfig> {
+}): Promise<VilaroConfig> {
   const existingPolicy = params.cfg.channels?.whatsapp?.dmPolicy ?? "pairing";
   const existingAllowFrom = params.cfg.channels?.whatsapp?.allowFrom ?? [];
   const existingLabel = existingAllowFrom.length > 0 ? existingAllowFrom.join(", ") : "unset";
@@ -152,7 +152,7 @@ async function promptWhatsAppDmAccess(params: {
     message: "WhatsApp phone setup",
     options: [
       { value: "personal", label: "This is my personal phone number" },
-      { value: "separate", label: "Separate phone just for OpenClaw" },
+      { value: "separate", label: "Separate phone just for Vilaro" },
     ],
   });
 
@@ -318,7 +318,7 @@ export const whatsappSetupWizard: ChannelSetupWizard = {
       }
     } else if (!linked) {
       await prompter.note(
-        `Run \`${formatCliCommand("openclaw channels login")}\` later to link WhatsApp.`,
+        `Run \`${formatCliCommand("vilaro channels login")}\` later to link WhatsApp.`,
         "WhatsApp",
       );
     }

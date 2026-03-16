@@ -4,9 +4,9 @@ import {
   discoverOpenAICompatibleSelfHostedProvider,
   emptyPluginConfigSchema,
   promptAndConfigureOpenAICompatibleSelfHostedProviderAuth,
-  type OpenClawPluginApi,
+  type VilaroPluginApi,
   type ProviderAuthMethodNonInteractiveContext,
-} from "openclaw/plugin-sdk/core";
+} from "vilaro/plugin-sdk/core";
 
 const PROVIDER_ID = "sglang";
 const DEFAULT_BASE_URL = "http://127.0.0.1:30000/v1";
@@ -16,7 +16,7 @@ const sglangPlugin = {
   name: "SGLang Provider",
   description: "Bundled SGLang provider plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: "SGLang",

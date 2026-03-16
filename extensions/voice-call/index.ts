@@ -1,8 +1,5 @@
 import { Type } from "@sinclair/typebox";
-import type {
-  GatewayRequestHandlerOptions,
-  OpenClawPluginApi,
-} from "openclaw/plugin-sdk/voice-call";
+import type { GatewayRequestHandlerOptions, VilaroPluginApi } from "vilaro/plugin-sdk/voice-call";
 import { registerVoiceCallCli } from "./src/cli.js";
 import {
   VoiceCallConfigSchema,
@@ -148,7 +145,7 @@ const voiceCallPlugin = {
   name: "Voice Call",
   description: "Voice-call plugin with Telnyx/Twilio/Plivo providers",
   configSchema: voiceCallConfigSchema,
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     const config = resolveVoiceCallConfig(voiceCallConfigSchema.parse(api.pluginConfig));
     const validation = validateProviderConfig(config);
 

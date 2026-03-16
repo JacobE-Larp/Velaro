@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "../config/config.js";
+import type { VilaroConfig } from "../config/config.js";
 import { GATEWAY_CLIENT_MODES, GATEWAY_CLIENT_NAMES } from "../utils/message-channel.js";
 import { buildGatewayConnectionDetails } from "./call.js";
 import { GatewayClient, type GatewayClientOptions } from "./client.js";
@@ -9,7 +9,7 @@ export async function createOperatorApprovalsGatewayClient(
     GatewayClientOptions,
     "clientDisplayName" | "onClose" | "onConnectError" | "onEvent" | "onHelloOk"
   > & {
-    config: OpenClawConfig;
+    config: VilaroConfig;
     gatewayUrl?: string;
   },
 ): Promise<GatewayClient> {
@@ -18,11 +18,7 @@ export async function createOperatorApprovalsGatewayClient(
     url: params.gatewayUrl,
   });
   const gatewayUrlOverrideSource =
-    urlSource === "cli --url"
-      ? "cli"
-      : urlSource === "env OPENCLAW_GATEWAY_URL"
-        ? "env"
-        : undefined;
+    urlSource === "cli --url" ? "cli" : urlSource === "env VILARO_GATEWAY_URL" ? "env" : undefined;
   const auth = await resolveGatewayConnectionAuth({
     config: params.config,
     env: process.env,

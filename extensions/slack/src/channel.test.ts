@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk/slack";
+import type { VilaroConfig } from "vilaro/plugin-sdk/slack";
 import { describe, expect, it, vi } from "vitest";
 
 const handleSlackActionMock = vi.fn();
@@ -15,7 +15,7 @@ vi.mock("./runtime.js", () => ({
 
 import { slackPlugin } from "./channel.js";
 
-async function getSlackConfiguredState(cfg: OpenClawConfig) {
+async function getSlackConfiguredState(cfg: VilaroConfig) {
   const account = slackPlugin.config.resolveAccount(cfg, "default");
   return {
     configured: slackPlugin.config.isConfigured?.(account, cfg),
@@ -191,7 +191,7 @@ describe("slackPlugin agentPrompt", () => {
 
 describe("slackPlugin config", () => {
   it("treats HTTP mode accounts with bot token + signing secret as configured", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: VilaroConfig = {
       channels: {
         slack: {
           mode: "http",
@@ -208,7 +208,7 @@ describe("slackPlugin config", () => {
   });
 
   it("keeps socket mode requiring app token", async () => {
-    const cfg: OpenClawConfig = {
+    const cfg: VilaroConfig = {
       channels: {
         slack: {
           mode: "socket",
@@ -236,7 +236,7 @@ describe("slackPlugin config", () => {
         appTokenSource: "none",
         config: {},
       } as never,
-      cfg: {} as OpenClawConfig,
+      cfg: {} as VilaroConfig,
       runtime: undefined,
     });
 
@@ -263,7 +263,7 @@ describe("slackPlugin config", () => {
           signingSecret: { source: "env", provider: "default", id: "SLACK_SIGNING_SECRET" },
         },
       } as never,
-      cfg: {} as OpenClawConfig,
+      cfg: {} as VilaroConfig,
       runtime: undefined,
     });
 

@@ -20,7 +20,7 @@ import { HEARTBEAT_TOKEN } from "../auto-reply/tokens.js";
 import type { ReplyPayload } from "../auto-reply/types.js";
 import { getChannelPlugin } from "../channels/plugins/index.js";
 import type { ChannelHeartbeatDeps } from "../channels/plugins/types.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { VilaroConfig } from "../config/config.js";
 import { loadConfig } from "../config/config.js";
 import {
   canonicalizeMainSessionAlias,
@@ -113,18 +113,15 @@ type HeartbeatAgentState = {
 
 export type HeartbeatRunner = {
   stop: () => void;
-  updateConfig: (cfg: OpenClawConfig) => void;
+  updateConfig: (cfg: VilaroConfig) => void;
 };
 
-function hasExplicitHeartbeatAgents(cfg: OpenClawConfig) {
+function hasExplicitHeartbeatAgents(cfg: VilaroConfig) {
   const list = cfg.agents?.list ?? [];
   return list.some((entry) => Boolean(entry?.heartbeat));
 }
 
-function resolveHeartbeatConfig(
-  cfg: OpenClawConfig,
-  agentId?: string,
-): HeartbeatConfig | undefined {
+function resolveHeartbeatConfig(cfg: VilaroConfig, agentId?: string): HeartbeatConfig | undefined {
   const defaults = cfg.agents?.defaults?.heartbeat;
   if (!agentId) {
     return defaults;
@@ -136,7 +133,7 @@ function resolveHeartbeatConfig(
   return { ...defaults, ...overrides };
 }
 
-function resolveHeartbeatAgents(cfg: OpenClawConfig): HeartbeatAgent[] {
+function resolveHeartbeatAgents(cfg: VilaroConfig): HeartbeatAgent[] {
   const list = cfg.agents?.list ?? [];
   if (hasExplicitHeartbeatAgents(cfg)) {
     return list
@@ -151,11 +148,11 @@ function resolveHeartbeatAgents(cfg: OpenClawConfig): HeartbeatAgent[] {
   return [{ agentId: fallbackId, heartbeat: resolveHeartbeatConfig(cfg, fallbackId) }];
 }
 
-export function resolveHeartbeatPrompt(cfg: OpenClawConfig, heartbeat?: HeartbeatConfig) {
+export function resolveHeartbeatPrompt(cfg: VilaroConfig, heartbeat?: HeartbeatConfig) {
   return resolveHeartbeatPromptText(heartbeat?.prompt ?? cfg.agents?.defaults?.heartbeat?.prompt);
 }
 
-function resolveHeartbeatAckMaxChars(cfg: OpenClawConfig, heartbeat?: HeartbeatConfig) {
+function resolveHeartbeatAckMaxChars(cfg: VilaroConfig, heartbeat?: HeartbeatConfig) {
   return Math.max(
     0,
     heartbeat?.ackMaxChars ??
@@ -165,7 +162,7 @@ function resolveHeartbeatAckMaxChars(cfg: OpenClawConfig, heartbeat?: HeartbeatC
 }
 
 function resolveHeartbeatSession(
-  cfg: OpenClawConfig,
+  cfg: VilaroConfig,
   agentId?: string,
   heartbeat?: HeartbeatConfig,
   forcedSessionKey?: string,
@@ -409,7 +406,7 @@ function resolveHeartbeatReasonFlags(reason?: string): HeartbeatReasonFlags {
 }
 
 async function resolveHeartbeatPreflight(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   agentId: string;
   heartbeat?: HeartbeatConfig;
   forcedSessionKey?: string;
@@ -487,7 +484,7 @@ function appendHeartbeatWorkspacePathHint(prompt: string, workspaceDir: string):
 }
 
 function resolveHeartbeatRunPrompt(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   heartbeat?: HeartbeatConfig;
   preflight: HeartbeatPreflight;
   canRelayToUser: boolean;
@@ -517,7 +514,7 @@ function resolveHeartbeatRunPrompt(params: {
 }
 
 export async function runHeartbeatOnce(opts: {
-  cfg?: OpenClawConfig;
+  cfg?: VilaroConfig;
   agentId?: string;
   sessionKey?: string;
   heartbeat?: HeartbeatConfig;
@@ -944,7 +941,7 @@ export async function runHeartbeatOnce(opts: {
 }
 
 export function startHeartbeatRunner(opts: {
-  cfg?: OpenClawConfig;
+  cfg?: VilaroConfig;
   runtime?: RuntimeEnv;
   abortSignal?: AbortSignal;
   runOnce?: typeof runHeartbeatOnce;
@@ -1004,7 +1001,7 @@ export function startHeartbeatRunner(opts: {
     state.timer.unref?.();
   };
 
-  const updateConfig = (cfg: OpenClawConfig) => {
+  const updateConfig = (cfg: VilaroConfig) => {
     if (state.stopped) {
       return;
     }

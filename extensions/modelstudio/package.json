@@ -1,10 +1,10 @@
 {
-  "name": "@openclaw/modelstudio-provider",
+  "name": "@vilaro/modelstudio-provider",
   "version": "2026.3.14",
   "private": true,
-  "description": "OpenClaw Model Studio provider plugin",
+  "description": "Vilaro Model Studio provider plugin",
   "type": "module",
-  "openclaw": {
+  "vilaro": {
     "extensions": [
       "./index.ts"
     ]

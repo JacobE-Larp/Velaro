@@ -1,14 +1,14 @@
 ---
 summary: "Plugin manifest + JSON schema requirements (strict config validation)"
 read_when:
-  - You are building a OpenClaw plugin
+  - You are building a Vilaro plugin
   - You need to ship a plugin config schema or debug plugin validation errors
 title: "Plugin Manifest"
 ---
 
-# Plugin manifest (openclaw.plugin.json)
+# Plugin manifest (vilaro.plugin.json)
 
-This page is for the **native OpenClaw plugin manifest** only.
+This page is for the **native Vilaro plugin manifest** only.
 
 For compatible bundle layouts, see [Plugin bundles](/plugins/bundles).
 
@@ -19,15 +19,15 @@ Compatible bundle formats use different manifest files:
   layout without a manifest
 - Cursor bundle: `.cursor-plugin/plugin.json`
 
-OpenClaw auto-detects those bundle layouts too, but they are not validated
-against the `openclaw.plugin.json` schema described here.
+Vilaro auto-detects those bundle layouts too, but they are not validated
+against the `vilaro.plugin.json` schema described here.
 
-For compatible bundles, OpenClaw currently reads bundle metadata plus declared
+For compatible bundles, Vilaro currently reads bundle metadata plus declared
 skill roots, Claude command roots, Claude bundle `settings.json` defaults, and
-supported hook packs when the layout matches OpenClaw runtime expectations.
+supported hook packs when the layout matches Vilaro runtime expectations.
 
-Every native OpenClaw plugin **must** ship a `openclaw.plugin.json` file in the
-**plugin root**. OpenClaw uses this manifest to validate configuration
+Every native Vilaro plugin **must** ship a `vilaro.plugin.json` file in the
+**plugin root**. Vilaro uses this manifest to validate configuration
 **without executing plugin code**. Missing or invalid manifests are treated as
 plugin errors and block config validation.
 
@@ -57,10 +57,10 @@ Optional keys:
 - `channels` (array): channel ids registered by this plugin (example: `["matrix"]`).
 - `providers` (array): provider ids registered by this plugin.
 - `providerAuthEnvVars` (object): auth env vars keyed by provider id. Use this
-  when OpenClaw should resolve provider credentials from env without loading
+  when Vilaro should resolve provider credentials from env without loading
   plugin runtime first.
 - `providerAuthChoices` (array): cheap onboarding/auth-choice metadata keyed by
-  provider + auth method. Use this when OpenClaw should show a provider in
+  provider + auth method. Use this when Vilaro should show a provider in
   auth-choice pickers, preferred-provider resolution, and CLI help without
   loading plugin runtime first.
 - `skills` (array): skill directories to load (relative to the plugin root).
@@ -121,7 +121,7 @@ Example:
 
 ## Notes
 
-- The manifest is **required for native OpenClaw plugins**, including local filesystem loads.
+- The manifest is **required for native Vilaro plugins**, including local filesystem loads.
 - Runtime still loads the plugin module separately; the manifest is only for
   discovery + validation.
 - `providerAuthEnvVars` is the cheap metadata path for auth probes, env-marker

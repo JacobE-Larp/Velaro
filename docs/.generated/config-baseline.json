@@ -1450,7 +1450,7 @@
         "advanced"
       ],
       "label": "Embedded Pi",
-      "help": "Embedded Pi runner hardening controls for how workspace-local Pi settings are trusted and applied in OpenClaw sessions.",
+      "help": "Embedded Pi runner hardening controls for how workspace-local Pi settings are trusted and applied in Vilaro sessions.",
       "hasChildren": true
     },
     {
@@ -2567,7 +2567,7 @@
         "storage"
       ],
       "label": "Memory Search Index Path",
-      "help": "Sets where the SQLite memory index is stored on disk for each agent. Keep the default `~/.openclaw/memory/{agentId}.sqlite` unless you need custom storage placement or backup policy alignment.",
+      "help": "Sets where the SQLite memory index is stored on disk for each agent. Keep the default `~/.vilaro/memory/{agentId}.sqlite` unless you need custom storage placement or backup policy alignment.",
       "hasChildren": false
     },
     {
@@ -3111,7 +3111,7 @@
         "storage"
       ],
       "label": "Sandbox Browser Network",
-      "help": "Docker network for sandbox browser containers (default: openclaw-sandbox-browser). Avoid bridge if you need stricter isolation.",
+      "help": "Docker network for sandbox browser containers (default: vilaro-sandbox-browser). Avoid bridge if you need stricter isolation.",
       "hasChildren": false
     },
     {
@@ -5185,7 +5185,7 @@
         "advanced"
       ],
       "label": "Agent Runtime",
-      "help": "Optional runtime descriptor for this agent. Use embedded for default OpenClaw execution or acp for external ACP harness defaults.",
+      "help": "Optional runtime descriptor for this agent. Use embedded for default Vilaro execution or acp for external ACP harness defaults.",
       "hasChildren": true
     },
     {
@@ -5213,7 +5213,7 @@
         "advanced"
       ],
       "label": "Agent ACP Harness Agent",
-      "help": "Optional ACP harness agent id to use for this OpenClaw agent (for example codex, claude).",
+      "help": "Optional ACP harness agent id to use for this Vilaro agent (for example codex, claude).",
       "hasChildren": false
     },
     {
@@ -5273,7 +5273,7 @@
         "advanced"
       ],
       "label": "Agent Runtime Type",
-      "help": "Runtime type for this agent: \"embedded\" (default OpenClaw runtime) or \"acp\" (ACP harness defaults).",
+      "help": "Runtime type for this agent: \"embedded\" (default Vilaro runtime) or \"acp\" (ACP harness defaults).",
       "hasChildren": false
     },
     {
@@ -8035,7 +8035,7 @@
         "storage"
       ],
       "label": "Browser Profile Driver",
-      "help": "Per-profile browser driver mode. Use \"openclaw\" (or legacy \"clawd\") for CDP-based profiles, or use \"existing-session\" for host-local Chrome MCP attachment.",
+      "help": "Per-profile browser driver mode. Use \"vilaro\" (or legacy \"vilaro\") for CDP-based profiles, or use \"existing-session\" for host-local Chrome MCP attachment.",
       "hasChildren": false
     },
     {
@@ -12839,7 +12839,7 @@
         "performance"
       ],
       "label": "Discord EventQueue Listener Timeout (ms)",
-      "help": "Canonical Discord listener timeout control in ms for gateway normalization/enqueue handlers. Default is 120000 in OpenClaw; set per account via channels.discord.accounts.<id>.eventQueue.listenerTimeout.",
+      "help": "Canonical Discord listener timeout control in ms for gateway normalization/enqueue handlers. Default is 120000 in Vilaro; set per account via channels.discord.accounts.<id>.eventQueue.listenerTimeout.",
       "hasChildren": false
     },
     {
@@ -30422,7 +30422,7 @@
         "network"
       ],
       "label": "Synology Chat",
-      "help": "Connect your Synology NAS Chat to OpenClaw",
+      "help": "Connect your Synology NAS Chat to Vilaro",
       "hasChildren": true
     },
     {
@@ -38549,7 +38549,7 @@
         "storage"
       ],
       "label": "Cache Trace File Path",
-      "help": "JSONL output path for cache trace logs (default: $OPENCLAW_STATE_DIR/logs/cache-trace.jsonl).",
+      "help": "JSONL output path for cache trace logs (default: $VILARO_STATE_DIR/logs/cache-trace.jsonl).",
       "hasChildren": false
     },
     {
@@ -38887,7 +38887,7 @@
         "network"
       ],
       "label": "Wide-area Discovery Domain",
-      "help": "Optional unicast DNS-SD domain for wide-area discovery, such as openclaw.internal. Use this when you intentionally publish gateway discovery beyond local mDNS scopes.",
+      "help": "Optional unicast DNS-SD domain for wide-area discovery, such as vilaro.internal. Use this when you intentionally publish gateway discovery beyond local mDNS scopes.",
       "hasChildren": false
     },
     {
@@ -38981,7 +38981,7 @@
         "advanced"
       ],
       "label": "Environment Variable Overrides",
-      "help": "Explicit key/value environment variable overrides merged into runtime process environment for OpenClaw. Use this for deterministic env configuration instead of relying only on shell profile side effects.",
+      "help": "Explicit key/value environment variable overrides merged into runtime process environment for Vilaro. Use this for deterministic env configuration instead of relying only on shell profile side effects.",
       "hasChildren": true
     },
     {
@@ -39412,7 +39412,7 @@
         "storage"
       ],
       "label": "Control UI Base Path",
-      "help": "Optional URL prefix where the Control UI is served (e.g. /openclaw).",
+      "help": "Optional URL prefix where the Control UI is served (e.g. /vilaro).",
       "hasChildren": false
     },
     {
@@ -40059,7 +40059,7 @@
         "network"
       ],
       "label": "Gateway Node Allowlist (Extra Commands)",
-      "help": "Extra node.invoke commands to allow beyond the gateway defaults (array of command strings). Enabling dangerous commands here is a security-sensitive override and is flagged by `openclaw security audit`.",
+      "help": "Extra node.invoke commands to allow beyond the gateway defaults (array of command strings). Enabling dangerous commands here is a security-sensitive override and is flagged by `vilaro security audit`.",
       "hasChildren": true
     },
     {
@@ -40695,7 +40695,7 @@
         "advanced"
       ],
       "label": "Hooks",
-      "help": "Inbound webhook automation surface for mapping external events into wake or agent actions in OpenClaw. Keep this locked down with explicit token/session/agent controls before exposing it beyond trusted networks.",
+      "help": "Inbound webhook automation surface for mapping external events into wake or agent actions in Vilaro. Keep this locked down with explicit token/session/agent controls before exposing it beyond trusted networks.",
       "hasChildren": true
     },
     {
@@ -42032,7 +42032,7 @@
         "storage"
       ],
       "label": "Memory Backend",
-      "help": "Selects the global memory engine: \"builtin\" uses OpenClaw memory internals, while \"qmd\" uses the QMD sidecar pipeline. Keep \"builtin\" unless you intentionally operate QMD.",
+      "help": "Selects the global memory engine: \"builtin\" uses Vilaro memory internals, while \"qmd\" uses the QMD sidecar pipeline. Keep \"builtin\" unless you intentionally operate QMD.",
       "hasChildren": false
     },
     {
@@ -43788,7 +43788,7 @@
         "advanced"
       ],
       "label": "Metadata",
-      "help": "Metadata fields automatically maintained by OpenClaw to record write/version history for this config file. Keep these values system-managed and avoid manual edits unless debugging migration history.",
+      "help": "Metadata fields automatically maintained by Vilaro to record write/version history for this config file. Keep these values system-managed and avoid manual edits unless debugging migration history.",
       "hasChildren": true
     },
     {
@@ -43816,7 +43816,7 @@
         "media"
       ],
       "label": "Config Last Touched Version",
-      "help": "Auto-set when OpenClaw writes the config.",
+      "help": "Auto-set when Vilaro writes the config.",
       "hasChildren": false
     },
     {
@@ -44169,7 +44169,7 @@
         "models"
       ],
       "label": "Model Provider Inject num_ctx (OpenAI Compat)",
-      "help": "Controls whether OpenClaw injects `options.num_ctx` for Ollama providers configured with the OpenAI-compatible adapter (`openai-completions`). Default is true. Set false only if your proxy/upstream rejects unknown `options` payload fields.",
+      "help": "Controls whether Vilaro injects `options.num_ctx` for Ollama providers configured with the OpenAI-compatible adapter (`openai-completions`). Default is true. Set false only if your proxy/upstream rejects unknown `options` payload fields.",
       "hasChildren": false
     },
     {
@@ -44922,7 +44922,7 @@
         "advanced"
       ],
       "label": "Queue Owner TTL Seconds",
-      "help": "Idle queue-owner TTL for acpx prompt turns. Keep this short in OpenClaw to avoid delayed completion after each turn.",
+      "help": "Idle queue-owner TTL for acpx prompt turns. Keep this short in Vilaro to avoid delayed completion after each turn.",
       "hasChildren": false
     },
     {
@@ -45005,8 +45005,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/amazon-bedrock-provider",
-      "help": "OpenClaw Amazon Bedrock provider plugin (plugin: amazon-bedrock)",
+      "label": "@vilaro/amazon-bedrock-provider",
+      "help": "Vilaro Amazon Bedrock provider plugin (plugin: amazon-bedrock)",
       "hasChildren": true
     },
     {
@@ -45019,7 +45019,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/amazon-bedrock-provider Config",
+      "label": "@vilaro/amazon-bedrock-provider Config",
       "help": "Plugin-defined config payload for amazon-bedrock.",
       "hasChildren": false
     },
@@ -45033,7 +45033,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/amazon-bedrock-provider",
+      "label": "Enable @vilaro/amazon-bedrock-provider",
       "hasChildren": false
     },
     {
@@ -45074,8 +45074,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/anthropic-provider",
-      "help": "OpenClaw Anthropic provider plugin (plugin: anthropic)",
+      "label": "@vilaro/anthropic-provider",
+      "help": "Vilaro Anthropic provider plugin (plugin: anthropic)",
       "hasChildren": true
     },
     {
@@ -45088,7 +45088,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/anthropic-provider Config",
+      "label": "@vilaro/anthropic-provider Config",
       "help": "Plugin-defined config payload for anthropic.",
       "hasChildren": false
     },
@@ -45102,7 +45102,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/anthropic-provider",
+      "label": "Enable @vilaro/anthropic-provider",
       "hasChildren": false
     },
     {
@@ -45143,8 +45143,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/bluebubbles",
-      "help": "OpenClaw BlueBubbles channel plugin (plugin: bluebubbles)",
+      "label": "@vilaro/bluebubbles",
+      "help": "Vilaro BlueBubbles channel plugin (plugin: bluebubbles)",
       "hasChildren": true
     },
     {
@@ -45157,7 +45157,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/bluebubbles Config",
+      "label": "@vilaro/bluebubbles Config",
       "help": "Plugin-defined config payload for bluebubbles.",
       "hasChildren": false
     },
@@ -45171,7 +45171,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/bluebubbles",
+      "label": "Enable @vilaro/bluebubbles",
       "hasChildren": false
     },
     {
@@ -45212,8 +45212,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/brave-plugin",
-      "help": "OpenClaw Brave plugin (plugin: brave)",
+      "label": "@vilaro/brave-plugin",
+      "help": "Vilaro Brave plugin (plugin: brave)",
       "hasChildren": true
     },
     {
@@ -45226,7 +45226,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/brave-plugin Config",
+      "label": "@vilaro/brave-plugin Config",
       "help": "Plugin-defined config payload for brave.",
       "hasChildren": false
     },
@@ -45240,7 +45240,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/brave-plugin",
+      "label": "Enable @vilaro/brave-plugin",
       "hasChildren": false
     },
     {
@@ -45281,8 +45281,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/byteplus-provider",
-      "help": "OpenClaw BytePlus provider plugin (plugin: byteplus)",
+      "label": "@vilaro/byteplus-provider",
+      "help": "Vilaro BytePlus provider plugin (plugin: byteplus)",
       "hasChildren": true
     },
     {
@@ -45295,7 +45295,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/byteplus-provider Config",
+      "label": "@vilaro/byteplus-provider Config",
       "help": "Plugin-defined config payload for byteplus.",
       "hasChildren": false
     },
@@ -45309,7 +45309,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/byteplus-provider",
+      "label": "Enable @vilaro/byteplus-provider",
       "hasChildren": false
     },
     {
@@ -45350,8 +45350,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/cloudflare-ai-gateway-provider",
-      "help": "OpenClaw Cloudflare AI Gateway provider plugin (plugin: cloudflare-ai-gateway)",
+      "label": "@vilaro/cloudflare-ai-gateway-provider",
+      "help": "Vilaro Cloudflare AI Gateway provider plugin (plugin: cloudflare-ai-gateway)",
       "hasChildren": true
     },
     {
@@ -45364,7 +45364,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/cloudflare-ai-gateway-provider Config",
+      "label": "@vilaro/cloudflare-ai-gateway-provider Config",
       "help": "Plugin-defined config payload for cloudflare-ai-gateway.",
       "hasChildren": false
     },
@@ -45378,7 +45378,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/cloudflare-ai-gateway-provider",
+      "label": "Enable @vilaro/cloudflare-ai-gateway-provider",
       "hasChildren": false
     },
     {
@@ -45419,8 +45419,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/copilot-proxy",
-      "help": "OpenClaw Copilot Proxy provider plugin (plugin: copilot-proxy)",
+      "label": "@vilaro/copilot-proxy",
+      "help": "Vilaro Copilot Proxy provider plugin (plugin: copilot-proxy)",
       "hasChildren": true
     },
     {
@@ -45433,7 +45433,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/copilot-proxy Config",
+      "label": "@vilaro/copilot-proxy Config",
       "help": "Plugin-defined config payload for copilot-proxy.",
       "hasChildren": false
     },
@@ -45447,7 +45447,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/copilot-proxy",
+      "label": "Enable @vilaro/copilot-proxy",
       "hasChildren": false
     },
     {
@@ -45571,8 +45571,8 @@
       "tags": [
         "observability"
       ],
-      "label": "@openclaw/diagnostics-otel",
-      "help": "OpenClaw diagnostics OpenTelemetry exporter (plugin: diagnostics-otel)",
+      "label": "@vilaro/diagnostics-otel",
+      "help": "Vilaro diagnostics OpenTelemetry exporter (plugin: diagnostics-otel)",
       "hasChildren": true
     },
     {
@@ -45585,7 +45585,7 @@
       "tags": [
         "observability"
       ],
-      "label": "@openclaw/diagnostics-otel Config",
+      "label": "@vilaro/diagnostics-otel Config",
       "help": "Plugin-defined config payload for diagnostics-otel.",
       "hasChildren": false
     },
@@ -45599,7 +45599,7 @@
       "tags": [
         "observability"
       ],
-      "label": "Enable @openclaw/diagnostics-otel",
+      "label": "Enable @vilaro/diagnostics-otel",
       "hasChildren": false
     },
     {
@@ -46046,8 +46046,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/discord",
-      "help": "OpenClaw Discord channel plugin (plugin: discord)",
+      "label": "@vilaro/discord",
+      "help": "Vilaro Discord channel plugin (plugin: discord)",
       "hasChildren": true
     },
     {
@@ -46060,7 +46060,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/discord Config",
+      "label": "@vilaro/discord Config",
       "help": "Plugin-defined config payload for discord.",
       "hasChildren": false
     },
@@ -46074,7 +46074,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/discord",
+      "label": "Enable @vilaro/discord",
       "hasChildren": false
     },
     {
@@ -46115,8 +46115,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/feishu",
-      "help": "OpenClaw Feishu/Lark channel plugin (community maintained by @m1heng) (plugin: feishu)",
+      "label": "@vilaro/feishu",
+      "help": "Vilaro Feishu/Lark channel plugin (community maintained by @m1heng) (plugin: feishu)",
       "hasChildren": true
     },
     {
@@ -46129,7 +46129,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/feishu Config",
+      "label": "@vilaro/feishu Config",
       "help": "Plugin-defined config payload for feishu.",
       "hasChildren": false
     },
@@ -46143,7 +46143,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/feishu",
+      "label": "Enable @vilaro/feishu",
       "hasChildren": false
     },
     {
@@ -46184,8 +46184,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/firecrawl-plugin",
-      "help": "OpenClaw Firecrawl plugin (plugin: firecrawl)",
+      "label": "@vilaro/firecrawl-plugin",
+      "help": "Vilaro Firecrawl plugin (plugin: firecrawl)",
       "hasChildren": true
     },
     {
@@ -46198,7 +46198,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/firecrawl-plugin Config",
+      "label": "@vilaro/firecrawl-plugin Config",
       "help": "Plugin-defined config payload for firecrawl.",
       "hasChildren": false
     },
@@ -46212,7 +46212,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/firecrawl-plugin",
+      "label": "Enable @vilaro/firecrawl-plugin",
       "hasChildren": false
     },
     {
@@ -46253,8 +46253,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/github-copilot-provider",
-      "help": "OpenClaw GitHub Copilot provider plugin (plugin: github-copilot)",
+      "label": "@vilaro/github-copilot-provider",
+      "help": "Vilaro GitHub Copilot provider plugin (plugin: github-copilot)",
       "hasChildren": true
     },
     {
@@ -46267,7 +46267,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/github-copilot-provider Config",
+      "label": "@vilaro/github-copilot-provider Config",
       "help": "Plugin-defined config payload for github-copilot.",
       "hasChildren": false
     },
@@ -46281,7 +46281,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/github-copilot-provider",
+      "label": "Enable @vilaro/github-copilot-provider",
       "hasChildren": false
     },
     {
@@ -46322,8 +46322,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/google-plugin",
-      "help": "OpenClaw Google plugin (plugin: google)",
+      "label": "@vilaro/google-plugin",
+      "help": "Vilaro Google plugin (plugin: google)",
       "hasChildren": true
     },
     {
@@ -46336,7 +46336,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/google-plugin Config",
+      "label": "@vilaro/google-plugin Config",
       "help": "Plugin-defined config payload for google.",
       "hasChildren": false
     },
@@ -46350,7 +46350,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/google-plugin",
+      "label": "Enable @vilaro/google-plugin",
       "hasChildren": false
     },
     {
@@ -46391,8 +46391,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/googlechat",
-      "help": "OpenClaw Google Chat channel plugin (plugin: googlechat)",
+      "label": "@vilaro/googlechat",
+      "help": "Vilaro Google Chat channel plugin (plugin: googlechat)",
       "hasChildren": true
     },
     {
@@ -46405,7 +46405,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/googlechat Config",
+      "label": "@vilaro/googlechat Config",
       "help": "Plugin-defined config payload for googlechat.",
       "hasChildren": false
     },
@@ -46419,7 +46419,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/googlechat",
+      "label": "Enable @vilaro/googlechat",
       "hasChildren": false
     },
     {
@@ -46460,8 +46460,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/huggingface-provider",
-      "help": "OpenClaw Hugging Face provider plugin (plugin: huggingface)",
+      "label": "@vilaro/huggingface-provider",
+      "help": "Vilaro Hugging Face provider plugin (plugin: huggingface)",
       "hasChildren": true
     },
     {
@@ -46474,7 +46474,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/huggingface-provider Config",
+      "label": "@vilaro/huggingface-provider Config",
       "help": "Plugin-defined config payload for huggingface.",
       "hasChildren": false
     },
@@ -46488,7 +46488,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/huggingface-provider",
+      "label": "Enable @vilaro/huggingface-provider",
       "hasChildren": false
     },
     {
@@ -46529,8 +46529,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/imessage",
-      "help": "OpenClaw iMessage channel plugin (plugin: imessage)",
+      "label": "@vilaro/imessage",
+      "help": "Vilaro iMessage channel plugin (plugin: imessage)",
       "hasChildren": true
     },
     {
@@ -46543,7 +46543,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/imessage Config",
+      "label": "@vilaro/imessage Config",
       "help": "Plugin-defined config payload for imessage.",
       "hasChildren": false
     },
@@ -46557,7 +46557,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/imessage",
+      "label": "Enable @vilaro/imessage",
       "hasChildren": false
     },
     {
@@ -46598,8 +46598,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/irc",
-      "help": "OpenClaw IRC channel plugin (plugin: irc)",
+      "label": "@vilaro/irc",
+      "help": "Vilaro IRC channel plugin (plugin: irc)",
       "hasChildren": true
     },
     {
@@ -46612,7 +46612,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/irc Config",
+      "label": "@vilaro/irc Config",
       "help": "Plugin-defined config payload for irc.",
       "hasChildren": false
     },
@@ -46626,7 +46626,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/irc",
+      "label": "Enable @vilaro/irc",
       "hasChildren": false
     },
     {
@@ -46667,8 +46667,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/kilocode-provider",
-      "help": "OpenClaw Kilo Gateway provider plugin (plugin: kilocode)",
+      "label": "@vilaro/kilocode-provider",
+      "help": "Vilaro Kilo Gateway provider plugin (plugin: kilocode)",
       "hasChildren": true
     },
     {
@@ -46681,7 +46681,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/kilocode-provider Config",
+      "label": "@vilaro/kilocode-provider Config",
       "help": "Plugin-defined config payload for kilocode.",
       "hasChildren": false
     },
@@ -46695,7 +46695,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/kilocode-provider",
+      "label": "Enable @vilaro/kilocode-provider",
       "hasChildren": false
     },
     {
@@ -46736,8 +46736,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/kimi-coding-provider",
-      "help": "OpenClaw Kimi Coding provider plugin (plugin: kimi-coding)",
+      "label": "@vilaro/kimi-coding-provider",
+      "help": "Vilaro Kimi Coding provider plugin (plugin: kimi-coding)",
       "hasChildren": true
     },
     {
@@ -46750,7 +46750,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/kimi-coding-provider Config",
+      "label": "@vilaro/kimi-coding-provider Config",
       "help": "Plugin-defined config payload for kimi-coding.",
       "hasChildren": false
     },
@@ -46764,7 +46764,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/kimi-coding-provider",
+      "label": "Enable @vilaro/kimi-coding-provider",
       "hasChildren": false
     },
     {
@@ -46805,8 +46805,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/line",
-      "help": "OpenClaw LINE channel plugin (plugin: line)",
+      "label": "@vilaro/line",
+      "help": "Vilaro LINE channel plugin (plugin: line)",
       "hasChildren": true
     },
     {
@@ -46819,7 +46819,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/line Config",
+      "label": "@vilaro/line Config",
       "help": "Plugin-defined config payload for line.",
       "hasChildren": false
     },
@@ -46833,7 +46833,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/line",
+      "label": "Enable @vilaro/line",
       "hasChildren": false
     },
     {
@@ -47004,7 +47004,7 @@
       "hasChildren": false
     },
     {
-      "path": "plugins.entries.lobster",
+      "path": "plugins.entries.vilaro",
       "kind": "plugin",
       "type": "object",
       "required": false,
@@ -47013,12 +47013,12 @@
       "tags": [
         "advanced"
       ],
-      "label": "Lobster",
-      "help": "Typed workflow tool with resumable approvals. (plugin: lobster)",
+      "label": "Vilaro",
+      "help": "Typed workflow tool with resumable approvals. (plugin: vilaro)",
       "hasChildren": true
     },
     {
-      "path": "plugins.entries.lobster.config",
+      "path": "plugins.entries.vilaro.config",
       "kind": "plugin",
       "type": "object",
       "required": false,
@@ -47027,12 +47027,12 @@
       "tags": [
         "advanced"
       ],
-      "label": "Lobster Config",
-      "help": "Plugin-defined config payload for lobster.",
+      "label": "Vilaro Config",
+      "help": "Plugin-defined config payload for vilaro.",
       "hasChildren": false
     },
     {
-      "path": "plugins.entries.lobster.enabled",
+      "path": "plugins.entries.vilaro.enabled",
       "kind": "plugin",
       "type": "boolean",
       "required": false,
@@ -47041,11 +47041,11 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable Lobster",
+      "label": "Enable Vilaro",
       "hasChildren": false
     },
     {
-      "path": "plugins.entries.lobster.hooks",
+      "path": "plugins.entries.vilaro.hooks",
       "kind": "plugin",
       "type": "object",
       "required": false,
@@ -47059,7 +47059,7 @@
       "hasChildren": true
     },
     {
-      "path": "plugins.entries.lobster.hooks.allowPromptInjection",
+      "path": "plugins.entries.vilaro.hooks.allowPromptInjection",
       "kind": "plugin",
       "type": "boolean",
       "required": false,
@@ -47082,8 +47082,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/matrix",
-      "help": "OpenClaw Matrix channel plugin (plugin: matrix)",
+      "label": "@vilaro/matrix",
+      "help": "Vilaro Matrix channel plugin (plugin: matrix)",
       "hasChildren": true
     },
     {
@@ -47096,7 +47096,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/matrix Config",
+      "label": "@vilaro/matrix Config",
       "help": "Plugin-defined config payload for matrix.",
       "hasChildren": false
     },
@@ -47110,7 +47110,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/matrix",
+      "label": "Enable @vilaro/matrix",
       "hasChildren": false
     },
     {
@@ -47151,8 +47151,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/mattermost",
-      "help": "OpenClaw Mattermost channel plugin (plugin: mattermost)",
+      "label": "@vilaro/mattermost",
+      "help": "Vilaro Mattermost channel plugin (plugin: mattermost)",
       "hasChildren": true
     },
     {
@@ -47165,7 +47165,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/mattermost Config",
+      "label": "@vilaro/mattermost Config",
       "help": "Plugin-defined config payload for mattermost.",
       "hasChildren": false
     },
@@ -47179,7 +47179,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/mattermost",
+      "label": "Enable @vilaro/mattermost",
       "hasChildren": false
     },
     {
@@ -47220,8 +47220,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/memory-core",
-      "help": "OpenClaw core memory search plugin (plugin: memory-core)",
+      "label": "@vilaro/memory-core",
+      "help": "Vilaro core memory search plugin (plugin: memory-core)",
       "hasChildren": true
     },
     {
@@ -47234,7 +47234,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/memory-core Config",
+      "label": "@vilaro/memory-core Config",
       "help": "Plugin-defined config payload for memory-core.",
       "hasChildren": false
     },
@@ -47248,7 +47248,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/memory-core",
+      "label": "Enable @vilaro/memory-core",
       "hasChildren": false
     },
     {
@@ -47289,8 +47289,8 @@
       "tags": [
         "storage"
       ],
-      "label": "@openclaw/memory-lancedb",
-      "help": "OpenClaw LanceDB-backed long-term memory plugin with auto-recall/capture (plugin: memory-lancedb)",
+      "label": "@vilaro/memory-lancedb",
+      "help": "Vilaro LanceDB-backed long-term memory plugin with auto-recall/capture (plugin: memory-lancedb)",
       "hasChildren": true
     },
     {
@@ -47303,7 +47303,7 @@
       "tags": [
         "storage"
       ],
-      "label": "@openclaw/memory-lancedb Config",
+      "label": "@vilaro/memory-lancedb Config",
       "help": "Plugin-defined config payload for memory-lancedb.",
       "hasChildren": true
     },
@@ -47446,7 +47446,7 @@
       "tags": [
         "storage"
       ],
-      "label": "Enable @openclaw/memory-lancedb",
+      "label": "Enable @vilaro/memory-lancedb",
       "hasChildren": false
     },
     {
@@ -47487,8 +47487,8 @@
       "tags": [
         "performance"
       ],
-      "label": "@openclaw/minimax-provider",
-      "help": "OpenClaw MiniMax provider and OAuth plugin (plugin: minimax)",
+      "label": "@vilaro/minimax-provider",
+      "help": "Vilaro MiniMax provider and OAuth plugin (plugin: minimax)",
       "hasChildren": true
     },
     {
@@ -47501,7 +47501,7 @@
       "tags": [
         "performance"
       ],
-      "label": "@openclaw/minimax-provider Config",
+      "label": "@vilaro/minimax-provider Config",
       "help": "Plugin-defined config payload for minimax.",
       "hasChildren": false
     },
@@ -47515,7 +47515,7 @@
       "tags": [
         "performance"
       ],
-      "label": "Enable @openclaw/minimax-provider",
+      "label": "Enable @vilaro/minimax-provider",
       "hasChildren": false
     },
     {
@@ -47556,8 +47556,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/mistral-provider",
-      "help": "OpenClaw Mistral provider plugin (plugin: mistral)",
+      "label": "@vilaro/mistral-provider",
+      "help": "Vilaro Mistral provider plugin (plugin: mistral)",
       "hasChildren": true
     },
     {
@@ -47570,7 +47570,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/mistral-provider Config",
+      "label": "@vilaro/mistral-provider Config",
       "help": "Plugin-defined config payload for mistral.",
       "hasChildren": false
     },
@@ -47584,7 +47584,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/mistral-provider",
+      "label": "Enable @vilaro/mistral-provider",
       "hasChildren": false
     },
     {
@@ -47625,8 +47625,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/modelstudio-provider",
-      "help": "OpenClaw Model Studio provider plugin (plugin: modelstudio)",
+      "label": "@vilaro/modelstudio-provider",
+      "help": "Vilaro Model Studio provider plugin (plugin: modelstudio)",
       "hasChildren": true
     },
     {
@@ -47639,7 +47639,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/modelstudio-provider Config",
+      "label": "@vilaro/modelstudio-provider Config",
       "help": "Plugin-defined config payload for modelstudio.",
       "hasChildren": false
     },
@@ -47653,7 +47653,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/modelstudio-provider",
+      "label": "Enable @vilaro/modelstudio-provider",
       "hasChildren": false
     },
     {
@@ -47694,8 +47694,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/moonshot-provider",
-      "help": "OpenClaw Moonshot provider plugin (plugin: moonshot)",
+      "label": "@vilaro/moonshot-provider",
+      "help": "Vilaro Moonshot provider plugin (plugin: moonshot)",
       "hasChildren": true
     },
     {
@@ -47708,7 +47708,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/moonshot-provider Config",
+      "label": "@vilaro/moonshot-provider Config",
       "help": "Plugin-defined config payload for moonshot.",
       "hasChildren": false
     },
@@ -47722,7 +47722,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/moonshot-provider",
+      "label": "Enable @vilaro/moonshot-provider",
       "hasChildren": false
     },
     {
@@ -47763,8 +47763,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/msteams",
-      "help": "OpenClaw Microsoft Teams channel plugin (plugin: msteams)",
+      "label": "@vilaro/msteams",
+      "help": "Vilaro Microsoft Teams channel plugin (plugin: msteams)",
       "hasChildren": true
     },
     {
@@ -47777,7 +47777,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/msteams Config",
+      "label": "@vilaro/msteams Config",
       "help": "Plugin-defined config payload for msteams.",
       "hasChildren": false
     },
@@ -47791,7 +47791,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/msteams",
+      "label": "Enable @vilaro/msteams",
       "hasChildren": false
     },
     {
@@ -47832,8 +47832,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/nextcloud-talk",
-      "help": "OpenClaw Nextcloud Talk channel plugin (plugin: nextcloud-talk)",
+      "label": "@vilaro/nextcloud-talk",
+      "help": "Vilaro Nextcloud Talk channel plugin (plugin: nextcloud-talk)",
       "hasChildren": true
     },
     {
@@ -47846,7 +47846,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/nextcloud-talk Config",
+      "label": "@vilaro/nextcloud-talk Config",
       "help": "Plugin-defined config payload for nextcloud-talk.",
       "hasChildren": false
     },
@@ -47860,7 +47860,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/nextcloud-talk",
+      "label": "Enable @vilaro/nextcloud-talk",
       "hasChildren": false
     },
     {
@@ -47901,8 +47901,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/nostr",
-      "help": "OpenClaw Nostr channel plugin for NIP-04 encrypted DMs (plugin: nostr)",
+      "label": "@vilaro/nostr",
+      "help": "Vilaro Nostr channel plugin for NIP-04 encrypted DMs (plugin: nostr)",
       "hasChildren": true
     },
     {
@@ -47915,7 +47915,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/nostr Config",
+      "label": "@vilaro/nostr Config",
       "help": "Plugin-defined config payload for nostr.",
       "hasChildren": false
     },
@@ -47929,7 +47929,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/nostr",
+      "label": "Enable @vilaro/nostr",
       "hasChildren": false
     },
     {
@@ -47970,8 +47970,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/nvidia-provider",
-      "help": "OpenClaw NVIDIA provider plugin (plugin: nvidia)",
+      "label": "@vilaro/nvidia-provider",
+      "help": "Vilaro NVIDIA provider plugin (plugin: nvidia)",
       "hasChildren": true
     },
     {
@@ -47984,7 +47984,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/nvidia-provider Config",
+      "label": "@vilaro/nvidia-provider Config",
       "help": "Plugin-defined config payload for nvidia.",
       "hasChildren": false
     },
@@ -47998,7 +47998,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/nvidia-provider",
+      "label": "Enable @vilaro/nvidia-provider",
       "hasChildren": false
     },
     {
@@ -48039,8 +48039,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/ollama-provider",
-      "help": "OpenClaw Ollama provider plugin (plugin: ollama)",
+      "label": "@vilaro/ollama-provider",
+      "help": "Vilaro Ollama provider plugin (plugin: ollama)",
       "hasChildren": true
     },
     {
@@ -48053,7 +48053,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/ollama-provider Config",
+      "label": "@vilaro/ollama-provider Config",
       "help": "Plugin-defined config payload for ollama.",
       "hasChildren": false
     },
@@ -48067,7 +48067,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/ollama-provider",
+      "label": "Enable @vilaro/ollama-provider",
       "hasChildren": false
     },
     {
@@ -48177,8 +48177,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/openai-provider",
-      "help": "OpenClaw OpenAI provider plugins (plugin: openai)",
+      "label": "@vilaro/openai-provider",
+      "help": "Vilaro OpenAI provider plugins (plugin: openai)",
       "hasChildren": true
     },
     {
@@ -48191,7 +48191,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/openai-provider Config",
+      "label": "@vilaro/openai-provider Config",
       "help": "Plugin-defined config payload for openai.",
       "hasChildren": false
     },
@@ -48205,7 +48205,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/openai-provider",
+      "label": "Enable @vilaro/openai-provider",
       "hasChildren": false
     },
     {
@@ -48246,8 +48246,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/opencode-provider",
-      "help": "OpenClaw OpenCode Zen provider plugin (plugin: opencode)",
+      "label": "@vilaro/opencode-provider",
+      "help": "Vilaro OpenCode Zen provider plugin (plugin: opencode)",
       "hasChildren": true
     },
     {
@@ -48260,8 +48260,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/opencode-go-provider",
-      "help": "OpenClaw OpenCode Go provider plugin (plugin: opencode-go)",
+      "label": "@vilaro/opencode-go-provider",
+      "help": "Vilaro OpenCode Go provider plugin (plugin: opencode-go)",
       "hasChildren": true
     },
     {
@@ -48274,7 +48274,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/opencode-go-provider Config",
+      "label": "@vilaro/opencode-go-provider Config",
       "help": "Plugin-defined config payload for opencode-go.",
       "hasChildren": false
     },
@@ -48288,7 +48288,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/opencode-go-provider",
+      "label": "Enable @vilaro/opencode-go-provider",
       "hasChildren": false
     },
     {
@@ -48329,7 +48329,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/opencode-provider Config",
+      "label": "@vilaro/opencode-provider Config",
       "help": "Plugin-defined config payload for opencode.",
       "hasChildren": false
     },
@@ -48343,7 +48343,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/opencode-provider",
+      "label": "Enable @vilaro/opencode-provider",
       "hasChildren": false
     },
     {
@@ -48384,8 +48384,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/openrouter-provider",
-      "help": "OpenClaw OpenRouter provider plugin (plugin: openrouter)",
+      "label": "@vilaro/openrouter-provider",
+      "help": "Vilaro OpenRouter provider plugin (plugin: openrouter)",
       "hasChildren": true
     },
     {
@@ -48398,7 +48398,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/openrouter-provider Config",
+      "label": "@vilaro/openrouter-provider Config",
       "help": "Plugin-defined config payload for openrouter.",
       "hasChildren": false
     },
@@ -48412,7 +48412,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/openrouter-provider",
+      "label": "Enable @vilaro/openrouter-provider",
       "hasChildren": false
     },
     {
@@ -48510,7 +48510,7 @@
         "advanced"
       ],
       "label": "Sandbox Source",
-      "help": "OpenShell sandbox source for first-time create. Defaults to openclaw.",
+      "help": "OpenShell sandbox source for first-time create. Defaults to vilaro.",
       "hasChildren": false
     },
     {
@@ -48689,8 +48689,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/perplexity-plugin",
-      "help": "OpenClaw Perplexity plugin (plugin: perplexity)",
+      "label": "@vilaro/perplexity-plugin",
+      "help": "Vilaro Perplexity plugin (plugin: perplexity)",
       "hasChildren": true
     },
     {
@@ -48703,7 +48703,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/perplexity-plugin Config",
+      "label": "@vilaro/perplexity-plugin Config",
       "help": "Plugin-defined config payload for perplexity.",
       "hasChildren": false
     },
@@ -48717,7 +48717,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/perplexity-plugin",
+      "label": "Enable @vilaro/perplexity-plugin",
       "hasChildren": false
     },
     {
@@ -48827,8 +48827,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/qianfan-provider",
-      "help": "OpenClaw Qianfan provider plugin (plugin: qianfan)",
+      "label": "@vilaro/qianfan-provider",
+      "help": "Vilaro Qianfan provider plugin (plugin: qianfan)",
       "hasChildren": true
     },
     {
@@ -48841,7 +48841,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/qianfan-provider Config",
+      "label": "@vilaro/qianfan-provider Config",
       "help": "Plugin-defined config payload for qianfan.",
       "hasChildren": false
     },
@@ -48855,7 +48855,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/qianfan-provider",
+      "label": "Enable @vilaro/qianfan-provider",
       "hasChildren": false
     },
     {
@@ -48965,8 +48965,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/sglang-provider",
-      "help": "OpenClaw SGLang provider plugin (plugin: sglang)",
+      "label": "@vilaro/sglang-provider",
+      "help": "Vilaro SGLang provider plugin (plugin: sglang)",
       "hasChildren": true
     },
     {
@@ -48979,7 +48979,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/sglang-provider Config",
+      "label": "@vilaro/sglang-provider Config",
       "help": "Plugin-defined config payload for sglang.",
       "hasChildren": false
     },
@@ -48993,7 +48993,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/sglang-provider",
+      "label": "Enable @vilaro/sglang-provider",
       "hasChildren": false
     },
     {
@@ -49034,8 +49034,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/signal",
-      "help": "OpenClaw Signal channel plugin (plugin: signal)",
+      "label": "@vilaro/signal",
+      "help": "Vilaro Signal channel plugin (plugin: signal)",
       "hasChildren": true
     },
     {
@@ -49048,7 +49048,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/signal Config",
+      "label": "@vilaro/signal Config",
       "help": "Plugin-defined config payload for signal.",
       "hasChildren": false
     },
@@ -49062,7 +49062,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/signal",
+      "label": "Enable @vilaro/signal",
       "hasChildren": false
     },
     {
@@ -49103,8 +49103,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/slack",
-      "help": "OpenClaw Slack channel plugin (plugin: slack)",
+      "label": "@vilaro/slack",
+      "help": "Vilaro Slack channel plugin (plugin: slack)",
       "hasChildren": true
     },
     {
@@ -49117,7 +49117,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/slack Config",
+      "label": "@vilaro/slack Config",
       "help": "Plugin-defined config payload for slack.",
       "hasChildren": false
     },
@@ -49131,7 +49131,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/slack",
+      "label": "Enable @vilaro/slack",
       "hasChildren": false
     },
     {
@@ -49172,8 +49172,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/synology-chat",
-      "help": "Synology Chat channel plugin for OpenClaw (plugin: synology-chat)",
+      "label": "@vilaro/synology-chat",
+      "help": "Synology Chat channel plugin for Vilaro (plugin: synology-chat)",
       "hasChildren": true
     },
     {
@@ -49186,7 +49186,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/synology-chat Config",
+      "label": "@vilaro/synology-chat Config",
       "help": "Plugin-defined config payload for synology-chat.",
       "hasChildren": false
     },
@@ -49200,7 +49200,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/synology-chat",
+      "label": "Enable @vilaro/synology-chat",
       "hasChildren": false
     },
     {
@@ -49241,8 +49241,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/synthetic-provider",
-      "help": "OpenClaw Synthetic provider plugin (plugin: synthetic)",
+      "label": "@vilaro/synthetic-provider",
+      "help": "Vilaro Synthetic provider plugin (plugin: synthetic)",
       "hasChildren": true
     },
     {
@@ -49255,7 +49255,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/synthetic-provider Config",
+      "label": "@vilaro/synthetic-provider Config",
       "help": "Plugin-defined config payload for synthetic.",
       "hasChildren": false
     },
@@ -49269,7 +49269,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/synthetic-provider",
+      "label": "Enable @vilaro/synthetic-provider",
       "hasChildren": false
     },
     {
@@ -49379,8 +49379,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/telegram",
-      "help": "OpenClaw Telegram channel plugin (plugin: telegram)",
+      "label": "@vilaro/telegram",
+      "help": "Vilaro Telegram channel plugin (plugin: telegram)",
       "hasChildren": true
     },
     {
@@ -49393,7 +49393,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/telegram Config",
+      "label": "@vilaro/telegram Config",
       "help": "Plugin-defined config payload for telegram.",
       "hasChildren": false
     },
@@ -49407,7 +49407,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/telegram",
+      "label": "Enable @vilaro/telegram",
       "hasChildren": false
     },
     {
@@ -49555,8 +49555,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/tlon",
-      "help": "OpenClaw Tlon/Urbit channel plugin (plugin: tlon)",
+      "label": "@vilaro/tlon",
+      "help": "Vilaro Tlon/Urbit channel plugin (plugin: tlon)",
       "hasChildren": true
     },
     {
@@ -49569,7 +49569,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/tlon Config",
+      "label": "@vilaro/tlon Config",
       "help": "Plugin-defined config payload for tlon.",
       "hasChildren": false
     },
@@ -49583,7 +49583,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/tlon",
+      "label": "Enable @vilaro/tlon",
       "hasChildren": false
     },
     {
@@ -49624,8 +49624,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/together-provider",
-      "help": "OpenClaw Together provider plugin (plugin: together)",
+      "label": "@vilaro/together-provider",
+      "help": "Vilaro Together provider plugin (plugin: together)",
       "hasChildren": true
     },
     {
@@ -49638,7 +49638,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/together-provider Config",
+      "label": "@vilaro/together-provider Config",
       "help": "Plugin-defined config payload for together.",
       "hasChildren": false
     },
@@ -49652,7 +49652,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/together-provider",
+      "label": "Enable @vilaro/together-provider",
       "hasChildren": false
     },
     {
@@ -49693,8 +49693,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/twitch",
-      "help": "OpenClaw Twitch channel plugin (plugin: twitch)",
+      "label": "@vilaro/twitch",
+      "help": "Vilaro Twitch channel plugin (plugin: twitch)",
       "hasChildren": true
     },
     {
@@ -49707,7 +49707,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/twitch Config",
+      "label": "@vilaro/twitch Config",
       "help": "Plugin-defined config payload for twitch.",
       "hasChildren": false
     },
@@ -49721,7 +49721,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/twitch",
+      "label": "Enable @vilaro/twitch",
       "hasChildren": false
     },
     {
@@ -49762,8 +49762,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/venice-provider",
-      "help": "OpenClaw Venice provider plugin (plugin: venice)",
+      "label": "@vilaro/venice-provider",
+      "help": "Vilaro Venice provider plugin (plugin: venice)",
       "hasChildren": true
     },
     {
@@ -49776,7 +49776,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/venice-provider Config",
+      "label": "@vilaro/venice-provider Config",
       "help": "Plugin-defined config payload for venice.",
       "hasChildren": false
     },
@@ -49790,7 +49790,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/venice-provider",
+      "label": "Enable @vilaro/venice-provider",
       "hasChildren": false
     },
     {
@@ -49831,8 +49831,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/vercel-ai-gateway-provider",
-      "help": "OpenClaw Vercel AI Gateway provider plugin (plugin: vercel-ai-gateway)",
+      "label": "@vilaro/vercel-ai-gateway-provider",
+      "help": "Vilaro Vercel AI Gateway provider plugin (plugin: vercel-ai-gateway)",
       "hasChildren": true
     },
     {
@@ -49845,7 +49845,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/vercel-ai-gateway-provider Config",
+      "label": "@vilaro/vercel-ai-gateway-provider Config",
       "help": "Plugin-defined config payload for vercel-ai-gateway.",
       "hasChildren": false
     },
@@ -49859,7 +49859,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/vercel-ai-gateway-provider",
+      "label": "Enable @vilaro/vercel-ai-gateway-provider",
       "hasChildren": false
     },
     {
@@ -49900,8 +49900,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/vllm-provider",
-      "help": "OpenClaw vLLM provider plugin (plugin: vllm)",
+      "label": "@vilaro/vllm-provider",
+      "help": "Vilaro vLLM provider plugin (plugin: vllm)",
       "hasChildren": true
     },
     {
@@ -49914,7 +49914,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/vllm-provider Config",
+      "label": "@vilaro/vllm-provider Config",
       "help": "Plugin-defined config payload for vllm.",
       "hasChildren": false
     },
@@ -49928,7 +49928,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/vllm-provider",
+      "label": "Enable @vilaro/vllm-provider",
       "hasChildren": false
     },
     {
@@ -49969,8 +49969,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/voice-call",
-      "help": "OpenClaw voice-call plugin (plugin: voice-call)",
+      "label": "@vilaro/voice-call",
+      "help": "Vilaro voice-call plugin (plugin: voice-call)",
       "hasChildren": true
     },
     {
@@ -49983,7 +49983,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/voice-call Config",
+      "label": "@vilaro/voice-call Config",
       "help": "Plugin-defined config payload for voice-call.",
       "hasChildren": true
     },
@@ -51358,7 +51358,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/voice-call",
+      "label": "Enable @vilaro/voice-call",
       "hasChildren": false
     },
     {
@@ -51399,8 +51399,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/volcengine-provider",
-      "help": "OpenClaw Volcengine provider plugin (plugin: volcengine)",
+      "label": "@vilaro/volcengine-provider",
+      "help": "Vilaro Volcengine provider plugin (plugin: volcengine)",
       "hasChildren": true
     },
     {
@@ -51413,7 +51413,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/volcengine-provider Config",
+      "label": "@vilaro/volcengine-provider Config",
       "help": "Plugin-defined config payload for volcengine.",
       "hasChildren": false
     },
@@ -51427,7 +51427,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/volcengine-provider",
+      "label": "Enable @vilaro/volcengine-provider",
       "hasChildren": false
     },
     {
@@ -51468,8 +51468,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/whatsapp",
-      "help": "OpenClaw WhatsApp channel plugin (plugin: whatsapp)",
+      "label": "@vilaro/whatsapp",
+      "help": "Vilaro WhatsApp channel plugin (plugin: whatsapp)",
       "hasChildren": true
     },
     {
@@ -51482,7 +51482,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/whatsapp Config",
+      "label": "@vilaro/whatsapp Config",
       "help": "Plugin-defined config payload for whatsapp.",
       "hasChildren": false
     },
@@ -51496,7 +51496,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/whatsapp",
+      "label": "Enable @vilaro/whatsapp",
       "hasChildren": false
     },
     {
@@ -51537,8 +51537,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/xai-plugin",
-      "help": "OpenClaw xAI plugin (plugin: xai)",
+      "label": "@vilaro/xai-plugin",
+      "help": "Vilaro xAI plugin (plugin: xai)",
       "hasChildren": true
     },
     {
@@ -51551,7 +51551,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/xai-plugin Config",
+      "label": "@vilaro/xai-plugin Config",
       "help": "Plugin-defined config payload for xai.",
       "hasChildren": false
     },
@@ -51565,7 +51565,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/xai-plugin",
+      "label": "Enable @vilaro/xai-plugin",
       "hasChildren": false
     },
     {
@@ -51606,8 +51606,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/xiaomi-provider",
-      "help": "OpenClaw Xiaomi provider plugin (plugin: xiaomi)",
+      "label": "@vilaro/xiaomi-provider",
+      "help": "Vilaro Xiaomi provider plugin (plugin: xiaomi)",
       "hasChildren": true
     },
     {
@@ -51620,7 +51620,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/xiaomi-provider Config",
+      "label": "@vilaro/xiaomi-provider Config",
       "help": "Plugin-defined config payload for xiaomi.",
       "hasChildren": false
     },
@@ -51634,7 +51634,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/xiaomi-provider",
+      "label": "Enable @vilaro/xiaomi-provider",
       "hasChildren": false
     },
     {
@@ -51675,8 +51675,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/zai-provider",
-      "help": "OpenClaw Z.AI provider plugin (plugin: zai)",
+      "label": "@vilaro/zai-provider",
+      "help": "Vilaro Z.AI provider plugin (plugin: zai)",
       "hasChildren": true
     },
     {
@@ -51689,7 +51689,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/zai-provider Config",
+      "label": "@vilaro/zai-provider Config",
       "help": "Plugin-defined config payload for zai.",
       "hasChildren": false
     },
@@ -51703,7 +51703,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/zai-provider",
+      "label": "Enable @vilaro/zai-provider",
       "hasChildren": false
     },
     {
@@ -51744,8 +51744,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/zalo",
-      "help": "OpenClaw Zalo channel plugin (plugin: zalo)",
+      "label": "@vilaro/zalo",
+      "help": "Vilaro Zalo channel plugin (plugin: zalo)",
       "hasChildren": true
     },
     {
@@ -51758,7 +51758,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/zalo Config",
+      "label": "@vilaro/zalo Config",
       "help": "Plugin-defined config payload for zalo.",
       "hasChildren": false
     },
@@ -51772,7 +51772,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/zalo",
+      "label": "Enable @vilaro/zalo",
       "hasChildren": false
     },
     {
@@ -51813,8 +51813,8 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/zalouser",
-      "help": "OpenClaw Zalo Personal Account plugin via native zca-js integration (plugin: zalouser)",
+      "label": "@vilaro/zalouser",
+      "help": "Vilaro Zalo Personal Account plugin via native zca-js integration (plugin: zalouser)",
       "hasChildren": true
     },
     {
@@ -51827,7 +51827,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "@openclaw/zalouser Config",
+      "label": "@vilaro/zalouser Config",
       "help": "Plugin-defined config payload for zalouser.",
       "hasChildren": false
     },
@@ -51841,7 +51841,7 @@
       "tags": [
         "advanced"
       ],
-      "label": "Enable @openclaw/zalouser",
+      "label": "Enable @vilaro/zalouser",
       "hasChildren": false
     },
     {
@@ -51883,7 +51883,7 @@
         "advanced"
       ],
       "label": "Plugin Install Records",
-      "help": "CLI-managed install metadata (used by `openclaw plugins update` to locate install sources).",
+      "help": "CLI-managed install metadata (used by `vilaro plugins update` to locate install sources).",
       "hasChildren": true
     },
     {
@@ -51921,7 +51921,7 @@
         "storage"
       ],
       "label": "Plugin Install Path",
-      "help": "Resolved install directory (usually ~/.openclaw/extensions/<id>).",
+      "help": "Resolved install directory (usually ~/.vilaro/extensions/<id>).",
       "hasChildren": false
     },
     {
@@ -52745,7 +52745,7 @@
         "storage"
       ],
       "label": "Session Parent Fork Max Tokens",
-      "help": "Maximum parent-session token count allowed for thread/session inheritance forking. If the parent exceeds this, OpenClaw starts a fresh thread session instead of forking; set 0 to disable this protection.",
+      "help": "Maximum parent-session token count allowed for thread/session inheritance forking. If the parent exceeds this, Vilaro starts a fresh thread session instead of forking; set 0 to disable this protection.",
       "hasChildren": false
     },
     {
@@ -53923,7 +53923,7 @@
         "media"
       ],
       "label": "Talk Voice Aliases",
-      "help": "Use this legacy ElevenLabs voice alias map (for example {\"Clawd\":\"EXAVITQu4vr4xnSDxMaL\"}) only during migration. Prefer talk.providers.elevenlabs.voiceAliases.",
+      "help": "Use this legacy ElevenLabs voice alias map (for example {\"Vilaro\":\"EXAVITQu4vr4xnSDxMaL\"}) only during migration. Prefer talk.providers.elevenlabs.voiceAliases.",
       "hasChildren": true
     },
     {
@@ -58641,7 +58641,7 @@
         "advanced"
       ],
       "label": "Updates",
-      "help": "Update-channel and startup-check behavior for keeping OpenClaw runtime versions current. Use conservative channels in production and more experimental channels only in controlled environments.",
+      "help": "Update-channel and startup-check behavior for keeping Vilaro runtime versions current. Use conservative channels in production and more experimental channels only in controlled environments.",
       "hasChildren": true
     },
     {
@@ -58945,7 +58945,7 @@
         "advanced"
       ],
       "label": "Wizard Last Run Version",
-      "help": "OpenClaw version recorded at the time of the most recent wizard run on this config. Use this when diagnosing behavior differences across version-to-version setup changes.",
+      "help": "Vilaro version recorded at the time of the most recent wizard run on this config. Use this when diagnosing behavior differences across version-to-version setup changes.",
       "hasChildren": false
     }
   ]

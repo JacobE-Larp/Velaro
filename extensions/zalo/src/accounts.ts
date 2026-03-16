@@ -1,5 +1,5 @@
-import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "openclaw/plugin-sdk/account-id";
-import { createAccountListHelpers, type OpenClawConfig } from "openclaw/plugin-sdk/zalo";
+import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "vilaro/plugin-sdk/account-id";
+import { createAccountListHelpers, type VilaroConfig } from "vilaro/plugin-sdk/zalo";
 import { resolveZaloToken } from "./token.js";
 import type { ResolvedZaloAccount, ZaloAccountConfig, ZaloConfig } from "./types.js";
 
@@ -9,10 +9,7 @@ const { listAccountIds: listZaloAccountIds, resolveDefaultAccountId: resolveDefa
   createAccountListHelpers("zalo");
 export { listZaloAccountIds, resolveDefaultZaloAccountId };
 
-function resolveAccountConfig(
-  cfg: OpenClawConfig,
-  accountId: string,
-): ZaloAccountConfig | undefined {
+function resolveAccountConfig(cfg: VilaroConfig, accountId: string): ZaloAccountConfig | undefined {
   const accounts = (cfg.channels?.zalo as ZaloConfig | undefined)?.accounts;
   if (!accounts || typeof accounts !== "object") {
     return undefined;
@@ -20,7 +17,7 @@ function resolveAccountConfig(
   return accounts[accountId] as ZaloAccountConfig | undefined;
 }
 
-function mergeZaloAccountConfig(cfg: OpenClawConfig, accountId: string): ZaloAccountConfig {
+function mergeZaloAccountConfig(cfg: VilaroConfig, accountId: string): ZaloAccountConfig {
   const raw = (cfg.channels?.zalo ?? {}) as ZaloConfig;
   const { accounts: _ignored, defaultAccount: _ignored2, ...base } = raw;
   const account = resolveAccountConfig(cfg, accountId) ?? {};
@@ -28,7 +25,7 @@ function mergeZaloAccountConfig(cfg: OpenClawConfig, accountId: string): ZaloAcc
 }
 
 export function resolveZaloAccount(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   accountId?: string | null;
   allowUnresolvedSecretRef?: boolean;
 }): ResolvedZaloAccount {
@@ -53,7 +50,7 @@ export function resolveZaloAccount(params: {
   };
 }
 
-export function listEnabledZaloAccounts(cfg: OpenClawConfig): ResolvedZaloAccount[] {
+export function listEnabledZaloAccounts(cfg: VilaroConfig): ResolvedZaloAccount[] {
   return listZaloAccountIds(cfg)
     .map((accountId) => resolveZaloAccount({ cfg, accountId }))
     .filter((account) => account.enabled);

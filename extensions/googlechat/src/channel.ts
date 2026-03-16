@@ -1,11 +1,11 @@
-import { createScopedChannelConfigBase } from "openclaw/plugin-sdk/compat";
+import { createScopedChannelConfigBase } from "vilaro/plugin-sdk/compat";
 import {
   buildOpenGroupPolicyConfigureRouteAllowlistWarning,
   collectAllowlistProviderGroupPolicyWarnings,
   createScopedAccountConfigAccessors,
   createScopedDmSecurityResolver,
   formatNormalizedAllowFromEntries,
-} from "openclaw/plugin-sdk/compat";
+} from "vilaro/plugin-sdk/compat";
 import {
   buildComputedAccountStatusSnapshot,
   buildChannelConfigSchema,
@@ -22,9 +22,9 @@ import {
   type ChannelMessageActionAdapter,
   type ChannelPlugin,
   type ChannelStatusIssue,
-  type OpenClawConfig,
-} from "openclaw/plugin-sdk/googlechat";
-import { GoogleChatConfigSchema } from "openclaw/plugin-sdk/googlechat";
+  type VilaroConfig,
+} from "vilaro/plugin-sdk/googlechat";
+import { GoogleChatConfigSchema } from "vilaro/plugin-sdk/googlechat";
 import { buildPassiveProbedChannelStatusSummary } from "../../shared/channel-status-summary.js";
 import {
   listGoogleChatAccountIds,

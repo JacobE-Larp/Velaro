@@ -14,7 +14,7 @@ import type {
   ChannelSetupWizard,
   ChannelSetupWizardAllowFromEntry,
 } from "../../../src/channels/plugins/setup-wizard.js";
-import type { OpenClawConfig } from "../../../src/config/config.js";
+import type { VilaroConfig } from "../../../src/config/config.js";
 import { hasConfiguredSecretInput } from "../../../src/config/types.secrets.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../../../src/routing/session-key.js";
 import { formatDocsLink } from "../../../src/terminal/links.js";
@@ -33,11 +33,11 @@ import { slackSetupAdapter } from "./setup-core.js";
 const channel = "slack" as const;
 
 function buildSlackManifest(botName: string) {
-  const safeName = botName.trim() || "OpenClaw";
+  const safeName = botName.trim() || "Vilaro";
   const manifest = {
     display_information: {
       name: safeName,
-      description: `${safeName} connector for OpenClaw`,
+      description: `${safeName} connector for Vilaro`,
     },
     features: {
       bot_user: {
@@ -50,8 +50,8 @@ function buildSlackManifest(botName: string) {
       },
       slash_commands: [
         {
-          command: "/openclaw",
-          description: "Send a message to OpenClaw",
+          command: "/vilaro",
+          description: "Send a message to Vilaro",
           should_escape: false,
         },
       ],
@@ -101,7 +101,7 @@ function buildSlackManifest(botName: string) {
   return JSON.stringify(manifest, null, 2);
 }
 
-function buildSlackSetupLines(botName = "OpenClaw"): string[] {
+function buildSlackSetupLines(botName = "Vilaro"): string[] {
   return [
     "1) Slack API -> Create App -> From scratch or From manifest (with the JSON below)",
     "2) Add Socket Mode + enable it to get the app-level token (xapp-...)",
@@ -117,10 +117,10 @@ function buildSlackSetupLines(botName = "OpenClaw"): string[] {
 }
 
 function setSlackChannelAllowlist(
-  cfg: OpenClawConfig,
+  cfg: VilaroConfig,
   accountId: string,
   channelKeys: string[],
-): OpenClawConfig {
+): VilaroConfig {
   const channels = Object.fromEntries(channelKeys.map((key) => [key, { allow: true }]));
   return patchChannelConfigForAccount({
     cfg,
@@ -130,7 +130,7 @@ function setSlackChannelAllowlist(
   });
 }
 
-function enableSlackAccount(cfg: OpenClawConfig, accountId: string): OpenClawConfig {
+function enableSlackAccount(cfg: VilaroConfig, accountId: string): VilaroConfig {
   return patchChannelConfigForAccount({
     cfg,
     channel,
@@ -162,10 +162,10 @@ async function resolveSlackAllowFromEntries(params: {
 }
 
 async function promptSlackAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   prompter: WizardPrompter;
   accountId?: string;
-}): Promise<OpenClawConfig> {
+}): Promise<VilaroConfig> {
   const accountId = resolveSetupAccountId({
     accountId: params.accountId,
     defaultAccountId: resolveDefaultSlackAccountId(params.cfg),

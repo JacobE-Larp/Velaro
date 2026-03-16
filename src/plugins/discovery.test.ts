@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { clearPluginDiscoveryCache, discoverOpenClawPlugins } from "./discovery.js";
+import { clearPluginDiscoveryCache, discoverVilaroPlugins } from "./discovery.js";
 import {
   cleanupTrackedTempDirs,
   makeTrackedTempDir,
@@ -11,7 +11,7 @@ import {
 const tempDirs: string[] = [];
 
 function makeTempDir() {
-  return makeTrackedTempDir("openclaw-plugins", tempDirs);
+  return makeTrackedTempDir("vilaro-plugins", tempDirs);
 }
 
 const mkdirSafe = mkdirSafeDir;
@@ -35,18 +35,17 @@ function hasDiagnosticSourceSuffix(
 
 function buildDiscoveryEnv(stateDir: string): NodeJS.ProcessEnv {
   return {
-    OPENCLAW_STATE_DIR: stateDir,
-    CLAWDBOT_STATE_DIR: undefined,
-    OPENCLAW_HOME: undefined,
-    OPENCLAW_BUNDLED_PLUGINS_DIR: "/nonexistent/bundled/plugins",
+    VILARO_STATE_DIR: stateDir,
+    VILARO_HOME: undefined,
+    VILARO_BUNDLED_PLUGINS_DIR: "/nonexistent/bundled/plugins",
   };
 }
 
 async function discoverWithStateDir(
   stateDir: string,
-  params: Parameters<typeof discoverOpenClawPlugins>[0],
+  params: Parameters<typeof discoverVilaroPlugins>[0],
 ) {
-  return discoverOpenClawPlugins({ ...params, env: buildDiscoveryEnv(stateDir) });
+  return discoverVilaroPlugins({ ...params, env: buildDiscoveryEnv(stateDir) });
 }
 
 function writePluginPackageManifest(params: {
@@ -58,7 +57,7 @@ function writePluginPackageManifest(params: {
     path.join(params.packageDir, "package.json"),
     JSON.stringify({
       name: params.packageName,
-      openclaw: { extensions: params.extensions },
+      vilaro: { extensions: params.extensions },
     }),
     "utf-8",
   );
@@ -75,7 +74,7 @@ afterEach(() => {
   cleanupTrackedTempDirs(tempDirs);
 });
 
-describe("discoverOpenClawPlugins", () => {
+describe("discoverVilaroPlugins", () => {
   it("discovers global and workspace extensions", async () => {
     const stateDir = makeTempDir();
     const workspaceDir = path.join(stateDir, "workspace");
@@ -84,7 +83,7 @@ describe("discoverOpenClawPlugins", () => {
     mkdirSafe(globalExt);
     fs.writeFileSync(path.join(globalExt, "alpha.ts"), "export default function () {}", "utf-8");
 
-    const workspaceExt = path.join(workspaceDir, ".openclaw", "extensions");
+    const workspaceExt = path.join(workspaceDir, ".vilaro", "extensions");
     mkdirSafe(workspaceExt);
     fs.writeFileSync(path.join(workspaceExt, "beta.ts"), "export default function () {}", "utf-8");
 
@@ -99,11 +98,11 @@ describe("discoverOpenClawPlugins", () => {
     const stateDir = makeTempDir();
     const homeDir = makeTempDir();
     const workspaceRoot = path.join(homeDir, "workspace");
-    const workspaceExt = path.join(workspaceRoot, ".openclaw", "extensions");
+    const workspaceExt = path.join(workspaceRoot, ".vilaro", "extensions");
     mkdirSafe(workspaceExt);
     fs.writeFileSync(path.join(workspaceExt, "tilde-workspace.ts"), "export default {}", "utf-8");
 
-    const result = discoverOpenClawPlugins({
+    const result = discoverVilaroPlugins({
       workspaceDir: "~/workspace",
       env: {
         ...buildDiscoveryEnv(stateDir),
@@ -181,7 +180,7 @@ describe("discoverOpenClawPlugins", () => {
 
     writePluginPackageManifest({
       packageDir: globalExt,
-      packageName: "@openclaw/voice-call",
+      packageName: "@vilaro/voice-call",
       extensions: ["./src/index.ts"],
     });
     fs.writeFileSync(
@@ -203,7 +202,7 @@ describe("discoverOpenClawPlugins", () => {
 
     writePluginPackageManifest({
       packageDir: globalExt,
-      packageName: "@openclaw/ollama-provider",
+      packageName: "@vilaro/ollama-provider",
       extensions: ["./src/index.ts"],
     });
     fs.writeFileSync(
@@ -226,7 +225,7 @@ describe("discoverOpenClawPlugins", () => {
 
     writePluginPackageManifest({
       packageDir: packDir,
-      packageName: "@openclaw/demo-plugin-dir",
+      packageName: "@vilaro/demo-plugin-dir",
       extensions: ["./index.js"],
     });
     fs.writeFileSync(path.join(packDir, "index.js"), "module.exports = {}", "utf-8");
@@ -314,7 +313,7 @@ describe("discoverOpenClawPlugins", () => {
     );
 
     expect(legacy).toBeDefined();
-    expect(legacy?.format).toBe("openclaw");
+    expect(legacy?.format).toBe("vilaro");
     expect(hasDiagnosticSourceSuffix(result.diagnostics, ".claude-plugin/plugin.json")).toBe(true);
   });
 
@@ -333,7 +332,7 @@ describe("discoverOpenClawPlugins", () => {
     );
 
     expect(legacy).toBeDefined();
-    expect(legacy?.format).toBe("openclaw");
+    expect(legacy?.format).toBe("vilaro");
     expect(hasDiagnosticSourceSuffix(result.diagnostics, ".codex-plugin/plugin.json")).toBe(true);
   });
 
@@ -345,7 +344,7 @@ describe("discoverOpenClawPlugins", () => {
 
     writePluginPackageManifest({
       packageDir: globalExt,
-      packageName: "@openclaw/escape-pack",
+      packageName: "@vilaro/escape-pack",
       extensions: ["../../outside.js"],
     });
     fs.writeFileSync(outside, "export default function () {}", "utf-8");
@@ -372,7 +371,7 @@ describe("discoverOpenClawPlugins", () => {
 
     writePluginPackageManifest({
       packageDir: globalExt,
-      packageName: "@openclaw/pack",
+      packageName: "@vilaro/pack",
       extensions: ["./linked/escape.ts"],
     });
 
@@ -405,7 +404,7 @@ describe("discoverOpenClawPlugins", () => {
 
     writePluginPackageManifest({
       packageDir: globalExt,
-      packageName: "@openclaw/pack",
+      packageName: "@vilaro/pack",
       extensions: ["./escape.ts"],
     });
 
@@ -430,8 +429,8 @@ describe("discoverOpenClawPlugins", () => {
     fs.writeFileSync(
       outsideManifest,
       JSON.stringify({
-        name: "@openclaw/pack",
-        openclaw: { extensions: ["./entry.ts"] },
+        name: "@vilaro/pack",
+        vilaro: { extensions: ["./entry.ts"] },
       }),
       "utf-8",
     );
@@ -475,12 +474,11 @@ describe("discoverOpenClawPlugins", () => {
       fs.writeFileSync(path.join(packDir, "index.ts"), "export default function () {}", "utf-8");
       fs.chmodSync(packDir, 0o777);
 
-      const result = discoverOpenClawPlugins({
+      const result = discoverVilaroPlugins({
         env: {
           ...process.env,
-          OPENCLAW_STATE_DIR: stateDir,
-          CLAWDBOT_STATE_DIR: undefined,
-          OPENCLAW_BUNDLED_PLUGINS_DIR: bundledDir,
+          VILARO_STATE_DIR: stateDir,
+          VILARO_BUNDLED_PLUGINS_DIR: bundledDir,
         },
       });
 
@@ -523,30 +521,30 @@ describe("discoverOpenClawPlugins", () => {
     const pluginPath = path.join(globalExt, "cached.ts");
     fs.writeFileSync(pluginPath, "export default function () {}", "utf-8");
 
-    const first = discoverOpenClawPlugins({
+    const first = discoverVilaroPlugins({
       env: {
         ...buildDiscoveryEnv(stateDir),
-        OPENCLAW_PLUGIN_DISCOVERY_CACHE_MS: "5000",
+        VILARO_PLUGIN_DISCOVERY_CACHE_MS: "5000",
       },
     });
     expect(first.candidates.some((candidate) => candidate.idHint === "cached")).toBe(true);
 
     fs.rmSync(pluginPath, { force: true });
 
-    const second = discoverOpenClawPlugins({
+    const second = discoverVilaroPlugins({
       env: {
         ...buildDiscoveryEnv(stateDir),
-        OPENCLAW_PLUGIN_DISCOVERY_CACHE_MS: "5000",
+        VILARO_PLUGIN_DISCOVERY_CACHE_MS: "5000",
       },
     });
     expect(second.candidates.some((candidate) => candidate.idHint === "cached")).toBe(true);
 
     clearPluginDiscoveryCache();
 
-    const third = discoverOpenClawPlugins({
+    const third = discoverVilaroPlugins({
       env: {
         ...buildDiscoveryEnv(stateDir),
-        OPENCLAW_PLUGIN_DISCOVERY_CACHE_MS: "5000",
+        VILARO_PLUGIN_DISCOVERY_CACHE_MS: "5000",
       },
     });
     expect(third.candidates.some((candidate) => candidate.idHint === "cached")).toBe(false);
@@ -562,16 +560,16 @@ describe("discoverOpenClawPlugins", () => {
     fs.writeFileSync(path.join(globalExtA, "alpha.ts"), "export default function () {}", "utf-8");
     fs.writeFileSync(path.join(globalExtB, "beta.ts"), "export default function () {}", "utf-8");
 
-    const first = discoverOpenClawPlugins({
+    const first = discoverVilaroPlugins({
       env: {
         ...buildDiscoveryEnv(stateDirA),
-        OPENCLAW_PLUGIN_DISCOVERY_CACHE_MS: "5000",
+        VILARO_PLUGIN_DISCOVERY_CACHE_MS: "5000",
       },
     });
-    const second = discoverOpenClawPlugins({
+    const second = discoverVilaroPlugins({
       env: {
         ...buildDiscoveryEnv(stateDirB),
-        OPENCLAW_PLUGIN_DISCOVERY_CACHE_MS: "5000",
+        VILARO_PLUGIN_DISCOVERY_CACHE_MS: "5000",
       },
     });
 
@@ -592,20 +590,20 @@ describe("discoverOpenClawPlugins", () => {
     fs.writeFileSync(pluginA, "export default {}", "utf-8");
     fs.writeFileSync(pluginB, "export default {}", "utf-8");
 
-    const first = discoverOpenClawPlugins({
+    const first = discoverVilaroPlugins({
       extraPaths: ["~/plugins/demo.ts"],
       env: {
         ...buildDiscoveryEnv(stateDir),
         HOME: homeA,
-        OPENCLAW_PLUGIN_DISCOVERY_CACHE_MS: "5000",
+        VILARO_PLUGIN_DISCOVERY_CACHE_MS: "5000",
       },
     });
-    const second = discoverOpenClawPlugins({
+    const second = discoverVilaroPlugins({
       extraPaths: ["~/plugins/demo.ts"],
       env: {
         ...buildDiscoveryEnv(stateDir),
         HOME: homeB,
-        OPENCLAW_PLUGIN_DISCOVERY_CACHE_MS: "5000",
+        VILARO_PLUGIN_DISCOVERY_CACHE_MS: "5000",
       },
     });
 
@@ -625,14 +623,14 @@ describe("discoverOpenClawPlugins", () => {
 
     const env = {
       ...buildDiscoveryEnv(stateDir),
-      OPENCLAW_PLUGIN_DISCOVERY_CACHE_MS: "5000",
+      VILARO_PLUGIN_DISCOVERY_CACHE_MS: "5000",
     };
 
-    const first = discoverOpenClawPlugins({
+    const first = discoverVilaroPlugins({
       extraPaths: [pluginA, pluginB],
       env,
     });
-    const second = discoverOpenClawPlugins({
+    const second = discoverVilaroPlugins({
       extraPaths: [pluginB, pluginA],
       env,
     });

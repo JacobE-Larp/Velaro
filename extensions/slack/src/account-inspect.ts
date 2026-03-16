@@ -1,9 +1,9 @@
 import {
   DEFAULT_ACCOUNT_ID,
   normalizeAccountId,
-  type OpenClawConfig,
+  type VilaroConfig,
   type SlackAccountConfig,
-} from "openclaw/plugin-sdk/slack";
+} from "vilaro/plugin-sdk/slack";
 import {
   hasConfiguredSecretInput,
   normalizeSecretInputString,
@@ -64,7 +64,7 @@ function inspectSlackToken(value: unknown): {
 }
 
 export function inspectSlackAccount(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   accountId?: string | null;
   envBotToken?: string | null;
   envAppToken?: string | null;

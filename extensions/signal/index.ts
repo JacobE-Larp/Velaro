@@ -1,5 +1,5 @@
-import type { OpenClawPluginApi } from "openclaw/plugin-sdk";
-import { emptyPluginConfigSchema } from "openclaw/plugin-sdk";
+import type { VilaroPluginApi } from "vilaro/plugin-sdk";
+import { emptyPluginConfigSchema } from "vilaro/plugin-sdk";
 import { signalPlugin } from "./src/channel.js";
 import { setSignalRuntime } from "./src/runtime.js";
 
@@ -8,7 +8,7 @@ const plugin = {
   name: "Signal",
   description: "Signal channel plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     setSignalRuntime(api.runtime);
     api.registerChannel({ plugin: signalPlugin });
   },

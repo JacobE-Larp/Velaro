@@ -271,15 +271,15 @@ describe("buildServiceEnvironment", () => {
     } else {
       expect(env.PATH).toContain("/usr/bin");
     }
-    expect(env.OPENCLAW_GATEWAY_PORT).toBe("18789");
-    expect(env.OPENCLAW_GATEWAY_TOKEN).toBeUndefined();
-    expect(env.OPENCLAW_SERVICE_MARKER).toBe("openclaw");
-    expect(env.OPENCLAW_SERVICE_KIND).toBe("gateway");
-    expect(typeof env.OPENCLAW_SERVICE_VERSION).toBe("string");
-    expect(env.OPENCLAW_SYSTEMD_UNIT).toBe("openclaw-gateway.service");
-    expect(env.OPENCLAW_WINDOWS_TASK_NAME).toBe("OpenClaw Gateway");
+    expect(env.VILARO_GATEWAY_PORT).toBe("18789");
+    expect(env.VILARO_GATEWAY_TOKEN).toBeUndefined();
+    expect(env.VILARO_SERVICE_MARKER).toBe("vilaro");
+    expect(env.VILARO_SERVICE_KIND).toBe("gateway");
+    expect(typeof env.VILARO_SERVICE_VERSION).toBe("string");
+    expect(env.VILARO_SYSTEMD_UNIT).toBe("vilaro-gateway.service");
+    expect(env.VILARO_WINDOWS_TASK_NAME).toBe("Vilaro Gateway");
     if (process.platform === "darwin") {
-      expect(env.OPENCLAW_LAUNCHD_LABEL).toBe("ai.openclaw.gateway");
+      expect(env.VILARO_LAUNCHD_LABEL).toBe("ai.vilaro.gateway");
     }
   });
 
@@ -301,13 +301,13 @@ describe("buildServiceEnvironment", () => {
 
   it("uses profile-specific unit and label", () => {
     const env = buildServiceEnvironment({
-      env: { HOME: "/home/user", OPENCLAW_PROFILE: "work" },
+      env: { HOME: "/home/user", VILARO_PROFILE: "work" },
       port: 18789,
     });
-    expect(env.OPENCLAW_SYSTEMD_UNIT).toBe("openclaw-gateway-work.service");
-    expect(env.OPENCLAW_WINDOWS_TASK_NAME).toBe("OpenClaw Gateway (work)");
+    expect(env.VILARO_SYSTEMD_UNIT).toBe("vilaro-gateway-work.service");
+    expect(env.VILARO_WINDOWS_TASK_NAME).toBe("Vilaro Gateway (work)");
     if (process.platform === "darwin") {
-      expect(env.OPENCLAW_LAUNCHD_LABEL).toBe("ai.openclaw.work");
+      expect(env.VILARO_LAUNCHD_LABEL).toBe("ai.vilaro.work");
     }
   });
 
@@ -342,7 +342,7 @@ describe("buildServiceEnvironment", () => {
     });
 
     expect(env).not.toHaveProperty("PATH");
-    expect(env.OPENCLAW_WINDOWS_TASK_NAME).toBe("OpenClaw Gateway");
+    expect(env.VILARO_WINDOWS_TASK_NAME).toBe("Vilaro Gateway");
   });
 });
 
@@ -354,40 +354,38 @@ describe("buildNodeServiceEnvironment", () => {
     expect(env.HOME).toBe("/home/user");
   });
 
-  it("passes through OPENCLAW_GATEWAY_TOKEN for node services", () => {
+  it("passes through VILARO_GATEWAY_TOKEN for node services", () => {
     const env = buildNodeServiceEnvironment({
-      env: { HOME: "/home/user", OPENCLAW_GATEWAY_TOKEN: " node-token " },
+      env: { HOME: "/home/user", VILARO_GATEWAY_TOKEN: " node-token " },
     });
-    expect(env.OPENCLAW_GATEWAY_TOKEN).toBe("node-token");
+    expect(env.VILARO_GATEWAY_TOKEN).toBe("node-token");
   });
 
-  it("maps legacy CLAWDBOT_GATEWAY_TOKEN to OPENCLAW_GATEWAY_TOKEN for node services", () => {
+  it("maps legacy VILARO_GATEWAY_TOKEN to VILARO_GATEWAY_TOKEN for node services", () => {
     const env = buildNodeServiceEnvironment({
-      env: { HOME: "/home/user", CLAWDBOT_GATEWAY_TOKEN: " legacy-token " },
+      env: { HOME: "/home/user", VILARO_GATEWAY_TOKEN: " legacy-token " },
     });
-    expect(env.OPENCLAW_GATEWAY_TOKEN).toBe("legacy-token");
+    expect(env.VILARO_GATEWAY_TOKEN).toBe("legacy-token");
   });
 
-  it("prefers OPENCLAW_GATEWAY_TOKEN over legacy CLAWDBOT_GATEWAY_TOKEN", () => {
+  it("prefers VILARO_GATEWAY_TOKEN over legacy VILARO_GATEWAY_TOKEN", () => {
     const env = buildNodeServiceEnvironment({
       env: {
         HOME: "/home/user",
-        OPENCLAW_GATEWAY_TOKEN: "openclaw-token",
-        CLAWDBOT_GATEWAY_TOKEN: "legacy-token",
+        VILARO_GATEWAY_TOKEN: "vilaro-token",
       },
     });
-    expect(env.OPENCLAW_GATEWAY_TOKEN).toBe("openclaw-token");
+    expect(env.VILARO_GATEWAY_TOKEN).toBe("vilaro-token");
   });
 
-  it("omits OPENCLAW_GATEWAY_TOKEN when both token env vars are empty", () => {
+  it("omits VILARO_GATEWAY_TOKEN when both token env vars are empty", () => {
     const env = buildNodeServiceEnvironment({
       env: {
         HOME: "/home/user",
-        OPENCLAW_GATEWAY_TOKEN: "   ",
-        CLAWDBOT_GATEWAY_TOKEN: " ",
+        VILARO_GATEWAY_TOKEN: "   ",
       },
     });
-    expect(env.OPENCLAW_GATEWAY_TOKEN).toBeUndefined();
+    expect(env.VILARO_GATEWAY_TOKEN).toBeUndefined();
   });
 
   it("forwards proxy environment variables for node services", () => {
@@ -466,31 +464,31 @@ describe("shared Node TLS env defaults", () => {
 describe("resolveGatewayStateDir", () => {
   it("uses the default state dir when no overrides are set", () => {
     const env = { HOME: "/Users/test" };
-    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".openclaw"));
+    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".vilaro"));
   });
 
   it("appends the profile suffix when set", () => {
-    const env = { HOME: "/Users/test", OPENCLAW_PROFILE: "rescue" };
-    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".openclaw-rescue"));
+    const env = { HOME: "/Users/test", VILARO_PROFILE: "rescue" };
+    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".vilaro-rescue"));
   });
 
   it("treats default profiles as the base state dir", () => {
-    const env = { HOME: "/Users/test", OPENCLAW_PROFILE: "Default" };
-    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".openclaw"));
+    const env = { HOME: "/Users/test", VILARO_PROFILE: "Default" };
+    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".vilaro"));
   });
 
-  it("uses OPENCLAW_STATE_DIR when provided", () => {
-    const env = { HOME: "/Users/test", OPENCLAW_STATE_DIR: "/var/lib/openclaw" };
-    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/var/lib/openclaw"));
+  it("uses VILARO_STATE_DIR when provided", () => {
+    const env = { HOME: "/Users/test", VILARO_STATE_DIR: "/var/lib/vilaro" };
+    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/var/lib/vilaro"));
   });
 
-  it("expands ~ in OPENCLAW_STATE_DIR", () => {
-    const env = { HOME: "/Users/test", OPENCLAW_STATE_DIR: "~/openclaw-state" };
-    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/Users/test/openclaw-state"));
+  it("expands ~ in VILARO_STATE_DIR", () => {
+    const env = { HOME: "/Users/test", VILARO_STATE_DIR: "~/vilaro-state" };
+    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/Users/test/vilaro-state"));
   });
 
   it("preserves Windows absolute paths without HOME", () => {
-    const env = { OPENCLAW_STATE_DIR: "C:\\State\\openclaw" };
-    expect(resolveGatewayStateDir(env)).toBe("C:\\State\\openclaw");
+    const env = { VILARO_STATE_DIR: "C:\\State\\vilaro" };
+    expect(resolveGatewayStateDir(env)).toBe("C:\\State\\vilaro");
   });
 });

@@ -1,5 +1,4 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { createOpenClawTools } from "../agents/openclaw-tools.js";
 import { runBeforeToolCallHook } from "../agents/pi-tools.before-tool-call.js";
 import { resolveToolLoopDetectionConfig } from "../agents/pi-tools.js";
 import {
@@ -17,6 +16,7 @@ import {
   resolveToolProfilePolicy,
 } from "../agents/tool-policy.js";
 import { ToolInputError } from "../agents/tools/common.js";
+import { createVilaroTools } from "../agents/vilaro-tools.js";
 import { loadConfig } from "../config/config.js";
 import { resolveMainSessionKey } from "../config/sessions.js";
 import { logWarn } from "../logger.js";
@@ -211,12 +211,10 @@ export async function handleToolsInvokeHttpRequest(
     !rawSessionKey || rawSessionKey === "main" ? resolveMainSessionKey(cfg) : rawSessionKey;
 
   // Resolve message channel/account hints (optional headers) for policy inheritance.
-  const messageChannel = normalizeMessageChannel(
-    getHeader(req, "x-openclaw-message-channel") ?? "",
-  );
-  const accountId = getHeader(req, "x-openclaw-account-id")?.trim() || undefined;
-  const agentTo = getHeader(req, "x-openclaw-message-to")?.trim() || undefined;
-  const agentThreadId = getHeader(req, "x-openclaw-thread-id")?.trim() || undefined;
+  const messageChannel = normalizeMessageChannel(getHeader(req, "x-vilaro-message-channel") ?? "");
+  const accountId = getHeader(req, "x-vilaro-account-id")?.trim() || undefined;
+  const agentTo = getHeader(req, "x-vilaro-message-to")?.trim() || undefined;
+  const agentThreadId = getHeader(req, "x-vilaro-thread-id")?.trim() || undefined;
 
   const {
     agentId,
@@ -248,7 +246,7 @@ export async function handleToolsInvokeHttpRequest(
     : undefined;
 
   // Build tool list (core + plugin tools).
-  const allTools = createOpenClawTools({
+  const allTools = createVilaroTools({
     agentSessionKey: sessionKey,
     agentChannel: messageChannel ?? undefined,
     agentAccountId: accountId,

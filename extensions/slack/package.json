@@ -1,10 +1,10 @@
 {
-  "name": "@openclaw/slack",
+  "name": "@vilaro/slack",
   "version": "2026.3.14",
   "private": true,
-  "description": "OpenClaw Slack channel plugin",
+  "description": "Vilaro Slack channel plugin",
   "type": "module",
-  "openclaw": {
+  "vilaro": {
     "extensions": [
       "./index.ts"
     ],

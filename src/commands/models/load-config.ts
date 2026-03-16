@@ -4,17 +4,17 @@ import {
   loadConfig,
   readConfigFileSnapshotForWrite,
   setRuntimeConfigSnapshot,
-  type OpenClawConfig,
+  type VilaroConfig,
 } from "../../config/config.js";
 import type { RuntimeEnv } from "../../runtime.js";
 
 export type LoadedModelsConfig = {
-  sourceConfig: OpenClawConfig;
-  resolvedConfig: OpenClawConfig;
+  sourceConfig: VilaroConfig;
+  resolvedConfig: VilaroConfig;
   diagnostics: string[];
 };
 
-async function loadSourceConfigSnapshot(fallback: OpenClawConfig): Promise<OpenClawConfig> {
+async function loadSourceConfigSnapshot(fallback: VilaroConfig): Promise<VilaroConfig> {
   try {
     const { snapshot } = await readConfigFileSnapshotForWrite();
     if (snapshot.valid) {
@@ -53,6 +53,6 @@ export async function loadModelsConfigWithSource(params: {
 export async function loadModelsConfig(params: {
   commandName: string;
   runtime?: RuntimeEnv;
-}): Promise<OpenClawConfig> {
+}): Promise<VilaroConfig> {
   return (await loadModelsConfigWithSource(params)).resolvedConfig;
 }

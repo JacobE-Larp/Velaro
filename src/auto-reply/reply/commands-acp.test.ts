@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AcpRuntimeError } from "../../acp/runtime/errors.js";
 import { setDefaultChannelPluginRegistryForTests } from "../../commands/channel-test-helpers.js";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { VilaroConfig } from "../../config/config.js";
 import type { SessionBindingRecord } from "../../infra/outbound/session-binding-service.js";
 import { INTERNAL_MESSAGE_CHANNEL } from "../../utils/message-channel.js";
 
@@ -171,9 +171,9 @@ const baseCfg = {
       },
     },
   },
-} satisfies OpenClawConfig;
+} satisfies VilaroConfig;
 
-function createDiscordParams(commandBody: string, cfg: OpenClawConfig = baseCfg) {
+function createDiscordParams(commandBody: string, cfg: VilaroConfig = baseCfg) {
   const params = buildCommandTestParams(commandBody, cfg, {
     Provider: "discord",
     Surface: "discord",
@@ -312,13 +312,13 @@ function mockBoundThreadSession(options?: {
   );
 }
 
-function createThreadParams(commandBody: string, cfg: OpenClawConfig = baseCfg) {
+function createThreadParams(commandBody: string, cfg: VilaroConfig = baseCfg) {
   const params = createDiscordParams(commandBody, cfg);
   params.ctx.MessageThreadId = defaultThreadId;
   return params;
 }
 
-function createTelegramTopicParams(commandBody: string, cfg: OpenClawConfig = baseCfg) {
+function createTelegramTopicParams(commandBody: string, cfg: VilaroConfig = baseCfg) {
   const params = buildCommandTestParams(commandBody, cfg, {
     Provider: "telegram",
     Surface: "telegram",
@@ -331,7 +331,7 @@ function createTelegramTopicParams(commandBody: string, cfg: OpenClawConfig = ba
   return params;
 }
 
-function createTelegramDmParams(commandBody: string, cfg: OpenClawConfig = baseCfg) {
+function createTelegramDmParams(commandBody: string, cfg: VilaroConfig = baseCfg) {
   const params = buildCommandTestParams(commandBody, cfg, {
     Provider: "telegram",
     Surface: "telegram",
@@ -343,23 +343,23 @@ function createTelegramDmParams(commandBody: string, cfg: OpenClawConfig = baseC
   return params;
 }
 
-async function runDiscordAcpCommand(commandBody: string, cfg: OpenClawConfig = baseCfg) {
+async function runDiscordAcpCommand(commandBody: string, cfg: VilaroConfig = baseCfg) {
   return handleAcpCommand(createDiscordParams(commandBody, cfg), true);
 }
 
-async function runThreadAcpCommand(commandBody: string, cfg: OpenClawConfig = baseCfg) {
+async function runThreadAcpCommand(commandBody: string, cfg: VilaroConfig = baseCfg) {
   return handleAcpCommand(createThreadParams(commandBody, cfg), true);
 }
 
-async function runTelegramAcpCommand(commandBody: string, cfg: OpenClawConfig = baseCfg) {
+async function runTelegramAcpCommand(commandBody: string, cfg: VilaroConfig = baseCfg) {
   return handleAcpCommand(createTelegramTopicParams(commandBody, cfg), true);
 }
 
-async function runTelegramDmAcpCommand(commandBody: string, cfg: OpenClawConfig = baseCfg) {
+async function runTelegramDmAcpCommand(commandBody: string, cfg: VilaroConfig = baseCfg) {
   return handleAcpCommand(createTelegramDmParams(commandBody, cfg), true);
 }
 
-function createFeishuDmParams(commandBody: string, cfg: OpenClawConfig = baseCfg) {
+function createFeishuDmParams(commandBody: string, cfg: VilaroConfig = baseCfg) {
   const params = buildCommandTestParams(commandBody, cfg, {
     Provider: "feishu",
     Surface: "feishu",
@@ -372,14 +372,14 @@ function createFeishuDmParams(commandBody: string, cfg: OpenClawConfig = baseCfg
   return params;
 }
 
-async function runFeishuDmAcpCommand(commandBody: string, cfg: OpenClawConfig = baseCfg) {
+async function runFeishuDmAcpCommand(commandBody: string, cfg: VilaroConfig = baseCfg) {
   return handleAcpCommand(createFeishuDmParams(commandBody, cfg), true);
 }
 
 async function runInternalAcpCommand(params: {
   commandBody: string;
   scopes: string[];
-  cfg?: OpenClawConfig;
+  cfg?: VilaroConfig;
 }) {
   const commandParams = buildCommandTestParams(params.commandBody, params.cfg ?? baseCfg, {
     Provider: INTERNAL_MESSAGE_CHANNEL,
@@ -492,7 +492,7 @@ describe("/acp command", () => {
       backendSessionId: "acpx-1",
     });
 
-    const result = await runDiscordAcpCommand("/acp spawn codex --cwd /home/bob/clawd");
+    const result = await runDiscordAcpCommand("/acp spawn codex --cwd /home/bob/vilaro");
 
     expect(result?.reply?.text).toContain("Spawned ACP session agent:codex:acp:");
     expect(result?.reply?.text).toContain("Created thread thread-created and bound it");
@@ -501,7 +501,7 @@ describe("/acp command", () => {
       expect.objectContaining({
         agent: "codex",
         mode: "persistent",
-        cwd: "/home/bob/clawd",
+        cwd: "/home/bob/vilaro",
       }),
     );
     expect(hoisted.sessionBindingBindMock).toHaveBeenCalledWith(
@@ -509,7 +509,7 @@ describe("/acp command", () => {
         targetKind: "session",
         placement: "child",
         metadata: expect.objectContaining({
-          introText: expect.stringContaining("cwd: /home/bob/clawd"),
+          introText: expect.stringContaining("cwd: /home/bob/vilaro"),
         }),
       }),
     );
@@ -540,7 +540,7 @@ describe("/acp command", () => {
 
   it("accepts unicode dash option prefixes in /acp spawn args", async () => {
     const result = await runThreadAcpCommand(
-      "/acp spawn codex \u2014mode oneshot \u2014thread here \u2014cwd /home/bob/clawd \u2014label jeerreview",
+      "/acp spawn codex \u2014mode oneshot \u2014thread here \u2014cwd /home/bob/vilaro \u2014label jeerreview",
     );
 
     expect(result?.reply?.text).toContain("Spawned ACP session agent:codex:acp:");
@@ -549,7 +549,7 @@ describe("/acp command", () => {
       expect.objectContaining({
         agent: "codex",
         mode: "oneshot",
-        cwd: "/home/bob/clawd",
+        cwd: "/home/bob/vilaro",
       }),
     );
     expect(hoisted.sessionBindingBindMock).toHaveBeenCalledWith(
@@ -633,7 +633,7 @@ describe("/acp command", () => {
           },
         },
       },
-    } satisfies OpenClawConfig;
+    } satisfies VilaroConfig;
 
     const result = await runDiscordAcpCommand("/acp spawn codex", cfg);
 
@@ -662,7 +662,7 @@ describe("/acp command", () => {
           sandbox: { mode: "all" },
         },
       },
-    } satisfies OpenClawConfig;
+    } satisfies VilaroConfig;
 
     const result = await runDiscordAcpCommand("/acp spawn codex", cfg);
 
@@ -757,7 +757,7 @@ describe("/acp command", () => {
         ...baseCfg.acp,
         dispatch: { enabled: false },
       },
-    } satisfies OpenClawConfig;
+    } satisfies VilaroConfig;
     const result = await runDiscordAcpCommand("/acp steer tighten logging", cfg);
     expect(result?.reply?.text).toContain("ACP dispatch is disabled by policy");
     expect(hoisted.runTurnMock).not.toHaveBeenCalled();

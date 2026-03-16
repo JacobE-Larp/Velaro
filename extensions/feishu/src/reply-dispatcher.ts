@@ -2,11 +2,11 @@ import {
   createReplyPrefixContext,
   createTypingCallbacks,
   logTypingFailure,
-  type ClawdbotConfig,
+  type VilaroConfig,
   type OutboundIdentity,
   type ReplyPayload,
   type RuntimeEnv,
-} from "openclaw/plugin-sdk/feishu";
+} from "vilaro/plugin-sdk/feishu";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 import { sendMediaFeishu } from "./media.js";
@@ -73,7 +73,7 @@ function resolveCardNote(
 }
 
 export type CreateFeishuReplyDispatcherParams = {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   agentId: string;
   runtime: RuntimeEnv;
   chatId: string;

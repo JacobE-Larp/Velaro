@@ -1,10 +1,10 @@
 {
-  "name": "@openclaw/volcengine-provider",
+  "name": "@vilaro/volcengine-provider",
   "version": "2026.3.14",
   "private": true,
-  "description": "OpenClaw Volcengine provider plugin",
+  "description": "Vilaro Volcengine provider plugin",
   "type": "module",
-  "openclaw": {
+  "vilaro": {
     "extensions": [
       "./index.ts"
     ]

@@ -1,10 +1,10 @@
-import type { ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+import type { VilaroConfig } from "vilaro/plugin-sdk/feishu";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 import { resolveReceiveIdType, normalizeFeishuTarget } from "./targets.js";
 
 export function resolveFeishuSendTarget(params: {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   to: string;
   accountId?: string;
 }) {

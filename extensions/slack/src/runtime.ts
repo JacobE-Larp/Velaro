@@ -1,5 +1,5 @@
-import type { PluginRuntime } from "openclaw/plugin-sdk";
-import { createPluginRuntimeStore } from "openclaw/plugin-sdk/compat";
+import type { PluginRuntime } from "vilaro/plugin-sdk";
+import { createPluginRuntimeStore } from "vilaro/plugin-sdk/compat";
 
 const { setRuntime: setSlackRuntime, getRuntime: getSlackRuntime } =
   createPluginRuntimeStore<PluginRuntime>("Slack runtime not initialized");

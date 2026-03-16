@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+import type { VilaroConfig } from "vilaro/plugin-sdk/feishu";
 import { resolveFeishuAccount } from "./accounts.js";
 import { createFeishuClient } from "./client.js";
 
@@ -33,7 +33,7 @@ function normalizePin(pin: {
 }
 
 export async function createPinFeishu(params: {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   messageId: string;
   accountId?: string;
 }): Promise<FeishuPin | null> {
@@ -53,7 +53,7 @@ export async function createPinFeishu(params: {
 }
 
 export async function removePinFeishu(params: {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   messageId: string;
   accountId?: string;
 }): Promise<void> {
@@ -72,7 +72,7 @@ export async function removePinFeishu(params: {
 }
 
 export async function listPinsFeishu(params: {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   chatId: string;
   startTime?: string;
   endTime?: string;

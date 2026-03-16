@@ -5,7 +5,7 @@ import type {
   SandboxFsBridge,
   SandboxFsStat,
   SandboxResolvedPath,
-} from "openclaw/plugin-sdk/core";
+} from "vilaro/plugin-sdk/core";
 import type { OpenShellSandboxBackend } from "./backend.js";
 import { movePathWithCopyFallback } from "./mirror.js";
 
@@ -79,7 +79,7 @@ class OpenShellFsBridge implements SandboxFsBridge {
     }
     const tempPath = path.join(
       parentDir,
-      `.openclaw-openshell-write-${path.basename(hostPath)}-${process.pid}-${Date.now()}`,
+      `.vilaro-openshell-write-${path.basename(hostPath)}-${process.pid}-${Date.now()}`,
     );
     await fsPromises.writeFile(tempPath, buffer);
     await fsPromises.rename(tempPath, hostPath);

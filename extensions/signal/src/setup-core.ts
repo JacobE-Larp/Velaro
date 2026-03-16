@@ -12,7 +12,7 @@ import type { ChannelSetupDmPolicy } from "../../../src/channels/plugins/setup-w
 import type { ChannelSetupWizard } from "../../../src/channels/plugins/setup-wizard.js";
 import type { ChannelSetupAdapter } from "../../../src/channels/plugins/types.adapters.js";
 import { formatCliCommand } from "../../../src/cli/command-format.js";
-import type { OpenClawConfig } from "../../../src/config/config.js";
+import type { VilaroConfig } from "../../../src/config/config.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../../../src/routing/session-key.js";
 import { formatDocsLink } from "../../../src/terminal/links.js";
 import { normalizeE164 } from "../../../src/utils.js";
@@ -87,10 +87,10 @@ function buildSignalSetupPatch(input: {
 }
 
 async function promptSignalAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   prompter: WizardPrompter;
   accountId?: string;
-}): Promise<OpenClawConfig> {
+}): Promise<VilaroConfig> {
   return promptParsedAllowFromForScopedChannel({
     cfg: params.cfg,
     channel,
@@ -191,8 +191,8 @@ export function createSignalSetupWizardProxy(
     channel,
     policyKey: "channels.signal.dmPolicy",
     allowFromKey: "channels.signal.allowFrom",
-    getCurrent: (cfg: OpenClawConfig) => cfg.channels?.signal?.dmPolicy ?? "pairing",
-    setPolicy: (cfg: OpenClawConfig, policy) =>
+    getCurrent: (cfg: VilaroConfig) => cfg.channels?.signal?.dmPolicy ?? "pairing",
+    setPolicy: (cfg: VilaroConfig, policy) =>
       setChannelDmPolicyWithAllowFrom({
         cfg,
         channel,
@@ -263,13 +263,13 @@ export function createSignalSetupWizardProxy(
     completionNote: {
       title: "Signal next steps",
       lines: [
-        'Link device with: signal-cli link -n "OpenClaw"',
+        'Link device with: signal-cli link -n "Vilaro"',
         "Scan QR in Signal -> Linked Devices",
-        `Then run: ${formatCliCommand("openclaw gateway call channels.status --params '{\"probe\":true}'")}`,
+        `Then run: ${formatCliCommand("vilaro gateway call channels.status --params '{\"probe\":true}'")}`,
         `Docs: ${formatDocsLink("/signal", "signal")}`,
       ],
     },
     dmPolicy: signalDmPolicy,
-    disable: (cfg: OpenClawConfig) => setSetupChannelEnabled(cfg, channel, false),
+    disable: (cfg: VilaroConfig) => setSetupChannelEnabled(cfg, channel, false),
   } satisfies ChannelSetupWizard;
 }

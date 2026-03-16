@@ -119,8 +119,8 @@ describe("plugin-sdk exports", () => {
   });
 
   it("emits importable bundled subpath entries", { timeout: 240_000 }, async () => {
-    const outDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-plugin-sdk-build-"));
-    const fixtureDir = await fs.mkdtemp(path.join(os.tmpdir(), "openclaw-plugin-sdk-consumer-"));
+    const outDir = await fs.mkdtemp(path.join(os.tmpdir(), "vilaro-plugin-sdk-build-"));
+    const fixtureDir = await fs.mkdtemp(path.join(os.tmpdir(), "vilaro-plugin-sdk-consumer-"));
 
     try {
       await build({
@@ -140,7 +140,7 @@ describe("plugin-sdk exports", () => {
         expect(module).toBeTypeOf("object");
       }
 
-      const packageDir = path.join(fixtureDir, "openclaw");
+      const packageDir = path.join(fixtureDir, "vilaro");
       const consumerDir = path.join(fixtureDir, "consumer");
       const consumerEntry = path.join(consumerDir, "import-plugin-sdk.mjs");
 
@@ -151,7 +151,7 @@ describe("plugin-sdk exports", () => {
         JSON.stringify(
           {
             exports: buildPluginSdkPackageExports(),
-            name: "openclaw",
+            name: "vilaro",
             type: "module",
           },
           null,
@@ -160,7 +160,7 @@ describe("plugin-sdk exports", () => {
       );
 
       await fs.mkdir(path.join(consumerDir, "node_modules"), { recursive: true });
-      await fs.symlink(packageDir, path.join(consumerDir, "node_modules", "openclaw"), "dir");
+      await fs.symlink(packageDir, path.join(consumerDir, "node_modules", "vilaro"), "dir");
       await fs.writeFile(
         consumerEntry,
         [

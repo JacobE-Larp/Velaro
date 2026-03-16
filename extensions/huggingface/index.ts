@@ -1,4 +1,4 @@
-import { emptyPluginConfigSchema, type OpenClawPluginApi } from "openclaw/plugin-sdk/core";
+import { emptyPluginConfigSchema, type VilaroPluginApi } from "vilaro/plugin-sdk/core";
 import { buildHuggingfaceProvider } from "../../src/agents/models-config.providers.discovery.js";
 import {
   applyHuggingfaceConfig,
@@ -13,7 +13,7 @@ const huggingfacePlugin = {
   name: "Hugging Face Provider",
   description: "Bundled Hugging Face provider plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: "Hugging Face",

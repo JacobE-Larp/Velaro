@@ -13,7 +13,7 @@ import {
 import type { ChannelSetupDmPolicy } from "../../../src/channels/plugins/setup-wizard-types.js";
 import type { ChannelSetupWizard } from "../../../src/channels/plugins/setup-wizard.js";
 import type { ChannelSetupAdapter } from "../../../src/channels/plugins/types.adapters.js";
-import type { OpenClawConfig } from "../../../src/config/config.js";
+import type { VilaroConfig } from "../../../src/config/config.js";
 import type { DiscordGuildEntry } from "../../../src/config/types.discord.js";
 import { DEFAULT_ACCOUNT_ID, normalizeAccountId } from "../../../src/routing/session-key.js";
 import { formatDocsLink } from "../../../src/terminal/links.js";
@@ -31,13 +31,13 @@ export const DISCORD_TOKEN_HELP_LINES = [
 ];
 
 export function setDiscordGuildChannelAllowlist(
-  cfg: OpenClawConfig,
+  cfg: VilaroConfig,
   accountId: string,
   entries: Array<{
     guildKey: string;
     channelKey?: string;
   }>,
-): OpenClawConfig {
+): VilaroConfig {
   const baseGuilds =
     accountId === DEFAULT_ACCOUNT_ID
       ? (cfg.channels?.discord?.guilds ?? {})
@@ -145,9 +145,9 @@ export function createDiscordSetupWizardProxy(
     channel,
     policyKey: "channels.discord.dmPolicy",
     allowFromKey: "channels.discord.allowFrom",
-    getCurrent: (cfg: OpenClawConfig) =>
+    getCurrent: (cfg: VilaroConfig) =>
       cfg.channels?.discord?.dmPolicy ?? cfg.channels?.discord?.dm?.policy ?? "pairing",
-    setPolicy: (cfg: OpenClawConfig, policy) =>
+    setPolicy: (cfg: VilaroConfig, policy) =>
       setLegacyChannelDmPolicyWithAllowFrom({
         cfg,
         channel,
@@ -189,7 +189,7 @@ export function createDiscordSetupWizardProxy(
         keepPrompt: "Discord token already configured. Keep it?",
         inputPrompt: "Enter Discord bot token",
         allowEnv: ({ accountId }: { accountId: string }) => accountId === DEFAULT_ACCOUNT_ID,
-        inspect: ({ cfg, accountId }: { cfg: OpenClawConfig; accountId: string }) => {
+        inspect: ({ cfg, accountId }: { cfg: VilaroConfig; accountId: string }) => {
           const account = inspectDiscordAccount({ cfg, accountId });
           return {
             accountConfigured: account.configured,
@@ -206,9 +206,9 @@ export function createDiscordSetupWizardProxy(
     groupAccess: {
       label: "Discord channels",
       placeholder: "My Server/#general, guildId/channelId, #support",
-      currentPolicy: ({ cfg, accountId }: { cfg: OpenClawConfig; accountId: string }) =>
+      currentPolicy: ({ cfg, accountId }: { cfg: VilaroConfig; accountId: string }) =>
         resolveDiscordAccount({ cfg, accountId }).config.groupPolicy ?? "allowlist",
-      currentEntries: ({ cfg, accountId }: { cfg: OpenClawConfig; accountId: string }) =>
+      currentEntries: ({ cfg, accountId }: { cfg: VilaroConfig; accountId: string }) =>
         Object.entries(resolveDiscordAccount({ cfg, accountId }).config.guilds ?? {}).flatMap(
           ([guildKey, value]) => {
             const channels = value?.channels ?? {};
@@ -220,14 +220,14 @@ export function createDiscordSetupWizardProxy(
             return channelKeys.map((channelKey) => `${guildKey}/${channelKey}`);
           },
         ),
-      updatePrompt: ({ cfg, accountId }: { cfg: OpenClawConfig; accountId: string }) =>
+      updatePrompt: ({ cfg, accountId }: { cfg: VilaroConfig; accountId: string }) =>
         Boolean(resolveDiscordAccount({ cfg, accountId }).config.guilds),
       setPolicy: ({
         cfg,
         accountId,
         policy,
       }: {
-        cfg: OpenClawConfig;
+        cfg: VilaroConfig;
         accountId: string;
         policy: "open" | "allowlist" | "disabled";
       }) =>
@@ -244,7 +244,7 @@ export function createDiscordSetupWizardProxy(
         entries,
         prompter,
       }: {
-        cfg: OpenClawConfig;
+        cfg: VilaroConfig;
         accountId: string;
         credentialValues: { token?: string };
         entries: string[];
@@ -282,7 +282,7 @@ export function createDiscordSetupWizardProxy(
         accountId,
         resolved,
       }: {
-        cfg: OpenClawConfig;
+        cfg: VilaroConfig;
         accountId: string;
         resolved: unknown;
       }) => setDiscordGuildChannelAllowlist(cfg, accountId, resolved as never),
@@ -310,7 +310,7 @@ export function createDiscordSetupWizardProxy(
         credentialValues,
         entries,
       }: {
-        cfg: OpenClawConfig;
+        cfg: VilaroConfig;
         accountId: string;
         credentialValues: { token?: string };
         entries: string[];
@@ -331,7 +331,7 @@ export function createDiscordSetupWizardProxy(
         accountId,
         allowFrom,
       }: {
-        cfg: OpenClawConfig;
+        cfg: VilaroConfig;
         accountId: string;
         allowFrom: string[];
       }) =>
@@ -343,6 +343,6 @@ export function createDiscordSetupWizardProxy(
         }),
     },
     dmPolicy: discordDmPolicy,
-    disable: (cfg: OpenClawConfig) => setSetupChannelEnabled(cfg, channel, false),
+    disable: (cfg: VilaroConfig) => setSetupChannelEnabled(cfg, channel, false),
   } satisfies ChannelSetupWizard;
 }

@@ -1,12 +1,12 @@
 {
-  "name": "@openclaw/irc",
+  "name": "@vilaro/irc",
   "version": "2026.3.14",
-  "description": "OpenClaw IRC channel plugin",
+  "description": "Vilaro IRC channel plugin",
   "type": "module",
   "dependencies": {
     "zod": "^4.3.6"
   },
-  "openclaw": {
+  "vilaro": {
     "extensions": [
       "./index.ts"
     ],

@@ -1,6 +1,6 @@
-import OpenClawKit
+import VilaroKit
 import Testing
-@testable import OpenClaw
+@testable import Vilaro
 
 @Suite struct IOSGatewayChatTransportTests {
     @Test func requestsFailFastWhenGatewayNotConnected() async {

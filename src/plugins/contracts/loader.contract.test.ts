@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { providerContractRegistry, webSearchProviderContractRegistry } from "./registry.js";
 
-const loadOpenClawPluginsMock = vi.fn();
+const loadVilaroPluginsMock = vi.fn();
 
 vi.mock("../loader.js", () => ({
-  loadOpenClawPlugins: (...args: unknown[]) => loadOpenClawPluginsMock(...args),
+  loadVilaroPlugins: (...args: unknown[]) => loadVilaroPluginsMock(...args),
 }));
 
 const { resolvePluginProviders } = await import("../providers.js");
@@ -16,8 +16,8 @@ function uniqueSortedPluginIds(values: string[]) {
 
 describe("plugin loader contract", () => {
   beforeEach(() => {
-    loadOpenClawPluginsMock.mockReset();
-    loadOpenClawPluginsMock.mockReturnValue({
+    loadVilaroPluginsMock.mockReset();
+    loadVilaroPluginsMock.mockReturnValue({
       providers: [],
       webSearchProviders: [],
     });
@@ -37,7 +37,7 @@ describe("plugin loader contract", () => {
       },
     });
 
-    expect(loadOpenClawPluginsMock).toHaveBeenCalledWith(
+    expect(loadVilaroPluginsMock).toHaveBeenCalledWith(
       expect.objectContaining({
         config: expect.objectContaining({
           plugins: expect.objectContaining({
@@ -58,7 +58,7 @@ describe("plugin loader contract", () => {
       env: { VITEST: "1" } as NodeJS.ProcessEnv,
     });
 
-    expect(loadOpenClawPluginsMock).toHaveBeenCalledWith(
+    expect(loadVilaroPluginsMock).toHaveBeenCalledWith(
       expect.objectContaining({
         config: expect.objectContaining({
           plugins: expect.objectContaining({
@@ -77,7 +77,7 @@ describe("plugin loader contract", () => {
 
     resolvePluginWebSearchProviders({});
 
-    expect(loadOpenClawPluginsMock).toHaveBeenCalledWith(
+    expect(loadVilaroPluginsMock).toHaveBeenCalledWith(
       expect.objectContaining({
         onlyPluginIds: webSearchPluginIds,
         activate: false,
@@ -100,7 +100,7 @@ describe("plugin loader contract", () => {
       },
     });
 
-    expect(loadOpenClawPluginsMock).toHaveBeenCalledWith(
+    expect(loadVilaroPluginsMock).toHaveBeenCalledWith(
       expect.objectContaining({
         config: expect.objectContaining({
           plugins: expect.objectContaining({

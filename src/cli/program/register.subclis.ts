@@ -1,5 +1,5 @@
 import type { Command } from "commander";
-import type { OpenClawConfig } from "../../config/config.js";
+import type { VilaroConfig } from "../../config/config.js";
 import { isTruthyEnvValue } from "../../infra/env.js";
 import { getPrimaryCommand, hasHelpOrVersion } from "../argv.js";
 import { reparseProgramFromActionArgs } from "./action-reparse.js";
@@ -19,7 +19,7 @@ type SubCliEntry = SubCliDescriptor & {
 };
 
 const shouldRegisterPrimaryOnly = (argv: string[]) => {
-  if (isTruthyEnvValue(process.env.OPENCLAW_DISABLE_LAZY_SUBCOMMANDS)) {
+  if (isTruthyEnvValue(process.env.VILARO_DISABLE_LAZY_SUBCOMMANDS)) {
     return false;
   }
   if (hasHelpOrVersion(argv)) {
@@ -29,18 +29,17 @@ const shouldRegisterPrimaryOnly = (argv: string[]) => {
 };
 
 const shouldEagerRegisterSubcommands = (_argv: string[]) => {
-  return isTruthyEnvValue(process.env.OPENCLAW_DISABLE_LAZY_SUBCOMMANDS);
+  return isTruthyEnvValue(process.env.VILARO_DISABLE_LAZY_SUBCOMMANDS);
 };
 
-export const loadValidatedConfigForPluginRegistration =
-  async (): Promise<OpenClawConfig | null> => {
-    const mod = await import("../../config/config.js");
-    const snapshot = await mod.readConfigFileSnapshot();
-    if (!snapshot.valid) {
-      return null;
-    }
-    return mod.loadConfig();
-  };
+export const loadValidatedConfigForPluginRegistration = async (): Promise<VilaroConfig | null> => {
+  const mod = await import("../../config/config.js");
+  const snapshot = await mod.readConfigFileSnapshot();
+  if (!snapshot.valid) {
+    return null;
+  }
+  return mod.loadConfig();
+};
 
 // Note for humans and agents:
 // If you update the list of commands, also check whether they have subcommands
@@ -174,7 +173,7 @@ const entries: SubCliEntry[] = [
   },
   {
     name: "docs",
-    description: "Search the live OpenClaw docs",
+    description: "Search the live Vilaro docs",
     hasSubcommands: false,
     register: async (program) => {
       const mod = await import("../docs-cli.js");
@@ -236,7 +235,7 @@ const entries: SubCliEntry[] = [
   },
   {
     name: "plugins",
-    description: "Manage OpenClaw plugins and extensions",
+    description: "Manage Vilaro plugins and extensions",
     hasSubcommands: true,
     register: async (program) => {
       const mod = await import("../plugins-cli.js");
@@ -295,7 +294,7 @@ const entries: SubCliEntry[] = [
   },
   {
     name: "update",
-    description: "Update OpenClaw and inspect update channel status",
+    description: "Update Vilaro and inspect update channel status",
     hasSubcommands: true,
     register: async (program) => {
       const mod = await import("../update-cli.js");

@@ -7,7 +7,7 @@ import { Mock, vi } from "vitest";
 import type { MsgContext } from "../auto-reply/templating.js";
 import type { GetReplyOptions, ReplyPayload } from "../auto-reply/types.js";
 import type { ChannelPlugin, ChannelOutboundAdapter } from "../channels/plugins/types.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { VilaroConfig } from "../config/config.js";
 import { applyPluginAutoEnable } from "../config/plugin-auto-enable.js";
 import type { AgentBinding } from "../config/types.agents.js";
 import type { HooksConfig } from "../config/types.hooks.js";
@@ -25,7 +25,7 @@ type StubChannelOptions = {
 type GetReplyFromConfigFn = (
   ctx: MsgContext,
   opts?: GetReplyOptions,
-  configOverride?: OpenClawConfig,
+  configOverride?: VilaroConfig,
 ) => Promise<ReplyPayload | ReplyPayload[] | undefined>;
 
 const createStubOutboundAdapter = (channelId: ChannelPlugin["id"]): ChannelOutboundAdapter => ({
@@ -199,12 +199,12 @@ export const resetTestPluginRegistry = () => {
 };
 
 const testConfigRoot = {
-  value: path.join(os.tmpdir(), `openclaw-gateway-test-${process.pid}-${crypto.randomUUID()}`),
+  value: path.join(os.tmpdir(), `vilaro-gateway-test-${process.pid}-${crypto.randomUUID()}`),
 };
 
 export const setTestConfigRoot = (root: string) => {
   testConfigRoot.value = root;
-  process.env.OPENCLAW_CONFIG_PATH = path.join(root, "openclaw.json");
+  process.env.VILARO_CONFIG_PATH = path.join(root, "vilaro.json");
 };
 
 export const testTailnetIPv4 = hoisted.testTailnetIPv4;
@@ -297,7 +297,7 @@ vi.mock("../config/sessions.js", async () => {
 
 vi.mock("../config/config.js", async () => {
   const actual = await vi.importActual<typeof import("../config/config.js")>("../config/config.js");
-  const resolveConfigPath = () => path.join(testConfigRoot.value, "openclaw.json");
+  const resolveConfigPath = () => path.join(testConfigRoot.value, "vilaro.json");
   const hashConfigRaw = (raw: string | null) =>
     crypto
       .createHash("sha256")
@@ -415,7 +415,7 @@ vi.mock("../config/config.js", async () => {
           : {};
       const defaults = {
         model: { primary: "anthropic/claude-opus-4-6" },
-        workspace: path.join(os.tmpdir(), "openclaw-gateway-test"),
+        workspace: path.join(os.tmpdir(), "vilaro-gateway-test"),
         ...fileDefaults,
         ...testState.agentConfig,
       };
@@ -607,11 +607,11 @@ vi.mock("../plugins/loader.js", async () => {
     await vi.importActual<typeof import("../plugins/loader.js")>("../plugins/loader.js");
   return {
     ...actual,
-    loadOpenClawPlugins: () => pluginRegistryState.registry,
+    loadVilaroPlugins: () => pluginRegistryState.registry,
   };
 });
 
-process.env.OPENCLAW_SKIP_CHANNELS = "1";
-process.env.OPENCLAW_SKIP_CRON = "1";
-process.env.OPENCLAW_SKIP_CHANNELS = "1";
-process.env.OPENCLAW_SKIP_CRON = "1";
+process.env.VILARO_SKIP_CHANNELS = "1";
+process.env.VILARO_SKIP_CRON = "1";
+process.env.VILARO_SKIP_CHANNELS = "1";
+process.env.VILARO_SKIP_CRON = "1";

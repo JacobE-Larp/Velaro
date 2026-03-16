@@ -5,7 +5,7 @@ import {
 } from "../../../agents/agent-scope.js";
 import type { ApiKeyCredential } from "../../../agents/auth-profiles/types.js";
 import { resolveDefaultAgentWorkspaceDir } from "../../../agents/workspace.js";
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { VilaroConfig } from "../../../config/config.js";
 import { enablePluginInConfig } from "../../../plugins/enable.js";
 import type {
   ProviderNonInteractiveApiKeyCredentialParams,
@@ -22,9 +22,9 @@ async function loadPluginProviderRuntime() {
 }
 
 function buildIsolatedProviderResolutionConfig(
-  cfg: OpenClawConfig,
+  cfg: VilaroConfig,
   providerId: string | undefined,
-): OpenClawConfig {
+): VilaroConfig {
   if (!providerId) {
     return cfg;
   }
@@ -47,11 +47,11 @@ function buildIsolatedProviderResolutionConfig(
 }
 
 export async function applyNonInteractivePluginProviderChoice(params: {
-  nextConfig: OpenClawConfig;
+  nextConfig: VilaroConfig;
   authChoice: string;
   opts: OnboardOptions;
   runtime: RuntimeEnv;
-  baseConfig: OpenClawConfig;
+  baseConfig: VilaroConfig;
   resolveApiKey: (input: ProviderResolveNonInteractiveApiKeyParams) => Promise<{
     key: string;
     source: "profile" | "env" | "flag";
@@ -60,7 +60,7 @@ export async function applyNonInteractivePluginProviderChoice(params: {
   toApiKeyCredential: (
     input: ProviderNonInteractiveApiKeyCredentialParams,
   ) => ApiKeyCredential | null;
-}): Promise<OpenClawConfig | null | undefined> {
+}): Promise<VilaroConfig | null | undefined> {
   const agentId = resolveDefaultAgentId(params.nextConfig);
   const agentDir = resolveAgentDir(params.nextConfig, agentId);
   const workspaceDir =

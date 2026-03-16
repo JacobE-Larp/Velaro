@@ -25,7 +25,7 @@ const requiredPathGroups = [
   "dist/plugin-sdk/root-alias.cjs",
   "dist/build-info.json",
 ];
-const forbiddenPrefixes = ["dist/OpenClaw.app/"];
+const forbiddenPrefixes = ["dist/Vilaro.app/"];
 // 2026.3.12 ballooned to ~213.6 MiB unpacked and correlated with low-memory
 // startup/doctor OOM reports. Keep enough headroom for the current pack while
 // failing fast if duplicate/shim content sneaks back into the release artifact.
@@ -59,7 +59,7 @@ export function collectBundledExtensionRootDependencyGapErrors(params: {
     }
 
     const missing = Object.keys(extension.packageJson.dependencies ?? {})
-      .filter((dep) => dep !== "openclaw" && !rootDeps[dep])
+      .filter((dep) => dep !== "vilaro" && !rootDeps[dep])
       .toSorted();
     const allowlisted = extension.rootDependencyMirrorAllowlist.toSorted();
     if (missing.join("\n") !== allowlisted.join("\n")) {
@@ -315,7 +315,7 @@ function checkAppcastSparkleVersions() {
   }
 }
 
-// Critical functions that channel extension plugins import from openclaw/plugin-sdk.
+// Critical functions that channel extension plugins import from vilaro/plugin-sdk.
 // If any are missing from the compiled output, plugins crash at runtime (#27569).
 const requiredPluginSdkExports = [
   "isDangerousNameMatchingEnabled",

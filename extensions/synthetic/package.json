@@ -1,10 +1,10 @@
 {
-  "name": "@openclaw/synthetic-provider",
+  "name": "@vilaro/synthetic-provider",
   "version": "2026.3.14",
   "private": true,
-  "description": "OpenClaw Synthetic provider plugin",
+  "description": "Vilaro Synthetic provider plugin",
   "type": "module",
-  "openclaw": {
+  "vilaro": {
     "extensions": [
       "./index.ts"
     ]

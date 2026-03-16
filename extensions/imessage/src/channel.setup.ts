@@ -1,7 +1,7 @@
 import {
   buildAccountScopedDmSecurityPolicy,
   collectAllowlistProviderRestrictSendersWarnings,
-} from "openclaw/plugin-sdk/compat";
+} from "vilaro/plugin-sdk/compat";
 import {
   buildChannelConfigSchema,
   DEFAULT_ACCOUNT_ID,
@@ -13,7 +13,7 @@ import {
   resolveIMessageConfigDefaultTo,
   setAccountEnabledInConfigSection,
   type ChannelPlugin,
-} from "openclaw/plugin-sdk/imessage";
+} from "vilaro/plugin-sdk/imessage";
 import {
   listIMessageAccountIds,
   resolveDefaultIMessageAccountId,

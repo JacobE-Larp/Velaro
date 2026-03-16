@@ -1,5 +1,5 @@
-import type { TelegramAccountConfig } from "openclaw/plugin-sdk/telegram";
-import type { OpenClawConfig } from "../../../src/config/config.js";
+import type { TelegramAccountConfig } from "vilaro/plugin-sdk/telegram";
+import type { VilaroConfig } from "../../../src/config/config.js";
 import {
   coerceSecretRef,
   hasConfiguredSecretInput,
@@ -48,7 +48,7 @@ function inspectTokenFile(pathValue: unknown): {
 }
 
 function canResolveEnvSecretRefInReadOnlyPath(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   provider: string;
   id: string;
 }): boolean {
@@ -63,7 +63,7 @@ function canResolveEnvSecretRefInReadOnlyPath(params: {
   return !allowlist || allowlist.includes(params.id);
 }
 
-function inspectTokenValue(params: { cfg: OpenClawConfig; value: unknown }): {
+function inspectTokenValue(params: { cfg: VilaroConfig; value: unknown }): {
   token: string;
   tokenSource: "config" | "env" | "none";
   tokenStatus: TelegramCredentialStatus;
@@ -117,7 +117,7 @@ function inspectTokenValue(params: { cfg: OpenClawConfig; value: unknown }): {
 }
 
 function inspectTelegramAccountPrimary(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   accountId: string;
   envToken?: string | null;
 }): InspectedTelegramAccount {
@@ -213,7 +213,7 @@ function inspectTelegramAccountPrimary(params: {
 }
 
 export function inspectTelegramAccount(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   accountId?: string | null;
   envToken?: string | null;
 }): InspectedTelegramAccount {

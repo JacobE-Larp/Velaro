@@ -86,7 +86,7 @@ describe("profile CRUD endpoints", () => {
     const createDuplicate = await realFetch(`${base}/profiles/create`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: "openclaw" }),
+      body: JSON.stringify({ name: "vilaro" }),
     });
     expect(createDuplicate.status).toBe(409);
     const createDuplicateBody = (await createDuplicate.json()) as { error: string };
@@ -116,20 +116,20 @@ describe("profile CRUD endpoints", () => {
     const createBadRemoteBody = (await createBadRemote.json()) as { error: string };
     expect(createBadRemoteBody.error).toContain("cdpUrl");
 
-    const createClawd = await realFetch(`${base}/profiles/create`, {
+    const createVilaro = await realFetch(`${base}/profiles/create`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: "legacyclawd", driver: "clawd" }),
+      body: JSON.stringify({ name: "legacyvilaro", driver: "vilaro" }),
     });
-    expect(createClawd.status).toBe(200);
-    const createClawdBody = (await createClawd.json()) as {
+    expect(createVilaro.status).toBe(200);
+    const createVilaroBody = (await createVilaro.json()) as {
       profile?: string;
       transport?: string;
       cdpPort?: number | null;
     };
-    expect(createClawdBody.profile).toBe("legacyclawd");
-    expect(createClawdBody.transport).toBe("cdp");
-    expect(createClawdBody.cdpPort).toBeTypeOf("number");
+    expect(createVilaroBody.profile).toBe("legacyvilaro");
+    expect(createVilaroBody.transport).toBe("cdp");
+    expect(createVilaroBody.cdpPort).toBeTypeOf("number");
 
     const createLegacyDriver = await realFetch(`${base}/profiles/create`, {
       method: "POST",
@@ -147,7 +147,7 @@ describe("profile CRUD endpoints", () => {
     const deleteMissingBody = (await deleteMissing.json()) as { error: string };
     expect(deleteMissingBody.error).toContain("not found");
 
-    const deleteDefault = await realFetch(`${base}/profiles/openclaw`, {
+    const deleteDefault = await realFetch(`${base}/profiles/vilaro`, {
       method: "DELETE",
     });
     expect(deleteDefault.status).toBe(400);

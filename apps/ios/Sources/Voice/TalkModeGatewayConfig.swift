@@ -1,5 +1,5 @@
 import Foundation
-import OpenClawKit
+import VilaroKit
 
 struct TalkModeGatewayConfigState {
     let activeProvider: String

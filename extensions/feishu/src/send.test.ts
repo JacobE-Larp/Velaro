@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+import type { VilaroConfig } from "vilaro/plugin-sdk/feishu";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   buildStructuredCard,
@@ -82,7 +82,7 @@ describe("getMessageFeishu", () => {
     });
 
     const result = await getMessageFeishu({
-      cfg: {} as ClawdbotConfig,
+      cfg: {} as VilaroConfig,
       messageId: "om_1",
     });
 
@@ -119,7 +119,7 @@ describe("getMessageFeishu", () => {
     });
 
     const result = await getMessageFeishu({
-      cfg: {} as ClawdbotConfig,
+      cfg: {} as VilaroConfig,
       messageId: "om_post",
     });
 
@@ -151,7 +151,7 @@ describe("getMessageFeishu", () => {
     });
 
     const result = await getMessageFeishu({
-      cfg: {} as ClawdbotConfig,
+      cfg: {} as VilaroConfig,
       messageId: "om_file",
     });
 
@@ -179,7 +179,7 @@ describe("getMessageFeishu", () => {
     });
 
     const result = await getMessageFeishu({
-      cfg: {} as ClawdbotConfig,
+      cfg: {} as VilaroConfig,
       messageId: "om_single",
     });
 
@@ -238,7 +238,7 @@ describe("getMessageFeishu", () => {
     });
 
     const result = await listFeishuThreadMessages({
-      cfg: {} as ClawdbotConfig,
+      cfg: {} as VilaroConfig,
       threadId: "omt_1",
       rootMessageId: "om_root",
     });
@@ -278,7 +278,7 @@ describe("editMessageFeishu", () => {
     mockClientPatch.mockResolvedValueOnce({ code: 0 });
 
     const result = await editMessageFeishu({
-      cfg: {} as ClawdbotConfig,
+      cfg: {} as VilaroConfig,
       messageId: "om_edit",
       text: "updated body",
     });
@@ -307,7 +307,7 @@ describe("editMessageFeishu", () => {
     mockClientPatch.mockResolvedValueOnce({ code: 0 });
 
     const result = await editMessageFeishu({
-      cfg: {} as ClawdbotConfig,
+      cfg: {} as VilaroConfig,
       messageId: "om_card",
       card: { schema: "2.0" },
     });
@@ -328,7 +328,7 @@ describe("resolveFeishuCardTemplate", () => {
   });
 
   it("drops unsupported free-form identity themes", () => {
-    expect(resolveFeishuCardTemplate("space lobster")).toBeUndefined();
+    expect(resolveFeishuCardTemplate("space vilaro")).toBeUndefined();
   });
 });
 
@@ -337,7 +337,7 @@ describe("buildStructuredCard", () => {
     const card = buildStructuredCard("hello", {
       header: {
         title: "Agent",
-        template: "space lobster",
+        template: "space vilaro",
       },
     });
 

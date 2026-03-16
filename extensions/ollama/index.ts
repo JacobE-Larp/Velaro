@@ -5,12 +5,12 @@ import {
   OLLAMA_DEFAULT_BASE_URL,
   promptAndConfigureOllama,
   configureOllamaNonInteractive,
-  type OpenClawPluginApi,
+  type VilaroPluginApi,
   type ProviderAuthContext,
   type ProviderAuthMethodNonInteractiveContext,
   type ProviderAuthResult,
   type ProviderDiscoveryContext,
-} from "openclaw/plugin-sdk/core";
+} from "vilaro/plugin-sdk/core";
 import { resolveOllamaApiBase } from "../../src/agents/models-config.providers.discovery.js";
 
 const PROVIDER_ID = "ollama";
@@ -21,7 +21,7 @@ const ollamaPlugin = {
   name: "Ollama Provider",
   description: "Bundled Ollama provider plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: "Ollama",

@@ -3,7 +3,7 @@ import {
   hasConfiguredSecretInput,
   normalizeResolvedSecretInputString,
   normalizeSecretInputString,
-} from "openclaw/plugin-sdk/matrix";
+} from "vilaro/plugin-sdk/matrix";
 
 export {
   buildSecretInputSchema,

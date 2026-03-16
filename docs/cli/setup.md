@@ -1,14 +1,14 @@
 ---
-summary: "CLI reference for `openclaw setup` (initialize config + workspace)"
+summary: "CLI reference for `vilaro setup` (initialize config + workspace)"
 read_when:
   - You’re doing first-run setup without the full setup wizard
   - You want to set the default workspace path
 title: "setup"
 ---
 
-# `openclaw setup`
+# `vilaro setup`
 
-Initialize `~/.openclaw/openclaw.json` and the agent workspace.
+Initialize `~/.vilaro/vilaro.json` and the agent workspace.
 
 Related:
 
@@ -18,12 +18,12 @@ Related:
 ## Examples
 
 ```bash
-openclaw setup
-openclaw setup --workspace ~/.openclaw/workspace
+vilaro setup
+vilaro setup --workspace ~/.vilaro/workspace
 ```
 
 To run the wizard via setup:
 
 ```bash
-openclaw setup --wizard
+vilaro setup --wizard
 ```

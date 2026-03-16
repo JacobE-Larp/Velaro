@@ -1,5 +1,5 @@
 import Testing
-@testable import OpenClaw
+@testable import Vilaro
 
 @Suite struct SettingsNetworkingHelpersTests {
     @Test func parseHostPortParsesIPv4() {

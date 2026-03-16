@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../../../../src/config/config.js";
+import type { VilaroConfig } from "../../../../src/config/config.js";
 import type { ResolvedAgentRoute } from "../../../../src/routing/resolve-route.js";
 import {
   buildDiscordRoutePeer,
@@ -8,10 +8,7 @@ import {
   resolveDiscordEffectiveRoute,
 } from "./route-resolution.js";
 
-function buildWorkerBindingConfig(peer: {
-  kind: "channel" | "direct";
-  id: string;
-}): OpenClawConfig {
+function buildWorkerBindingConfig(peer: { kind: "channel" | "direct"; id: string }): VilaroConfig {
   return {
     agents: {
       list: [{ id: "worker" }],

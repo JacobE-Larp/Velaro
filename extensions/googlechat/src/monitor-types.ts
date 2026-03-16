@@ -1,4 +1,4 @@
-import type { OpenClawConfig } from "openclaw/plugin-sdk/googlechat";
+import type { VilaroConfig } from "vilaro/plugin-sdk/googlechat";
 import type { ResolvedGoogleChatAccount } from "./accounts.js";
 import type { GoogleChatAudienceType } from "./auth.js";
 import { getGoogleChatRuntime } from "./runtime.js";
@@ -10,7 +10,7 @@ export type GoogleChatRuntimeEnv = {
 
 export type GoogleChatMonitorOptions = {
   account: ResolvedGoogleChatAccount;
-  config: OpenClawConfig;
+  config: VilaroConfig;
   runtime: GoogleChatRuntimeEnv;
   abortSignal: AbortSignal;
   webhookPath?: string;
@@ -22,7 +22,7 @@ export type GoogleChatCoreRuntime = ReturnType<typeof getGoogleChatRuntime>;
 
 export type WebhookTarget = {
   account: ResolvedGoogleChatAccount;
-  config: OpenClawConfig;
+  config: VilaroConfig;
   runtime: GoogleChatRuntimeEnv;
   core: GoogleChatCoreRuntime;
   path: string;

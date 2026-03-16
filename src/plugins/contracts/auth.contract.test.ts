@@ -11,7 +11,7 @@ import type {
   WizardProgress,
   WizardSelectParams,
 } from "../../wizard/prompts.js";
-import type { OpenClawPluginApi, ProviderPlugin } from "../types.js";
+import type { VilaroPluginApi, ProviderPlugin } from "../types.js";
 
 type LoginOpenAICodexOAuth =
   (typeof import("../../commands/openai-codex-oauth.js"))["loginOpenAICodexOAuth"];
@@ -78,7 +78,7 @@ function buildAuthContext() {
   };
 }
 
-function registerProviders(...plugins: Array<{ register(api: OpenClawPluginApi): void }>) {
+function registerProviders(...plugins: Array<{ register(api: VilaroPluginApi): void }>) {
   const captured = createCapturedPluginRegistration();
   for (const plugin of plugins) {
     plugin.register(captured.api);

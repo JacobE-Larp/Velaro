@@ -1,4 +1,4 @@
-export type { OpenClawConfig } from "../config/config.js";
+export type { VilaroConfig } from "../config/config.js";
 export type { SlackAccountConfig } from "../config/types.slack.js";
 export * from "./channel-plugin-common.js";
 

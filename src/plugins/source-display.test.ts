@@ -10,11 +10,11 @@ function createPluginSourceRoots() {
     "homebrew",
     "lib",
     "node_modules",
-    "openclaw",
+    "vilaro",
     "extensions",
   );
-  const globalRoot = path.resolve(path.sep, "Users", "x", ".openclaw", "extensions");
-  const workspaceRoot = path.resolve(path.sep, "Users", "x", "ws", ".openclaw", "extensions");
+  const globalRoot = path.resolve(path.sep, "Users", "x", ".vilaro", "extensions");
+  const workspaceRoot = path.resolve(path.sep, "Users", "x", "ws", ".vilaro", "extensions");
   return {
     stock: stockRoot,
     global: globalRoot,
@@ -64,11 +64,11 @@ describe("formatPluginSourceForTable", () => {
 
   it("resolves source roots from an explicit env override", () => {
     const ignoredHome = path.resolve(path.sep, "tmp", "ignored-home");
-    const homeDir = path.resolve(path.sep, "tmp", "openclaw-home");
+    const homeDir = path.resolve(path.sep, "tmp", "vilaro-home");
     const roots = withEnv(
       {
-        OPENCLAW_BUNDLED_PLUGINS_DIR: path.join(ignoredHome, "ignored-bundled"),
-        OPENCLAW_STATE_DIR: path.join(ignoredHome, "ignored-state"),
+        VILARO_BUNDLED_PLUGINS_DIR: path.join(ignoredHome, "ignored-bundled"),
+        VILARO_STATE_DIR: path.join(ignoredHome, "ignored-state"),
         HOME: ignoredHome,
       },
       () =>
@@ -76,8 +76,8 @@ describe("formatPluginSourceForTable", () => {
           env: {
             ...process.env,
             HOME: homeDir,
-            OPENCLAW_BUNDLED_PLUGINS_DIR: "~/bundled",
-            OPENCLAW_STATE_DIR: "~/state",
+            VILARO_BUNDLED_PLUGINS_DIR: "~/bundled",
+            VILARO_STATE_DIR: "~/state",
           },
           workspaceDir: "~/ws",
         }),
@@ -86,7 +86,7 @@ describe("formatPluginSourceForTable", () => {
     expect(roots).toEqual({
       stock: path.join(homeDir, "bundled"),
       global: path.join(homeDir, "state", "extensions"),
-      workspace: path.join(homeDir, "ws", ".openclaw", "extensions"),
+      workspace: path.join(homeDir, "ws", ".vilaro", "extensions"),
     });
   });
 });

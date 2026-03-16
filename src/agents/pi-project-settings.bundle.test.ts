@@ -50,8 +50,8 @@ afterEach(async () => {
 
 describe("loadEnabledBundlePiSettingsSnapshot", () => {
   it("loads sanitized settings from enabled bundle plugins", async () => {
-    const workspaceDir = await tempDirs.make("openclaw-workspace-");
-    const pluginRoot = await tempDirs.make("openclaw-bundle-");
+    const workspaceDir = await tempDirs.make("vilaro-workspace-");
+    const pluginRoot = await tempDirs.make("vilaro-bundle-");
     await fs.writeFile(
       path.join(pluginRoot, "settings.json"),
       JSON.stringify({
@@ -80,8 +80,8 @@ describe("loadEnabledBundlePiSettingsSnapshot", () => {
   });
 
   it("ignores disabled bundle plugins", async () => {
-    const workspaceDir = await tempDirs.make("openclaw-workspace-");
-    const pluginRoot = await tempDirs.make("openclaw-bundle-");
+    const workspaceDir = await tempDirs.make("vilaro-workspace-");
+    const pluginRoot = await tempDirs.make("vilaro-bundle-");
     await fs.writeFile(
       path.join(pluginRoot, "settings.json"),
       JSON.stringify({ hideThinkingBlock: true }),

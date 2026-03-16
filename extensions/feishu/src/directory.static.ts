@@ -1,8 +1,8 @@
 import {
   listDirectoryGroupEntriesFromMapKeysAndAllowFrom,
   listDirectoryUserEntriesFromAllowFromAndMapKeys,
-} from "openclaw/plugin-sdk/compat";
-import type { ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+} from "vilaro/plugin-sdk/compat";
+import type { VilaroConfig } from "vilaro/plugin-sdk/feishu";
 import { resolveFeishuAccount } from "./accounts.js";
 import { normalizeFeishuTarget } from "./targets.js";
 
@@ -27,7 +27,7 @@ function toFeishuDirectoryGroups(ids: string[]): FeishuDirectoryGroup[] {
 }
 
 export async function listFeishuDirectoryPeers(params: {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   query?: string;
   limit?: number;
   accountId?: string;
@@ -45,7 +45,7 @@ export async function listFeishuDirectoryPeers(params: {
 }
 
 export async function listFeishuDirectoryGroups(params: {
-  cfg: ClawdbotConfig;
+  cfg: VilaroConfig;
   query?: string;
   limit?: number;
   accountId?: string;

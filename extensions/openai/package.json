@@ -1,10 +1,10 @@
 {
-  "name": "@openclaw/openai-provider",
+  "name": "@vilaro/openai-provider",
   "version": "2026.3.14",
   "private": true,
-  "description": "OpenClaw OpenAI provider plugins",
+  "description": "Vilaro OpenAI provider plugins",
   "type": "module",
-  "openclaw": {
+  "vilaro": {
     "extensions": [
       "./index.ts"
     ]

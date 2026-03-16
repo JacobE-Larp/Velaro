@@ -121,23 +121,20 @@ async function withOnboardEnv(
   run: (ctx: OnboardEnv) => Promise<void>,
 ): Promise<void> {
   const tempHome = await makeTempWorkspace(prefix);
-  const configPath = path.join(tempHome, "openclaw.json");
+  const configPath = path.join(tempHome, "vilaro.json");
   const runtime = createThrowingRuntime();
 
   try {
     await withEnvAsync(
       {
         HOME: tempHome,
-        OPENCLAW_STATE_DIR: tempHome,
-        OPENCLAW_CONFIG_PATH: configPath,
-        OPENCLAW_SKIP_CHANNELS: "1",
-        OPENCLAW_SKIP_GMAIL_WATCHER: "1",
-        OPENCLAW_SKIP_CRON: "1",
-        OPENCLAW_SKIP_CANVAS_HOST: "1",
-        OPENCLAW_GATEWAY_TOKEN: undefined,
-        OPENCLAW_GATEWAY_PASSWORD: undefined,
+        VILARO_STATE_DIR: tempHome,
+        VILARO_CONFIG_PATH: configPath,
+        VILARO_SKIP_CHANNELS: "1",
+        VILARO_SKIP_CRON: "1",
+        VILARO_GATEWAY_TOKEN: undefined,
         CUSTOM_API_KEY: undefined,
-        OPENCLAW_DISABLE_CONFIG_CACHE: "1",
+        VILARO_DISABLE_CONFIG_CACHE: "1",
       },
       async () => {
         await run({ configPath, runtime });
@@ -226,7 +223,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("stores MiniMax API key and uses global baseUrl by default", async () => {
-    await withOnboardEnv("openclaw-onboard-minimax-", async (env) => {
+    await withOnboardEnv("vilaro-onboard-minimax-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "minimax-global-api",
         minimaxApiKey: "sk-minimax-test", // pragma: allowlist secret
@@ -245,7 +242,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("supports MiniMax CN API endpoint auth choice", async () => {
-    await withOnboardEnv("openclaw-onboard-minimax-cn-", async (env) => {
+    await withOnboardEnv("vilaro-onboard-minimax-cn-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "minimax-cn-api",
         minimaxApiKey: "sk-minimax-test", // pragma: allowlist secret
@@ -269,7 +266,7 @@ describe("onboard (non-interactive): provider auth", () => {
         [`${ZAI_GLOBAL_BASE_URL}/chat/completions::glm-5`]: 200,
       },
       async (fetchMock) =>
-        await withOnboardEnv("openclaw-onboard-zai-", async (env) => {
+        await withOnboardEnv("vilaro-onboard-zai-", async (env) => {
           const cfg = await runOnboardingAndReadConfig(env, {
             authChoice: "zai-api-key",
             zaiApiKey: "zai-test-key", // pragma: allowlist secret
@@ -296,7 +293,7 @@ describe("onboard (non-interactive): provider auth", () => {
         [`${ZAI_CODING_CN_BASE_URL}/chat/completions::glm-4.7`]: 200,
       },
       async (fetchMock) =>
-        await withOnboardEnv("openclaw-onboard-zai-cn-", async (env) => {
+        await withOnboardEnv("vilaro-onboard-zai-cn-", async (env) => {
           const cfg = await runOnboardingAndReadConfig(env, {
             authChoice: "zai-coding-cn",
             zaiApiKey: "zai-test-key", // pragma: allowlist secret
@@ -315,7 +312,7 @@ describe("onboard (non-interactive): provider auth", () => {
         [`${ZAI_CODING_GLOBAL_BASE_URL}/chat/completions::glm-5`]: 200,
       },
       async (fetchMock) =>
-        await withOnboardEnv("openclaw-onboard-zai-coding-global-", async (env) => {
+        await withOnboardEnv("vilaro-onboard-zai-coding-global-", async (env) => {
           const cfg = await runOnboardingAndReadConfig(env, {
             authChoice: "zai-coding-global",
             zaiApiKey: "zai-test-key", // pragma: allowlist secret
@@ -329,7 +326,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("stores xAI API key and sets default model", async () => {
-    await withOnboardEnv("openclaw-onboard-xai-", async (env) => {
+    await withOnboardEnv("vilaro-onboard-xai-", async (env) => {
       const rawKey = "xai-test-\r\nkey";
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "xai-api-key",
@@ -344,7 +341,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("infers Mistral auth choice from --mistral-api-key and sets default model", async () => {
-    await withOnboardEnv("openclaw-onboard-mistral-infer-", async (env) => {
+    await withOnboardEnv("vilaro-onboard-mistral-infer-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         mistralApiKey: "mistral-test-key", // pragma: allowlist secret
       });
@@ -361,7 +358,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("stores Volcano Engine API key and sets default model", async () => {
-    await withOnboardEnv("openclaw-onboard-volcengine-", async (env) => {
+    await withOnboardEnv("vilaro-onboard-volcengine-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "volcengine-api-key",
         volcengineApiKey: "volcengine-test-key", // pragma: allowlist secret
@@ -372,7 +369,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("infers BytePlus auth choice from --byteplus-api-key and sets default model", async () => {
-    await withOnboardEnv("openclaw-onboard-byteplus-infer-", async (env) => {
+    await withOnboardEnv("vilaro-onboard-byteplus-infer-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         byteplusApiKey: "byteplus-test-key", // pragma: allowlist secret
       });
@@ -382,7 +379,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("stores Vercel AI Gateway API key and sets default model", async () => {
-    await withOnboardEnv("openclaw-onboard-ai-gateway-", async (env) => {
+    await withOnboardEnv("vilaro-onboard-ai-gateway-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "ai-gateway-api-key",
         aiGatewayApiKey: "gateway-test-key", // pragma: allowlist secret
@@ -402,7 +399,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("stores token auth profile", async () => {
-    await withOnboardEnv("openclaw-onboard-token-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("vilaro-onboard-token-", async ({ configPath, runtime }) => {
       const cleanToken = `sk-ant-oat01-${"a".repeat(80)}`;
       const token = `${cleanToken.slice(0, 30)}\r${cleanToken.slice(30)}`;
 
@@ -429,7 +426,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("stores OpenAI API key and sets OpenAI default model", async () => {
-    await withOnboardEnv("openclaw-onboard-openai-", async (env) => {
+    await withOnboardEnv("vilaro-onboard-openai-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "openai-api-key",
         openaiApiKey: "sk-openai-test", // pragma: allowlist secret
@@ -442,7 +439,7 @@ describe("onboard (non-interactive): provider auth", () => {
   it.each([
     {
       name: "anthropic",
-      prefix: "openclaw-onboard-ref-flag-anthropic-",
+      prefix: "vilaro-onboard-ref-flag-anthropic-",
       authChoice: "apiKey",
       optionKey: "anthropicApiKey",
       flagName: "--anthropic-api-key",
@@ -450,7 +447,7 @@ describe("onboard (non-interactive): provider auth", () => {
     },
     {
       name: "openai",
-      prefix: "openclaw-onboard-ref-flag-openai-",
+      prefix: "vilaro-onboard-ref-flag-openai-",
       authChoice: "openai-api-key",
       optionKey: "openaiApiKey",
       flagName: "--openai-api-key",
@@ -458,7 +455,7 @@ describe("onboard (non-interactive): provider auth", () => {
     },
     {
       name: "openrouter",
-      prefix: "openclaw-onboard-ref-flag-openrouter-",
+      prefix: "vilaro-onboard-ref-flag-openrouter-",
       authChoice: "openrouter-api-key",
       optionKey: "openrouterApiKey",
       flagName: "--openrouter-api-key",
@@ -466,7 +463,7 @@ describe("onboard (non-interactive): provider auth", () => {
     },
     {
       name: "xai",
-      prefix: "openclaw-onboard-ref-flag-xai-",
+      prefix: "vilaro-onboard-ref-flag-xai-",
       authChoice: "xai-api-key",
       optionKey: "xaiApiKey",
       flagName: "--xai-api-key",
@@ -474,7 +471,7 @@ describe("onboard (non-interactive): provider auth", () => {
     },
     {
       name: "volcengine",
-      prefix: "openclaw-onboard-ref-flag-volcengine-",
+      prefix: "vilaro-onboard-ref-flag-volcengine-",
       authChoice: "volcengine-api-key",
       optionKey: "volcengineApiKey",
       flagName: "--volcengine-api-key",
@@ -482,7 +479,7 @@ describe("onboard (non-interactive): provider auth", () => {
     },
     {
       name: "byteplus",
-      prefix: "openclaw-onboard-ref-flag-byteplus-",
+      prefix: "vilaro-onboard-ref-flag-byteplus-",
       authChoice: "byteplus-api-key",
       optionKey: "byteplusApiKey",
       flagName: "--byteplus-api-key",
@@ -525,7 +522,7 @@ describe("onboard (non-interactive): provider auth", () => {
   );
 
   it("stores the detected env alias as keyRef for both OpenCode runtime providers", async () => {
-    await withOnboardEnv("openclaw-onboard-ref-opencode-alias-", async ({ runtime }) => {
+    await withOnboardEnv("vilaro-onboard-ref-opencode-alias-", async ({ runtime }) => {
       await withEnvAsync(
         {
           OPENCODE_API_KEY: undefined,
@@ -557,7 +554,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("configures vLLM via the provider plugin in non-interactive mode", async () => {
-    await withOnboardEnv("openclaw-onboard-vllm-non-interactive-", async (env) => {
+    await withOnboardEnv("vilaro-onboard-vllm-non-interactive-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "vllm",
         customBaseUrl: "http://127.0.0.1:8100/v1",
@@ -587,7 +584,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("configures SGLang via the provider plugin in non-interactive mode", async () => {
-    await withOnboardEnv("openclaw-onboard-sglang-non-interactive-", async (env) => {
+    await withOnboardEnv("vilaro-onboard-sglang-non-interactive-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "sglang",
         customBaseUrl: "http://127.0.0.1:31000/v1",
@@ -617,7 +614,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("stores LiteLLM API key and sets default model", async () => {
-    await withOnboardEnv("openclaw-onboard-litellm-", async (env) => {
+    await withOnboardEnv("vilaro-onboard-litellm-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         authChoice: "litellm-api-key",
         litellmApiKey: "litellm-test-key", // pragma: allowlist secret
@@ -637,14 +634,14 @@ describe("onboard (non-interactive): provider auth", () => {
   it.each([
     {
       name: "stores Cloudflare AI Gateway API key and metadata",
-      prefix: "openclaw-onboard-cf-gateway-",
+      prefix: "vilaro-onboard-cf-gateway-",
       options: {
         authChoice: "cloudflare-ai-gateway-api-key",
       },
     },
     {
       name: "infers Cloudflare auth choice from API key flags",
-      prefix: "openclaw-onboard-cf-gateway-infer-",
+      prefix: "vilaro-onboard-cf-gateway-infer-",
       options: {},
     },
   ])("$name", async ({ prefix, options }) => {
@@ -674,7 +671,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("infers Together auth choice from --together-api-key and sets default model", async () => {
-    await withOnboardEnv("openclaw-onboard-together-infer-", async (env) => {
+    await withOnboardEnv("vilaro-onboard-together-infer-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         togetherApiKey: "together-test-key", // pragma: allowlist secret
       });
@@ -691,7 +688,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("infers QIANFAN auth choice from --qianfan-api-key and sets default model", async () => {
-    await withOnboardEnv("openclaw-onboard-qianfan-infer-", async (env) => {
+    await withOnboardEnv("vilaro-onboard-qianfan-infer-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         qianfanApiKey: "qianfan-test-key", // pragma: allowlist secret
       });
@@ -708,7 +705,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("infers Model Studio auth choice from --modelstudio-api-key and sets default model", async () => {
-    await withOnboardEnv("openclaw-onboard-modelstudio-infer-", async (env) => {
+    await withOnboardEnv("vilaro-onboard-modelstudio-infer-", async (env) => {
       const cfg = await runOnboardingAndReadConfig(env, {
         modelstudioApiKey: "modelstudio-test-key", // pragma: allowlist secret
       });
@@ -728,7 +725,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("configures a custom provider from non-interactive flags", async () => {
-    await withOnboardEnv("openclaw-onboard-custom-provider-", async ({ configPath, runtime }) => {
+    await withOnboardEnv("vilaro-onboard-custom-provider-", async ({ configPath, runtime }) => {
       await runNonInteractiveSetupWithDefaults(runtime, {
         authChoice: "custom-api-key",
         customBaseUrl: "https://llm.example.com/v1",
@@ -751,7 +748,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("infers custom provider auth choice from custom flags", async () => {
     await withOnboardEnv(
-      "openclaw-onboard-custom-provider-infer-",
+      "vilaro-onboard-custom-provider-infer-",
       async ({ configPath, runtime }) => {
         await runNonInteractiveSetupWithDefaults(runtime, {
           customBaseUrl: "https://models.custom.local/v1",
@@ -775,7 +772,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("uses CUSTOM_API_KEY env fallback for non-interactive custom provider auth", async () => {
     await withOnboardEnv(
-      "openclaw-onboard-custom-provider-env-fallback-",
+      "vilaro-onboard-custom-provider-env-fallback-",
       async ({ configPath, runtime }) => {
         process.env.CUSTOM_API_KEY = "custom-env-key"; // pragma: allowlist secret
         await runCustomLocalNonInteractive(runtime);
@@ -786,7 +783,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("stores CUSTOM_API_KEY env ref for non-interactive custom provider auth in ref mode", async () => {
     await withOnboardEnv(
-      "openclaw-onboard-custom-provider-env-ref-",
+      "vilaro-onboard-custom-provider-env-ref-",
       async ({ configPath, runtime }) => {
         process.env.CUSTOM_API_KEY = "custom-env-key"; // pragma: allowlist secret
         await runCustomLocalNonInteractive(runtime, {
@@ -802,7 +799,7 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("fails fast for custom provider ref mode when --custom-api-key is set but CUSTOM_API_KEY env is missing", async () => {
-    await withOnboardEnv("openclaw-onboard-custom-provider-ref-flag-", async ({ runtime }) => {
+    await withOnboardEnv("vilaro-onboard-custom-provider-ref-flag-", async ({ runtime }) => {
       const providedSecret = "custom-inline-key-should-not-leak"; // pragma: allowlist secret
       await withEnvAsync({ CUSTOM_API_KEY: undefined }, async () => {
         let thrown: Error | undefined;
@@ -829,7 +826,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("uses matching profile fallback for non-interactive custom provider auth", async () => {
     await withOnboardEnv(
-      "openclaw-onboard-custom-provider-profile-fallback-",
+      "vilaro-onboard-custom-provider-profile-fallback-",
       async ({ configPath, runtime }) => {
         upsertAuthProfile({
           profileId: `${CUSTOM_LOCAL_PROVIDER_ID}:default`,
@@ -846,24 +843,21 @@ describe("onboard (non-interactive): provider auth", () => {
   });
 
   it("fails custom provider auth when compatibility is invalid", async () => {
-    await withOnboardEnv(
-      "openclaw-onboard-custom-provider-invalid-compat-",
-      async ({ runtime }) => {
-        await expect(
-          runNonInteractiveSetupWithDefaults(runtime, {
-            authChoice: "custom-api-key",
-            customBaseUrl: "https://models.custom.local/v1",
-            customModelId: "local-large",
-            customCompatibility: "xmlrpc",
-            skipSkills: true,
-          }),
-        ).rejects.toThrow('Invalid --custom-compatibility (use "openai" or "anthropic").');
-      },
-    );
+    await withOnboardEnv("vilaro-onboard-custom-provider-invalid-compat-", async ({ runtime }) => {
+      await expect(
+        runNonInteractiveSetupWithDefaults(runtime, {
+          authChoice: "custom-api-key",
+          customBaseUrl: "https://models.custom.local/v1",
+          customModelId: "local-large",
+          customCompatibility: "xmlrpc",
+          skipSkills: true,
+        }),
+      ).rejects.toThrow('Invalid --custom-compatibility (use "openai" or "anthropic").');
+    });
   });
 
   it("fails custom provider auth when explicit provider id is invalid", async () => {
-    await withOnboardEnv("openclaw-onboard-custom-provider-invalid-id-", async ({ runtime }) => {
+    await withOnboardEnv("vilaro-onboard-custom-provider-invalid-id-", async ({ runtime }) => {
       await expect(
         runNonInteractiveSetupWithDefaults(runtime, {
           authChoice: "custom-api-key",
@@ -880,7 +874,7 @@ describe("onboard (non-interactive): provider auth", () => {
 
   it("fails inferred custom auth when required flags are incomplete", async () => {
     await withOnboardEnv(
-      "openclaw-onboard-custom-provider-missing-required-",
+      "vilaro-onboard-custom-provider-missing-required-",
       async ({ runtime }) => {
         await expect(
           runNonInteractiveSetupWithDefaults(runtime, {

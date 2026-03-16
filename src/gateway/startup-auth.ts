@@ -1,9 +1,5 @@
 import crypto from "node:crypto";
-import type {
-  GatewayAuthConfig,
-  GatewayTailscaleConfig,
-  OpenClawConfig,
-} from "../config/config.js";
+import type { GatewayAuthConfig, GatewayTailscaleConfig, VilaroConfig } from "../config/config.js";
 import { writeConfigFile } from "../config/config.js";
 import { hasConfiguredSecretInput } from "../config/types.secrets.js";
 import { assertExplicitGatewayAuthModeWhenBothConfigured } from "./auth-mode-policy.js";
@@ -62,7 +58,7 @@ export function mergeGatewayTailscaleConfig(
 }
 
 function resolveGatewayAuthFromConfig(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   env: NodeJS.ProcessEnv;
   authOverride?: GatewayAuthConfig;
   tailscaleOverride?: GatewayTailscaleConfig;
@@ -97,7 +93,7 @@ function shouldPersistGeneratedToken(params: {
 }
 
 function hasGatewayTokenCandidate(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   env: NodeJS.ProcessEnv;
   authOverride?: GatewayAuthConfig;
 }): boolean {
@@ -134,7 +130,7 @@ function hasGatewayPasswordOverrideCandidate(params: {
 }
 
 function shouldResolveGatewayTokenSecretRef(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   env: NodeJS.ProcessEnv;
   authOverride?: GatewayAuthConfig;
 }): boolean {
@@ -162,7 +158,7 @@ function shouldResolveGatewayTokenSecretRef(params: {
 }
 
 async function resolveGatewayTokenSecretRef(
-  cfg: OpenClawConfig,
+  cfg: VilaroConfig,
   env: NodeJS.ProcessEnv,
   authOverride?: GatewayAuthConfig,
 ): Promise<string | undefined> {
@@ -178,7 +174,7 @@ async function resolveGatewayTokenSecretRef(
 }
 
 function shouldResolveGatewayPasswordSecretRef(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   env: NodeJS.ProcessEnv;
   authOverride?: GatewayAuthConfig;
 }): boolean {
@@ -200,7 +196,7 @@ function shouldResolveGatewayPasswordSecretRef(params: {
 }
 
 async function resolveGatewayPasswordSecretRef(
-  cfg: OpenClawConfig,
+  cfg: VilaroConfig,
   env: NodeJS.ProcessEnv,
   authOverride?: GatewayAuthConfig,
 ): Promise<string | undefined> {
@@ -216,13 +212,13 @@ async function resolveGatewayPasswordSecretRef(
 }
 
 export async function ensureGatewayStartupAuth(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   env?: NodeJS.ProcessEnv;
   authOverride?: GatewayAuthConfig;
   tailscaleOverride?: GatewayTailscaleConfig;
   persist?: boolean;
 }): Promise<{
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   auth: ReturnType<typeof resolveGatewayAuth>;
   generatedToken?: string;
   persistedGeneratedToken: boolean;
@@ -254,7 +250,7 @@ export async function ensureGatewayStartupAuth(params: {
   }
 
   const generatedToken = crypto.randomBytes(24).toString("hex");
-  const nextCfg: OpenClawConfig = {
+  const nextCfg: VilaroConfig = {
     ...params.cfg,
     gateway: {
       ...params.cfg.gateway,
@@ -289,7 +285,7 @@ export async function ensureGatewayStartupAuth(params: {
 }
 
 export function assertHooksTokenSeparateFromGatewayAuth(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   auth: ResolvedGatewayAuth;
 }): void {
   if (params.cfg.hooks?.enabled !== true) {

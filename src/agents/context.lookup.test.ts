@@ -10,10 +10,10 @@ function mockContextDeps(params: {
     loadConfig: params.loadConfig,
   }));
   vi.doMock("./models-config.js", () => ({
-    ensureOpenClawModelsJson: vi.fn(async () => {}),
+    ensureVilaroModelsJson: vi.fn(async () => {}),
   }));
   vi.doMock("./agent-paths.js", () => ({
-    resolveOpenClawAgentDir: () => "/tmp/openclaw-agent",
+    resolveVilaroAgentDir: () => "/tmp/vilaro-agent",
   }));
   vi.doMock("./pi-model-discovery.js", () => ({
     discoverAuthStorage: vi.fn(() => ({})),
@@ -81,7 +81,7 @@ describe("lookupContextTokens", () => {
     mockContextModuleDeps(loadConfigMock);
 
     const argvSnapshot = process.argv;
-    process.argv = ["node", "openclaw", "--profile", "--", "config", "validate"];
+    process.argv = ["node", "vilaro", "--profile", "--", "config", "validate"];
     try {
       await import("./context.js");
       expect(loadConfigMock).toHaveBeenCalledTimes(1);
@@ -95,7 +95,7 @@ describe("lookupContextTokens", () => {
     mockContextModuleDeps(loadConfigMock);
 
     const argvSnapshot = process.argv;
-    process.argv = ["node", "openclaw", "logs", "--limit", "5"];
+    process.argv = ["node", "vilaro", "logs", "--limit", "5"];
     try {
       await import("./context.js");
       expect(loadConfigMock).not.toHaveBeenCalled();
@@ -109,7 +109,7 @@ describe("lookupContextTokens", () => {
     mockContextModuleDeps(loadConfigMock);
 
     const argvSnapshot = process.argv;
-    process.argv = ["node", "openclaw", "status", "--json"];
+    process.argv = ["node", "vilaro", "status", "--json"];
     try {
       await import("./context.js");
       expect(loadConfigMock).not.toHaveBeenCalled();
@@ -123,7 +123,7 @@ describe("lookupContextTokens", () => {
     mockContextModuleDeps(loadConfigMock);
 
     const argvSnapshot = process.argv;
-    process.argv = ["node", "openclaw", "gateway", "status", "--json"];
+    process.argv = ["node", "vilaro", "gateway", "status", "--json"];
     try {
       await import("./context.js");
       expect(loadConfigMock).not.toHaveBeenCalled();
@@ -152,7 +152,7 @@ describe("lookupContextTokens", () => {
     mockContextModuleDeps(loadConfigMock);
 
     const argvSnapshot = process.argv;
-    process.argv = ["node", "openclaw", "config", "validate"];
+    process.argv = ["node", "vilaro", "config", "validate"];
     try {
       const { lookupContextTokens } = await import("./context.js");
       expect(lookupContextTokens("openrouter/claude-sonnet")).toBeUndefined();

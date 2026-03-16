@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { drainFormattedSystemEvents } from "../auto-reply/reply/session-updates.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { VilaroConfig } from "../config/config.js";
 import { resolveMainSessionKey } from "../config/sessions.js";
 import { isCronSystemEvent } from "./heartbeat-runner.js";
 import {
@@ -13,7 +13,7 @@ import {
   resetSystemEventsForTest,
 } from "./system-events.js";
 
-const cfg = {} as unknown as OpenClawConfig;
+const cfg = {} as unknown as VilaroConfig;
 const mainKey = resolveMainSessionKey(cfg);
 
 describe("system events (session routing)", () => {
@@ -165,7 +165,7 @@ describe("isCronSystemEvent", () => {
 
   it("returns false for heartbeat ack markers", () => {
     expect(isCronSystemEvent("HEARTBEAT_OK")).toBe(false);
-    expect(isCronSystemEvent("HEARTBEAT_OK 🦞")).toBe(false);
+    expect(isCronSystemEvent("HEARTBEAT_OK ")).toBe(false);
     expect(isCronSystemEvent("heartbeat_ok")).toBe(false);
     expect(isCronSystemEvent("HEARTBEAT_OK:")).toBe(false);
     expect(isCronSystemEvent("HEARTBEAT_OK, continue")).toBe(false);

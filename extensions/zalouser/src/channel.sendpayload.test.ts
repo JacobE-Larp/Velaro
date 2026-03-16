@@ -1,4 +1,4 @@
-import type { ReplyPayload } from "openclaw/plugin-sdk/zalouser";
+import type { ReplyPayload } from "vilaro/plugin-sdk/zalouser";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import "./accounts.test-mocks.js";
 import {

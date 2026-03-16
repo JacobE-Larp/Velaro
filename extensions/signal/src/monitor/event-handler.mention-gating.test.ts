@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import type { MsgContext } from "../../../../src/auto-reply/templating.js";
-import type { OpenClawConfig } from "../../../../src/config/types.js";
+import type { VilaroConfig } from "../../../../src/config/types.js";
 import { buildDispatchInboundCaptureMock } from "../../../../test/helpers/dispatch-inbound-capture.js";
 import {
   createBaseSignalEventHandlerDeps,
@@ -87,7 +87,7 @@ function createSignalConfig(params: { requireMention: boolean; mentionPattern?: 
         groups: { "*": { requireMention: params.requireMention } },
       },
     },
-  } as unknown as OpenClawConfig;
+  } as unknown as VilaroConfig;
 }
 
 async function expectSkippedGroupHistory(opts: GroupEventOpts, expectedBody: string) {

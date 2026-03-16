@@ -1,4 +1,4 @@
-import type { ClawdbotConfig } from "openclaw/plugin-sdk/feishu";
+import type { VilaroConfig } from "vilaro/plugin-sdk/feishu";
 import { describe, expect, it, vi } from "vitest";
 
 const resolveFeishuAccountMock = vi.hoisted(() => vi.fn());
@@ -20,7 +20,7 @@ import {
 } from "./directory.js";
 
 describe("feishu directory (config-backed)", () => {
-  const cfg = {} as ClawdbotConfig;
+  const cfg = {} as VilaroConfig;
 
   function makeStaticAccount() {
     return {

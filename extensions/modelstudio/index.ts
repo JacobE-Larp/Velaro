@@ -1,4 +1,4 @@
-import { emptyPluginConfigSchema, type OpenClawPluginApi } from "openclaw/plugin-sdk/core";
+import { emptyPluginConfigSchema, type VilaroPluginApi } from "vilaro/plugin-sdk/core";
 import { buildModelStudioProvider } from "../../src/agents/models-config.providers.static.js";
 import {
   applyModelStudioConfig,
@@ -14,7 +14,7 @@ const modelStudioPlugin = {
   name: "Model Studio Provider",
   description: "Bundled Model Studio provider plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: "Model Studio",

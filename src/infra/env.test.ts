@@ -67,16 +67,16 @@ describe("logAcceptedEnvOption", () => {
       {
         VITEST: "",
         NODE_ENV: "development",
-        OPENCLAW_TEST_ENV: "  line one\nline two  ",
+        VILARO_TEST_ENV: "  line one\nline two  ",
       },
       () => {
         logAcceptedEnvOption({
-          key: "OPENCLAW_TEST_ENV",
+          key: "VILARO_TEST_ENV",
           description: "test option",
           redact: true,
         });
         logAcceptedEnvOption({
-          key: "OPENCLAW_TEST_ENV",
+          key: "VILARO_TEST_ENV",
           description: "test option",
           redact: true,
         });
@@ -84,9 +84,7 @@ describe("logAcceptedEnvOption", () => {
     );
 
     expect(loggerMocks.info).toHaveBeenCalledTimes(1);
-    expect(loggerMocks.info).toHaveBeenCalledWith(
-      "env: OPENCLAW_TEST_ENV=<redacted> (test option)",
-    );
+    expect(loggerMocks.info).toHaveBeenCalledWith("env: VILARO_TEST_ENV=<redacted> (test option)");
   });
 
   it("skips blank values and test-mode logging", () => {
@@ -96,11 +94,11 @@ describe("logAcceptedEnvOption", () => {
       {
         VITEST: "1",
         NODE_ENV: "development",
-        OPENCLAW_BLANK_ENV: "value",
+        VILARO_BLANK_ENV: "value",
       },
       () => {
         logAcceptedEnvOption({
-          key: "OPENCLAW_BLANK_ENV",
+          key: "VILARO_BLANK_ENV",
           description: "skipped in vitest",
         });
       },
@@ -110,11 +108,11 @@ describe("logAcceptedEnvOption", () => {
       {
         VITEST: "",
         NODE_ENV: "development",
-        OPENCLAW_BLANK_ENV: "   ",
+        VILARO_BLANK_ENV: "   ",
       },
       () => {
         logAcceptedEnvOption({
-          key: "OPENCLAW_BLANK_ENV",
+          key: "VILARO_BLANK_ENV",
           description: "blank value",
         });
       },

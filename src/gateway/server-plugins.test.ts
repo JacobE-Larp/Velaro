@@ -4,7 +4,7 @@ import type { PluginRuntime } from "../plugins/runtime/types.js";
 import type { PluginDiagnostic } from "../plugins/types.js";
 import type { GatewayRequestContext, GatewayRequestOptions } from "./server-methods/types.js";
 
-const loadOpenClawPlugins = vi.hoisted(() => vi.fn());
+const loadVilaroPlugins = vi.hoisted(() => vi.fn());
 type HandleGatewayRequestOptions = GatewayRequestOptions & {
   extraHandlers?: Record<string, unknown>;
 };
@@ -13,7 +13,7 @@ const handleGatewayRequest = vi.hoisted(() =>
 );
 
 vi.mock("../plugins/loader.js", () => ({
-  loadOpenClawPlugins,
+  loadVilaroPlugins,
 }));
 
 vi.mock("./server-methods.js", () => ({
@@ -59,7 +59,7 @@ function createSubagentRuntime(serverPlugins: ServerPluginsModule): PluginRuntim
     error: vi.fn(),
     debug: vi.fn(),
   };
-  loadOpenClawPlugins.mockReturnValue(createRegistry([]));
+  loadVilaroPlugins.mockReturnValue(createRegistry([]));
   serverPlugins.loadGatewayPlugins({
     cfg: {},
     workspaceDir: "/tmp",
@@ -67,7 +67,7 @@ function createSubagentRuntime(serverPlugins: ServerPluginsModule): PluginRuntim
     coreGatewayHandlers: {},
     baseMethods: [],
   });
-  const call = loadOpenClawPlugins.mock.calls.at(-1)?.[0] as
+  const call = loadVilaroPlugins.mock.calls.at(-1)?.[0] as
     | { runtimeOptions?: { subagent?: PluginRuntime["subagent"] } }
     | undefined;
   if (!call?.runtimeOptions?.subagent) {
@@ -77,7 +77,7 @@ function createSubagentRuntime(serverPlugins: ServerPluginsModule): PluginRuntim
 }
 
 beforeEach(() => {
-  loadOpenClawPlugins.mockReset();
+  loadVilaroPlugins.mockReset();
   handleGatewayRequest.mockReset();
   handleGatewayRequest.mockImplementation(async (opts: HandleGatewayRequestOptions) => {
     switch (opts.req.method) {
@@ -114,7 +114,7 @@ describe("loadGatewayPlugins", () => {
         message: "failed to load plugin: boom",
       },
     ];
-    loadOpenClawPlugins.mockReturnValue(createRegistry(diagnostics));
+    loadVilaroPlugins.mockReturnValue(createRegistry(diagnostics));
 
     const log = {
       info: vi.fn(),
@@ -139,7 +139,7 @@ describe("loadGatewayPlugins", () => {
 
   test("provides subagent runtime with sessions.get method aliases", async () => {
     const { loadGatewayPlugins } = await importServerPluginsModule();
-    loadOpenClawPlugins.mockReturnValue(createRegistry([]));
+    loadVilaroPlugins.mockReturnValue(createRegistry([]));
 
     const log = {
       info: vi.fn(),
@@ -156,7 +156,7 @@ describe("loadGatewayPlugins", () => {
       baseMethods: [],
     });
 
-    const call = loadOpenClawPlugins.mock.calls.at(-1)?.[0];
+    const call = loadVilaroPlugins.mock.calls.at(-1)?.[0];
     const subagent = call?.runtimeOptions?.subagent;
     expect(typeof subagent?.getSessionMessages).toBe("function");
     expect(typeof subagent?.getSession).toBe("function");

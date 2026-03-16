@@ -3,13 +3,13 @@ import os from "node:os";
 import path from "node:path";
 import {
   emptyPluginConfigSchema,
-  type OpenClawPluginApi,
+  type VilaroPluginApi,
   type ProviderAuthContext,
   type ProviderAuthMethod,
   type ProviderAuthMethodNonInteractiveContext,
   type ProviderResolveDynamicModelContext,
   type ProviderRuntimeModel,
-} from "openclaw/plugin-sdk/core";
+} from "vilaro/plugin-sdk/core";
 import { upsertAuthProfile } from "../../src/agents/auth-profiles.js";
 import { DEFAULT_CONTEXT_TOKENS } from "../../src/agents/defaults.js";
 import { normalizeModelCompat } from "../../src/agents/model-compat.js";
@@ -260,7 +260,7 @@ const zaiPlugin = {
   name: "Z.AI Provider",
   description: "Bundled Z.AI provider plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: "Z.AI",

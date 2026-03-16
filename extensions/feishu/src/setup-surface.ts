@@ -9,7 +9,7 @@ import {
 } from "../../../src/channels/plugins/setup-wizard-helpers.js";
 import type { ChannelSetupDmPolicy } from "../../../src/channels/plugins/setup-wizard-types.js";
 import type { ChannelSetupWizard } from "../../../src/channels/plugins/setup-wizard.js";
-import type { OpenClawConfig } from "../../../src/config/config.js";
+import type { VilaroConfig } from "../../../src/config/config.js";
 import type { DmPolicy } from "../../../src/config/types.js";
 import type { SecretInput } from "../../../src/config/types.secrets.js";
 import { hasConfiguredSecretInput } from "../../../src/config/types.secrets.js";
@@ -30,35 +30,35 @@ function normalizeString(value: unknown): string | undefined {
   return trimmed || undefined;
 }
 
-function setFeishuDmPolicy(cfg: OpenClawConfig, dmPolicy: DmPolicy): OpenClawConfig {
+function setFeishuDmPolicy(cfg: VilaroConfig, dmPolicy: DmPolicy): VilaroConfig {
   return setTopLevelChannelDmPolicyWithAllowFrom({
     cfg,
     channel,
     dmPolicy,
-  }) as OpenClawConfig;
+  }) as VilaroConfig;
 }
 
-function setFeishuAllowFrom(cfg: OpenClawConfig, allowFrom: string[]): OpenClawConfig {
+function setFeishuAllowFrom(cfg: VilaroConfig, allowFrom: string[]): VilaroConfig {
   return setTopLevelChannelAllowFrom({
     cfg,
     channel,
     allowFrom,
-  }) as OpenClawConfig;
+  }) as VilaroConfig;
 }
 
 function setFeishuGroupPolicy(
-  cfg: OpenClawConfig,
+  cfg: VilaroConfig,
   groupPolicy: "open" | "allowlist" | "disabled",
-): OpenClawConfig {
+): VilaroConfig {
   return setTopLevelChannelGroupPolicy({
     cfg,
     channel,
     groupPolicy,
     enabled: true,
-  }) as OpenClawConfig;
+  }) as VilaroConfig;
 }
 
-function setFeishuGroupAllowFrom(cfg: OpenClawConfig, groupAllowFrom: string[]): OpenClawConfig {
+function setFeishuGroupAllowFrom(cfg: VilaroConfig, groupAllowFrom: string[]): VilaroConfig {
   return {
     ...cfg,
     channels: {
@@ -71,7 +71,7 @@ function setFeishuGroupAllowFrom(cfg: OpenClawConfig, groupAllowFrom: string[]):
   };
 }
 
-function isFeishuConfigured(cfg: OpenClawConfig): boolean {
+function isFeishuConfigured(cfg: VilaroConfig): boolean {
   const feishuCfg = cfg.channels?.feishu as FeishuConfig | undefined;
 
   const isAppIdConfigured = (value: unknown): boolean => {
@@ -114,9 +114,9 @@ function isFeishuConfigured(cfg: OpenClawConfig): boolean {
 }
 
 async function promptFeishuAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   prompter: Parameters<NonNullable<ChannelSetupDmPolicy["promptAllowFrom"]>>[0]["prompter"];
-}): Promise<OpenClawConfig> {
+}): Promise<VilaroConfig> {
   const existing = params.cfg.channels?.feishu?.allowFrom ?? [];
   await params.prompter.note(
     [
@@ -183,7 +183,7 @@ const feishuDmPolicy: ChannelSetupDmPolicy = {
   policyKey: "channels.feishu.dmPolicy",
   allowFromKey: "channels.feishu.allowFrom",
   getCurrent: (cfg) => (cfg.channels?.feishu as FeishuConfig | undefined)?.dmPolicy ?? "pairing",
-  setPolicy: (cfg, policy) => setFeishuDmPolicy(cfg as OpenClawConfig, policy),
+  setPolicy: (cfg, policy) => setFeishuDmPolicy(cfg as VilaroConfig, policy),
   promptAllowFrom: promptFeishuAllowFrom,
 };
 

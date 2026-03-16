@@ -2,7 +2,7 @@
  * Twitch channel plugin types.
  *
  * This file defines Twitch-specific types. Generic channel types are imported
- * from OpenClaw core.
+ * from Vilaro core.
  */
 
 import type {
@@ -19,10 +19,10 @@ import type {
   ChannelResolveKind,
   ChannelResolveResult,
   ChannelStatusAdapter,
-  OpenClawConfig,
+  VilaroConfig,
   OutboundDeliveryResult,
   RuntimeEnv,
-} from "openclaw/plugin-sdk/twitch";
+} from "vilaro/plugin-sdk/twitch";
 
 // ============================================================================
 // Twitch-Specific Types
@@ -137,5 +137,5 @@ import type { z } from "zod";
 import type { TwitchConfigSchema } from "./config-schema.js";
 export type TwitchConfig = z.infer<typeof TwitchConfigSchema>;
 
-export type { OpenClawConfig };
+export type { VilaroConfig };
 export type { RuntimeEnv };

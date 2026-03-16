@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: openclaw
+  name: vilaro
   labels:
-    app: openclaw
+    app: vilaro
 spec:
   type: ClusterIP
   selector:
-    app: openclaw
+    app: vilaro
   ports:
     - name: gateway
       port: 18789

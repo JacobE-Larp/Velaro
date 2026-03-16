@@ -44,7 +44,7 @@ import type { ReplyPayload } from "../../../../src/auto-reply/types.js";
 import { resolveCommandAuthorizedFromAuthorizers } from "../../../../src/channels/command-gating.js";
 import { resolveNativeCommandSessionTargets } from "../../../../src/channels/native-command-session-targets.js";
 import { createReplyPrefixOptions } from "../../../../src/channels/reply-prefix.js";
-import type { OpenClawConfig, loadConfig } from "../../../../src/config/config.js";
+import type { VilaroConfig, loadConfig } from "../../../../src/config/config.js";
 import { isDangerousNameMatchingEnabled } from "../../../../src/config/dangerous-name-matching.js";
 import { resolveOpenProviderRuntimeGroupPolicy } from "../../../../src/config/runtime-group-policy.js";
 import { loadSessionStore, resolveStorePath } from "../../../../src/config/sessions.js";
@@ -94,11 +94,11 @@ import { resolveDiscordSenderIdentity } from "./sender-identity.js";
 import type { ThreadBindingManager } from "./thread-bindings.js";
 import { resolveDiscordThreadParentInfo } from "./threading.js";
 
-type DiscordConfig = NonNullable<OpenClawConfig["channels"]>["discord"];
+type DiscordConfig = NonNullable<VilaroConfig["channels"]>["discord"];
 const log = createSubsystemLogger("discord/native-command");
 
 function resolveDiscordNativeCommandAllowlistAccess(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   accountId?: string | null;
   sender: { id: string; name?: string; tag?: string };
   chatType: "direct" | "group" | "thread" | "channel";

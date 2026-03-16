@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import type { OpenClawConfig } from "../config/config.js";
+import type { VilaroConfig } from "../config/config.js";
 import { captureEnv } from "../test-utils/env.js";
 import { loadEnabledBundleMcpConfig } from "./bundle-mcp.js";
 import { clearPluginManifestRegistryCache } from "./manifest-registry.js";
@@ -24,16 +24,16 @@ afterEach(async () => {
 
 describe("loadEnabledBundleMcpConfig", () => {
   it("loads enabled Claude bundle MCP config and absolutizes relative args", async () => {
-    const env = captureEnv(["HOME", "USERPROFILE", "OPENCLAW_HOME", "OPENCLAW_STATE_DIR"]);
+    const env = captureEnv(["HOME", "USERPROFILE", "VILARO_HOME", "VILARO_STATE_DIR"]);
     try {
-      const homeDir = await createTempDir("openclaw-bundle-mcp-home-");
-      const workspaceDir = await createTempDir("openclaw-bundle-mcp-workspace-");
+      const homeDir = await createTempDir("vilaro-bundle-mcp-home-");
+      const workspaceDir = await createTempDir("vilaro-bundle-mcp-workspace-");
       process.env.HOME = homeDir;
       process.env.USERPROFILE = homeDir;
-      delete process.env.OPENCLAW_HOME;
-      delete process.env.OPENCLAW_STATE_DIR;
+      delete process.env.VILARO_HOME;
+      delete process.env.VILARO_STATE_DIR;
 
-      const pluginRoot = path.join(homeDir, ".openclaw", "extensions", "bundle-probe");
+      const pluginRoot = path.join(homeDir, ".vilaro", "extensions", "bundle-probe");
       const serverPath = path.join(pluginRoot, "servers", "probe.mjs");
       await fs.mkdir(path.join(pluginRoot, ".claude-plugin"), { recursive: true });
       await fs.mkdir(path.dirname(serverPath), { recursive: true });
@@ -60,7 +60,7 @@ describe("loadEnabledBundleMcpConfig", () => {
         "utf-8",
       );
 
-      const config: OpenClawConfig = {
+      const config: VilaroConfig = {
         plugins: {
           entries: {
             "bundle-probe": { enabled: true },
@@ -83,17 +83,17 @@ describe("loadEnabledBundleMcpConfig", () => {
   });
 
   it("merges inline bundle MCP servers and skips disabled bundles", async () => {
-    const env = captureEnv(["HOME", "USERPROFILE", "OPENCLAW_HOME", "OPENCLAW_STATE_DIR"]);
+    const env = captureEnv(["HOME", "USERPROFILE", "VILARO_HOME", "VILARO_STATE_DIR"]);
     try {
-      const homeDir = await createTempDir("openclaw-bundle-inline-home-");
-      const workspaceDir = await createTempDir("openclaw-bundle-inline-workspace-");
+      const homeDir = await createTempDir("vilaro-bundle-inline-home-");
+      const workspaceDir = await createTempDir("vilaro-bundle-inline-workspace-");
       process.env.HOME = homeDir;
       process.env.USERPROFILE = homeDir;
-      delete process.env.OPENCLAW_HOME;
-      delete process.env.OPENCLAW_STATE_DIR;
+      delete process.env.VILARO_HOME;
+      delete process.env.VILARO_STATE_DIR;
 
-      const enabledRoot = path.join(homeDir, ".openclaw", "extensions", "inline-enabled");
-      const disabledRoot = path.join(homeDir, ".openclaw", "extensions", "inline-disabled");
+      const enabledRoot = path.join(homeDir, ".vilaro", "extensions", "inline-enabled");
+      const disabledRoot = path.join(homeDir, ".vilaro", "extensions", "inline-disabled");
       await fs.mkdir(path.join(enabledRoot, ".claude-plugin"), { recursive: true });
       await fs.mkdir(path.join(disabledRoot, ".claude-plugin"), { recursive: true });
       await fs.writeFile(
@@ -131,7 +131,7 @@ describe("loadEnabledBundleMcpConfig", () => {
         "utf-8",
       );
 
-      const config: OpenClawConfig = {
+      const config: VilaroConfig = {
         plugins: {
           entries: {
             "inline-enabled": { enabled: true },

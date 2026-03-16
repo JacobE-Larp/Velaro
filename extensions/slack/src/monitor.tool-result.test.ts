@@ -284,7 +284,7 @@ describe("monitorSlackProvider tool results", () => {
           {
             id: "main",
             default: true,
-            identity: { name: "Mainbot", theme: "space lobster", emoji: "🦞" },
+            identity: { name: "Mainbot", theme: "space vilaro", emoji: "" },
           },
           {
             id: "rich",
@@ -396,7 +396,7 @@ describe("monitorSlackProvider tool results", () => {
   });
 
   async function expectMentionPatternMessageAccepted(text: string): Promise<void> {
-    setRequireMentionChannelConfig(["\\bopenclaw\\b"]);
+    setRequireMentionChannelConfig(["\\bvilaro\\b"]);
     replyMock.mockResolvedValue({ text: "hi" });
 
     await runSlackMessageOnce(monitorSlackProvider, {
@@ -411,11 +411,11 @@ describe("monitorSlackProvider tool results", () => {
   }
 
   it("accepts channel messages when mentionPatterns match", async () => {
-    await expectMentionPatternMessageAccepted("openclaw: hello");
+    await expectMentionPatternMessageAccepted("vilaro: hello");
   });
 
   it("accepts channel messages when mentionPatterns match even if another user is mentioned", async () => {
-    await expectMentionPatternMessageAccepted("openclaw: hello <@U2>");
+    await expectMentionPatternMessageAccepted("vilaro: hello <@U2>");
   });
 
   it("treats replies to bot threads as implicit mentions", async () => {

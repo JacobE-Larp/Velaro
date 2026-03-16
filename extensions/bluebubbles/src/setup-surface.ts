@@ -4,7 +4,7 @@ import {
 } from "../../../src/channels/plugins/setup-wizard-helpers.js";
 import type { ChannelSetupDmPolicy } from "../../../src/channels/plugins/setup-wizard-types.js";
 import type { ChannelSetupWizard } from "../../../src/channels/plugins/setup-wizard.js";
-import type { OpenClawConfig } from "../../../src/config/config.js";
+import type { VilaroConfig } from "../../../src/config/config.js";
 import type { DmPolicy } from "../../../src/config/types.js";
 import { DEFAULT_ACCOUNT_ID } from "../../../src/routing/session-key.js";
 import { formatDocsLink } from "../../../src/terminal/links.js";
@@ -51,10 +51,10 @@ function validateBlueBubblesAllowFromEntry(value: string): string | null {
 }
 
 async function promptBlueBubblesAllowFrom(params: {
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   prompter: WizardPrompter;
   accountId?: string;
-}): Promise<OpenClawConfig> {
+}): Promise<VilaroConfig> {
   const accountId = resolveSetupAccountId({
     accountId: params.accountId,
     defaultAccountId: resolveDefaultBlueBubblesAccountId(params.cfg),
@@ -112,14 +112,14 @@ function validateBlueBubblesServerUrlInput(value: unknown): string | undefined {
 }
 
 function applyBlueBubblesSetupPatch(
-  cfg: OpenClawConfig,
+  cfg: VilaroConfig,
   accountId: string,
   patch: {
     serverUrl?: string;
     password?: unknown;
     webhookPath?: string;
   },
-): OpenClawConfig {
+): VilaroConfig {
   return applyBlueBubblesConnectionConfig({
     cfg,
     accountId,
@@ -129,11 +129,11 @@ function applyBlueBubblesSetupPatch(
   });
 }
 
-function resolveBlueBubblesServerUrl(cfg: OpenClawConfig, accountId: string): string | undefined {
+function resolveBlueBubblesServerUrl(cfg: VilaroConfig, accountId: string): string | undefined {
   return resolveBlueBubblesAccount({ cfg, accountId }).config.serverUrl?.trim() || undefined;
 }
 
-function resolveBlueBubblesWebhookPath(cfg: OpenClawConfig, accountId: string): string | undefined {
+function resolveBlueBubblesWebhookPath(cfg: VilaroConfig, accountId: string): string | undefined {
   return resolveBlueBubblesAccount({ cfg, accountId }).config.webhookPath?.trim() || undefined;
 }
 
@@ -264,7 +264,7 @@ export const blueBubblesSetupWizard: ChannelSetupWizard = {
     lines: [
       "Configure the webhook URL in BlueBubbles Server:",
       "1. Open BlueBubbles Server -> Settings -> Webhooks",
-      "2. Add your OpenClaw gateway URL + webhook path",
+      "2. Add your Vilaro gateway URL + webhook path",
       `   Example: https://your-gateway-host:3000${DEFAULT_WEBHOOK_PATH}`,
       "3. Enable the webhook and save",
       "",

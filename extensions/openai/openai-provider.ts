@@ -1,7 +1,7 @@
 import {
   type ProviderResolveDynamicModelContext,
   type ProviderRuntimeModel,
-} from "openclaw/plugin-sdk/core";
+} from "vilaro/plugin-sdk/core";
 import { normalizeModelCompat } from "../../src/agents/model-compat.js";
 import { normalizeProviderId } from "../../src/agents/model-selection.js";
 import {

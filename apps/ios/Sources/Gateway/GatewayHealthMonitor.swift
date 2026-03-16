@@ -1,5 +1,5 @@
 import Foundation
-import OpenClawKit
+import VilaroKit
 
 @MainActor
 final class GatewayHealthMonitor {

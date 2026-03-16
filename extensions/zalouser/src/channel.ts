@@ -2,16 +2,16 @@ import {
   buildAccountScopedDmSecurityPolicy,
   createAccountStatusSink,
   mapAllowFromEntries,
-} from "openclaw/plugin-sdk/compat";
+} from "vilaro/plugin-sdk/compat";
 import type {
   ChannelAccountSnapshot,
   ChannelDirectoryEntry,
   ChannelGroupContext,
   ChannelMessageActionAdapter,
   ChannelPlugin,
-  OpenClawConfig,
+  VilaroConfig,
   GroupToolPolicyConfig,
-} from "openclaw/plugin-sdk/zalouser";
+} from "vilaro/plugin-sdk/zalouser";
 import {
   buildChannelSendResult,
   buildBaseAccountStatusSnapshot,
@@ -24,7 +24,7 @@ import {
   normalizeAccountId,
   sendPayloadWithChunkedTextAndMedia,
   setAccountEnabledInConfigSection,
-} from "openclaw/plugin-sdk/zalouser";
+} from "vilaro/plugin-sdk/zalouser";
 import { buildPassiveProbedChannelStatusSummary } from "../../shared/channel-status-summary.js";
 import {
   listZalouserAccountIds,
@@ -167,11 +167,11 @@ function resolveZalouserQrProfile(accountId?: string | null): string {
   return normalized;
 }
 
-function resolveZalouserOutboundChunkMode(cfg: OpenClawConfig, accountId?: string) {
+function resolveZalouserOutboundChunkMode(cfg: VilaroConfig, accountId?: string) {
   return getZalouserRuntime().channel.text.resolveChunkMode(cfg, "zalouser", accountId);
 }
 
-function resolveZalouserOutboundTextChunkLimit(cfg: OpenClawConfig, accountId?: string) {
+function resolveZalouserOutboundTextChunkLimit(cfg: VilaroConfig, accountId?: string) {
   return getZalouserRuntime().channel.text.resolveTextChunkLimit(cfg, "zalouser", accountId, {
     fallbackLimit: ZALOUSER_TEXT_CHUNK_LIMIT,
   });

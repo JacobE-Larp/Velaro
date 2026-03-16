@@ -3,12 +3,12 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createJiti } from "jiti";
 import type { ChannelPlugin } from "../channels/plugins/types.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { VilaroConfig } from "../config/config.js";
 import { isChannelConfigured } from "../config/plugin-auto-enable.js";
 import type { PluginInstallRecord } from "../config/types.plugins.js";
 import type { GatewayRequestHandler } from "../gateway/server-methods/types.js";
 import { openBoundaryFileSync } from "../infra/boundary-file-read.js";
-import { resolveOpenClawPackageRootSync } from "../infra/openclaw-root.js";
+import { resolveVilaroPackageRootSync } from "../infra/vilaro-root.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import { resolveUserPath } from "../utils.js";
 import { clearPluginCommands } from "./commands.js";
@@ -19,7 +19,7 @@ import {
   resolveMemorySlotDecision,
   type NormalizedPluginsConfig,
 } from "./config-state.js";
-import { discoverOpenClawPlugins } from "./discovery.js";
+import { discoverVilaroPlugins } from "./discovery.js";
 import { initializeGlobalHookRunner } from "./hook-runner-global.js";
 import { clearPluginInteractiveHandlers } from "./interactive.js";
 import { loadPluginManifestRegistry } from "./manifest-registry.js";
@@ -31,8 +31,8 @@ import type { CreatePluginRuntimeOptions } from "./runtime/index.js";
 import type { PluginRuntime } from "./runtime/types.js";
 import { validateJsonSchemaValue } from "./schema-validator.js";
 import type {
-  OpenClawPluginDefinition,
-  OpenClawPluginModule,
+  VilaroPluginDefinition,
+  VilaroPluginModule,
   PluginDiagnostic,
   PluginBundleFormat,
   PluginFormat,
@@ -42,7 +42,7 @@ import type {
 export type PluginLoadResult = PluginRegistry;
 
 export type PluginLoadOptions = {
-  config?: OpenClawConfig;
+  config?: VilaroConfig;
   workspaceDir?: string;
   // Allows callers to resolve plugin roots and load paths against an explicit env
   // instead of the process-global environment.
@@ -85,13 +85,13 @@ function resolveLoaderPackageRoot(
   params: LoaderModuleResolveParams & { modulePath: string },
 ): string | null {
   const cwd = params.cwd ?? path.dirname(params.modulePath);
-  const fromModulePath = resolveOpenClawPackageRootSync({ cwd });
+  const fromModulePath = resolveVilaroPackageRootSync({ cwd });
   if (fromModulePath) {
     return fromModulePath;
   }
   const argv1 = params.argv1 ?? process.argv[1];
   const moduleUrl = params.moduleUrl ?? (params.modulePath ? undefined : import.meta.url);
-  return resolveOpenClawPackageRootSync({
+  return resolveVilaroPackageRootSync({
     cwd,
     ...(argv1 ? { argv1 } : {}),
     ...(moduleUrl ? { moduleUrl } : {}),
@@ -238,7 +238,7 @@ const cachedPluginSdkExportedSubpaths = new Map<string, string[]>();
 
 function listPluginSdkExportedSubpaths(params: { modulePath?: string } = {}): string[] {
   const modulePath = params.modulePath ?? fileURLToPath(import.meta.url);
-  const packageRoot = resolveOpenClawPackageRootSync({
+  const packageRoot = resolveVilaroPackageRootSync({
     cwd: path.dirname(modulePath),
   });
   if (!packageRoot) {
@@ -273,7 +273,7 @@ const resolvePluginSdkScopedAliasMap = (): Record<string, string> => {
       distFile: `${subpath}.js`,
     });
     if (resolved) {
-      aliasMap[`openclaw/plugin-sdk/${subpath}`] = resolved;
+      aliasMap[`vilaro/plugin-sdk/${subpath}`] = resolved;
     }
   }
   return aliasMap;
@@ -382,8 +382,8 @@ function validatePluginConfig(params: {
 }
 
 function resolvePluginModuleExport(moduleExport: unknown): {
-  definition?: OpenClawPluginDefinition;
-  register?: OpenClawPluginDefinition["register"];
+  definition?: VilaroPluginDefinition;
+  register?: VilaroPluginDefinition["register"];
 } {
   const resolved =
     moduleExport &&
@@ -393,11 +393,11 @@ function resolvePluginModuleExport(moduleExport: unknown): {
       : moduleExport;
   if (typeof resolved === "function") {
     return {
-      register: resolved as OpenClawPluginDefinition["register"],
+      register: resolved as VilaroPluginDefinition["register"],
     };
   }
   if (resolved && typeof resolved === "object") {
-    const def = resolved as OpenClawPluginDefinition;
+    const def = resolved as VilaroPluginDefinition;
     const register = def.register ?? def.activate;
     return { definition: def, register };
   }
@@ -430,7 +430,7 @@ function resolveSetupChannelRegistration(moduleExport: unknown): {
 function shouldLoadChannelPluginInSetupRuntime(params: {
   manifestChannels: string[];
   setupSource?: string;
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   env: NodeJS.ProcessEnv;
 }): boolean {
   if (!params.setupSource || params.manifestChannels.length === 0) {
@@ -461,7 +461,7 @@ function createPluginRecord(params: {
     name: params.name ?? params.id,
     description: params.description,
     version: params.version,
-    format: params.format ?? "openclaw",
+    format: params.format ?? "vilaro",
     bundleFormat: params.bundleFormat,
     bundleCapabilities: params.bundleCapabilities,
     source: params.source,
@@ -572,7 +572,7 @@ function matchesPathMatcher(matcher: PathMatcher, sourcePath: string): boolean {
 }
 
 function buildProvenanceIndex(params: {
-  config: OpenClawConfig;
+  config: VilaroConfig;
   normalizedLoadPaths: string[];
   env: NodeJS.ProcessEnv;
 }): PluginProvenanceIndex {
@@ -638,7 +638,7 @@ function matchesExplicitInstallRule(params: {
 }
 
 function resolveCandidateDuplicateRank(params: {
-  candidate: ReturnType<typeof discoverOpenClawPlugins>["candidates"][number];
+  candidate: ReturnType<typeof discoverVilaroPlugins>["candidates"][number];
   manifestByRoot: Map<string, ReturnType<typeof loadPluginManifestRegistry>["plugins"][number]>;
   provenance: PluginProvenanceIndex;
   env: NodeJS.ProcessEnv;
@@ -672,8 +672,8 @@ function resolveCandidateDuplicateRank(params: {
 }
 
 function compareDuplicateCandidateOrder(params: {
-  left: ReturnType<typeof discoverOpenClawPlugins>["candidates"][number];
-  right: ReturnType<typeof discoverOpenClawPlugins>["candidates"][number];
+  left: ReturnType<typeof discoverVilaroPlugins>["candidates"][number];
+  right: ReturnType<typeof discoverVilaroPlugins>["candidates"][number];
   manifestByRoot: Map<string, ReturnType<typeof loadPluginManifestRegistry>["plugins"][number]>;
   provenance: PluginProvenanceIndex;
   env: NodeJS.ProcessEnv;
@@ -767,12 +767,12 @@ function activatePluginRegistry(registry: PluginRegistry, cacheKey: string): voi
   initializeGlobalHookRunner(registry);
 }
 
-export function loadOpenClawPlugins(options: PluginLoadOptions = {}): PluginRegistry {
+export function loadVilaroPlugins(options: PluginLoadOptions = {}): PluginRegistry {
   // Snapshot (non-activating) loads must disable the cache to avoid storing a registry
   // whose commands were never globally registered.
   if (options.activate === false && options.cache !== false) {
     throw new Error(
-      "loadOpenClawPlugins: activate:false requires cache:false to prevent command registry divergence",
+      "loadVilaroPlugins: activate:false requires cache:false to prevent command registry divergence",
     );
   }
   const env = options.env ?? process.env;
@@ -825,8 +825,8 @@ export function loadOpenClawPlugins(options: PluginLoadOptions = {}): PluginRegi
     const pluginSdkAlias = resolvePluginSdkAlias();
     const extensionApiAlias = resolveExtensionApiAlias();
     const aliasMap = {
-      ...(extensionApiAlias ? { "openclaw/extension-api": extensionApiAlias } : {}),
-      ...(pluginSdkAlias ? { "openclaw/plugin-sdk": pluginSdkAlias } : {}),
+      ...(extensionApiAlias ? { "vilaro/extension-api": extensionApiAlias } : {}),
+      ...(pluginSdkAlias ? { "vilaro/plugin-sdk": pluginSdkAlias } : {}),
       ...resolvePluginSdkScopedAliasMap(),
     };
     jitiLoader = createJiti(import.meta.url, {
@@ -904,7 +904,7 @@ export function loadOpenClawPlugins(options: PluginLoadOptions = {}): PluginRegi
     suppressGlobalCommands: !shouldActivate,
   });
 
-  const discovery = discoverOpenClawPlugins({
+  const discovery = discoverVilaroPlugins({
     workspaceDir: options.workspaceDir,
     extraPaths: normalized.loadPaths,
     cache: options.cache,
@@ -1072,7 +1072,7 @@ export function loadOpenClawPlugins(options: PluginLoadOptions = {}): PluginRegi
           level: "warn",
           pluginId: record.id,
           source: record.source,
-          message: `bundle capability detected but not wired into OpenClaw yet: ${capability}`,
+          message: `bundle capability detected but not wired into Vilaro yet: ${capability}`,
         });
       }
       registry.plugins.push(record);
@@ -1127,9 +1127,9 @@ export function loadOpenClawPlugins(options: PluginLoadOptions = {}): PluginRegi
     const safeSource = opened.path;
     fs.closeSync(opened.fd);
 
-    let mod: OpenClawPluginModule | null = null;
+    let mod: VilaroPluginModule | null = null;
     try {
-      mod = getJiti()(safeSource) as OpenClawPluginModule;
+      mod = getJiti()(safeSource) as VilaroPluginModule;
     } catch (err) {
       recordPluginError({
         logger,

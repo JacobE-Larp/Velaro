@@ -1,9 +1,9 @@
 {
-  "name": "@openclaw/discord",
+  "name": "@vilaro/discord",
   "version": "2026.3.14",
-  "description": "OpenClaw Discord channel plugin",
+  "description": "Vilaro Discord channel plugin",
   "type": "module",
-  "openclaw": {
+  "vilaro": {
     "extensions": [
       "./index.ts"
     ],

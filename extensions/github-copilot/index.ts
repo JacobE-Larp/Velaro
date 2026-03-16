@@ -1,10 +1,10 @@
 import {
   emptyPluginConfigSchema,
-  type OpenClawPluginApi,
+  type VilaroPluginApi,
   type ProviderAuthContext,
   type ProviderResolveDynamicModelContext,
   type ProviderRuntimeModel,
-} from "openclaw/plugin-sdk/core";
+} from "vilaro/plugin-sdk/core";
 import { listProfilesForProvider } from "../../src/agents/auth-profiles/profiles.js";
 import { ensureAuthProfileStore } from "../../src/agents/auth-profiles/store.js";
 import { normalizeModelCompat } from "../../src/agents/model-compat.js";
@@ -119,7 +119,7 @@ const githubCopilotPlugin = {
   name: "GitHub Copilot Provider",
   description: "Bundled GitHub Copilot provider plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     api.registerProvider({
       id: PROVIDER_ID,
       label: "GitHub Copilot",

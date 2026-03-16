@@ -1,11 +1,11 @@
-import type { OpenClawConfig, PluginRuntime, RuntimeEnv } from "openclaw/plugin-sdk/msteams";
+import type { VilaroConfig, PluginRuntime, RuntimeEnv } from "vilaro/plugin-sdk/msteams";
 import { describe, expect, it, vi } from "vitest";
 import type { MSTeamsMessageHandlerDeps } from "../monitor-handler.js";
 import { setMSTeamsRuntime } from "../runtime.js";
 import { createMSTeamsMessageHandler } from "./message-handler.js";
 
 describe("msteams monitor handler authz", () => {
-  function createDeps(cfg: OpenClawConfig) {
+  function createDeps(cfg: VilaroConfig) {
     const readAllowFromStore = vi.fn(async () => ["attacker-aad"]);
     setMSTeamsRuntime({
       logging: { shouldLogVerbose: () => false },
@@ -69,7 +69,7 @@ describe("msteams monitor handler authz", () => {
           groupAllowFrom: [],
         },
       },
-    } as OpenClawConfig);
+    } as VilaroConfig);
 
     const handler = createMSTeamsMessageHandler(deps);
     await handler({
@@ -120,7 +120,7 @@ describe("msteams monitor handler authz", () => {
           },
         },
       },
-    } as OpenClawConfig);
+    } as VilaroConfig);
 
     const handler = createMSTeamsMessageHandler(deps);
     await handler({

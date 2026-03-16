@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import type { OpenClawConfig } from "../../../config/config.js";
+import type { VilaroConfig } from "../../../config/config.js";
 import type {
   ChannelAccountSnapshot,
   ChannelAccountState,
@@ -39,7 +39,7 @@ export function installChannelPluginContractSuite(params: {
 
 type ChannelActionsContractCase = {
   name: string;
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   expectedActions: readonly ChannelMessageActionName[];
   expectedCapabilities?: readonly ChannelMessageCapability[];
   beforeTest?: () => void;
@@ -86,14 +86,14 @@ export function installChannelActionsContractSuite(params: {
 
 type ChannelSetupContractCase<ResolvedAccount> = {
   name: string;
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   accountId?: string;
   input: ChannelSetupInput;
   expectedAccountId?: string;
   expectedValidation?: string | null;
   beforeTest?: () => void;
-  assertPatchedConfig?: (cfg: OpenClawConfig) => void;
-  assertResolvedAccount?: (account: ResolvedAccount, cfg: OpenClawConfig) => void;
+  assertPatchedConfig?: (cfg: VilaroConfig) => void;
+  assertResolvedAccount?: (account: ResolvedAccount, cfg: VilaroConfig) => void;
 };
 
 export function installChannelSetupContractSuite<ResolvedAccount>(params: {
@@ -144,7 +144,7 @@ export function installChannelSetupContractSuite<ResolvedAccount>(params: {
 
 type ChannelStatusContractCase<Probe> = {
   name: string;
-  cfg: OpenClawConfig;
+  cfg: VilaroConfig;
   accountId?: string;
   runtime?: ChannelAccountSnapshot;
   probe?: Probe;

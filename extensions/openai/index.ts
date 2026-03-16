@@ -1,4 +1,4 @@
-import { emptyPluginConfigSchema, type OpenClawPluginApi } from "openclaw/plugin-sdk/core";
+import { emptyPluginConfigSchema, type VilaroPluginApi } from "vilaro/plugin-sdk/core";
 import { buildOpenAICodexProviderPlugin } from "./openai-codex-provider.js";
 import { buildOpenAIProvider } from "./openai-provider.js";
 
@@ -7,7 +7,7 @@ const openAIPlugin = {
   name: "OpenAI Provider",
   description: "Bundled OpenAI provider plugins",
   configSchema: emptyPluginConfigSchema(),
-  register(api: OpenClawPluginApi) {
+  register(api: VilaroPluginApi) {
     api.registerProvider(buildOpenAIProvider());
     api.registerProvider(buildOpenAICodexProviderPlugin());
   },

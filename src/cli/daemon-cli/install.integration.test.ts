@@ -49,18 +49,18 @@ describe("runDaemonInstall integration", () => {
   beforeAll(async () => {
     envSnapshot = captureEnv([
       "HOME",
-      "OPENCLAW_STATE_DIR",
-      "OPENCLAW_CONFIG_PATH",
-      "OPENCLAW_GATEWAY_TOKEN",
-      "CLAWDBOT_GATEWAY_TOKEN",
-      "OPENCLAW_GATEWAY_PASSWORD",
-      "CLAWDBOT_GATEWAY_PASSWORD",
+      "VILARO_STATE_DIR",
+      "VILARO_CONFIG_PATH",
+      "VILARO_GATEWAY_TOKEN",
+      "VILARO_GATEWAY_TOKEN",
+      "VILARO_GATEWAY_PASSWORD",
+      "VILARO_GATEWAY_PASSWORD",
     ]);
-    tempHome = await makeTempWorkspace("openclaw-daemon-install-int-");
-    configPath = path.join(tempHome, "openclaw.json");
+    tempHome = await makeTempWorkspace("vilaro-daemon-install-int-");
+    configPath = path.join(tempHome, "vilaro.json");
     process.env.HOME = tempHome;
-    process.env.OPENCLAW_STATE_DIR = tempHome;
-    process.env.OPENCLAW_CONFIG_PATH = configPath;
+    process.env.VILARO_STATE_DIR = tempHome;
+    process.env.VILARO_CONFIG_PATH = configPath;
   });
 
   afterAll(async () => {
@@ -73,10 +73,10 @@ describe("runDaemonInstall integration", () => {
     runtimeErrors.length = 0;
     vi.clearAllMocks();
     // Keep these defined-but-empty so dotenv won't repopulate from local .env.
-    process.env.OPENCLAW_GATEWAY_TOKEN = "";
-    process.env.CLAWDBOT_GATEWAY_TOKEN = "";
-    process.env.OPENCLAW_GATEWAY_PASSWORD = "";
-    process.env.CLAWDBOT_GATEWAY_PASSWORD = "";
+    process.env.VILARO_GATEWAY_TOKEN = "";
+    process.env.VILARO_GATEWAY_TOKEN = "";
+    process.env.VILARO_GATEWAY_PASSWORD = "";
+    process.env.VILARO_GATEWAY_PASSWORD = "";
     serviceMock.isLoaded.mockResolvedValue(false);
     await fs.writeFile(configPath, JSON.stringify({}, null, 2));
     clearConfigCache();
@@ -143,6 +143,6 @@ describe("runDaemonInstall integration", () => {
     expect((persistedToken ?? "").length).toBeGreaterThan(0);
 
     const installEnv = serviceMock.install.mock.calls[0]?.[0]?.environment;
-    expect(installEnv?.OPENCLAW_GATEWAY_TOKEN).toBeUndefined();
+    expect(installEnv?.VILARO_GATEWAY_TOKEN).toBeUndefined();
   });
 });
