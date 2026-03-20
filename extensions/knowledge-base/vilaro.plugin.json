@@ -1,0 +1,11 @@
+{
+  "id": "knowledge-base",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": { "type": "boolean" },
+      "clientId": { "type": "string" }
+    }
+  }
+}

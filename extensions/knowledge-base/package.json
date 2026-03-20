@@ -1,0 +1,11 @@
+{
+  "name": "@vilaro/knowledge-base",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "vilaro": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}
