@@ -78,6 +78,11 @@ jobs:
       digest: ${{ steps.build.outputs.digest }}
       slim-digest: ${{ steps.build-slim.outputs.digest }}
     steps:
+      - name: Set lowercase image name
+        run: echo "IMAGE_NAME=${REPO,,}" >> "$GITHUB_ENV"
+        env:
+          REPO: ${{ github.repository }}
+
       - name: Checkout
         uses: actions/checkout@v6
         with:
@@ -191,6 +196,11 @@ jobs:
       digest: ${{ steps.build.outputs.digest }}
       slim-digest: ${{ steps.build-slim.outputs.digest }}
     steps:
+      - name: Set lowercase image name
+        run: echo "IMAGE_NAME=${REPO,,}" >> "$GITHUB_ENV"
+        env:
+          REPO: ${{ github.repository }}
+
       - name: Checkout
         uses: actions/checkout@v6
         with:
@@ -301,6 +311,11 @@ jobs:
       packages: write
       contents: read
     steps:
+      - name: Set lowercase image name
+        run: echo "IMAGE_NAME=${REPO,,}" >> "$GITHUB_ENV"
+        env:
+          REPO: ${{ github.repository }}
+
       - name: Checkout
         uses: actions/checkout@v6
         with:
