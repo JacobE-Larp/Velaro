@@ -20,7 +20,7 @@ import {
 } from "../hooks/internal-hooks.js";
 import { loadInternalHooks } from "../hooks/loader.js";
 import { isTruthyEnvValue } from "../infra/env.js";
-import type { loadVilaroPlugins } from "../plugins/loader.js";
+import type { loadVelaroPlugins } from "../plugins/loader.js";
 import { type PluginServicesHandle, startPluginServices } from "../plugins/services.js";
 import { startBrowserControlServerIfEnabled } from "./server-browser.js";
 import {
@@ -33,7 +33,7 @@ const SESSION_LOCK_STALE_MS = 30 * 60 * 1000;
 
 export async function startGatewaySidecars(params: {
   cfg: ReturnType<typeof loadConfig>;
-  pluginRegistry: ReturnType<typeof loadVilaroPlugins>;
+  pluginRegistry: ReturnType<typeof loadVelaroPlugins>;
   defaultWorkspaceDir: string;
   deps: CliDeps;
   startChannels: () => Promise<void>;
@@ -61,7 +61,7 @@ export async function startGatewaySidecars(params: {
     params.log.warn(`session lock cleanup failed on startup: ${String(err)}`);
   }
 
-  // Start Vilaro browser control server (unless disabled via config).
+  // Start Velaro browser control server (unless disabled via config).
   let browserControl: Awaited<ReturnType<typeof startBrowserControlServerIfEnabled>> = null;
   try {
     browserControl = await startBrowserControlServerIfEnabled();

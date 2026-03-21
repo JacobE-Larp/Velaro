@@ -86,7 +86,7 @@ jobs:
                 lockReason: "off-topic",
                 commentTriggers: ["moltbook"],
                 message:
-                  "Vilaro is not affiliated with Moltbook, and issues related to Moltbook should not be submitted here.",
+                  "Velaro is not affiliated with Moltbook, and issues related to Moltbook should not be submitted here.",
               },
             ];
 

@@ -1,5 +1,5 @@
 ---
-summary: "Vilaro CLI reference for `vilaro` commands, subcommands, and options"
+summary: "Velaro CLI reference for `velaro` commands, subcommands, and options"
 read_when:
   - Adding or modifying CLI commands or options
   - Documenting new command surfaces
@@ -64,7 +64,7 @@ This page describes the current CLI behavior. If commands change, update this do
 - `--dev`: isolate state under `~/.vilaro-dev` and shift default ports.
 - `--profile <name>`: isolate state under `~/.vilaro-<name>`.
 - `--no-color`: disable ANSI colors.
-- `--update`: shorthand for `vilaro update` (source installs only).
+- `--update`: shorthand for `velaro update` (source installs only).
 - `-V`, `--version`, `-v`: print version and exit.
 
 ## Output styling
@@ -77,7 +77,7 @@ This page describes the current CLI behavior. If commands change, update this do
 
 ## Color palette
 
-Vilaro uses a vilaro palette for CLI output.
+Velaro uses a velaro palette for CLI output.
 
 - `accent` (#FF5A2D): headings, labels, primary highlights.
 - `accentBright` (#FF7A3D): command names, emphasis.
@@ -88,12 +88,12 @@ Vilaro uses a vilaro palette for CLI output.
 - `error` (#E23D2D): errors, failures.
 - `muted` (#8B7F77): de-emphasis, metadata.
 
-Palette source of truth: `src/terminal/palette.ts` (aka “vilaro seam”).
+Palette source of truth: `src/terminal/palette.ts` (aka “velaro seam”).
 
 ## Command tree
 
 ```
-vilaro [--dev] [--profile <name>] <command>
+velaro [--dev] [--profile <name>] <command>
   setup
   onboard
   configure
@@ -263,30 +263,30 @@ vilaro [--dev] [--profile <name>] <command>
   tui
 ```
 
-Note: plugins can add additional top-level commands (for example `vilaro voicecall`).
+Note: plugins can add additional top-level commands (for example `velaro voicecall`).
 
 ## Security
 
-- `vilaro security audit` — audit config + local state for common security foot-guns.
-- `vilaro security audit --deep` — best-effort live Gateway probe.
-- `vilaro security audit --fix` — tighten safe defaults and chmod state/config.
+- `velaro security audit` — audit config + local state for common security foot-guns.
+- `velaro security audit --deep` — best-effort live Gateway probe.
+- `velaro security audit --fix` — tighten safe defaults and chmod state/config.
 
 ## Secrets
 
-- `vilaro secrets reload` — re-resolve refs and atomically swap the runtime snapshot.
-- `vilaro secrets audit` — scan for plaintext residues, unresolved refs, and precedence drift.
-- `vilaro secrets configure` — interactive helper for provider setup + SecretRef mapping + preflight/apply.
-- `vilaro secrets apply --from <plan.json>` — apply a previously generated plan (`--dry-run` supported).
+- `velaro secrets reload` — re-resolve refs and atomically swap the runtime snapshot.
+- `velaro secrets audit` — scan for plaintext residues, unresolved refs, and precedence drift.
+- `velaro secrets configure` — interactive helper for provider setup + SecretRef mapping + preflight/apply.
+- `velaro secrets apply --from <plan.json>` — apply a previously generated plan (`--dry-run` supported).
 
 ## Plugins
 
 Manage extensions and their config:
 
-- `vilaro plugins list` — discover plugins (use `--json` for machine output).
-- `vilaro plugins info <id>` — show details for a plugin.
-- `vilaro plugins install <path|.tgz|npm-spec>` — install a plugin (or add a plugin path to `plugins.load.paths`).
-- `vilaro plugins enable <id>` / `disable <id>` — toggle `plugins.entries.<id>.enabled`.
-- `vilaro plugins doctor` — report plugin load errors.
+- `velaro plugins list` — discover plugins (use `--json` for machine output).
+- `velaro plugins info <id>` — show details for a plugin.
+- `velaro plugins install <path|.tgz|npm-spec>` — install a plugin (or add a plugin path to `plugins.load.paths`).
+- `velaro plugins enable <id>` / `disable <id>` — toggle `plugins.entries.<id>.enabled`.
+- `velaro plugins doctor` — report plugin load errors.
 
 Most plugin changes require a gateway restart. See [/plugin](/tools/plugin).
 
@@ -294,9 +294,9 @@ Most plugin changes require a gateway restart. See [/plugin](/tools/plugin).
 
 Vector search over `MEMORY.md` + `memory/*.md`:
 
-- `vilaro memory status` — show index stats.
-- `vilaro memory index` — reindex memory files.
-- `vilaro memory search "<query>"` (or `--query "<query>"`) — semantic search over memory.
+- `velaro memory status` — show index stats.
+- `velaro memory index` — reindex memory files.
+- `velaro memory search "<query>"` (or `--query "<query>"`) — semantic search over memory.
 
 ## Chat slash commands
 
@@ -386,7 +386,7 @@ Interactive configuration wizard (models, channels, skills, gateway).
 
 ### `config`
 
-Non-interactive config helpers (get/set/unset/file/validate). Running `vilaro config` with no
+Non-interactive config helpers (get/set/unset/file/validate). Running `velaro config` with no
 subcommand launches the wizard.
 
 Subcommands:
@@ -418,11 +418,11 @@ Manage chat channel accounts (WhatsApp/Telegram/Discord/Google Chat/Slack/Matter
 Subcommands:
 
 - `channels list`: show configured channels and auth profiles.
-- `channels status`: check gateway reachability and channel health (`--probe` runs extra checks; use `vilaro health` or `vilaro status --deep` for gateway health probes).
-- Tip: `channels status` prints warnings with suggested fixes when it can detect common misconfigurations (then points you to `vilaro doctor`).
+- `channels status`: check gateway reachability and channel health (`--probe` runs extra checks; use `velaro health` or `velaro status --deep` for gateway health probes).
+- Tip: `channels status` prints warnings with suggested fixes when it can detect common misconfigurations (then points you to `velaro doctor`).
 - `channels logs`: show recent channel logs from the gateway log file.
 - `channels add`: wizard-style setup when no flags are passed; flags switch to non-interactive mode.
-  - When adding a non-default account to a channel still using single-account top-level config, Vilaro moves account-scoped values into `channels.<channel>.accounts.default` before writing the new account.
+  - When adding a non-default account to a channel still using single-account top-level config, Velaro moves account-scoped values into `channels.<channel>.accounts.default` before writing the new account.
   - Non-interactive `channels add` does not auto-create/upgrade bindings; channel-only bindings continue to match the default account.
 - `channels remove`: disable by default; pass `--delete` to remove config entries without prompts.
 - `channels login`: interactive channel login (WhatsApp Web only).
@@ -461,11 +461,11 @@ More detail: [/concepts/oauth](/concepts/oauth)
 Examples:
 
 ```bash
-vilaro channels add --channel telegram --account alerts --name "Alerts Bot" --token $TELEGRAM_BOT_TOKEN
-vilaro channels add --channel discord --account work --name "Work Bot" --token $DISCORD_BOT_TOKEN
-vilaro channels remove --channel discord --account work --delete
-vilaro channels status --probe
-vilaro status --deep
+velaro channels add --channel telegram --account alerts --name "Alerts Bot" --token $TELEGRAM_BOT_TOKEN
+velaro channels add --channel discord --account work --name "Work Bot" --token $DISCORD_BOT_TOKEN
+velaro channels remove --channel discord --account work --delete
+velaro channels status --probe
+velaro status --deep
 ```
 
 ### `skills`
@@ -549,8 +549,8 @@ Subcommands:
 
 Examples:
 
-- `vilaro message send --target +15555550123 --message "Hi"`
-- `vilaro message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi`
+- `velaro message send --target +15555550123 --message "Hi"`
+- `velaro message poll --channel discord --target channel:123 --poll-question "Snack?" --poll-option Pizza --poll-option Sushi`
 
 ### `agent`
 
@@ -598,7 +598,7 @@ Options:
 - `--non-interactive`
 - `--json`
 
-Binding specs use `channel[:accountId]`. When `accountId` is omitted, Vilaro may resolve account scope via channel defaults/plugin hooks; otherwise it is a channel binding without explicit account scope.
+Binding specs use `channel[:accountId]`. When `accountId` is omitted, Velaro may resolve account scope via channel defaults/plugin hooks; otherwise it is a channel binding without explicit account scope.
 
 #### `agents bindings`
 
@@ -665,12 +665,12 @@ Notes:
 
 ### Usage tracking
 
-Vilaro can surface provider usage/quota when OAuth/API creds are available.
+Velaro can surface provider usage/quota when OAuth/API creds are available.
 
 Surfaces:
 
 - `/status` (adds a short provider usage line when available)
-- `vilaro status --usage` (prints full provider breakdown)
+- `velaro status --usage` (prints full provider breakdown)
 - macOS menu bar (Usage section under Context)
 
 Notes:
@@ -781,7 +781,7 @@ Notes:
 
 - `gateway status` probes the Gateway RPC by default using the service’s resolved port/config (override with `--url/--token/--password`).
 - `gateway status` supports `--no-probe`, `--deep`, `--require-rpc`, and `--json` for scripting.
-- `gateway status` also surfaces legacy or extra gateway services when it can detect them (`--deep` adds system-level scans). Profile-named Vilaro services are treated as first-class and aren't flagged as "extra".
+- `gateway status` also surfaces legacy or extra gateway services when it can detect them (`--deep` adds system-level scans). Profile-named Velaro services are treated as first-class and aren't flagged as "extra".
 - `gateway status` prints which config path the CLI uses vs which config the service likely uses (service env), plus the resolved probe target URL.
 - If gateway auth SecretRefs are unresolved in the current command path, `gateway status --json` reports `rpc.authWarning` only when probe connectivity/auth fails (warnings are suppressed when probe succeeds).
 - On Linux systemd installs, status token-drift checks include both `Environment=` and `EnvironmentFile=` unit sources.
@@ -801,11 +801,11 @@ Notes:
 Examples:
 
 ```bash
-vilaro logs --follow
-vilaro logs --limit 200
-vilaro logs --plain
-vilaro logs --json
-vilaro logs --no-color
+velaro logs --follow
+velaro logs --limit 200
+velaro logs --plain
+velaro logs --json
+velaro logs --no-color
 ```
 
 ### `gateway <subcommand>`
@@ -841,8 +841,8 @@ Anthropic setup-token (supported):
 
 ```bash
 claude setup-token
-vilaro models auth setup-token --provider anthropic
-vilaro models status
+velaro models auth setup-token --provider anthropic
+velaro models status
 ```
 
 Policy note: this is technical compatibility. Anthropic has blocked some
@@ -851,7 +851,7 @@ terms before relying on setup-token in production.
 
 ### `models` (root)
 
-`vilaro models` is an alias for `models status`.
+`velaro models` is an alias for `models status`.
 
 Root options:
 
@@ -1007,7 +1007,7 @@ All `cron` commands accept `--url`, `--token`, `--timeout`, `--expect-final`.
 ## Node host
 
 `node` runs a **headless node host** or manages it as a background service. See
-[`vilaro node`](/cli/node).
+[`velaro node`](/cli/node).
 
 Subcommands:
 
@@ -1067,7 +1067,7 @@ Location:
 
 ## Browser
 
-Browser control CLI (dedicated Chrome/Brave/Edge/Chromium). See [`vilaro browser`](/cli/browser) and the [Browser tool](/tools/browser).
+Browser control CLI (dedicated Chrome/Brave/Edge/Chromium). See [`velaro browser`](/cli/browser) and the [Browser tool](/tools/browser).
 
 Common options:
 

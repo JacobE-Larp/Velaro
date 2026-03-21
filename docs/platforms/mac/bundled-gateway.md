@@ -1,7 +1,7 @@
 ---
 summary: "Gateway runtime on macOS (external launchd service)"
 read_when:
-  - Packaging Vilaro.app
+  - Packaging Velaro.app
   - Debugging the macOS gateway launchd service
   - Installing the gateway CLI for macOS
 title: "Gateway on macOS"
@@ -9,17 +9,17 @@ title: "Gateway on macOS"
 
 # Gateway on macOS (external launchd)
 
-Vilaro.app no longer bundles Node/Bun or the Gateway runtime. The macOS app
-expects an **external** `vilaro` CLI install, does not spawn the Gateway as a
+Velaro.app no longer bundles Node/Bun or the Gateway runtime. The macOS app
+expects an **external** `velaro` CLI install, does not spawn the Gateway as a
 child process, and manages a per‑user launchd service to keep the Gateway
 running (or attaches to an existing local Gateway if one is already running).
 
 ## Install the CLI (required for local mode)
 
-Node 24 is the default runtime on the Mac. Node 22 LTS, currently `22.16+`, still works for compatibility. Then install `vilaro` globally:
+Node 24 is the default runtime on the Mac. Node 22 LTS, currently `22.16+`, still works for compatibility. Then install `velaro` globally:
 
 ```bash
-npm install -g vilaro@<version>
+npm install -g velaro@<version>
 ```
 
 The macOS app’s **Install CLI** button runs the same flow via npm/pnpm (bun not recommended for Gateway runtime).
@@ -28,28 +28,28 @@ The macOS app’s **Install CLI** button runs the same flow via npm/pnpm (bun no
 
 Label:
 
-- `ai.vilaro.gateway` (or `ai.vilaro.<profile>`; legacy `com.vilaro.*` may remain)
+- `ai.vilaro.gateway` (or `ai.velaro.<profile>`; legacy `com.velaro.*` may remain)
 
 Plist location (per‑user):
 
 - `~/Library/LaunchAgents/ai.vilaro.gateway.plist`
-  (or `~/Library/LaunchAgents/ai.vilaro.<profile>.plist`)
+  (or `~/Library/LaunchAgents/ai.velaro.<profile>.plist`)
 
 Manager:
 
 - The macOS app owns LaunchAgent install/update in Local mode.
-- The CLI can also install it: `vilaro gateway install`.
+- The CLI can also install it: `velaro gateway install`.
 
 Behavior:
 
-- “Vilaro Active” enables/disables the LaunchAgent.
+- “Velaro Active” enables/disables the LaunchAgent.
 - App quit does **not** stop the gateway (launchd keeps it alive).
 - If a Gateway is already running on the configured port, the app attaches to
   it instead of starting a new one.
 
 Logging:
 
-- launchd stdout/err: `/tmp/vilaro/vilaro-gateway.log`
+- launchd stdout/err: `/tmp/velaro/vilaro-gateway.log`
 
 ## Version compatibility
 
@@ -59,15 +59,15 @@ incompatible, update the global CLI to match the app version.
 ## Smoke check
 
 ```bash
-vilaro --version
+velaro --version
 
 VILARO_SKIP_CHANNELS=1 \
 VILARO_SKIP_CANVAS_HOST=1 \
-vilaro gateway --port 18999 --bind loopback
+velaro gateway --port 18999 --bind loopback
 ```
 
 Then:
 
 ```bash
-vilaro gateway call health --url ws://127.0.0.1:18999 --timeout 3000
+velaro gateway call health --url ws://127.0.0.1:18999 --timeout 3000
 ```

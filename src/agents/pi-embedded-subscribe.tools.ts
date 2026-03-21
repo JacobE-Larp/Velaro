@@ -186,8 +186,8 @@ export function filterToolResultMediaUrls(
  * Extract media file paths from a tool result.
  *
  * Strategy (first match wins):
- * 1. Parse `MEDIA:` tokens from text content blocks (all Vilaro tools).
- * 2. Fall back to `details.path` when image content exists (Vilaro imageResult).
+ * 1. Parse `MEDIA:` tokens from text content blocks (all Velaro tools).
+ * 2. Fall back to `details.path` when image content exists (Velaro imageResult).
  *
  * Returns an empty array when no media is found (e.g. Pi SDK `read` tool
  * returns base64 image data but no file path; those need a different delivery

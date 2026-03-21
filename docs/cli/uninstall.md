@@ -1,20 +1,20 @@
 ---
-summary: "CLI reference for `vilaro uninstall` (remove gateway service + local data)"
+summary: "CLI reference for `velaro uninstall` (remove gateway service + local data)"
 read_when:
   - You want to remove the gateway service and/or local state
   - You want a dry-run first
 title: "uninstall"
 ---
 
-# `vilaro uninstall`
+# `velaro uninstall`
 
 Uninstall the gateway service + local data (CLI remains).
 
 ```bash
-vilaro backup create
-vilaro uninstall
-vilaro uninstall --all --yes
-vilaro uninstall --dry-run
+velaro backup create
+velaro uninstall
+velaro uninstall --all --yes
+velaro uninstall --dry-run
 ```
 
-Run `vilaro backup create` first if you want a restorable snapshot before removing state or workspaces.
+Run `velaro backup create` first if you want a restorable snapshot before removing state or workspaces.

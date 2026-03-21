@@ -180,7 +180,7 @@ vi.mock("../agents/skills-status.js", () => ({
 }));
 
 vi.mock("../plugins/loader.js", () => ({
-  loadVilaroPlugins: () => ({ plugins: [], diagnostics: [] }),
+  loadVelaroPlugins: () => ({ plugins: [], diagnostics: [] }),
 }));
 
 vi.mock("../config/config.js", async (importOriginal) => {

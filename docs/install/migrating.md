@@ -1,14 +1,14 @@
 ---
-summary: "Move (migrate) a Vilaro install from one machine to another"
+summary: "Move (migrate) a Velaro install from one machine to another"
 read_when:
-  - You are moving Vilaro to a new laptop/server
+  - You are moving Velaro to a new laptop/server
   - You want to preserve sessions, auth, and channel logins (WhatsApp, etc.)
 title: "Migration Guide"
 ---
 
-# Migrating Vilaro to a new machine
+# Migrating Velaro to a new machine
 
-This guide migrates a Vilaro Gateway from one machine to another **without redoing onboarding**.
+This guide migrates a Velaro Gateway from one machine to another **without redoing onboarding**.
 
 The migration is simple conceptually:
 
@@ -33,7 +33,7 @@ But it may be different if you use:
 If you’re not sure, run on the **old** machine:
 
 ```bash
-vilaro status
+velaro status
 ```
 
 Look for mentions of `VILARO_STATE_DIR` / profile in the output. If you run multiple gateways, repeat for each profile.
@@ -72,7 +72,7 @@ Those live under `$VILARO_STATE_DIR`.
 On the **old** machine, stop the gateway first so files aren’t changing mid-copy:
 
 ```bash
-vilaro gateway stop
+velaro gateway stop
 ```
 
 (Optional but recommended) archive the state dir and workspace:
@@ -80,14 +80,14 @@ vilaro gateway stop
 ```bash
 # Adjust paths if you use a profile or custom locations
 cd ~
-tar -czf vilaro-state.tgz .vilaro
+tar -czf velaro-state.tgz .velaro
 
-tar -czf vilaro-workspace.tgz .vilaro/workspace
+tar -czf velaro-workspace.tgz .velaro/workspace
 ```
 
 If you have multiple profiles/state dirs (e.g. `~/.vilaro-main`, `~/.vilaro-work`), archive each.
 
-### Step 1 — Install Vilaro on the new machine
+### Step 1 — Install Velaro on the new machine
 
 On the **new** machine, install the CLI (and Node if needed):
 
@@ -110,7 +110,7 @@ Common approaches:
 
 After copying, ensure:
 
-- Hidden directories were included (e.g. `.vilaro/`)
+- Hidden directories were included (e.g. `.velaro/`)
 - File ownership is correct for the user running the gateway
 
 ### Step 3 — Run Doctor (migrations + service repair)
@@ -118,7 +118,7 @@ After copying, ensure:
 On the **new** machine:
 
 ```bash
-vilaro doctor
+velaro doctor
 ```
 
 Doctor is the “safe boring” command. It repairs services, applies config migrations, and warns about mismatches.
@@ -126,8 +126,8 @@ Doctor is the “safe boring” command. It repairs services, applies config mig
 Then:
 
 ```bash
-vilaro gateway restart
-vilaro status
+velaro gateway restart
+velaro status
 ```
 
 ## Common footguns (and how to avoid them)
@@ -143,7 +143,7 @@ If you ran the old gateway with a profile (or `VILARO_STATE_DIR`), and the new g
 Fix: run the gateway/service using the **same** profile/state dir you migrated, then rerun:
 
 ```bash
-vilaro doctor
+velaro doctor
 ```
 
 ### Footgun: copying only `vilaro.json`
@@ -180,7 +180,7 @@ If you’re in remote mode, migrate the **gateway host**.
 
 On the new machine, confirm:
 
-- `vilaro status` shows the gateway running
+- `velaro status` shows the gateway running
 - Your channels are still connected (e.g. WhatsApp doesn’t require re-pair)
 - The dashboard opens and shows existing sessions
 - Your workspace files (memory, configs) are present
@@ -189,4 +189,4 @@ On the new machine, confirm:
 
 - [Doctor](/gateway/doctor)
 - [Gateway troubleshooting](/gateway/troubleshooting)
-- [Where does Vilaro store its data?](/help/faq#where-does-vilaro-store-its-data)
+- [Where does Velaro store its data?](/help/faq#where-does-velaro-store-its-data)

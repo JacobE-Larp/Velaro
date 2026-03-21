@@ -4,11 +4,11 @@ import { VERSION } from "../version.js";
 import type { ConfigUiHint, ConfigUiHints } from "./schema.hints.js";
 import { applySensitiveHints, buildBaseHints, mapSensitivePaths } from "./schema.hints.js";
 import { applyDerivedTags } from "./schema.tags.js";
-import { VilaroSchema } from "./zod-schema.js";
+import { VelaroSchema } from "./zod-schema.js";
 
 export type { ConfigUiHint, ConfigUiHints } from "./schema.hints.js";
 
-export type ConfigSchema = ReturnType<typeof VilaroSchema.toJSONSchema>;
+export type ConfigSchema = ReturnType<typeof VelaroSchema.toJSONSchema>;
 
 type JsonSchemaNode = Record<string, unknown>;
 
@@ -430,12 +430,12 @@ function buildBaseConfigSchema(): ConfigSchemaResponse {
   if (cachedBase) {
     return cachedBase;
   }
-  const schema = VilaroSchema.toJSONSchema({
+  const schema = VelaroSchema.toJSONSchema({
     target: "draft-07",
     unrepresentable: "any",
   });
   schema.title = "VilaroConfig";
-  const hints = applyDerivedTags(mapSensitivePaths(VilaroSchema, "", buildBaseHints()));
+  const hints = applyDerivedTags(mapSensitivePaths(VelaroSchema, "", buildBaseHints()));
   const next = {
     schema: stripChannelSchema(schema),
     uiHints: hints,

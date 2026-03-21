@@ -24,7 +24,7 @@ import {
   createSandboxBridgeReadFile,
   discoverAuthStorage,
   discoverModels,
-  ensureVilaroModelsJson,
+  ensureVelaroModelsJson,
   resolveSandboxedBridgeMediaPath,
   runWithImageModelFallback,
   type AnyAgentTool,
@@ -209,7 +209,7 @@ async function runImagePrompt(params: {
 }> {
   const effectiveCfg = applyImageModelConfigDefaults(params.cfg, params.imageModelConfig);
 
-  await ensureVilaroModelsJson(effectiveCfg, params.agentDir);
+  await ensureVelaroModelsJson(effectiveCfg, params.agentDir);
   const authStorage = discoverAuthStorage(params.agentDir);
   const modelRegistry = discoverModels(authStorage, params.agentDir);
 

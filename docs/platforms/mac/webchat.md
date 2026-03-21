@@ -17,14 +17,14 @@ agent (with a session switcher for other sessions).
 
 ## Launch & debugging
 
-- Manual: Vilaro menu → “Open Chat”.
+- Manual: Velaro menu → “Open Chat”.
 - Auto‑open for testing:
 
   ```bash
-  dist/Vilaro.app/Contents/MacOS/Vilaro --webchat
+  dist/Velaro.app/Contents/MacOS/Velaro --webchat
   ```
 
-- Logs: `./scripts/clawlog.sh` (subsystem `ai.vilaro`, category `WebChatSwiftUI`).
+- Logs: `./scripts/clawlog.sh` (subsystem `ai.velaro`, category `WebChatSwiftUI`).
 
 ## How it’s wired
 

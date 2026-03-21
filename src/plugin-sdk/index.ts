@@ -86,10 +86,10 @@ export { ACP_ERROR_CODES, AcpRuntimeError } from "../acp/runtime/errors.js";
 export type { AcpRuntimeErrorCode } from "../acp/runtime/errors.js";
 export type {
   AnyAgentTool,
-  VilaroPluginConfigSchema,
+  VelaroPluginConfigSchema,
   VilaroPluginApi,
-  VilaroPluginService,
-  VilaroPluginServiceContext,
+  VelaroPluginService,
+  VelaroPluginServiceContext,
   PluginHookInboundClaimContext,
   PluginHookInboundClaimEvent,
   PluginHookInboundClaimResult,
@@ -155,8 +155,6 @@ export type {
 export { normalizePluginHttpPath } from "../plugins/http-path.js";
 export { registerPluginHttpRoute } from "../plugins/http-registry.js";
 export { emptyPluginConfigSchema } from "../plugins/config-schema.js";
-export type { VilaroConfig } from "../config/config.js";
-/** @deprecated Use VilaroConfig instead */
 export type { VilaroConfig } from "../config/config.js";
 export { isDangerousNameMatchingEnabled } from "../config/dangerous-name-matching.js";
 

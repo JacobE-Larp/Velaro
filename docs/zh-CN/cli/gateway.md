@@ -3,7 +3,7 @@ read_when:
   - 从 CLI 运行 Gateway 网关（开发或服务器）
   - 调试 Gateway 网关认证、绑定模式和连接性
   - 通过 Bonjour 发现 Gateway 网关（局域网 + tailnet）
-summary: Vilaro Gateway 网关 CLI（`vilaro gateway`）— 运行、查询和发现 Gateway 网关
+summary: Velaro Gateway 网关 CLI（`velaro gateway`）— 运行、查询和发现 Gateway 网关
 title: gateway
 x-i18n:
   generated_at: "2026-02-03T07:45:15Z"
@@ -16,9 +16,9 @@ x-i18n:
 
 # Gateway 网关 CLI
 
-Gateway 网关是 Vilaro 的 WebSocket 服务器（渠道、节点、会话、hooks）。
+Gateway 网关是 Velaro 的 WebSocket 服务器（渠道、节点、会话、hooks）。
 
-本页中的子命令位于 `vilaro gateway …` 下。
+本页中的子命令位于 `velaro gateway …` 下。
 
 相关文档：
 
@@ -31,13 +31,13 @@ Gateway 网关是 Vilaro 的 WebSocket 服务器（渠道、节点、会话、ho
 运行本地 Gateway 网关进程：
 
 ```bash
-vilaro gateway
+velaro gateway
 ```
 
 前台运行别名：
 
 ```bash
-vilaro gateway run
+velaro gateway run
 ```
 
 注意事项：
@@ -88,7 +88,7 @@ vilaro gateway run
 ### `gateway health`
 
 ```bash
-vilaro gateway health --url ws://127.0.0.1:18789
+velaro gateway health --url ws://127.0.0.1:18789
 ```
 
 ### `gateway status`
@@ -96,8 +96,8 @@ vilaro gateway health --url ws://127.0.0.1:18789
 `gateway status` 显示 Gateway 网关服务（launchd/systemd/schtasks）以及可选的 RPC 探测。
 
 ```bash
-vilaro gateway status
-vilaro gateway status --json
+velaro gateway status
+velaro gateway status --json
 ```
 
 选项：
@@ -119,8 +119,8 @@ vilaro gateway status --json
 如果多个 Gateway 网关可达，它会打印所有。当你使用隔离的配置文件/端口（例如救援机器人）时支持多个 Gateway 网关，但大多数安装仍然运行单个 Gateway 网关。
 
 ```bash
-vilaro gateway probe
-vilaro gateway probe --json
+velaro gateway probe
+velaro gateway probe --json
 ```
 
 #### 通过 SSH 远程（Mac 应用对等）
@@ -130,7 +130,7 @@ macOS 应用的"通过 SSH 远程"模式使用本地端口转发，因此远程 
 CLI 等效命令：
 
 ```bash
-vilaro gateway probe --ssh user@gateway-host
+velaro gateway probe --ssh user@gateway-host
 ```
 
 选项：
@@ -149,18 +149,18 @@ vilaro gateway probe --ssh user@gateway-host
 低级 RPC 辅助工具。
 
 ```bash
-vilaro gateway call status
-vilaro gateway call logs.tail --params '{"sinceMs": 60000}'
+velaro gateway call status
+velaro gateway call logs.tail --params '{"sinceMs": 60000}'
 ```
 
 ## 管理 Gateway 网关服务
 
 ```bash
-vilaro gateway install
-vilaro gateway start
-vilaro gateway stop
-vilaro gateway restart
-vilaro gateway uninstall
+velaro gateway install
+velaro gateway start
+velaro gateway stop
+velaro gateway restart
+velaro gateway uninstall
 ```
 
 注意事项：
@@ -173,7 +173,7 @@ vilaro gateway uninstall
 `gateway discover` 扫描 Gateway 网关信标（`_vilaro-gw._tcp`）。
 
 - 组播 DNS-SD：`local.`
-- 单播 DNS-SD（广域 Bonjour）：选择一个域（示例：`vilaro.internal.`）并设置分割 DNS + DNS 服务器；参见 [/gateway/bonjour](/gateway/bonjour)
+- 单播 DNS-SD（广域 Bonjour）：选择一个域（示例：`velaro.internal.`）并设置分割 DNS + DNS 服务器；参见 [/gateway/bonjour](/gateway/bonjour)
 
 只有启用了 Bonjour 发现（默认）的 Gateway 网关才会广播信标。
 
@@ -190,7 +190,7 @@ vilaro gateway uninstall
 ### `gateway discover`
 
 ```bash
-vilaro gateway discover
+velaro gateway discover
 ```
 
 选项：
@@ -201,6 +201,6 @@ vilaro gateway discover
 示例：
 
 ```bash
-vilaro gateway discover --timeout 4000
-vilaro gateway discover --json | jq '.beacons[].wsUrl'
+velaro gateway discover --timeout 4000
+velaro gateway discover --json | jq '.beacons[].wsUrl'
 ```

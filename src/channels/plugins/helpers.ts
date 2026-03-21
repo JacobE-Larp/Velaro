@@ -15,8 +15,8 @@ export function resolveChannelDefaultAccountId<ResolvedAccount>(params: {
 }
 
 export function formatPairingApproveHint(channelId: string): string {
-  const listCmd = formatCliCommand(`vilaro pairing list ${channelId}`);
-  const approveCmd = formatCliCommand(`vilaro pairing approve ${channelId} <code>`);
+  const listCmd = formatCliCommand(`velaro pairing list ${channelId}`);
+  const approveCmd = formatCliCommand(`velaro pairing approve ${channelId} <code>`);
   return `Approve via: ${listCmd} / ${approveCmd}`;
 }
 

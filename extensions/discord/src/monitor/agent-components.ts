@@ -1844,7 +1844,7 @@ class DiscordComponentChannelSelect extends ChannelSelectMenu {
 }
 
 class DiscordComponentModal extends Modal {
-  title = "Vilaro form";
+  title = "Velaro form";
   customId = "__vilaro_discord_component_modal_wildcard__";
   components = [];
   customIdParser = parseDiscordModalCustomIdForCarbon;

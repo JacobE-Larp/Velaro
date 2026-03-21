@@ -2,18 +2,18 @@ import type { Skill } from "@mariozechner/pi-coding-agent";
 import { validateRegistryNpmSpec } from "../../infra/npm-registry-spec.js";
 import { parseFrontmatterBlock } from "../../markdown/frontmatter.js";
 import {
-  applyVilaroManifestInstallCommonFields,
+  applyVelaroManifestInstallCommonFields,
   getFrontmatterString,
   normalizeStringList,
-  parseVilaroManifestInstallBase,
+  parseVelaroManifestInstallBase,
   parseFrontmatterBool,
-  resolveVilaroManifestBlock,
-  resolveVilaroManifestInstall,
-  resolveVilaroManifestOs,
-  resolveVilaroManifestRequires,
+  resolveVelaroManifestBlock,
+  resolveVelaroManifestInstall,
+  resolveVelaroManifestOs,
+  resolveVelaroManifestRequires,
 } from "../../shared/frontmatter.js";
 import type {
-  VilaroSkillMetadata,
+  VelaroSkillMetadata,
   ParsedSkillFrontmatter,
   SkillEntry,
   SkillInstallSpec,
@@ -109,12 +109,12 @@ function normalizeSafeDownloadUrl(raw: unknown): string | undefined {
 }
 
 function parseInstallSpec(input: unknown): SkillInstallSpec | undefined {
-  const parsed = parseVilaroManifestInstallBase(input, ["brew", "node", "go", "uv", "download"]);
+  const parsed = parseVelaroManifestInstallBase(input, ["brew", "node", "go", "uv", "download"]);
   if (!parsed) {
     return undefined;
   }
   const { raw } = parsed;
-  const spec = applyVilaroManifestInstallCommonFields<SkillInstallSpec>(
+  const spec = applyVelaroManifestInstallCommonFields<SkillInstallSpec>(
     {
       kind: parsed.kind as SkillInstallSpec["kind"],
     },
@@ -183,16 +183,16 @@ function parseInstallSpec(input: unknown): SkillInstallSpec | undefined {
   return spec;
 }
 
-export function resolveVilaroMetadata(
+export function resolveVelaroMetadata(
   frontmatter: ParsedSkillFrontmatter,
-): VilaroSkillMetadata | undefined {
-  const metadataObj = resolveVilaroManifestBlock({ frontmatter });
+): VelaroSkillMetadata | undefined {
+  const metadataObj = resolveVelaroManifestBlock({ frontmatter });
   if (!metadataObj) {
     return undefined;
   }
-  const requires = resolveVilaroManifestRequires(metadataObj);
-  const install = resolveVilaroManifestInstall(metadataObj, parseInstallSpec);
-  const osRaw = resolveVilaroManifestOs(metadataObj);
+  const requires = resolveVelaroManifestRequires(metadataObj);
+  const install = resolveVelaroManifestInstall(metadataObj, parseInstallSpec);
+  const osRaw = resolveVelaroManifestOs(metadataObj);
   return {
     always: typeof metadataObj.always === "boolean" ? metadataObj.always : undefined,
     emoji: typeof metadataObj.emoji === "string" ? metadataObj.emoji : undefined,

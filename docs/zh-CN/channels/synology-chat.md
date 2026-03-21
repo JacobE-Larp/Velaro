@@ -1,8 +1,8 @@
 ---
 read_when:
-  - 设置 Vilaro 与 Synology Chat
+  - 设置 Velaro 与 Synology Chat
   - 调试 Synology Chat webhook 路由
-summary: Synology Chat webhook 设置与 Vilaro 配置
+summary: Synology Chat webhook 设置与 Velaro 配置
 title: Synology Chat
 x-i18n:
   generated_at: "2026-03-16T06:20:51Z"
@@ -25,7 +25,7 @@ Synology Chat 基于插件，不属于默认的核心渠道安装内容。
 从本地检出安装：
 
 ```bash
-vilaro plugins install ./extensions/synology-chat
+velaro plugins install ./extensions/synology-chat
 ```
 
 详情：[插件](/tools/plugin)
@@ -33,17 +33,17 @@ vilaro plugins install ./extensions/synology-chat
 ## 快速设置
 
 1. 安装并启用 Synology Chat 插件。
-   - `vilaro onboard` 现在会在与 `vilaro channels add` 相同的渠道设置列表中显示 Synology Chat。
-   - 非交互式设置：`vilaro channels add --channel synology-chat --token <token> --url <incoming-webhook-url>`
+   - `velaro onboard` 现在会在与 `velaro channels add` 相同的渠道设置列表中显示 Synology Chat。
+   - 非交互式设置：`velaro channels add --channel synology-chat --token <token> --url <incoming-webhook-url>`
 2. 在 Synology Chat 集成中：
    - 创建一个入站 webhook 并复制其 URL。
    - 使用你的 secret token 创建一个出站 webhook。
-3. 将出站 webhook URL 指向你的 Vilaro Gateway 网关：
+3. 将出站 webhook URL 指向你的 Velaro Gateway 网关：
    - 默认是 `https://gateway-host/webhook/synology`。
    - 或者使用你自定义的 `channels.synology-chat.webhookPath`。
-4. 在 Vilaro 中完成设置。
-   - 引导式：`vilaro onboard`
-   - 直接设置：`vilaro channels add --channel synology-chat --token <token> --url <incoming-webhook-url>`
+4. 在 Velaro 中完成设置。
+   - 引导式：`velaro onboard`
+   - 直接设置：`velaro channels add --channel synology-chat --token <token> --url <incoming-webhook-url>`
 5. 重启 Gateway 网关，并向 Synology Chat 机器人发送一条私信。
 
 最小配置：
@@ -86,8 +86,8 @@ vilaro plugins install ./extensions/synology-chat
 - `dmPolicy: "open"` 允许任何发送方。
 - `dmPolicy: "disabled"` 会阻止私信。
 - 配对批准可配合以下命令使用：
-  - `vilaro pairing list synology-chat`
-  - `vilaro pairing approve synology-chat <CODE>`
+  - `velaro pairing list synology-chat`
+  - `velaro pairing approve synology-chat <CODE>`
 
 ## 出站投递
 
@@ -96,8 +96,8 @@ vilaro plugins install ./extensions/synology-chat
 示例：
 
 ```bash
-vilaro message send --channel synology-chat --target 123456 --text "Hello from Vilaro"
-vilaro message send --channel synology-chat --target synology-chat:123456 --text "Hello again"
+velaro message send --channel synology-chat --target 123456 --text "Hello from Velaro"
+velaro message send --channel synology-chat --target synology-chat:123456 --text "Hello again"
 ```
 
 支持通过基于 URL 的文件投递发送媒体。

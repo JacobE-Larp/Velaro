@@ -21,9 +21,9 @@ provider id `opencode-go` so upstream per-model routing stays correct.
 ## CLI setup
 
 ```bash
-vilaro onboard --auth-choice opencode-go
+velaro onboard --auth-choice opencode-go
 # or non-interactive
-vilaro onboard --opencode-go-api-key "$OPENCODE_API_KEY"
+velaro onboard --opencode-go-api-key "$OPENCODE_API_KEY"
 ```
 
 ## Config snippet
@@ -37,7 +37,7 @@ vilaro onboard --opencode-go-api-key "$OPENCODE_API_KEY"
 
 ## Routing behavior
 
-Vilaro handles per-model routing automatically when the model ref uses `opencode-go/...`.
+Velaro handles per-model routing automatically when the model ref uses `opencode-go/...`.
 
 ## Notes
 

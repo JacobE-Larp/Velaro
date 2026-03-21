@@ -27,7 +27,7 @@ export type GatewayInstallTokenResolution = {
 function formatAmbiguousGatewayAuthModeReason(): string {
   return [
     "gateway.auth.token and gateway.auth.password are both configured while gateway.auth.mode is unset.",
-    `Set ${formatCliCommand("vilaro config set gateway.auth.mode token")} or ${formatCliCommand("vilaro config set gateway.auth.mode password")}.`,
+    `Set ${formatCliCommand("velaro config set gateway.auth.mode token")} or ${formatCliCommand("velaro config set gateway.auth.mode password")}.`,
   ].join(" ");
 }
 

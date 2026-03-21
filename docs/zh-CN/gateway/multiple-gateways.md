@@ -2,7 +2,7 @@
 read_when:
   - 在同一台机器上运行多个 Gateway 网关
   - 你需要为每个 Gateway 网关隔离配置/状态/端口
-summary: 在一台主机上运行多个 Vilaro Gateway 网关（隔离、端口和配置档案）
+summary: 在一台主机上运行多个 Velaro Gateway 网关（隔离、端口和配置档案）
 title: 多个 Gateway 网关
 x-i18n:
   generated_at: "2026-03-16T06:23:07Z"
@@ -33,19 +33,19 @@ x-i18n:
 
 ```bash
 # main
-vilaro --profile main setup
-vilaro --profile main gateway --port 18789
+velaro --profile main setup
+velaro --profile main gateway --port 18789
 
 # rescue
-vilaro --profile rescue setup
-vilaro --profile rescue gateway --port 19001
+velaro --profile rescue setup
+velaro --profile rescue gateway --port 19001
 ```
 
 每个配置档案的服务：
 
 ```bash
-vilaro --profile main gateway install
-vilaro --profile rescue gateway install
+velaro --profile main gateway install
+velaro --profile rescue gateway install
 ```
 
 ## 救援机器人指南
@@ -66,11 +66,11 @@ vilaro --profile rescue gateway install
 ```bash
 # Main bot（现有或全新，不带 --profile 参数）
 # 运行在端口 18789 + Chrome CDC/Canvas/... 端口
-vilaro onboard
-vilaro gateway install
+velaro onboard
+velaro gateway install
 
 # Rescue bot（隔离的配置档案 + 端口）
-vilaro --profile rescue onboard
+velaro --profile rescue onboard
 # 说明：
 # - 工作区名称默认会追加 -rescue 后缀
 # - 端口至少应为 18789 + 20 个端口，
@@ -78,7 +78,7 @@ vilaro --profile rescue onboard
 # - 其余新手引导与正常情况相同
 
 # 安装服务（如果设置期间未自动完成）
-vilaro --profile rescue gateway install
+velaro --profile rescue gateway install
 ```
 
 ## 端口映射（派生）
@@ -103,17 +103,17 @@ vilaro --profile rescue gateway install
 ```bash
 VILARO_CONFIG_PATH=~/.vilaro/main.json \
 VILARO_STATE_DIR=~/.vilaro-main \
-vilaro gateway --port 18789
+velaro gateway --port 18789
 
 VILARO_CONFIG_PATH=~/.vilaro/rescue.json \
 VILARO_STATE_DIR=~/.vilaro-rescue \
-vilaro gateway --port 19001
+velaro gateway --port 19001
 ```
 
 ## 快速检查
 
 ```bash
-vilaro --profile main status
-vilaro --profile rescue status
-vilaro --profile rescue browser status
+velaro --profile main status
+velaro --profile rescue status
+velaro --profile rescue browser status
 ```

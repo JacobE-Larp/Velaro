@@ -43,7 +43,7 @@ async function promptWhatsAppOwnerAllowFrom(params: {
   const { prompter, existingAllowFrom } = params;
 
   await prompter.note(
-    "We need the sender/owner number so Vilaro can allowlist you.",
+    "We need the sender/owner number so Velaro can allowlist you.",
     "WhatsApp number",
   );
   const entry = await prompter.text({
@@ -152,7 +152,7 @@ async function promptWhatsAppDmAccess(params: {
     message: "WhatsApp phone setup",
     options: [
       { value: "personal", label: "This is my personal phone number" },
-      { value: "separate", label: "Separate phone just for Vilaro" },
+      { value: "separate", label: "Separate phone just for Velaro" },
     ],
   });
 
@@ -318,7 +318,7 @@ export const whatsappSetupWizard: ChannelSetupWizard = {
       }
     } else if (!linked) {
       await prompter.note(
-        `Run \`${formatCliCommand("vilaro channels login")}\` later to link WhatsApp.`,
+        `Run \`${formatCliCommand("velaro channels login")}\` later to link WhatsApp.`,
         "WhatsApp",
       );
     }

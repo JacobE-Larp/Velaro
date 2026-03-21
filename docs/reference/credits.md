@@ -7,13 +7,13 @@ title: "Credits"
 
 ## The name
 
-Vilaro = CLAW + TARDIS, because every space vilaro needs a time and space machine.
+Velaro = CLAW + TARDIS, because every space velaro needs a time and space machine.
 
 ## Credits
 
-- **Peter Steinberger** ([@steipete](https://x.com/steipete)) - Creator, vilaro whisperer
+- **Peter Steinberger** ([@steipete](https://x.com/steipete)) - Creator, velaro whisperer
 - **Mario Zechner** ([@badlogicc](https://x.com/badlogicgames)) - Pi creator, security pen tester
-- **Vilaro** - The space vilaro who demanded a better name
+- **Velaro** - The space velaro who demanded a better name
 
 ## Core contributors
 
@@ -23,6 +23,6 @@ Vilaro = CLAW + TARDIS, because every space vilaro needs a time and space machin
 
 ## License
 
-MIT - Free as a vilaro in the ocean.
+MIT - Free as a velaro in the ocean.
 
 > "We are all just playing with our own prompts." (An AI, probably high on tokens)

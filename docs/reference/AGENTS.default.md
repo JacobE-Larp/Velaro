@@ -1,16 +1,16 @@
 ---
 title: "Default AGENTS.md"
-summary: "Default Vilaro agent instructions and skills roster for the personal assistant setup"
+summary: "Default Velaro agent instructions and skills roster for the personal assistant setup"
 read_when:
-  - Starting a new Vilaro agent session
+  - Starting a new Velaro agent session
   - Enabling or auditing default skills
 ---
 
-# AGENTS.md — Vilaro Personal Assistant (default)
+# AGENTS.md — Velaro Personal Assistant (default)
 
 ## First run (recommended)
 
-Vilaro uses a dedicated workspace directory for the agent. Default: `~/.vilaro/workspace` (configurable via `agents.defaults.workspace`).
+Velaro uses a dedicated workspace directory for the agent. Default: `~/.vilaro/workspace` (configurable via `agents.defaults.workspace`).
 
 1. Create the workspace (if it doesn’t already exist):
 
@@ -79,20 +79,20 @@ cp docs/reference/AGENTS.default.md ~/.vilaro/workspace/AGENTS.md
 
 ## Backup tip (recommended)
 
-If you treat this workspace as Vilaro’s “memory”, make it a git repo (ideally private) so `AGENTS.md` and your memory files are backed up.
+If you treat this workspace as Velaro’s “memory”, make it a git repo (ideally private) so `AGENTS.md` and your memory files are backed up.
 
 ```bash
 cd ~/.vilaro/workspace
 git init
 git add AGENTS.md
-git commit -m "Add Vilaro workspace"
+git commit -m "Add Velaro workspace"
 # Optional: add a private remote + push
 ```
 
-## What Vilaro Does
+## What Velaro Does
 
 - Runs WhatsApp gateway + Pi coding agent so the assistant can read/write chats, fetch context, and run skills via the host Mac.
-- macOS app manages permissions (screen recording, notifications, microphone) and exposes the `vilaro` CLI via its bundled binary.
+- macOS app manages permissions (screen recording, notifications, microphone) and exposes the `velaro` CLI via its bundled binary.
 - Direct chats collapse into the agent's `main` session by default; groups stay isolated as `agent:<agentId>:<channel>:group:<id>` (rooms/channels: `agent:<agentId>:<channel>:channel:<id>`); heartbeats keep background tasks alive.
 
 ## Core Skills (enable in Settings → Skills)
@@ -117,10 +117,10 @@ git commit -m "Add Vilaro workspace"
 
 ## Usage Notes
 
-- Prefer the `vilaro` CLI for scripting; mac app handles permissions.
+- Prefer the `velaro` CLI for scripting; mac app handles permissions.
 - Run installs from the Skills tab; it hides the button if a binary is already present.
 - Keep heartbeats enabled so the assistant can schedule reminders, monitor inboxes, and trigger camera captures.
 - Canvas UI runs full-screen with native overlays. Avoid placing critical controls in the top-left/top-right/bottom edges; add explicit gutters in the layout and don’t rely on safe-area insets.
-- For browser-driven verification, use `vilaro browser` (tabs/status/screenshot) with the Vilaro-managed Chrome profile.
-- For DOM inspection, use `vilaro browser eval|query|dom|snapshot` (and `--json`/`--out` when you need machine output).
-- For interactions, use `vilaro browser click|type|hover|drag|select|upload|press|wait|navigate|back|evaluate|run` (click/type require snapshot refs; use `evaluate` for CSS selectors).
+- For browser-driven verification, use `velaro browser` (tabs/status/screenshot) with the Velaro-managed Chrome profile.
+- For DOM inspection, use `velaro browser eval|query|dom|snapshot` (and `--json`/`--out` when you need machine output).
+- For interactions, use `velaro browser click|type|hover|drag|select|upload|press|wait|navigate|back|evaluate|run` (click/type require snapshot refs; use `evaluate` for CSS selectors).

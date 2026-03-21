@@ -32,15 +32,15 @@ async function requireRiskAcknowledgement(params: {
     [
       "Security warning — please read.",
       "",
-      "Vilaro is a hobby project and still in beta. Expect sharp edges.",
-      "By default, Vilaro is a personal agent: one trusted operator boundary.",
+      "Velaro is a hobby project and still in beta. Expect sharp edges.",
+      "By default, Velaro is a personal agent: one trusted operator boundary.",
       "This bot can read files and run actions if tools are enabled.",
       "A bad prompt can trick it into doing unsafe things.",
       "",
-      "Vilaro is not a hostile multi-tenant boundary by default.",
+      "Velaro is not a hostile multi-tenant boundary by default.",
       "If multiple users can message one tool-enabled agent, they share that delegated tool authority.",
       "",
-      "If you’re not comfortable with security hardening and access control, don’t run Vilaro.",
+      "If you’re not comfortable with security hardening and access control, don’t run Velaro.",
       "Ask someone experienced to help before enabling tools or exposing it to the internet.",
       "",
       "Recommended baseline:",
@@ -52,8 +52,8 @@ async function requireRiskAcknowledgement(params: {
       "- Use the strongest available model for any bot with tools or untrusted inboxes.",
       "",
       "Run regularly:",
-      "vilaro security audit --deep",
-      "vilaro security audit --fix",
+      "velaro security audit --deep",
+      "velaro security audit --fix",
       "",
       "Must read: https://docs.vilaro.ai/gateway/security",
     ].join("\n"),
@@ -77,7 +77,7 @@ export async function runSetupWizard(
 ) {
   const onboardHelpers = await import("../commands/onboard-helpers.js");
   onboardHelpers.printWizardHeader(runtime);
-  await prompter.intro("Vilaro setup");
+  await prompter.intro("Velaro setup");
   await requireRiskAcknowledgement({ opts, prompter });
 
   const snapshot = await readConfigFileSnapshot();
@@ -96,13 +96,13 @@ export async function runSetupWizard(
       );
     }
     await prompter.outro(
-      `Config invalid. Run \`${formatCliCommand("vilaro doctor")}\` to repair it, then re-run setup.`,
+      `Config invalid. Run \`${formatCliCommand("velaro doctor")}\` to repair it, then re-run setup.`,
     );
     runtime.exit(1);
     return;
   }
 
-  const quickstartHint = `Configure details later via ${formatCliCommand("vilaro configure")}.`;
+  const quickstartHint = `Configure details later via ${formatCliCommand("velaro configure")}.`;
   const manualHint = "Configure port, network, Tailscale, and auth options.";
   const explicitFlowRaw = opts.flow?.trim();
   const normalizedExplicitFlow = explicitFlowRaw === "manual" ? "advanced" : explicitFlowRaw;

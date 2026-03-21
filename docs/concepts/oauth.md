@@ -1,7 +1,7 @@
 ---
-summary: "OAuth in Vilaro: token exchange, storage, and multi-account patterns"
+summary: "OAuth in Velaro: token exchange, storage, and multi-account patterns"
 read_when:
-  - You want to understand Vilaro OAuth end-to-end
+  - You want to understand Velaro OAuth end-to-end
   - You hit token invalidation / logout issues
   - You want setup-token or OAuth auth flows
   - You want multiple accounts or profile routing
@@ -10,7 +10,7 @@ title: "OAuth"
 
 # OAuth
 
-Vilaro supports “subscription auth” via OAuth for providers that offer it (notably **OpenAI Codex (ChatGPT OAuth)**). For Anthropic subscriptions, use the **setup-token** flow. Anthropic subscription use outside Claude Code has been restricted for some users in the past, so treat it as a user-choice risk and verify current Anthropic policy yourself. OpenAI Codex OAuth is explicitly supported for use in external tools like Vilaro. This page explains:
+Velaro supports “subscription auth” via OAuth for providers that offer it (notably **OpenAI Codex (ChatGPT OAuth)**). For Anthropic subscriptions, use the **setup-token** flow. Anthropic subscription use outside Claude Code has been restricted for some users in the past, so treat it as a user-choice risk and verify current Anthropic policy yourself. OpenAI Codex OAuth is explicitly supported for use in external tools like Velaro. This page explains:
 
 For Anthropic in production, API key auth is the safer recommended path over subscription setup-token auth.
 
@@ -18,11 +18,11 @@ For Anthropic in production, API key auth is the safer recommended path over sub
 - where tokens are **stored** (and why)
 - how to handle **multiple accounts** (profiles + per-session overrides)
 
-Vilaro also supports **provider plugins** that ship their own OAuth or API‑key
+Velaro also supports **provider plugins** that ship their own OAuth or API‑key
 flows. Run them via:
 
 ```bash
-vilaro models auth login --provider <id>
+velaro models auth login --provider <id>
 ```
 
 ## The token sink (why it exists)
@@ -31,9 +31,9 @@ OAuth providers commonly mint a **new refresh token** during login/refresh flows
 
 Practical symptom:
 
-- you log in via Vilaro _and_ via Claude Code / Codex CLI → one of them randomly gets “logged out” later
+- you log in via Velaro _and_ via Claude Code / Codex CLI → one of them randomly gets “logged out” later
 
-To reduce that, Vilaro treats `auth-profiles.json` as a **token sink**:
+To reduce that, Velaro treats `auth-profiles.json` as a **token sink**:
 
 - the runtime reads credentials from **one place**
 - we can keep multiple profiles and route them deterministically
@@ -62,41 +62,41 @@ Anthropic has blocked some subscription usage outside Claude Code in the past.
 Decide for yourself whether to use subscription auth, and verify Anthropic's current terms.
 </Warning>
 
-Run `claude setup-token` on any machine, then paste it into Vilaro:
+Run `claude setup-token` on any machine, then paste it into Velaro:
 
 ```bash
-vilaro models auth setup-token --provider anthropic
+velaro models auth setup-token --provider anthropic
 ```
 
 If you generated the token elsewhere, paste it manually:
 
 ```bash
-vilaro models auth paste-token --provider anthropic
+velaro models auth paste-token --provider anthropic
 ```
 
 Verify:
 
 ```bash
-vilaro models status
+velaro models status
 ```
 
 ## OAuth exchange (how login works)
 
-Vilaro’s interactive login flows are implemented in `@mariozechner/pi-ai` and wired into the wizards/commands.
+Velaro’s interactive login flows are implemented in `@mariozechner/pi-ai` and wired into the wizards/commands.
 
 ### Anthropic setup-token
 
 Flow shape:
 
 1. run `claude setup-token`
-2. paste the token into Vilaro
+2. paste the token into Velaro
 3. store as a token auth profile (no refresh)
 
-The wizard path is `vilaro onboard` → auth choice `setup-token` (Anthropic).
+The wizard path is `velaro onboard` → auth choice `setup-token` (Anthropic).
 
 ### OpenAI Codex (ChatGPT OAuth)
 
-OpenAI Codex OAuth is explicitly supported for use outside the Codex CLI, including Vilaro workflows.
+OpenAI Codex OAuth is explicitly supported for use outside the Codex CLI, including Velaro workflows.
 
 Flow shape (PKCE):
 
@@ -107,7 +107,7 @@ Flow shape (PKCE):
 5. exchange at `https://auth.openai.com/oauth/token`
 6. extract `accountId` from the access token and store `{ access, refresh, expires, accountId }`
 
-Wizard path is `vilaro onboard` → auth choice `openai-codex`.
+Wizard path is `velaro onboard` → auth choice `openai-codex`.
 
 ## Refresh + expiry
 
@@ -129,8 +129,8 @@ Two patterns:
 If you want “personal” and “work” to never interact, use isolated agents (separate sessions + credentials + workspace):
 
 ```bash
-vilaro agents add work
-vilaro agents add personal
+velaro agents add work
+velaro agents add personal
 ```
 
 Then configure auth per-agent (wizard) and route chats to the right agent.
@@ -150,7 +150,7 @@ Example (session override):
 
 How to see what profile IDs exist:
 
-- `vilaro channels list --json` (shows `auth[]`)
+- `velaro channels list --json` (shows `auth[]`)
 
 Related docs:
 

@@ -15,7 +15,7 @@ x-i18n:
 
 # 发布策略
 
-Vilaro 有三个公开发布渠道：
+Velaro 有三个公开发布渠道：
 
 - stable：带标签的正式发布，发布到 npm `latest`
 - beta：预发布标签，发布到 npm `beta`
@@ -40,9 +40,9 @@ Vilaro 有三个公开发布渠道：
 
 ## 公开参考
 
-- [`.github/workflows/vilaro-npm-release.yml`](https://github.com/vilaro/vilaro/blob/main/.github/workflows/vilaro-npm-release.yml)
-- [`scripts/vilaro-npm-release-check.ts`](https://github.com/vilaro/vilaro/blob/main/scripts/vilaro-npm-release-check.ts)
+- [`.github/workflows/velaro-npm-release.yml`](https://github.com/vilaro/vilaro/blob/main/.github/workflows/vilaro-npm-release.yml)
+- [`scripts/velaro-npm-release-check.ts`](https://github.com/vilaro/vilaro/blob/main/scripts/vilaro-npm-release-check.ts)
 
 维护者使用
-[`vilaro/maintainers/release/README.md`](https://github.com/vilaro/maintainers/blob/main/release/README.md)
+[`velaro/maintainers/release/README.md`](https://github.com/vilaro/maintainers/blob/main/release/README.md)
 中的私有发布文档作为实际操作手册。

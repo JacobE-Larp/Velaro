@@ -144,7 +144,7 @@ export async function statusAllCommand(
         return {
           label: summary.label,
           installed: summary.installed,
-          managedByVilaro: summary.managedByVilaro,
+          managedByVelaro: summary.managedByVelaro,
           loaded: summary.loaded,
           loadedText: summary.loadedText,
           runtime: summary.runtime,
@@ -304,7 +304,7 @@ export async function statusAllCommand(
       ...(probeAuthResolution.warning
         ? [{ Item: "Gateway auth warning", Value: probeAuthResolution.warning }]
         : []),
-      { Item: "Security", Value: `Run: ${formatCliCommand("vilaro security audit --deep")}` },
+      { Item: "Security", Value: `Run: ${formatCliCommand("velaro security audit --deep")}` },
       gatewaySelfLine
         ? { Item: "Gateway self", Value: gatewaySelfLine }
         : { Item: "Gateway self", Value: "unknown" },
@@ -313,7 +313,7 @@ export async function statusAllCommand(
             Item: "Gateway service",
             Value: !daemon.installed
               ? `${daemon.label} not installed`
-              : `${daemon.label} ${daemon.managedByVilaro ? "installed · " : ""}${daemon.loadedText}${daemon.runtime?.status ? ` · ${daemon.runtime.status}` : ""}${daemon.runtime?.pid ? ` (pid ${daemon.runtime.pid})` : ""}`,
+              : `${daemon.label} ${daemon.managedByVelaro ? "installed · " : ""}${daemon.loadedText}${daemon.runtime?.status ? ` · ${daemon.runtime.status}` : ""}${daemon.runtime?.pid ? ` (pid ${daemon.runtime.pid})` : ""}`,
           }
         : { Item: "Gateway service", Value: "unknown" },
       nodeService
@@ -321,7 +321,7 @@ export async function statusAllCommand(
             Item: "Node service",
             Value: !nodeService.installed
               ? `${nodeService.label} not installed`
-              : `${nodeService.label} ${nodeService.managedByVilaro ? "installed · " : ""}${nodeService.loadedText}${nodeService.runtime?.status ? ` · ${nodeService.runtime.status}` : ""}${nodeService.runtime?.pid ? ` (pid ${nodeService.runtime.pid})` : ""}`,
+              : `${nodeService.label} ${nodeService.managedByVelaro ? "installed · " : ""}${nodeService.loadedText}${nodeService.runtime?.status ? ` · ${nodeService.runtime.status}` : ""}${nodeService.runtime?.pid ? ` (pid ${nodeService.runtime.pid})` : ""}`,
           }
         : { Item: "Node service", Value: "unknown" },
       {

@@ -13,7 +13,7 @@ A **node** is a companion device (macOS/iOS/Android/headless) that connects to t
 
 Legacy transport: [Bridge protocol](/gateway/bridge-protocol) (TCP JSONL; deprecated/removed for current nodes).
 
-macOS can also run in **node mode**: the menubar app connects to the Gateway’s WS server and exposes its local canvas/camera commands as a node (so `vilaro nodes …` works against this Mac).
+macOS can also run in **node mode**: the menubar app connects to the Gateway’s WS server and exposes its local canvas/camera commands as a node (so `velaro nodes …` works against this Mac).
 
 Notes:
 
@@ -29,17 +29,17 @@ creates a device pairing request for `role: node`. Approve via the devices CLI (
 Quick CLI:
 
 ```bash
-vilaro devices list
-vilaro devices approve <requestId>
-vilaro devices reject <requestId>
-vilaro nodes status
-vilaro nodes describe --node <idOrNameOrIp>
+velaro devices list
+velaro devices approve <requestId>
+velaro devices reject <requestId>
+velaro nodes status
+velaro nodes describe --node <idOrNameOrIp>
 ```
 
 Notes:
 
 - `nodes status` marks a node as **paired** when its device pairing role includes `node`.
-- `node.pair.*` (CLI: `vilaro nodes pending/approve/reject`) is a separate gateway-owned
+- `node.pair.*` (CLI: `velaro nodes pending/approve/reject`) is a separate gateway-owned
   node pairing store; it does **not** gate the WS `connect` handshake.
 
 ## Remote node host (system.run)
@@ -57,9 +57,9 @@ forwards `exec` calls to the **node host** when `host=node` is selected.
 Approval note:
 
 - Approval-backed node runs bind exact request context.
-- For direct shell/runtime file executions, Vilaro also best-effort binds one concrete local
+- For direct shell/runtime file executions, Velaro also best-effort binds one concrete local
   file operand and denies the run if that file changes before execution.
-- If Vilaro cannot identify exactly one concrete local file for an interpreter/runtime command,
+- If Velaro cannot identify exactly one concrete local file for an interpreter/runtime command,
   approval-backed execution is denied instead of pretending full runtime coverage. Use sandboxing,
   separate hosts, or an explicit trusted allowlist/full workflow for broader interpreter semantics.
 
@@ -68,7 +68,7 @@ Approval note:
 On the node machine:
 
 ```bash
-vilaro node run --host <gateway-host> --port 18789 --display-name "Build Node"
+velaro node run --host <gateway-host> --port 18789 --display-name "Build Node"
 ```
 
 ### Remote gateway via SSH tunnel (loopback bind)
@@ -85,12 +85,12 @@ ssh -N -L 18790:127.0.0.1:18789 user@gateway-host
 
 # Terminal B: export the gateway token and connect through the tunnel
 export VILARO_GATEWAY_TOKEN="<gateway-token>"
-vilaro node run --host 127.0.0.1 --port 18790 --display-name "Build Node"
+velaro node run --host 127.0.0.1 --port 18790 --display-name "Build Node"
 ```
 
 Notes:
 
-- `vilaro node run` supports token or password auth.
+- `velaro node run` supports token or password auth.
 - Env vars are preferred: `VILARO_GATEWAY_TOKEN` / `VILARO_GATEWAY_PASSWORD`.
 - Config fallback is `gateway.auth.token` / `gateway.auth.password`.
 - In local mode, node host intentionally ignores `gateway.remote.token` / `gateway.remote.password`.
@@ -101,8 +101,8 @@ Notes:
 ### Start a node host (service)
 
 ```bash
-vilaro node install --host <gateway-host> --port 18789 --display-name "Build Node"
-vilaro node restart
+velaro node install --host <gateway-host> --port 18789 --display-name "Build Node"
+velaro node restart
 ```
 
 ### Pair + name
@@ -110,23 +110,23 @@ vilaro node restart
 On the gateway host:
 
 ```bash
-vilaro devices list
-vilaro devices approve <requestId>
-vilaro nodes status
+velaro devices list
+velaro devices approve <requestId>
+velaro nodes status
 ```
 
 Naming options:
 
-- `--display-name` on `vilaro node run` / `vilaro node install` (persists in `~/.vilaro/node.json` on the node).
-- `vilaro nodes rename --node <id|name|ip> --name "Build Node"` (gateway override).
+- `--display-name` on `velaro node run` / `velaro node install` (persists in `~/.vilaro/node.json` on the node).
+- `velaro nodes rename --node <id|name|ip> --name "Build Node"` (gateway override).
 
 ### Allowlist the commands
 
 Exec approvals are **per node host**. Add allowlist entries from the gateway:
 
 ```bash
-vilaro approvals allowlist add --node <id|name|ip> "/usr/bin/uname"
-vilaro approvals allowlist add --node <id|name|ip> "/usr/bin/sw_vers"
+velaro approvals allowlist add --node <id|name|ip> "/usr/bin/uname"
+velaro approvals allowlist add --node <id|name|ip> "/usr/bin/sw_vers"
 ```
 
 Approvals live on the node host at `~/.vilaro/exec-approvals.json`.
@@ -136,9 +136,9 @@ Approvals live on the node host at `~/.vilaro/exec-approvals.json`.
 Configure defaults (gateway config):
 
 ```bash
-vilaro config set tools.exec.host node
-vilaro config set tools.exec.security allowlist
-vilaro config set tools.exec.node "<id-or-name>"
+velaro config set tools.exec.host node
+velaro config set tools.exec.security allowlist
+velaro config set tools.exec.node "<id-or-name>"
 ```
 
 Or per session:
@@ -161,7 +161,7 @@ Related:
 Low-level (raw RPC):
 
 ```bash
-vilaro nodes invoke --node <idOrNameOrIp> --command canvas.eval --params '{"javaScript":"location.href"}'
+velaro nodes invoke --node <idOrNameOrIp> --command canvas.eval --params '{"javaScript":"location.href"}'
 ```
 
 Higher-level helpers exist for the common “give the agent a MEDIA attachment” workflows.
@@ -173,17 +173,17 @@ If the node is showing the Canvas (WebView), `canvas.snapshot` returns `{ format
 CLI helper (writes to a temp file and prints `MEDIA:<path>`):
 
 ```bash
-vilaro nodes canvas snapshot --node <idOrNameOrIp> --format png
-vilaro nodes canvas snapshot --node <idOrNameOrIp> --format jpg --max-width 1200 --quality 0.9
+velaro nodes canvas snapshot --node <idOrNameOrIp> --format png
+velaro nodes canvas snapshot --node <idOrNameOrIp> --format jpg --max-width 1200 --quality 0.9
 ```
 
 ### Canvas controls
 
 ```bash
-vilaro nodes canvas present --node <idOrNameOrIp> --target https://example.com
-vilaro nodes canvas hide --node <idOrNameOrIp>
-vilaro nodes canvas navigate https://example.com --node <idOrNameOrIp>
-vilaro nodes canvas eval --node <idOrNameOrIp> --js "document.title"
+velaro nodes canvas present --node <idOrNameOrIp> --target https://example.com
+velaro nodes canvas hide --node <idOrNameOrIp>
+velaro nodes canvas navigate https://example.com --node <idOrNameOrIp>
+velaro nodes canvas eval --node <idOrNameOrIp> --js "document.title"
 ```
 
 Notes:
@@ -194,9 +194,9 @@ Notes:
 ### A2UI (Canvas)
 
 ```bash
-vilaro nodes canvas a2ui push --node <idOrNameOrIp> --text "Hello"
-vilaro nodes canvas a2ui push --node <idOrNameOrIp> --jsonl ./payload.jsonl
-vilaro nodes canvas a2ui reset --node <idOrNameOrIp>
+velaro nodes canvas a2ui push --node <idOrNameOrIp> --text "Hello"
+velaro nodes canvas a2ui push --node <idOrNameOrIp> --jsonl ./payload.jsonl
+velaro nodes canvas a2ui reset --node <idOrNameOrIp>
 ```
 
 Notes:
@@ -208,16 +208,16 @@ Notes:
 Photos (`jpg`):
 
 ```bash
-vilaro nodes camera list --node <idOrNameOrIp>
-vilaro nodes camera snap --node <idOrNameOrIp>            # default: both facings (2 MEDIA lines)
-vilaro nodes camera snap --node <idOrNameOrIp> --facing front
+velaro nodes camera list --node <idOrNameOrIp>
+velaro nodes camera snap --node <idOrNameOrIp>            # default: both facings (2 MEDIA lines)
+velaro nodes camera snap --node <idOrNameOrIp> --facing front
 ```
 
 Video clips (`mp4`):
 
 ```bash
-vilaro nodes camera clip --node <idOrNameOrIp> --duration 10s
-vilaro nodes camera clip --node <idOrNameOrIp> --duration 3000 --no-audio
+velaro nodes camera clip --node <idOrNameOrIp> --duration 10s
+velaro nodes camera clip --node <idOrNameOrIp> --duration 3000 --no-audio
 ```
 
 Notes:
@@ -231,8 +231,8 @@ Notes:
 Supported nodes expose `screen.record` (mp4). Example:
 
 ```bash
-vilaro nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10
-vilaro nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10 --no-audio
+velaro nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10
+velaro nodes screen record --node <idOrNameOrIp> --duration 10s --fps 10 --no-audio
 ```
 
 Notes:
@@ -249,8 +249,8 @@ Nodes expose `location.get` when Location is enabled in settings.
 CLI helper:
 
 ```bash
-vilaro nodes location get --node <idOrNameOrIp>
-vilaro nodes location get --node <idOrNameOrIp> --accuracy precise --max-age 15000 --location-timeout 10000
+velaro nodes location get --node <idOrNameOrIp>
+velaro nodes location get --node <idOrNameOrIp> --accuracy precise --max-age 15000 --location-timeout 10000
 ```
 
 Notes:
@@ -266,7 +266,7 @@ Android nodes can expose `sms.send` when the user grants **SMS** permission and 
 Low-level invoke:
 
 ```bash
-vilaro nodes invoke --node <idOrNameOrIp> --command sms.send --params '{"to":"+15555550123","message":"Hello from Vilaro"}'
+velaro nodes invoke --node <idOrNameOrIp> --command sms.send --params '{"to":"+15555550123","message":"Hello from Velaro"}'
 ```
 
 Notes:
@@ -291,9 +291,9 @@ Available families:
 Example invokes:
 
 ```bash
-vilaro nodes invoke --node <idOrNameOrIp> --command device.status --params '{}'
-vilaro nodes invoke --node <idOrNameOrIp> --command notifications.list --params '{}'
-vilaro nodes invoke --node <idOrNameOrIp> --command photos.latest --params '{"limit":1}'
+velaro nodes invoke --node <idOrNameOrIp> --command device.status --params '{}'
+velaro nodes invoke --node <idOrNameOrIp> --command notifications.list --params '{}'
+velaro nodes invoke --node <idOrNameOrIp> --command photos.latest --params '{"limit":1}'
 ```
 
 Notes:
@@ -308,8 +308,8 @@ The headless node host exposes `system.run`, `system.which`, and `system.execApp
 Examples:
 
 ```bash
-vilaro nodes run --node <idOrNameOrIp> -- echo "Hello from mac node"
-vilaro nodes notify --node <idOrNameOrIp> --title "Ping" --body "Gateway ready"
+velaro nodes run --node <idOrNameOrIp> -- echo "Hello from mac node"
+velaro nodes notify --node <idOrNameOrIp> --title "Ping" --body "Gateway ready"
 ```
 
 Notes:
@@ -335,21 +335,21 @@ This sets the default node for `exec host=node` (and can be overridden per agent
 Global default:
 
 ```bash
-vilaro config set tools.exec.node "node-id-or-name"
+velaro config set tools.exec.node "node-id-or-name"
 ```
 
 Per-agent override:
 
 ```bash
-vilaro config get agents.list
-vilaro config set agents.list[0].tools.exec.node "node-id-or-name"
+velaro config get agents.list
+velaro config set agents.list[0].tools.exec.node "node-id-or-name"
 ```
 
 Unset to allow any node:
 
 ```bash
-vilaro config unset tools.exec.node
-vilaro config unset agents.list[0].tools.exec.node
+velaro config unset tools.exec.node
+velaro config unset agents.list[0].tools.exec.node
 ```
 
 ## Permissions map
@@ -358,14 +358,14 @@ Nodes may include a `permissions` map in `node.list` / `node.describe`, keyed by
 
 ## Headless node host (cross-platform)
 
-Vilaro can run a **headless node host** (no UI) that connects to the Gateway
+Velaro can run a **headless node host** (no UI) that connects to the Gateway
 WebSocket and exposes `system.run` / `system.which`. This is useful on Linux/Windows
 or for running a minimal node alongside a server.
 
 Start it:
 
 ```bash
-vilaro node run --host <gateway-host> --port 18789
+velaro node run --host <gateway-host> --port 18789
 ```
 
 Notes:
@@ -381,5 +381,5 @@ Notes:
 
 ## Mac node mode
 
-- The macOS menubar app connects to the Gateway WS server as a node (so `vilaro nodes …` works against this Mac).
+- The macOS menubar app connects to the Gateway WS server as a node (so `velaro nodes …` works against this Mac).
 - In remote mode, the app opens an SSH tunnel for the Gateway port and connects to `localhost`.

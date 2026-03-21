@@ -148,7 +148,7 @@ function matchesExpectedPluginId(params: {
   );
 }
 
-function ensureVilaroExtensions(params: { manifest: PackageManifest }):
+function ensureVelaroExtensions(params: { manifest: PackageManifest }):
   | {
       ok: true;
       entries: string[];
@@ -299,12 +299,12 @@ async function installBundleFromSourceDir(
       );
     } else if (scanSummary.warn > 0) {
       logger.warn?.(
-        `Bundle "${pluginId}" has ${scanSummary.warn} suspicious code pattern(s). Run "vilaro security audit --deep" for details.`,
+        `Bundle "${pluginId}" has ${scanSummary.warn} suspicious code pattern(s). Run "velaro security audit --deep" for details.`,
       );
     }
   } catch (err) {
     logger.warn?.(
-      `Bundle "${pluginId}" code safety scan failed (${String(err)}). Installation continues; run "vilaro security audit --deep" after install.`,
+      `Bundle "${pluginId}" code safety scan failed (${String(err)}). Installation continues; run "velaro security audit --deep" after install.`,
     );
   }
 
@@ -398,7 +398,7 @@ async function detectNativePackageInstallSource(packageDir: string): Promise<boo
 
   try {
     const manifest = await readJsonFile<PackageManifest>(manifestPath);
-    return ensureVilaroExtensions({ manifest }).ok;
+    return ensureVelaroExtensions({ manifest }).ok;
   } catch {
     return false;
   }
@@ -423,7 +423,7 @@ async function installPluginFromPackageDir(
     return { ok: false, error: `invalid package.json: ${String(err)}` };
   }
 
-  const extensionsResult = ensureVilaroExtensions({
+  const extensionsResult = ensureVelaroExtensions({
     manifest,
   });
   if (!extensionsResult.ok) {
@@ -505,12 +505,12 @@ async function installPluginFromPackageDir(
       );
     } else if (scanSummary.warn > 0) {
       logger.warn?.(
-        `Plugin "${pluginId}" has ${scanSummary.warn} suspicious code pattern(s). Run "vilaro security audit --deep" for details.`,
+        `Plugin "${pluginId}" has ${scanSummary.warn} suspicious code pattern(s). Run "velaro security audit --deep" for details.`,
       );
     }
   } catch (err) {
     logger.warn?.(
-      `Plugin "${pluginId}" code safety scan failed (${String(err)}). Installation continues; run "vilaro security audit --deep" after install.`,
+      `Plugin "${pluginId}" code safety scan failed (${String(err)}). Installation continues; run "velaro security audit --deep" after install.`,
     );
   }
 

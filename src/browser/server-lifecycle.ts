@@ -1,4 +1,4 @@
-import { stopVilaroChrome } from "./chrome.js";
+import { stopVelaroChrome } from "./chrome.js";
 import type { ResolvedBrowserConfig } from "./config.js";
 import {
   type BrowserServerState,
@@ -32,7 +32,7 @@ export async function stopKnownBrowserProfiles(params: {
       try {
         const runtime = current.profiles.get(name);
         if (runtime?.running) {
-          await stopVilaroChrome(runtime.running);
+          await stopVelaroChrome(runtime.running);
           runtime.running = null;
           continue;
         }
@@ -42,6 +42,6 @@ export async function stopKnownBrowserProfiles(params: {
       }
     }
   } catch (err) {
-    params.onWarn(`vilaro browser stop failed: ${String(err)}`);
+    params.onWarn(`velaro browser stop failed: ${String(err)}`);
   }
 }

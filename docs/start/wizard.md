@@ -9,25 +9,25 @@ sidebarTitle: "Onboarding: CLI"
 
 # Setup Wizard (CLI)
 
-The setup wizard is the **recommended** way to set up Vilaro on macOS,
+The setup wizard is the **recommended** way to set up Velaro on macOS,
 Linux, or Windows (via WSL2; strongly recommended).
 It configures a local Gateway or a remote Gateway connection, plus channels, skills,
 and workspace defaults in one guided flow.
 
 ```bash
-vilaro onboard
+velaro onboard
 ```
 
 <Info>
 Fastest first chat: open the Control UI (no channel setup needed). Run
-`vilaro dashboard` and chat in the browser. Docs: [Dashboard](/web/dashboard).
+`velaro dashboard` and chat in the browser. Docs: [Dashboard](/web/dashboard).
 </Info>
 
 To reconfigure later:
 
 ```bash
-vilaro configure
-vilaro agents add <name>
+velaro configure
+velaro agents add <name>
 ```
 
 <Note>
@@ -38,7 +38,7 @@ vilaro agents add <name>
 The setup wizard includes a web search step where you can pick a provider
 (Perplexity, Brave, Gemini, Grok, or Kimi) and paste your API key so the agent
 can use `web_search`. You can also configure this later with
-`vilaro configure --section web`. Docs: [Web tools](/tools/web).
+`velaro configure --section web`. Docs: [Web tools](/tools/web).
 </Tip>
 
 ## QuickStart vs Advanced
@@ -86,7 +86,7 @@ The wizard starts with **QuickStart** (defaults) vs **Advanced** (full control).
 <Note>
 Re-running the wizard does **not** wipe anything unless you explicitly choose **Reset** (or pass `--reset`).
 CLI `--reset` defaults to config, credentials, and sessions; use `--reset-scope full` to include workspace.
-If the config is invalid or contains legacy keys, the wizard asks you to run `vilaro doctor` first.
+If the config is invalid or contains legacy keys, the wizard asks you to run `velaro doctor` first.
 </Note>
 
 **Remote mode** only configures the local client to connect to a Gateway elsewhere.
@@ -94,7 +94,7 @@ It does **not** install or change anything on the remote host.
 
 ## Add another agent
 
-Use `vilaro agents add <name>` to create a separate agent with its own workspace,
+Use `velaro agents add <name>` to create a separate agent with its own workspace,
 sessions, and auth profiles. Running without `--workspace` launches the wizard.
 
 What it sets:
@@ -119,7 +119,7 @@ For the deeper technical reference, including RPC details, see
 
 ## Related docs
 
-- CLI command reference: [`vilaro onboard`](/cli/onboard)
+- CLI command reference: [`velaro onboard`](/cli/onboard)
 - Onboarding overview: [Onboarding Overview](/start/onboarding-overview)
 - macOS app onboarding: [Onboarding](/start/onboarding)
 - Agent first-run ritual: [Agent Bootstrapping](/start/bootstrapping)

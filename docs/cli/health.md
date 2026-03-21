@@ -1,18 +1,18 @@
 ---
-summary: "CLI reference for `vilaro health` (gateway health endpoint via RPC)"
+summary: "CLI reference for `velaro health` (gateway health endpoint via RPC)"
 read_when:
   - You want to quickly check the running Gateway’s health
 title: "health"
 ---
 
-# `vilaro health`
+# `velaro health`
 
 Fetch health from the running Gateway.
 
 ```bash
-vilaro health
-vilaro health --json
-vilaro health --verbose
+velaro health
+velaro health --json
+velaro health --verbose
 ```
 
 Notes:

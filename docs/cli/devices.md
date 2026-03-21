@@ -1,78 +1,78 @@
 ---
-summary: "CLI reference for `vilaro devices` (device pairing + token rotation/revocation)"
+summary: "CLI reference for `velaro devices` (device pairing + token rotation/revocation)"
 read_when:
   - You are approving device pairing requests
   - You need to rotate or revoke device tokens
 title: "devices"
 ---
 
-# `vilaro devices`
+# `velaro devices`
 
 Manage device pairing requests and device-scoped tokens.
 
 ## Commands
 
-### `vilaro devices list`
+### `velaro devices list`
 
 List pending pairing requests and paired devices.
 
 ```
-vilaro devices list
-vilaro devices list --json
+velaro devices list
+velaro devices list --json
 ```
 
-### `vilaro devices remove <deviceId>`
+### `velaro devices remove <deviceId>`
 
 Remove one paired device entry.
 
 ```
-vilaro devices remove <deviceId>
-vilaro devices remove <deviceId> --json
+velaro devices remove <deviceId>
+velaro devices remove <deviceId> --json
 ```
 
-### `vilaro devices clear --yes [--pending]`
+### `velaro devices clear --yes [--pending]`
 
 Clear paired devices in bulk.
 
 ```
-vilaro devices clear --yes
-vilaro devices clear --yes --pending
-vilaro devices clear --yes --pending --json
+velaro devices clear --yes
+velaro devices clear --yes --pending
+velaro devices clear --yes --pending --json
 ```
 
-### `vilaro devices approve [requestId] [--latest]`
+### `velaro devices approve [requestId] [--latest]`
 
-Approve a pending device pairing request. If `requestId` is omitted, Vilaro
+Approve a pending device pairing request. If `requestId` is omitted, Velaro
 automatically approves the most recent pending request.
 
 ```
-vilaro devices approve
-vilaro devices approve <requestId>
-vilaro devices approve --latest
+velaro devices approve
+velaro devices approve <requestId>
+velaro devices approve --latest
 ```
 
-### `vilaro devices reject <requestId>`
+### `velaro devices reject <requestId>`
 
 Reject a pending device pairing request.
 
 ```
-vilaro devices reject <requestId>
+velaro devices reject <requestId>
 ```
 
-### `vilaro devices rotate --device <id> --role <role> [--scope <scope...>]`
+### `velaro devices rotate --device <id> --role <role> [--scope <scope...>]`
 
 Rotate a device token for a specific role (optionally updating scopes).
 
 ```
-vilaro devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
+velaro devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
 ```
 
-### `vilaro devices revoke --device <id> --role <role>`
+### `velaro devices revoke --device <id> --role <role>`
 
 Revoke a device token for a specific role.
 
 ```
-vilaro devices revoke --device <deviceId> --role node
+velaro devices revoke --device <deviceId> --role node
 ```
 
 ## Common options
@@ -100,27 +100,27 @@ Use this when Control UI or other clients keep failing with `AUTH_TOKEN_MISMATCH
 1. Confirm current gateway token source:
 
 ```bash
-vilaro config get gateway.auth.token
+velaro config get gateway.auth.token
 ```
 
 2. List paired devices and identify the affected device id:
 
 ```bash
-vilaro devices list
+velaro devices list
 ```
 
 3. Rotate operator token for the affected device:
 
 ```bash
-vilaro devices rotate --device <deviceId> --role operator
+velaro devices rotate --device <deviceId> --role operator
 ```
 
 4. If rotation is not enough, remove stale pairing and approve again:
 
 ```bash
-vilaro devices remove <deviceId>
-vilaro devices list
-vilaro devices approve <requestId>
+velaro devices remove <deviceId>
+velaro devices list
+velaro devices approve <requestId>
 ```
 
 5. Retry client connection with the current shared token/password.

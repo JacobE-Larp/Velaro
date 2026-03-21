@@ -1,30 +1,30 @@
 ---
-summary: "GLM model family overview + how to use it in Vilaro"
+summary: "GLM model family overview + how to use it in Velaro"
 read_when:
-  - You want GLM models in Vilaro
+  - You want GLM models in Velaro
   - You need the model naming convention and setup
 title: "GLM Models"
 ---
 
 # GLM models
 
-GLM is a **model family** (not a company) available through the Z.AI platform. In Vilaro, GLM
+GLM is a **model family** (not a company) available through the Z.AI platform. In Velaro, GLM
 models are accessed via the `zai` provider and model IDs like `zai/glm-5`.
 
 ## CLI setup
 
 ```bash
 # Coding Plan Global, recommended for Coding Plan users
-vilaro onboard --auth-choice zai-coding-global
+velaro onboard --auth-choice zai-coding-global
 
 # Coding Plan CN (China region), recommended for Coding Plan users
-vilaro onboard --auth-choice zai-coding-cn
+velaro onboard --auth-choice zai-coding-cn
 
 # General API
-vilaro onboard --auth-choice zai-global
+velaro onboard --auth-choice zai-global
 
 # General API CN (China region)
-vilaro onboard --auth-choice zai-cn
+velaro onboard --auth-choice zai-cn
 ```
 
 ## Config snippet

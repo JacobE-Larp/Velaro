@@ -84,7 +84,7 @@ export async function dashboardCommand(
   if (resolvedToken.unresolvedRefReason) {
     runtime.log(`Token auto-auth unavailable: ${resolvedToken.unresolvedRefReason}`);
     runtime.log(
-      "Set VILARO_GATEWAY_TOKEN in this shell or resolve your secret provider, then rerun `vilaro dashboard`.",
+      "Set VILARO_GATEWAY_TOKEN in this shell or resolve your secret provider, then rerun `velaro dashboard`.",
     );
   }
 
@@ -110,7 +110,7 @@ export async function dashboardCommand(
   }
 
   if (opened) {
-    runtime.log("Opened in your browser. Keep that tab to control Vilaro.");
+    runtime.log("Opened in your browser. Keep that tab to control Velaro.");
   } else if (hint) {
     runtime.log(hint);
   }

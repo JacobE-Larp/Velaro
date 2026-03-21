@@ -1,18 +1,18 @@
 ---
-summary: "Deploy Vilaro Gateway to a Kubernetes cluster with Kustomize"
+summary: "Deploy Velaro Gateway to a Kubernetes cluster with Kustomize"
 read_when:
-  - You want to run Vilaro on a Kubernetes cluster
-  - You want to test Vilaro in a Kubernetes environment
+  - You want to run Velaro on a Kubernetes cluster
+  - You want to test Velaro in a Kubernetes environment
 title: "Kubernetes"
 ---
 
-# Vilaro on Kubernetes
+# Velaro on Kubernetes
 
-A minimal starting point for running Vilaro on Kubernetes — not a production-ready deployment. It covers the core resources and is meant to be adapted to your environment.
+A minimal starting point for running Velaro on Kubernetes — not a production-ready deployment. It covers the core resources and is meant to be adapted to your environment.
 
 ## Why not Helm?
 
-Vilaro is a single container with some config files. The interesting customization is in agent content (markdown files, skills, config overrides), not infrastructure templating. Kustomize handles overlays without the overhead of a Helm chart. If your deployment grows more complex, a Helm chart can be layered on top of these manifests.
+Velaro is a single container with some config files. The interesting customization is in agent content (markdown files, skills, config overrides), not infrastructure templating. Kustomize handles overlays without the overhead of a Helm chart. If your deployment grows more complex, a Helm chart can be layered on top of these manifests.
 
 ## What you need
 
@@ -27,14 +27,14 @@ Vilaro is a single container with some config files. The interesting customizati
 export <PROVIDER>_API_KEY="..."
 ./scripts/k8s/deploy.sh
 
-kubectl port-forward svc/vilaro 18789:18789 -n vilaro
+kubectl port-forward svc/velaro 18789:18789 -n velaro
 open http://localhost:18789
 ```
 
 Retrieve the gateway token and paste it into the Control UI:
 
 ```bash
-kubectl get secret vilaro-secrets -n vilaro -o jsonpath='{.data.VILARO_GATEWAY_TOKEN}' | base64 -d
+kubectl get secret velaro-secrets -n velaro -o jsonpath='{.data.VILARO_GATEWAY_TOKEN}' | base64 -d
 ```
 
 For local debugging, `./scripts/k8s/deploy.sh --show-token` prints the token after deploy.
@@ -77,19 +77,19 @@ Use `--show-token` with either command if you want the token printed to stdout f
 ### 2) Access the gateway
 
 ```bash
-kubectl port-forward svc/vilaro 18789:18789 -n vilaro
+kubectl port-forward svc/velaro 18789:18789 -n velaro
 open http://localhost:18789
 ```
 
 ## What gets deployed
 
 ```
-Namespace: vilaro (configurable via VILARO_NAMESPACE)
-├── Deployment/vilaro        # Single pod, init container + gateway
-├── Service/vilaro           # ClusterIP on port 18789
+Namespace: velaro (configurable via VILARO_NAMESPACE)
+├── Deployment/velaro        # Single pod, init container + gateway
+├── Service/velaro           # ClusterIP on port 18789
 ├── PersistentVolumeClaim      # 10Gi for agent state and config
-├── ConfigMap/vilaro-config  # vilaro.json + AGENTS.md
-└── Secret/vilaro-secrets    # Gateway token + API keys
+├── ConfigMap/velaro-config  # vilaro.json + AGENTS.md
+└── Secret/velaro-secrets    # Gateway token + API keys
 ```
 
 ## Customization
@@ -122,9 +122,9 @@ Existing provider keys stay in the Secret unless you overwrite them.
 Or patch the Secret directly:
 
 ```bash
-kubectl patch secret vilaro-secrets -n vilaro \
+kubectl patch secret velaro-secrets -n velaro \
   -p '{"stringData":{"<PROVIDER>_API_KEY":"..."}}'
-kubectl rollout restart deployment/vilaro -n vilaro
+kubectl rollout restart deployment/velaro -n velaro
 ```
 
 ### Custom namespace
@@ -138,7 +138,7 @@ VILARO_NAMESPACE=my-namespace ./scripts/k8s/deploy.sh
 Edit the `image` field in `scripts/k8s/manifests/deployment.yaml`:
 
 ```yaml
-image: ghcr.io/vilaro/vilaro:2026.3.1
+image: ghcr.io/velaro/velaro:2026.3.1
 ```
 
 ### Expose beyond port-forward

@@ -1,5 +1,5 @@
 ---
-summary: "Vilaro plugins/extensions: discovery, config, and safety"
+summary: "Velaro plugins/extensions: discovery, config, and safety"
 read_when:
   - Adding or modifying plugins/extensions
   - Documenting plugin install or load rules
@@ -13,14 +13,14 @@ title: "Plugins"
 
 A plugin is either:
 
-- a native **Vilaro plugin** (`vilaro.plugin.json` + runtime module), or
+- a native **Velaro plugin** (`vilaro.plugin.json` + runtime module), or
 - a compatible **bundle** (`.codex-plugin/plugin.json` or `.claude-plugin/plugin.json`)
 
-Both show up under `vilaro plugins`, but only native Vilaro plugins execute
+Both show up under `velaro plugins`, but only native Velaro plugins execute
 runtime code in-process.
 
 Most of the time, you’ll use plugins when you want a feature that’s not built
-into core Vilaro yet (or you want to keep optional features out of your main
+into core Velaro yet (or you want to keep optional features out of your main
 install).
 
 Fast path:
@@ -28,20 +28,20 @@ Fast path:
 1. See what’s already loaded:
 
 ```bash
-vilaro plugins list
+velaro plugins list
 ```
 
 2. Install an official plugin (example: Voice Call):
 
 ```bash
-vilaro plugins install @vilaro/voice-call
+velaro plugins install @vilaro/voice-call
 ```
 
 Npm specs are **registry-only** (package name + optional **exact version** or
 **dist-tag**). Git/URL/file specs and semver ranges are rejected.
 
 Bare specs and `@latest` stay on the stable track. If npm resolves either of
-those to a prerelease, Vilaro stops and asks you to opt in explicitly with a
+those to a prerelease, Velaro stops and asks you to opt in explicitly with a
 prerelease tag such as `@beta`/`@rc` or an exact prerelease version.
 
 3. Restart the Gateway, then configure under `plugins.entries.<id>.config`.
@@ -53,27 +53,27 @@ Need the bundle compatibility details? See [Plugin bundles](/plugins/bundles).
 For compatible bundles, install from a local directory or archive:
 
 ```bash
-vilaro plugins install ./my-bundle
-vilaro plugins install ./my-bundle.tgz
+velaro plugins install ./my-bundle
+velaro plugins install ./my-bundle.tgz
 ```
 
 ## Architecture
 
-Vilaro's plugin system has four layers:
+Velaro's plugin system has four layers:
 
 1. **Manifest + discovery**
-   Vilaro finds candidate plugins from configured paths, workspace roots,
+   Velaro finds candidate plugins from configured paths, workspace roots,
    global extension roots, and bundled extensions. Discovery reads native
    `vilaro.plugin.json` manifests plus supported bundle manifests first.
 2. **Enablement + validation**
    Core decides whether a discovered plugin is enabled, disabled, blocked, or
    selected for an exclusive slot such as memory.
 3. **Runtime loading**
-   Native Vilaro plugins are loaded in-process via jiti and register
+   Native Velaro plugins are loaded in-process via jiti and register
    capabilities into a central registry. Compatible bundles are normalized into
    registry records without importing runtime code.
 4. **Surface consumption**
-   The rest of Vilaro reads the registry to expose tools, channels, provider
+   The rest of Velaro reads the registry to expose tools, channels, provider
    setup, hooks, HTTP routes, CLI commands, and services.
 
 The important design boundary:
@@ -82,12 +82,12 @@ The important design boundary:
   without executing plugin code
 - native runtime behavior comes from the plugin module's `register(api)` path
 
-That split lets Vilaro validate config, explain missing/disabled plugins, and
+That split lets Velaro validate config, explain missing/disabled plugins, and
 build UI/schema hints before the full runtime is active.
 
 ## Compatible bundles
 
-Vilaro also recognizes two compatible external bundle layouts:
+Velaro also recognizes two compatible external bundle layouts:
 
 - Codex-style bundles: `.codex-plugin/plugin.json`
 - Claude-style bundles: `.claude-plugin/plugin.json` or the default Claude
@@ -100,17 +100,17 @@ They are shown in the plugin list as `format=bundle`, with a subtype of
 See [Plugin bundles](/plugins/bundles) for the exact detection rules, mapping
 behavior, and current support matrix.
 
-Today, Vilaro treats these as **capability packs**, not native runtime
+Today, Velaro treats these as **capability packs**, not native runtime
 plugins:
 
 - supported now: bundled `skills`
 - supported now: Claude `commands/` markdown roots, mapped into the normal
-  Vilaro skill loader
+  Velaro skill loader
 - supported now: Claude bundle `settings.json` defaults for embedded Pi agent
   settings (with shell override keys sanitized)
 - supported now: Cursor `.cursor/commands/*.md` roots, mapped into the normal
-  Vilaro skill loader
-- supported now: Codex bundle hook directories that use the Vilaro hook-pack
+  Velaro skill loader
+- supported now: Codex bundle hook directories that use the Velaro hook-pack
   layout (`HOOK.md` + `handler.ts`/`handler.js`)
 - detected but not wired yet: other declared bundle capabilities such as
   agents, Claude hook automation, Cursor rules/hooks/MCP metadata, MCP/app/LSP
@@ -121,14 +121,14 @@ skills, Claude command-skills, Claude bundle settings defaults, and compatible
 Codex hook directories load when the bundle is enabled, but bundle runtime code
 is not executed in-process.
 
-Bundle hook support is limited to the normal Vilaro hook directory format
+Bundle hook support is limited to the normal Velaro hook directory format
 (`HOOK.md` plus `handler.ts`/`handler.js` under the declared hook roots).
 Vendor-specific shell/JSON hook runtimes, including Claude `hooks.json`, are
 only detected today and are not executed directly.
 
 ## Execution model
 
-Native Vilaro plugins run **in-process** with the Gateway. They are not
+Native Velaro plugins run **in-process** with the Gateway. They are not
 sandboxed. A loaded native plugin has the same process-level trust boundary as
 core code.
 
@@ -137,9 +137,9 @@ Implications:
 - a native plugin can register tools, network handlers, hooks, and services
 - a native plugin bug can crash or destabilize the gateway
 - a malicious native plugin is equivalent to arbitrary code execution inside
-  the Vilaro process
+  the Velaro process
 
-Compatible bundles are safer by default because Vilaro currently treats them
+Compatible bundles are safer by default because Velaro currently treats them
 as metadata/content packs. In current releases, that mostly means bundled
 skills.
 
@@ -192,11 +192,11 @@ Important trust note:
 - Z.AI provider runtime — bundled as `zai` (enabled by default)
 - Copilot Proxy (provider auth) — local VS Code Copilot Proxy bridge; distinct from built-in `github-copilot` device login (bundled, disabled by default)
 
-Native Vilaro plugins are **TypeScript modules** loaded at runtime via jiti.
+Native Velaro plugins are **TypeScript modules** loaded at runtime via jiti.
 **Config validation does not execute plugin code**; it uses the plugin manifest
 and JSON Schema instead. See [Plugin manifest](/plugins/manifest).
 
-Native Vilaro plugins can register:
+Native Velaro plugins can register:
 
 - Gateway RPC methods
 - Gateway HTTP routes
@@ -210,7 +210,7 @@ Native Vilaro plugins can register:
 - **Skills** (by listing `skills` directories in the plugin manifest)
 - **Auto-reply commands** (execute without invoking the AI agent)
 
-Native Vilaro plugins run **in‑process** with the Gateway, so treat them as trusted code.
+Native Velaro plugins run **in‑process** with the Gateway, so treat them as trusted code.
 Tool authoring guide: [Plugin agent tools](/plugins/agent-tools).
 
 ## Provider runtime hooks
@@ -223,7 +223,7 @@ Provider plugins now have two layers:
 - config-time hooks: `catalog` / legacy `discovery`
 - runtime hooks: `resolveDynamicModel`, `prepareDynamicModel`, `normalizeResolvedModel`, `capabilities`, `prepareExtraParams`, `wrapStreamFn`, `formatApiKey`, `refreshOAuth`, `buildAuthDoctorHint`, `isCacheTtlEligible`, `buildMissingAuthMessage`, `suppressBuiltInModel`, `augmentModelCatalog`, `isBinaryThinking`, `supportsXHighThinking`, `resolveDefaultThinkingLevel`, `isModernModelRef`, `prepareRuntimeAuth`, `resolveUsageAuth`, `fetchUsageSnapshot`
 
-Vilaro still owns the generic agent loop, failover, transcript handling, and
+Velaro still owns the generic agent loop, failover, transcript handling, and
 tool policy. These hooks are the seam for provider-specific behavior without
 needing a whole custom inference transport.
 
@@ -237,13 +237,13 @@ client-id/client-secret setup vars.
 
 ### Hook order
 
-For model/provider plugins, Vilaro uses hooks in this rough order:
+For model/provider plugins, Velaro uses hooks in this rough order:
 
 1. `catalog`
    Publish provider config into `models.providers` during `models.json`
    generation.
 2. built-in/discovered model lookup
-   Vilaro tries the normal registry/catalog path first.
+   Velaro tries the normal registry/catalog path first.
 3. `resolveDynamicModel`
    Sync fallback for provider-owned model ids that are not in the local
    registry yet.
@@ -344,7 +344,7 @@ Rule of thumb:
 
 If the provider needs a fully custom wire protocol or custom request executor,
 that is a different class of extension. These hooks are for provider behavior
-that still runs on Vilaro's normal inference loop.
+that still runs on Velaro's normal inference loop.
 
 ### Provider Example
 
@@ -417,7 +417,7 @@ api.registerProvider({
   live-model policy.
 - OpenRouter uses `catalog` plus `resolveDynamicModel` and
   `prepareDynamicModel` because the provider is pass-through and may expose new
-  model ids before Vilaro's static catalog updates.
+  model ids before Velaro's static catalog updates.
 - GitHub Copilot uses `catalog`, `auth`, `resolveDynamicModel`, and
   `capabilities` plus `prepareRuntimeAuth` and `fetchUsageSnapshot` because it
   needs provider-owned device login, model fallback behavior, Claude transcript
@@ -461,7 +461,7 @@ api.registerProvider({
 
 ## Load pipeline
 
-At startup, Vilaro does roughly this:
+At startup, Velaro does roughly this:
 
 1. discover candidate plugin roots
 2. read native or compatible bundle manifests and package metadata
@@ -479,7 +479,7 @@ ownership looks suspicious for non-bundled plugins.
 
 ### Manifest-first behavior
 
-The manifest is the control-plane source of truth. Vilaro uses it to:
+The manifest is the control-plane source of truth. Velaro uses it to:
 
 - identify the plugin
 - discover declared channels/skills/config schema or bundle capabilities
@@ -492,7 +492,7 @@ actual behavior such as hooks, tools, commands, or provider flows.
 
 ### What the loader caches
 
-Vilaro keeps short in-process caches for:
+Velaro keeps short in-process caches for:
 
 - discovery results
 - manifest registry data
@@ -507,7 +507,7 @@ Plugins can access selected core helpers via `api.runtime`. For telephony TTS:
 
 ```ts
 const result = await api.runtime.tts.textToSpeechTelephony({
-  text: "Hello from Vilaro",
+  text: "Hello from Velaro",
   cfg: api.config,
 });
 ```
@@ -568,43 +568,43 @@ Notes:
 
 ## Plugin SDK import paths
 
-Use SDK subpaths instead of the monolithic `vilaro/plugin-sdk` import when
+Use SDK subpaths instead of the monolithic `velaro/plugin-sdk` import when
 authoring plugins:
 
-- `vilaro/plugin-sdk/core` for generic plugin APIs, provider auth types, and shared helpers such as routing/session utilities and logger-backed runtimes.
-- `vilaro/plugin-sdk/compat` for bundled/internal plugin code that needs broader shared runtime helpers than `core`.
-- `vilaro/plugin-sdk/telegram` for Telegram channel plugin types and shared channel-facing helpers. Built-in Telegram implementation internals stay private to the bundled extension.
-- `vilaro/plugin-sdk/discord` for Discord channel plugin types and shared channel-facing helpers. Built-in Discord implementation internals stay private to the bundled extension.
-- `vilaro/plugin-sdk/slack` for Slack channel plugin types and shared channel-facing helpers. Built-in Slack implementation internals stay private to the bundled extension.
-- `vilaro/plugin-sdk/signal` for Signal channel plugin types and shared channel-facing helpers. Built-in Signal implementation internals stay private to the bundled extension.
-- `vilaro/plugin-sdk/imessage` for iMessage channel plugin types and shared channel-facing helpers. Built-in iMessage implementation internals stay private to the bundled extension.
-- `vilaro/plugin-sdk/whatsapp` for WhatsApp channel plugin types and shared channel-facing helpers. Built-in WhatsApp implementation internals stay private to the bundled extension.
-- `vilaro/plugin-sdk/line` for LINE channel plugins.
-- `vilaro/plugin-sdk/msteams` for the bundled Microsoft Teams plugin surface.
+- `velaro/plugin-sdk/core` for generic plugin APIs, provider auth types, and shared helpers such as routing/session utilities and logger-backed runtimes.
+- `velaro/plugin-sdk/compat` for bundled/internal plugin code that needs broader shared runtime helpers than `core`.
+- `velaro/plugin-sdk/telegram` for Telegram channel plugin types and shared channel-facing helpers. Built-in Telegram implementation internals stay private to the bundled extension.
+- `velaro/plugin-sdk/discord` for Discord channel plugin types and shared channel-facing helpers. Built-in Discord implementation internals stay private to the bundled extension.
+- `velaro/plugin-sdk/slack` for Slack channel plugin types and shared channel-facing helpers. Built-in Slack implementation internals stay private to the bundled extension.
+- `velaro/plugin-sdk/signal` for Signal channel plugin types and shared channel-facing helpers. Built-in Signal implementation internals stay private to the bundled extension.
+- `velaro/plugin-sdk/imessage` for iMessage channel plugin types and shared channel-facing helpers. Built-in iMessage implementation internals stay private to the bundled extension.
+- `velaro/plugin-sdk/whatsapp` for WhatsApp channel plugin types and shared channel-facing helpers. Built-in WhatsApp implementation internals stay private to the bundled extension.
+- `velaro/plugin-sdk/line` for LINE channel plugins.
+- `velaro/plugin-sdk/msteams` for the bundled Microsoft Teams plugin surface.
 - Bundled extension-specific subpaths are also available:
-  `vilaro/plugin-sdk/acpx`, `vilaro/plugin-sdk/bluebubbles`,
-  `vilaro/plugin-sdk/copilot-proxy`, `vilaro/plugin-sdk/device-pair`,
-  `vilaro/plugin-sdk/diagnostics-otel`, `vilaro/plugin-sdk/diffs`,
-  `vilaro/plugin-sdk/feishu`, `vilaro/plugin-sdk/googlechat`,
-  `vilaro/plugin-sdk/irc`, `vilaro/plugin-sdk/llm-task`,
-  `vilaro/plugin-sdk/vilaro`, `vilaro/plugin-sdk/matrix`,
-  `vilaro/plugin-sdk/mattermost`, `vilaro/plugin-sdk/memory-core`,
-  `vilaro/plugin-sdk/memory-lancedb`,
-  `vilaro/plugin-sdk/minimax-portal-auth`,
-  `vilaro/plugin-sdk/nextcloud-talk`, `vilaro/plugin-sdk/nostr`,
-  `vilaro/plugin-sdk/open-prose`, `vilaro/plugin-sdk/phone-control`,
-  `vilaro/plugin-sdk/qwen-portal-auth`, `vilaro/plugin-sdk/synology-chat`,
-  `vilaro/plugin-sdk/talk-voice`, `vilaro/plugin-sdk/test-utils`,
-  `vilaro/plugin-sdk/thread-ownership`, `vilaro/plugin-sdk/tlon`,
-  `vilaro/plugin-sdk/twitch`, `vilaro/plugin-sdk/voice-call`,
-  `vilaro/plugin-sdk/zalo`, and `vilaro/plugin-sdk/zalouser`.
+  `velaro/plugin-sdk/acpx`, `velaro/plugin-sdk/bluebubbles`,
+  `velaro/plugin-sdk/copilot-proxy`, `velaro/plugin-sdk/device-pair`,
+  `velaro/plugin-sdk/diagnostics-otel`, `velaro/plugin-sdk/diffs`,
+  `velaro/plugin-sdk/feishu`, `velaro/plugin-sdk/googlechat`,
+  `velaro/plugin-sdk/irc`, `velaro/plugin-sdk/llm-task`,
+  `velaro/plugin-sdk/velaro`, `velaro/plugin-sdk/matrix`,
+  `velaro/plugin-sdk/mattermost`, `velaro/plugin-sdk/memory-core`,
+  `velaro/plugin-sdk/memory-lancedb`,
+  `velaro/plugin-sdk/minimax-portal-auth`,
+  `velaro/plugin-sdk/nextcloud-talk`, `velaro/plugin-sdk/nostr`,
+  `velaro/plugin-sdk/open-prose`, `velaro/plugin-sdk/phone-control`,
+  `velaro/plugin-sdk/qwen-portal-auth`, `velaro/plugin-sdk/synology-chat`,
+  `velaro/plugin-sdk/talk-voice`, `velaro/plugin-sdk/test-utils`,
+  `velaro/plugin-sdk/thread-ownership`, `velaro/plugin-sdk/tlon`,
+  `velaro/plugin-sdk/twitch`, `velaro/plugin-sdk/voice-call`,
+  `velaro/plugin-sdk/zalo`, and `velaro/plugin-sdk/zalouser`.
 
 ## Provider catalogs
 
 Provider plugins can define model catalogs for inference with
 `registerProvider({ catalog: { run(...) { ... } } })`.
 
-`catalog.run(...)` returns the same shape Vilaro writes into
+`catalog.run(...)` returns the same shape Velaro writes into
 `models.providers`:
 
 - `{ provider }` for one provider entry
@@ -613,7 +613,7 @@ Provider plugins can define model catalogs for inference with
 Use `catalog` when the plugin owns provider-specific model ids, base URL
 defaults, or auth-gated model metadata.
 
-`catalog.order` controls when a plugin's catalog merges relative to Vilaro's
+`catalog.order` controls when a plugin's catalog merges relative to Velaro's
 built-in implicit providers:
 
 - `simple`: plain API-key or env-driven providers
@@ -627,11 +627,11 @@ built-in provider entry with the same provider id.
 Compatibility:
 
 - `discovery` still works as a legacy alias
-- if both `catalog` and `discovery` are registered, Vilaro uses `catalog`
+- if both `catalog` and `discovery` are registered, Velaro uses `catalog`
 
 Compatibility note:
 
-- `vilaro/plugin-sdk` remains supported for existing external plugins.
+- `velaro/plugin-sdk` remains supported for existing external plugins.
 - New and migrated bundled plugins should use channel or extension-specific
   subpaths; use `core` for generic surfaces and `compat` only when broader
   shared helpers are required.
@@ -645,8 +645,8 @@ Why:
 
 - `resolveAccount(...)` is the runtime path. It is allowed to assume credentials
   are fully materialized and can fail fast when required secrets are missing.
-- Read-only command paths such as `vilaro status`, `vilaro status --all`,
-  `vilaro channels status`, `vilaro channels resolve`, and doctor/config
+- Read-only command paths such as `velaro status`, `velaro status --all`,
+  `velaro channels status`, `velaro channels resolve`, and doctor/config
   repair flows should not need to materialize runtime credentials just to
   describe configuration.
 
@@ -679,7 +679,7 @@ Performance note:
 
 ## Discovery & precedence
 
-Vilaro scans, in order:
+Velaro scans, in order:
 
 1. Config paths
 
@@ -687,22 +687,22 @@ Vilaro scans, in order:
 
 2. Workspace extensions
 
-- `<workspace>/.vilaro/extensions/*.ts`
-- `<workspace>/.vilaro/extensions/*/index.ts`
+- `<workspace>/.velaro/extensions/*.ts`
+- `<workspace>/.velaro/extensions/*/index.ts`
 
 3. Global extensions
 
 - `~/.vilaro/extensions/*.ts`
 - `~/.vilaro/extensions/*/index.ts`
 
-4. Bundled extensions (shipped with Vilaro; mixed default-on/default-off)
+4. Bundled extensions (shipped with Velaro; mixed default-on/default-off)
 
-- `<vilaro>/extensions/*`
+- `<velaro>/extensions/*`
 
 Many bundled provider plugins are enabled by default so model catalogs/runtime
 hooks stay available without extra setup. Others still require explicit
 enablement via `plugins.entries.<id>.enabled` or
-`vilaro plugins enable <id>`.
+`velaro plugins enable <id>`.
 
 Default-on bundled plugin examples:
 
@@ -743,14 +743,14 @@ become production gateway code.
 
 Hardening notes:
 
-- If `plugins.allow` is empty and non-bundled plugins are discoverable, Vilaro logs a startup warning with plugin ids and sources.
-- Candidate paths are safety-checked before discovery admission. Vilaro blocks candidates when:
+- If `plugins.allow` is empty and non-bundled plugins are discoverable, Velaro logs a startup warning with plugin ids and sources.
+- Candidate paths are safety-checked before discovery admission. Velaro blocks candidates when:
   - extension entry resolves outside plugin root (including symlink/path traversal escapes),
   - plugin root/source path is world-writable,
   - path ownership is suspicious for non-bundled plugins (POSIX owner is neither current uid nor root).
 - Loaded non-bundled plugins without install/load-path provenance emit a warning so you can pin trust (`plugins.allow`) or install tracking (`plugins.installs`).
 
-Each native Vilaro plugin must include a `vilaro.plugin.json` file in its
+Each native Velaro plugin must include a `vilaro.plugin.json` file in its
 root. If a path points at a file, the plugin root is the file's directory and
 must contain the manifest.
 
@@ -793,12 +793,12 @@ above plus the active memory slot plugin.
 
 ### Package packs
 
-A plugin directory may include a `package.json` with `vilaro.extensions`:
+A plugin directory may include a `package.json` with `velaro.extensions`:
 
 ```json
 {
   "name": "my-pack",
-  "vilaro": {
+  "velaro": {
     "extensions": ["./src/safety.ts", "./src/tools.ts"],
     "setupEntry": "./src/setup-entry.ts"
   }
@@ -811,16 +811,16 @@ becomes `name/<fileBase>`.
 If your plugin imports npm deps, install them in that directory so
 `node_modules` is available (`npm install` / `pnpm install`).
 
-Security guardrail: every `vilaro.extensions` entry must stay inside the plugin
+Security guardrail: every `velaro.extensions` entry must stay inside the plugin
 directory after symlink resolution. Entries that escape the package directory are
 rejected.
 
-Security note: `vilaro plugins install` installs plugin dependencies with
+Security note: `velaro plugins install` installs plugin dependencies with
 `npm install --ignore-scripts` (no lifecycle scripts). Keep plugin dependency
 trees "pure JS/TS" and avoid packages that require `postinstall` builds.
 
-Optional: `vilaro.setupEntry` can point at a lightweight setup-only module.
-When Vilaro needs setup surfaces for a disabled channel plugin, or
+Optional: `velaro.setupEntry` can point at a lightweight setup-only module.
+When Velaro needs setup surfaces for a disabled channel plugin, or
 when a channel plugin is enabled but still unconfigured, it loads `setupEntry`
 instead of the full plugin entry. This keeps startup and setup lighter
 when your main plugin entry also wires tools, hooks, or other runtime-only
@@ -828,15 +828,15 @@ code.
 
 ### Channel catalog metadata
 
-Channel plugins can advertise setup/discovery metadata via `vilaro.channel` and
-install hints via `vilaro.install`. This keeps the core catalog data-free.
+Channel plugins can advertise setup/discovery metadata via `velaro.channel` and
+install hints via `velaro.install`. This keeps the core catalog data-free.
 
 Example:
 
 ```json
 {
   "name": "@vilaro/nextcloud-talk",
-  "vilaro": {
+  "velaro": {
     "extensions": ["./index.ts"],
     "channel": {
       "id": "nextcloud-talk",
@@ -857,7 +857,7 @@ Example:
 }
 ```
 
-Vilaro can also merge **external channel catalogs** (for example, an MPM
+Velaro can also merge **external channel catalogs** (for example, an MPM
 registry export). Drop a JSON file at one of:
 
 - `~/.vilaro/mpm/plugins.json`
@@ -866,7 +866,7 @@ registry export). Drop a JSON file at one of:
 
 Or point `VILARO_PLUGIN_CATALOG_PATHS` (or `VILARO_MPM_CATALOG_PATHS`) at
 one or more JSON files (comma/semicolon/`PATH`-delimited). Each file should
-contain `{ "entries": [ { "name": "@scope/pkg", "vilaro": { "channel": {...}, "install": {...} } } ] }`.
+contain `{ "entries": [ { "name": "@scope/pkg", "velaro": { "channel": {...}, "install": {...} } } ] }`.
 
 ## Plugin IDs
 
@@ -875,7 +875,7 @@ Default plugin ids:
 - Package packs: `package.json` `name`
 - Standalone file: file base name (`~/.../voice-call.ts` → `voice-call`)
 
-If a plugin exports `id`, Vilaro uses it but warns when it doesn’t match the
+If a plugin exports `id`, Velaro uses it but warns when it doesn’t match the
 configured id.
 
 ## Registry model
@@ -940,7 +940,7 @@ Validation rules (strict):
   the channel id.
 - Native plugin config is validated using the JSON Schema embedded in
   `vilaro.plugin.json` (`configSchema`).
-- Compatible bundles currently do not expose native Vilaro config schemas.
+- Compatible bundles currently do not expose native Velaro config schemas.
 - If a plugin is disabled, its config is preserved and a **warning** is emitted.
 
 ### Disabled vs missing vs invalid
@@ -951,7 +951,7 @@ These states are intentionally different:
 - **missing**: config references a plugin id that discovery did not find
 - **invalid**: plugin exists, but its config does not match the declared schema
 
-Vilaro preserves config for disabled plugins so toggling them back on is not
+Velaro preserves config for disabled plugins so toggling them back on is not
 destructive.
 
 ## Plugin slots (exclusive categories)
@@ -992,7 +992,7 @@ pipeline rather than just add memory search or hooks.
 
 The Control UI uses `config.schema` (JSON Schema + `uiHints`) to render better forms.
 
-Vilaro augments `uiHints` at runtime based on discovered plugins:
+Velaro augments `uiHints` at runtime based on discovered plugins:
 
 - Adds per-plugin labels for `plugins.entries.<id>` / `.enabled` / `.config`
 - Merges optional plugin-provided config field hints under:
@@ -1024,30 +1024,30 @@ Example:
 ## CLI
 
 ```bash
-vilaro plugins list
-vilaro plugins info <id>
-vilaro plugins install <path>                 # copy a local file/dir into ~/.vilaro/extensions/<id>
-vilaro plugins install ./extensions/voice-call # relative path ok
-vilaro plugins install ./plugin.tgz           # install from a local tarball
-vilaro plugins install ./plugin.zip           # install from a local zip
-vilaro plugins install -l ./extensions/voice-call # link (no copy) for dev
-vilaro plugins install @vilaro/voice-call # install from npm
-vilaro plugins install @vilaro/voice-call --pin # store exact resolved name@version
-vilaro plugins update <id>
-vilaro plugins update --all
-vilaro plugins enable <id>
-vilaro plugins disable <id>
-vilaro plugins doctor
+velaro plugins list
+velaro plugins info <id>
+velaro plugins install <path>                 # copy a local file/dir into ~/.vilaro/extensions/<id>
+velaro plugins install ./extensions/voice-call # relative path ok
+velaro plugins install ./plugin.tgz           # install from a local tarball
+velaro plugins install ./plugin.zip           # install from a local zip
+velaro plugins install -l ./extensions/voice-call # link (no copy) for dev
+velaro plugins install @vilaro/voice-call # install from npm
+velaro plugins install @vilaro/voice-call --pin # store exact resolved name@version
+velaro plugins update <id>
+velaro plugins update --all
+velaro plugins enable <id>
+velaro plugins disable <id>
+velaro plugins doctor
 ```
 
-`vilaro plugins list` shows the top-level format as `vilaro` or `bundle`.
+`velaro plugins list` shows the top-level format as `velaro` or `bundle`.
 Verbose list/info output also shows bundle subtype (`codex` or `claude`) plus
 detected bundle capabilities.
 
 `plugins update` only works for npm installs tracked under `plugins.installs`.
-If stored integrity metadata changes between updates, Vilaro warns and asks for confirmation (use global `--yes` to bypass prompts).
+If stored integrity metadata changes between updates, Velaro warns and asks for confirmation (use global `--yes` to bypass prompts).
 
-Plugins may also register their own top‑level commands (example: `vilaro voicecall`).
+Plugins may also register their own top‑level commands (example: `velaro voicecall`).
 
 ## Plugin API (overview)
 
@@ -1126,8 +1126,8 @@ Notes:
 
 - Register hooks explicitly via `api.registerHook(...)`.
 - Hook eligibility rules still apply (OS/bins/env/config requirements).
-- Plugin-managed hooks show up in `vilaro hooks list` with `plugin:<id>`.
-- You cannot enable/disable plugin-managed hooks via `vilaro hooks`; enable/disable the plugin instead.
+- Plugin-managed hooks show up in `velaro hooks list` with `plugin:<id>`.
+- You cannot enable/disable plugin-managed hooks via `velaro hooks`; enable/disable the plugin instead.
 
 ### Agent lifecycle hooks (`api.on`)
 
@@ -1156,7 +1156,7 @@ Important hooks for prompt construction:
 Core-enforced hook policy:
 
 - Operators can disable prompt mutation hooks per plugin via `plugins.entries.<id>.hooks.allowPromptInjection: false`.
-- When disabled, Vilaro blocks `before_prompt_build` and ignores prompt-mutating fields returned from legacy `before_agent_start` while preserving legacy `modelOverride` and `providerOverride`.
+- When disabled, Velaro blocks `before_prompt_build` and ignores prompt-mutating fields returned from legacy `before_agent_start` while preserving legacy `modelOverride` and `providerOverride`.
 
 `before_prompt_build` result fields:
 
@@ -1185,7 +1185,7 @@ Migration guidance:
 ## Provider plugins (model auth)
 
 Plugins can register **model providers** so users can run OAuth or API-key
-setup inside Vilaro, surface provider setup in onboarding/model-pickers, and
+setup inside Velaro, surface provider setup in onboarding/model-pickers, and
 contribute implicit provider discovery.
 
 Provider plugins are the modular extension seam for model-provider setup. They
@@ -1199,11 +1199,11 @@ A provider plugin can participate in five distinct phases:
    `auth[].run(ctx)` performs OAuth, API-key capture, device code, or custom
    setup and returns auth profiles plus optional config patches.
 2. **Non-interactive setup**
-   `auth[].runNonInteractive(ctx)` handles `vilaro onboard --non-interactive`
+   `auth[].runNonInteractive(ctx)` handles `velaro onboard --non-interactive`
    without prompts. Use this when the provider needs custom headless setup
    beyond the built-in simple API-key paths.
 3. **Wizard integration**
-   `wizard.setup` adds an entry to `vilaro onboard`.
+   `wizard.setup` adds an entry to `velaro onboard`.
    `wizard.modelPicker` adds a setup entry to the model picker.
 4. **Implicit discovery**
    `discovery.run(ctx)` can contribute provider config automatically during
@@ -1299,9 +1299,9 @@ entry in model selection:
 - `methodId`
 
 When a provider has multiple auth methods, the wizard can either point at one
-explicit method or let Vilaro synthesize per-method choices.
+explicit method or let Velaro synthesize per-method choices.
 
-Vilaro validates provider wizard metadata when the plugin registers:
+Velaro validates provider wizard metadata when the plugin registers:
 
 - duplicate or blank auth-method ids are rejected
 - wizard metadata is ignored when the provider has no auth methods
@@ -1374,8 +1374,8 @@ Register a provider via `api.registerProvider(...)`. Each provider exposes one
 or more auth methods (OAuth, API key, device code, etc.). Those methods can
 power:
 
-- `vilaro models auth login --provider <id> [--method <id>]`
-- `vilaro onboard`
+- `velaro models auth login --provider <id> [--method <id>]`
+- `velaro onboard`
 - model-picker “custom provider” setup entries
 - implicit provider discovery during model resolution/listing
 
@@ -1444,18 +1444,18 @@ Notes:
   `openUrl`, `oauth.createVpsAwareHandlers`, `secretInputMode`, and
   `allowSecretRefPrompt` helpers/state. Onboarding/configure flows can use
   these to honor `--secret-input-mode` or offer env/file/exec secret-ref
-  capture, while `vilaro models auth` keeps a tighter prompt surface.
+  capture, while `velaro models auth` keeps a tighter prompt surface.
 - `runNonInteractive` receives a `ProviderAuthMethodNonInteractiveContext`
   with `opts`, `agentDir`, `resolveApiKey`, and `toApiKeyCredential` helpers
   for headless onboarding.
 - Return `configPatch` when you need to add default models or provider config.
 - Return `defaultModel` so `--set-default` can update agent defaults.
 - `wizard.setup` adds a provider choice to onboarding surfaces such as
-  `vilaro onboard` / `vilaro setup --wizard`.
+  `velaro onboard` / `velaro setup --wizard`.
 - `wizard.setup.modelAllowlist` lets the provider narrow the follow-up model
   allowlist prompt during onboarding/configure.
 - `wizard.modelPicker` adds a “setup this provider” entry to the model picker.
-- `deprecatedProfileIds` lets the provider own `vilaro doctor` cleanup for
+- `deprecatedProfileIds` lets the provider own `velaro doctor` cleanup for
   retired auth-profile ids.
 - `discovery.run` returns either `{ provider }` for the plugin’s own provider id
   or `{ providers }` for multi-provider discovery.
@@ -1665,7 +1665,7 @@ Command handler context:
 - `isAuthorizedSender`: Whether the sender is an authorized user
 - `args`: Arguments passed after the command (if `acceptsArgs: true`)
 - `commandBody`: The full command text
-- `config`: The current Vilaro config
+- `config`: The current Velaro config
 
 Command options:
 
@@ -1729,15 +1729,15 @@ it’s present in your workspace/managed skills locations.
 
 Recommended packaging:
 
-- Main package: `vilaro` (this repo)
-- Plugins: separate npm packages under `@vilaro/*` (example: `@vilaro/voice-call`)
+- Main package: `velaro` (this repo)
+- Plugins: separate npm packages under `@velaro/*` (example: `@vilaro/voice-call`)
 
 Publishing contract:
 
-- Plugin `package.json` must include `vilaro.extensions` with one or more entry files.
-- Optional: `vilaro.setupEntry` may point at a lightweight setup-only entry for disabled or still-unconfigured channel setup.
+- Plugin `package.json` must include `velaro.extensions` with one or more entry files.
+- Optional: `velaro.setupEntry` may point at a lightweight setup-only entry for disabled or still-unconfigured channel setup.
 - Entry files can be `.js` or `.ts` (jiti loads TS at runtime).
-- `vilaro plugins install <npm-spec>` uses `npm pack`, extracts into `~/.vilaro/extensions/<id>/`, and enables it in config.
+- `velaro plugins install <npm-spec>` uses `npm pack`, extracts into `~/.vilaro/extensions/<id>/`, and enables it in config.
 - Config key stability: scoped packages are normalized to the **unscoped** id for `plugins.entries.*`.
 
 ## Example plugin: Voice Call
@@ -1746,7 +1746,7 @@ This repo includes a voice‑call plugin (Twilio or log fallback):
 
 - Source: `extensions/voice-call`
 - Skill: `skills/voice-call`
-- CLI: `vilaro voicecall start|status`
+- CLI: `velaro voicecall start|status`
 - Tool: `voice_call`
 - RPC: `voicecall.start`, `voicecall.status`
 - Config (twilio): `provider: "twilio"` + `twilio.accountSid/authToken/from` (optional `statusCallbackUrl`, `twimlUrl`)
@@ -1769,4 +1769,4 @@ Plugins run in-process with the Gateway. Treat them as trusted code:
 Plugins can (and should) ship tests:
 
 - In-repo plugins can keep Vitest tests under `src/**` (example: `src/plugins/voice-call.plugin.test.ts`).
-- Separately published plugins should run their own CI (lint/build/test) and validate `vilaro.extensions` points at the built entrypoint (`dist/index.js`).
+- Separately published plugins should run their own CI (lint/build/test) and validate `velaro.extensions` points at the built entrypoint (`dist/index.js`).

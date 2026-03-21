@@ -7,7 +7,7 @@ title: "Group Messages"
 
 # Group messages (WhatsApp web channel)
 
-Goal: let Vilaro sit in WhatsApp groups, wake up only when pinged, and keep that thread separate from the personal DM session.
+Goal: let Velaro sit in WhatsApp groups, wake up only when pinged, and keep that thread separate from the personal DM session.
 
 Note: `agents.list[].groupChat.mentionPatterns` is now used by Telegram/Discord/Slack/iMessage as well; this doc focuses on WhatsApp-specific behavior. For multi-agent setups, set `agents.list[].groupChat.mentionPatterns` per agent (or use `messages.groupChat.mentionPatterns` as a global fallback).
 
@@ -40,7 +40,7 @@ Add a `groupChat` block to `~/.vilaro/vilaro.json` so display-name pings work ev
         id: "main",
         groupChat: {
           historyLimit: 50,
-          mentionPatterns: ["@?vilaro", "\\+?15555550123"],
+          mentionPatterns: ["@?velaro", "\\+?15555550123"],
         },
       },
     ],
@@ -64,15 +64,15 @@ Only the owner number (from `channels.whatsapp.allowFrom`, or the bot’s own E.
 
 ## How to use
 
-1. Add your WhatsApp account (the one running Vilaro) to the group.
-2. Say `@vilaro …` (or include the number). Only allowlisted senders can trigger it unless you set `groupPolicy: "open"`.
+1. Add your WhatsApp account (the one running Velaro) to the group.
+2. Say `@velaro …` (or include the number). Only allowlisted senders can trigger it unless you set `groupPolicy: "open"`.
 3. The agent prompt will include recent group context plus the trailing `[from: …]` marker so it can address the right person.
 4. Session-level directives (`/verbose on`, `/think high`, `/new` or `/reset`, `/compact`) apply only to that group’s session; send them as standalone messages so they register. Your personal DM session remains independent.
 
 ## Testing / verification
 
 - Manual smoke:
-  - Send an `@vilaro` ping in the group and confirm a reply that references the sender name.
+  - Send an `@velaro` ping in the group and confirm a reply that references the sender name.
   - Send a second ping and verify the history block is included then cleared on the next turn.
 - Check gateway logs (run with `--verbose`) to see `inbound web message` entries showing `from: <groupJid>` and the `[from: …]` suffix.
 

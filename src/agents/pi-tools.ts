@@ -29,7 +29,7 @@ import {
   assertRequiredParams,
   createHostWorkspaceEditTool,
   createHostWorkspaceWriteTool,
-  createVilaroReadTool,
+  createVelaroReadTool,
   createSandboxedEditTool,
   createSandboxedReadTool,
   createSandboxedWriteTool,
@@ -97,7 +97,7 @@ function applyModelProviderToolPolicy(
   if (!isXaiProvider(params?.modelProvider, params?.modelId)) {
     return tools;
   }
-  // xAI/Grok providers expose a native web_search tool; sending Vilaro's
+  // xAI/Grok providers expose a native web_search tool; sending Velaro's
   // web_search alongside it causes duplicate-name request failures.
   return tools.filter((tool) => !TOOL_DENY_FOR_XAI_PROVIDERS.has(tool.name));
 }
@@ -195,7 +195,7 @@ export const __testing = {
   applyModelProviderToolPolicy,
 } as const;
 
-export function createVilaroCodingTools(options?: {
+export function createVelaroCodingTools(options?: {
   agentId?: string;
   exec?: ExecToolDefaults & ProcessToolDefaults;
   messageProvider?: string;
@@ -381,7 +381,7 @@ export function createVilaroCodingTools(options?: {
         ];
       }
       const freshReadTool = createReadTool(workspaceRoot);
-      const wrapped = createVilaroReadTool(freshReadTool, {
+      const wrapped = createVelaroReadTool(freshReadTool, {
         modelContextWindowTokens: options?.modelContextWindowTokens,
         imageSanitization,
       });

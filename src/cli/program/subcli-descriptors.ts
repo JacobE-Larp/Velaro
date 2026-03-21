@@ -65,7 +65,7 @@ export const SUB_CLI_DESCRIPTORS = [
   },
   {
     name: "docs",
-    description: "Search the live Vilaro docs",
+    description: "Search the live Velaro docs",
     hasSubcommands: false,
   },
   {
@@ -95,7 +95,7 @@ export const SUB_CLI_DESCRIPTORS = [
   },
   {
     name: "plugins",
-    description: "Manage Vilaro plugins and extensions",
+    description: "Manage Velaro plugins and extensions",
     hasSubcommands: true,
   },
   {
@@ -125,7 +125,7 @@ export const SUB_CLI_DESCRIPTORS = [
   },
   {
     name: "update",
-    description: "Update Vilaro and inspect update channel status",
+    description: "Update Velaro and inspect update channel status",
     hasSubcommands: true,
   },
   {

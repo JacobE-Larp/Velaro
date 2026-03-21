@@ -281,7 +281,7 @@ Preferred:
 
 - Keypair fingerprint (public key hash).
 
-## Cute slug (vilaro‑themed)
+## Cute slug (velaro‑themed)
 
 Human label only.
 

@@ -1,5 +1,5 @@
 ---
-summary: "Run multiple Vilaro Gateways on one host (isolation, ports, and profiles)"
+summary: "Run multiple Velaro Gateways on one host (isolation, ports, and profiles)"
 read_when:
   - Running more than one Gateway on the same machine
   - You need isolated config/state/ports per Gateway
@@ -26,19 +26,19 @@ Profiles auto-scope `VILARO_STATE_DIR` + `VILARO_CONFIG_PATH` and suffix service
 
 ```bash
 # main
-vilaro --profile main setup
-vilaro --profile main gateway --port 18789
+velaro --profile main setup
+velaro --profile main gateway --port 18789
 
 # rescue
-vilaro --profile rescue setup
-vilaro --profile rescue gateway --port 19001
+velaro --profile rescue setup
+velaro --profile rescue gateway --port 19001
 ```
 
 Per-profile services:
 
 ```bash
-vilaro --profile main gateway install
-vilaro --profile rescue gateway install
+velaro --profile main gateway install
+velaro --profile rescue gateway install
 ```
 
 ## Rescue-bot guide
@@ -59,11 +59,11 @@ Port spacing: leave at least 20 ports between base ports so the derived browser/
 ```bash
 # Main bot (existing or fresh, without --profile param)
 # Runs on port 18789 + Chrome CDC/Canvas/... Ports
-vilaro onboard
-vilaro gateway install
+velaro onboard
+velaro gateway install
 
 # Rescue bot (isolated profile + ports)
-vilaro --profile rescue onboard
+velaro --profile rescue onboard
 # Notes:
 # - workspace name will be postfixed with -rescue per default
 # - Port should be at least 18789 + 20 Ports,
@@ -71,7 +71,7 @@ vilaro --profile rescue onboard
 # - rest of the onboarding is the same as normal
 
 # To install the service (if not happened automatically during setup)
-vilaro --profile rescue gateway install
+velaro --profile rescue gateway install
 ```
 
 ## Port mapping (derived)
@@ -96,17 +96,17 @@ If you override any of these in config or env, you must keep them unique per ins
 ```bash
 VILARO_CONFIG_PATH=~/.vilaro/main.json \
 VILARO_STATE_DIR=~/.vilaro-main \
-vilaro gateway --port 18789
+velaro gateway --port 18789
 
 VILARO_CONFIG_PATH=~/.vilaro/rescue.json \
 VILARO_STATE_DIR=~/.vilaro-rescue \
-vilaro gateway --port 19001
+velaro gateway --port 19001
 ```
 
 ## Quick checks
 
 ```bash
-vilaro --profile main status
-vilaro --profile rescue status
-vilaro --profile rescue browser status
+velaro --profile main status
+velaro --profile rescue status
+velaro --profile rescue browser status
 ```

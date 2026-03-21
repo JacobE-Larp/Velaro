@@ -34,7 +34,7 @@ function inheritedUpdateTimeout(
 export function registerUpdateCli(program: Command) {
   const update = program
     .command("update")
-    .description("Update Vilaro and inspect update channel status")
+    .description("Update Velaro and inspect update channel status")
     .option("--json", "Output result as JSON", false)
     .option("--no-restart", "Skip restarting the gateway service after a successful update")
     .option("--dry-run", "Preview update actions without making changes", false)
@@ -47,17 +47,17 @@ export function registerUpdateCli(program: Command) {
     .option("--yes", "Skip confirmation prompts (non-interactive)", false)
     .addHelpText("after", () => {
       const examples = [
-        ["vilaro update", "Update a source checkout (git)"],
-        ["vilaro update --channel beta", "Switch to beta channel (git + npm)"],
-        ["vilaro update --channel dev", "Switch to dev channel (git + npm)"],
-        ["vilaro update --tag beta", "One-off update to a dist-tag or version"],
-        ["vilaro update --tag main", "One-off package install from GitHub main"],
-        ["vilaro update --dry-run", "Preview actions without changing anything"],
-        ["vilaro update --no-restart", "Update without restarting the service"],
-        ["vilaro update --json", "Output result as JSON"],
-        ["vilaro update --yes", "Non-interactive (accept downgrade prompts)"],
-        ["vilaro update wizard", "Interactive update wizard"],
-        ["vilaro --update", "Shorthand for vilaro update"],
+        ["velaro update", "Update a source checkout (git)"],
+        ["velaro update --channel beta", "Switch to beta channel (git + npm)"],
+        ["velaro update --channel dev", "Switch to dev channel (git + npm)"],
+        ["velaro update --tag beta", "One-off update to a dist-tag or version"],
+        ["velaro update --tag main", "One-off package install from GitHub main"],
+        ["velaro update --dry-run", "Preview actions without changing anything"],
+        ["velaro update --no-restart", "Update without restarting the service"],
+        ["velaro update --json", "Output result as JSON"],
+        ["velaro update --yes", "Non-interactive (accept downgrade prompts)"],
+        ["velaro update wizard", "Interactive update wizard"],
+        ["velaro --update", "Shorthand for vilaro update"],
       ] as const;
       const fmtExamples = examples
         .map(([cmd, desc]) => `  ${theme.command(cmd)} ${theme.muted(`# ${desc}`)}`)
@@ -133,9 +133,9 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/update", "docs.vilaro.ai/cli/upda
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["vilaro update status", "Show channel + version status."],
-          ["vilaro update status --json", "JSON output."],
-          ["vilaro update status --timeout 10", "Custom timeout."],
+          ["velaro update status", "Show channel + version status."],
+          ["velaro update status --json", "JSON output."],
+          ["velaro update status --timeout 10", "Custom timeout."],
         ])}\n\n${theme.heading("Notes:")}\n${theme.muted(
           "- Shows current update channel (stable/beta/dev) and source",
         )}\n${theme.muted("- Includes git tag/branch/SHA for source checkouts")}\n\n${theme.muted(

@@ -1,7 +1,7 @@
 ---
 summary: "Contract for `secrets apply` plans: target validation, path matching, and `auth-profiles.json` target scope"
 read_when:
-  - Generating or reviewing `vilaro secrets apply` plans
+  - Generating or reviewing `velaro secrets apply` plans
   - Debugging `Invalid plan target path` errors
   - Understanding target type and path validation behavior
 title: "Secrets Apply Plan Contract"
@@ -9,13 +9,13 @@ title: "Secrets Apply Plan Contract"
 
 # Secrets apply plan contract
 
-This page defines the strict contract enforced by `vilaro secrets apply`.
+This page defines the strict contract enforced by `velaro secrets apply`.
 
 If a target does not match these rules, apply fails before mutating configuration.
 
 ## Plan file shape
 
-`vilaro secrets apply --from <plan.json>` expects a `targets` array of plan targets:
+`velaro secrets apply --from <plan.json>` expects a `targets` array of plan targets:
 
 ```json5
 {
@@ -90,13 +90,13 @@ No writes are committed for an invalid plan.
 
 ```bash
 # Validate plan without writes
-vilaro secrets apply --from /tmp/vilaro-secrets-plan.json --dry-run
+velaro secrets apply --from /tmp/velaro-secrets-plan.json --dry-run
 
 # Then apply for real
-vilaro secrets apply --from /tmp/vilaro-secrets-plan.json
+velaro secrets apply --from /tmp/velaro-secrets-plan.json
 ```
 
-If apply fails with an invalid target path message, regenerate the plan with `vilaro secrets configure` or fix the target path to a supported shape above.
+If apply fails with an invalid target path message, regenerate the plan with `velaro secrets configure` or fix the target path to a supported shape above.
 
 ## Related docs
 

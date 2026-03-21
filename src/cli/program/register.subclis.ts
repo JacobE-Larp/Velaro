@@ -173,7 +173,7 @@ const entries: SubCliEntry[] = [
   },
   {
     name: "docs",
-    description: "Search the live Vilaro docs",
+    description: "Search the live Velaro docs",
     hasSubcommands: false,
     register: async (program) => {
       const mod = await import("../docs-cli.js");
@@ -235,7 +235,7 @@ const entries: SubCliEntry[] = [
   },
   {
     name: "plugins",
-    description: "Manage Vilaro plugins and extensions",
+    description: "Manage Velaro plugins and extensions",
     hasSubcommands: true,
     register: async (program) => {
       const mod = await import("../plugins-cli.js");
@@ -294,7 +294,7 @@ const entries: SubCliEntry[] = [
   },
   {
     name: "update",
-    description: "Update Vilaro and inspect update channel status",
+    description: "Update Velaro and inspect update channel status",
     hasSubcommands: true,
     register: async (program) => {
       const mod = await import("../update-cli.js");

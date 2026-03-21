@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `vilaro channels` (accounts, status, login/logout, logs)"
+summary: "CLI reference for `velaro channels` (accounts, status, login/logout, logs)"
 read_when:
   - You want to add/remove channel accounts (WhatsApp/Telegram/Discord/Google Chat/Slack/Mattermost (plugin)/Signal/iMessage)
   - You want to check channel status or tail channel logs
 title: "channels"
 ---
 
-# `vilaro channels`
+# `velaro channels`
 
 Manage chat channel accounts and their runtime status on the Gateway.
 
@@ -18,25 +18,25 @@ Related docs:
 ## Common commands
 
 ```bash
-vilaro channels list
-vilaro channels status
-vilaro channels capabilities
-vilaro channels capabilities --channel discord --target channel:123
-vilaro channels resolve --channel slack "#general" "@jane"
-vilaro channels logs --channel all
+velaro channels list
+velaro channels status
+velaro channels capabilities
+velaro channels capabilities --channel discord --target channel:123
+velaro channels resolve --channel slack "#general" "@jane"
+velaro channels logs --channel all
 ```
 
 ## Add / remove accounts
 
 ```bash
-vilaro channels add --channel telegram --token <bot-token>
-vilaro channels add --channel nostr --private-key "$NOSTR_PRIVATE_KEY"
-vilaro channels remove --channel telegram --delete
+velaro channels add --channel telegram --token <bot-token>
+velaro channels add --channel nostr --private-key "$NOSTR_PRIVATE_KEY"
+velaro channels remove --channel telegram --delete
 ```
 
-Tip: `vilaro channels add --help` shows per-channel flags (token, private key, app token, signal-cli paths, etc).
+Tip: `velaro channels add --help` shows per-channel flags (token, private key, app token, signal-cli paths, etc).
 
-When you run `vilaro channels add` without flags, the interactive wizard can prompt:
+When you run `velaro channels add` without flags, the interactive wizard can prompt:
 
 - account ids per selected channel
 - optional display names for those accounts
@@ -44,9 +44,9 @@ When you run `vilaro channels add` without flags, the interactive wizard can pro
 
 If you confirm bind now, the wizard asks which agent should own each configured channel account and writes account-scoped routing bindings.
 
-You can also manage the same routing rules later with `vilaro agents bindings`, `vilaro agents bind`, and `vilaro agents unbind` (see [agents](/cli/agents)).
+You can also manage the same routing rules later with `velaro agents bindings`, `velaro agents bind`, and `velaro agents unbind` (see [agents](/cli/agents)).
 
-When you add a non-default account to a channel that is still using single-account top-level settings (no `channels.<channel>.accounts` entries yet), Vilaro moves account-scoped single-account top-level values into `channels.<channel>.accounts.default`, then writes the new account. This preserves the original account behavior while moving to the multi-account shape.
+When you add a non-default account to a channel that is still using single-account top-level settings (no `channels.<channel>.accounts` entries yet), Velaro moves account-scoped single-account top-level values into `channels.<channel>.accounts.default`, then writes the new account. This preserves the original account behavior while moving to the multi-account shape.
 
 Routing behavior stays consistent:
 
@@ -54,29 +54,29 @@ Routing behavior stays consistent:
 - `channels add` does not auto-create or rewrite bindings in non-interactive mode.
 - Interactive setup can optionally add account-scoped bindings.
 
-If your config was already in a mixed state (named accounts present, missing `default`, and top-level single-account values still set), run `vilaro doctor --fix` to move account-scoped values into `accounts.default`.
+If your config was already in a mixed state (named accounts present, missing `default`, and top-level single-account values still set), run `velaro doctor --fix` to move account-scoped values into `accounts.default`.
 
 ## Login / logout (interactive)
 
 ```bash
-vilaro channels login --channel whatsapp
-vilaro channels logout --channel whatsapp
+velaro channels login --channel whatsapp
+velaro channels logout --channel whatsapp
 ```
 
 ## Troubleshooting
 
-- Run `vilaro status --deep` for a broad probe.
-- Use `vilaro doctor` for guided fixes.
-- `vilaro channels list` prints `Claude: HTTP 403 ... user:profile` → usage snapshot needs the `user:profile` scope. Use `--no-usage`, or provide a claude.ai session key (`CLAUDE_WEB_SESSION_KEY` / `CLAUDE_WEB_COOKIE`), or re-auth via Claude Code CLI.
-- `vilaro channels status` falls back to config-only summaries when the gateway is unreachable. If a supported channel credential is configured via SecretRef but unavailable in the current command path, it reports that account as configured with degraded notes instead of showing it as not configured.
+- Run `velaro status --deep` for a broad probe.
+- Use `velaro doctor` for guided fixes.
+- `velaro channels list` prints `Claude: HTTP 403 ... user:profile` → usage snapshot needs the `user:profile` scope. Use `--no-usage`, or provide a claude.ai session key (`CLAUDE_WEB_SESSION_KEY` / `CLAUDE_WEB_COOKIE`), or re-auth via Claude Code CLI.
+- `velaro channels status` falls back to config-only summaries when the gateway is unreachable. If a supported channel credential is configured via SecretRef but unavailable in the current command path, it reports that account as configured with degraded notes instead of showing it as not configured.
 
 ## Capabilities probe
 
 Fetch provider capability hints (intents/scopes where available) plus static feature support:
 
 ```bash
-vilaro channels capabilities
-vilaro channels capabilities --channel discord --target channel:123
+velaro channels capabilities
+velaro channels capabilities --channel discord --target channel:123
 ```
 
 Notes:
@@ -90,9 +90,9 @@ Notes:
 Resolve channel/user names to IDs using the provider directory:
 
 ```bash
-vilaro channels resolve --channel slack "#general" "@jane"
-vilaro channels resolve --channel discord "My Server/#support" "@someone"
-vilaro channels resolve --channel matrix "Project Room"
+velaro channels resolve --channel slack "#general" "@jane"
+velaro channels resolve --channel discord "My Server/#support" "@someone"
+velaro channels resolve --channel matrix "Project Room"
 ```
 
 Notes:

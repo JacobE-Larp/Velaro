@@ -1,9 +1,9 @@
 ---
 read_when:
   - 设计超越每日 Markdown 日志的工作区记忆（~/.vilaro/workspace）
-  - Deciding: standalone CLI vs deep Vilaro integration
+  - Deciding: standalone CLI vs deep Velaro integration
   - 添加离线回忆 + 反思（retain/recall/reflect）
-summary: 研究笔记：Vilaro 工作区的离线记忆系统（Markdown 作为数据源 + 派生索引）
+summary: 研究笔记：Velaro 工作区的离线记忆系统（Markdown 作为数据源 + 派生索引）
 title: 工作区记忆研究
 x-i18n:
   generated_at: "2026-02-03T10:06:14Z"
@@ -16,7 +16,7 @@ x-i18n:
 
 # 工作区记忆 v2（离线）：研究笔记
 
-目标：Vilaro 风格的工作区（`agents.defaults.workspace`，默认 `~/.vilaro/workspace`），其中"记忆"以每天一个 Markdown 文件（`memory/YYYY-MM-DD.md`）加上一小组稳定文件（例如 `memory.md`、`SOUL.md`）的形式存储。
+目标：Velaro 风格的工作区（`agents.defaults.workspace`，默认 `~/.vilaro/workspace`），其中"记忆"以每天一个 Markdown 文件（`memory/YYYY-MM-DD.md`）加上一小组稳定文件（例如 `memory.md`、`SOUL.md`）的形式存储。
 
 本文档提出一种**离线优先**的记忆架构，保持 Markdown 作为规范的、可审查的数据源，但通过派生索引添加**结构化回忆**（搜索、实体摘要、置信度更新）。
 
@@ -89,7 +89,7 @@ x-i18n:
 
 - **每日日志保持为每日日志**。无需将其转换为 JSON。
 - `bank/` 文件是**经过整理的**，由反思任务生成，仍可手动编辑。
-- `memory.md` 保持"小型 + 类似核心"：你希望 Vilaro 每次会话都能看到的内容。
+- `memory.md` 保持"小型 + 类似核心"：你希望 Velaro 每次会话都能看到的内容。
 
 ### 派生存储（机器回忆）
 
@@ -175,17 +175,17 @@ Recall 应支持：
 
 ## CLI 集成：独立 vs 深度集成
 
-建议：**深度集成到 Vilaro**，但保持可分离的核心库。
+建议：**深度集成到 Velaro**，但保持可分离的核心库。
 
-### 为什么要集成到 Vilaro？
+### 为什么要集成到 Velaro？
 
-- Vilaro 已经知道：
+- Velaro 已经知道：
   - 工作区路径（`agents.defaults.workspace`）
   - 会话模型 + 心跳
   - 日志记录 + 故障排除模式
 - 你希望智能体自己调用工具：
-  - `vilaro memory recall "…" --k 25 --since 30d`
-  - `vilaro memory reflect --since 7d`
+  - `velaro memory recall "…" --k 25 --since 30d`
+  - `velaro memory reflect --since 7d`
 
 ### 为什么仍要分离库？
 

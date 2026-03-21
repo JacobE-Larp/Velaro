@@ -22,7 +22,7 @@ Availability: internal preview. The iOS app is not publicly distributed yet.
 - Gateway running on another device (macOS, Linux, or Windows via WSL2).
 - Network path:
   - Same LAN via Bonjour, **or**
-  - Tailnet via unicast DNS-SD (example domain: `vilaro.internal.`), **or**
+  - Tailnet via unicast DNS-SD (example domain: `velaro.internal.`), **or**
   - Manual host/port (fallback).
 
 ## Quick start (pair + connect)
@@ -30,7 +30,7 @@ Availability: internal preview. The iOS app is not publicly distributed yet.
 1. Start the Gateway:
 
 ```bash
-vilaro gateway --port 18789
+velaro gateway --port 18789
 ```
 
 2. In the iOS app, open Settings and pick a discovered gateway (or enable Manual Host and enter host/port).
@@ -38,15 +38,15 @@ vilaro gateway --port 18789
 3. Approve the pairing request on the gateway host:
 
 ```bash
-vilaro devices list
-vilaro devices approve <requestId>
+velaro devices list
+velaro devices approve <requestId>
 ```
 
 4. Verify connection:
 
 ```bash
-vilaro nodes status
-vilaro gateway call node.list --params "{}"
+velaro nodes status
+velaro gateway call node.list --params "{}"
 ```
 
 ## Relay-backed push for official builds
@@ -102,7 +102,7 @@ Compatibility note:
 The relay exists to enforce two constraints that direct APNs-on-gateway cannot provide for
 official iOS builds:
 
-- Only genuine Vilaro iOS builds distributed through Apple can use the hosted relay.
+- Only genuine Velaro iOS builds distributed through Apple can use the hosted relay.
 - A gateway can send relay-backed pushes only for iOS devices that paired with that specific
   gateway.
 
@@ -145,7 +145,7 @@ Why this design was created:
 
 - To keep production APNs credentials out of user gateways.
 - To avoid storing raw official-build APNs tokens on the gateway.
-- To allow hosted relay usage only for official/TestFlight Vilaro builds.
+- To allow hosted relay usage only for official/TestFlight Velaro builds.
 - To prevent one gateway from sending wake pushes to iOS devices owned by a different gateway.
 
 Local/manual builds remain on direct APNs. If you are testing those builds without the relay, the
@@ -165,7 +165,7 @@ The Gateway advertises `_vilaro-gw._tcp` on `local.`. The iOS app lists these au
 
 ### Tailnet (cross-network)
 
-If mDNS is blocked, use a unicast DNS-SD zone (choose a domain; example: `vilaro.internal.`) and Tailscale split DNS.
+If mDNS is blocked, use a unicast DNS-SD zone (choose a domain; example: `velaro.internal.`) and Tailscale split DNS.
 See [Bonjour](/gateway/bonjour) for the CoreDNS example.
 
 ### Manual host/port
@@ -177,7 +177,7 @@ In Settings, enable **Manual Host** and enter the gateway host + port (default `
 The iOS node renders a WKWebView canvas. Use `node.invoke` to drive it:
 
 ```bash
-vilaro nodes invoke --node "iOS Node" --command canvas.navigate --params '{"url":"http://<gateway-host>:18789/__vilaro__/canvas/"}'
+velaro nodes invoke --node "iOS Node" --command canvas.navigate --params '{"url":"http://<gateway-host>:18789/__vilaro__/canvas/"}'
 ```
 
 Notes:
@@ -190,11 +190,11 @@ Notes:
 ### Canvas eval / snapshot
 
 ```bash
-vilaro nodes invoke --node "iOS Node" --command canvas.eval --params '{"javaScript":"(() => { const {ctx} = window.__vilaro; ctx.clearRect(0,0,innerWidth,innerHeight); ctx.lineWidth=6; ctx.strokeStyle=\"#ff2d55\"; ctx.beginPath(); ctx.moveTo(40,40); ctx.lineTo(innerWidth-40, innerHeight-40); ctx.stroke(); return \"ok\"; })()"}'
+velaro nodes invoke --node "iOS Node" --command canvas.eval --params '{"javaScript":"(() => { const {ctx} = window.__velaro; ctx.clearRect(0,0,innerWidth,innerHeight); ctx.lineWidth=6; ctx.strokeStyle=\"#ff2d55\"; ctx.beginPath(); ctx.moveTo(40,40); ctx.lineTo(innerWidth-40, innerHeight-40); ctx.stroke(); return \"ok\"; })()"}'
 ```
 
 ```bash
-vilaro nodes invoke --node "iOS Node" --command canvas.snapshot --params '{"maxWidth":900,"format":"jpeg"}'
+velaro nodes invoke --node "iOS Node" --command canvas.snapshot --params '{"maxWidth":900,"format":"jpeg"}'
 ```
 
 ## Voice wake + talk mode
@@ -206,7 +206,7 @@ vilaro nodes invoke --node "iOS Node" --command canvas.snapshot --params '{"maxW
 
 - `NODE_BACKGROUND_UNAVAILABLE`: bring the iOS app to the foreground (canvas/camera/screen commands require it).
 - `A2UI_HOST_NOT_CONFIGURED`: the Gateway did not advertise a canvas host URL; check `canvasHost` in [Gateway configuration](/gateway/configuration).
-- Pairing prompt never appears: run `vilaro devices list` and approve manually.
+- Pairing prompt never appears: run `velaro devices list` and approve manually.
 - Reconnect fails after reinstall: the Keychain pairing token was cleared; re-pair the node.
 
 ## Related docs

@@ -56,8 +56,8 @@ type NodeDaemonStatusOptions = {
 
 function renderNodeServiceStartHints(): string[] {
   return buildPlatformServiceStartHints({
-    installCommand: formatCliCommand("vilaro node install"),
-    startCommand: formatCliCommand("vilaro node start"),
+    installCommand: formatCliCommand("velaro node install"),
+    startCommand: formatCliCommand("velaro node start"),
     launchAgentPlistPath: `~/Library/LaunchAgents/${resolveNodeLaunchAgentLabel()}.plist`,
     systemdServiceName: resolveNodeSystemdServiceName(),
     windowsTaskName: resolveNodeWindowsTaskName(),
@@ -122,7 +122,7 @@ export async function runNodeDaemonInstall(opts: NodeDaemonInstallOptions) {
     });
     if (!json) {
       defaultRuntime.log(`Node service already ${service.loadedText}.`);
-      defaultRuntime.log(`Reinstall with: ${formatCliCommand("vilaro node install --force")}`);
+      defaultRuntime.log(`Reinstall with: ${formatCliCommand("velaro node install --force")}`);
     }
     return;
   }

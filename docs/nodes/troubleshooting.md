@@ -13,19 +13,19 @@ Use this page when a node is visible in status but node tools fail.
 ## Command ladder
 
 ```bash
-vilaro status
-vilaro gateway status
-vilaro logs --follow
-vilaro doctor
-vilaro channels status --probe
+velaro status
+velaro gateway status
+velaro logs --follow
+velaro doctor
+velaro channels status --probe
 ```
 
 Then run node specific checks:
 
 ```bash
-vilaro nodes status
-vilaro nodes describe --node <idOrNameOrIp>
-vilaro approvals get --node <idOrNameOrIp>
+velaro nodes status
+velaro nodes describe --node <idOrNameOrIp>
+velaro approvals get --node <idOrNameOrIp>
 ```
 
 Healthy signals:
@@ -41,9 +41,9 @@ Healthy signals:
 Quick check and fix:
 
 ```bash
-vilaro nodes describe --node <idOrNameOrIp>
-vilaro nodes canvas snapshot --node <idOrNameOrIp>
-vilaro logs --follow
+velaro nodes describe --node <idOrNameOrIp>
+velaro nodes canvas snapshot --node <idOrNameOrIp>
+velaro logs --follow
 ```
 
 If you see `NODE_BACKGROUND_UNAVAILABLE`, bring the node app to the foreground and retry.
@@ -67,10 +67,10 @@ These are different gates:
 Quick checks:
 
 ```bash
-vilaro devices list
-vilaro nodes status
-vilaro approvals get --node <idOrNameOrIp>
-vilaro approvals allowlist add --node <idOrNameOrIp> "/usr/bin/uname"
+velaro devices list
+velaro nodes status
+velaro approvals get --node <idOrNameOrIp>
+velaro approvals allowlist add --node <idOrNameOrIp> "/usr/bin/uname"
 ```
 
 If pairing is missing, approve the node device first.
@@ -92,10 +92,10 @@ If pairing is fine but `system.run` fails, fix exec approvals/allowlist.
 ## Fast recovery loop
 
 ```bash
-vilaro nodes status
-vilaro nodes describe --node <idOrNameOrIp>
-vilaro approvals get --node <idOrNameOrIp>
-vilaro logs --follow
+velaro nodes status
+velaro nodes describe --node <idOrNameOrIp>
+velaro approvals get --node <idOrNameOrIp>
+velaro logs --follow
 ```
 
 If still stuck:

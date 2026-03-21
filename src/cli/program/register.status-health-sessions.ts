@@ -55,15 +55,15 @@ export function registerStatusHealthSessionsCommands(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["vilaro status", "Show channel health + session summary."],
-          ["vilaro status --all", "Full diagnosis (read-only)."],
-          ["vilaro status --json", "Machine-readable output."],
-          ["vilaro status --usage", "Show model provider usage/quota snapshots."],
+          ["velaro status", "Show channel health + session summary."],
+          ["velaro status --all", "Full diagnosis (read-only)."],
+          ["velaro status --json", "Machine-readable output."],
+          ["velaro status --usage", "Show model provider usage/quota snapshots."],
           [
-            "vilaro status --deep",
+            "velaro status --deep",
             "Run channel probes (WA + Telegram + Discord + Slack + Signal).",
           ],
-          ["vilaro status --deep --timeout 5000", "Tighten probe timeout."],
+          ["velaro status --deep --timeout 5000", "Tighten probe timeout."],
         ])}`,
     )
     .addHelpText(
@@ -125,12 +125,12 @@ export function registerStatusHealthSessionsCommands(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["vilaro sessions", "List all sessions."],
-          ["vilaro sessions --agent work", "List sessions for one agent."],
-          ["vilaro sessions --all-agents", "Aggregate sessions across agents."],
-          ["vilaro sessions --active 120", "Only last 2 hours."],
-          ["vilaro sessions --json", "Machine-readable output."],
-          ["vilaro sessions --store ./tmp/sessions.json", "Use a specific session store."],
+          ["velaro sessions", "List all sessions."],
+          ["velaro sessions --agent work", "List sessions for one agent."],
+          ["velaro sessions --all-agents", "Aggregate sessions across agents."],
+          ["velaro sessions --active 120", "Only last 2 hours."],
+          ["velaro sessions --json", "Machine-readable output."],
+          ["velaro sessions --store ./tmp/sessions.json", "Use a specific session store."],
         ])}\n\n${theme.muted(
           "Shows token usage per session when the agent reports it; set agents.defaults.contextTokens to cap the window and show %.",
         )}`,
@@ -174,16 +174,16 @@ export function registerStatusHealthSessionsCommands(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["vilaro sessions cleanup --dry-run", "Preview stale/cap cleanup."],
+          ["velaro sessions cleanup --dry-run", "Preview stale/cap cleanup."],
           [
-            "vilaro sessions cleanup --dry-run --fix-missing",
+            "velaro sessions cleanup --dry-run --fix-missing",
             "Also preview pruning entries with missing transcript files.",
           ],
-          ["vilaro sessions cleanup --enforce", "Apply maintenance now."],
-          ["vilaro sessions cleanup --agent work --dry-run", "Preview one agent store."],
-          ["vilaro sessions cleanup --all-agents --dry-run", "Preview all agent stores."],
+          ["velaro sessions cleanup --enforce", "Apply maintenance now."],
+          ["velaro sessions cleanup --agent work --dry-run", "Preview one agent store."],
+          ["velaro sessions cleanup --all-agents --dry-run", "Preview all agent stores."],
           [
-            "vilaro sessions cleanup --enforce --store ./tmp/sessions.json",
+            "velaro sessions cleanup --enforce --store ./tmp/sessions.json",
             "Use a specific store.",
           ],
         ])}`,

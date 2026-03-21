@@ -36,7 +36,7 @@ inside a sandbox workspace under `~/.vilaro/sandboxes`, not your host workspace.
 }
 ```
 
-`vilaro onboard`, `vilaro configure`, or `vilaro setup` will create the
+`velaro onboard`, `velaro configure`, or `velaro setup` will create the
 workspace and seed the bootstrap files if they are missing.
 Sandbox seed copies only accept regular in-workspace files; symlink/hardlink
 aliases that resolve outside the source workspace are ignored.
@@ -50,20 +50,20 @@ file creation:
 
 ## Extra workspace folders
 
-Older installs may have created `~/vilaro`. Keeping multiple workspace
+Older installs may have created `~/velaro`. Keeping multiple workspace
 directories around can cause confusing auth or state drift, because only one
 workspace is active at a time.
 
 **Recommendation:** keep a single active workspace. If you no longer use the
-extra folders, archive or move them to Trash (for example `trash ~/vilaro`).
+extra folders, archive or move them to Trash (for example `trash ~/velaro`).
 If you intentionally keep multiple workspaces, make sure
 `agents.defaults.workspace` points to the active one.
 
-`vilaro doctor` warns when it detects extra workspace directories.
+`velaro doctor` warns when it detects extra workspace directories.
 
 ## Workspace file map (what each file means)
 
-These are the standard files Vilaro expects inside the workspace:
+These are the standard files Velaro expects inside the workspace:
 
 - `AGENTS.md`
   - Operating instructions for the agent and how it should use memory.
@@ -116,11 +116,11 @@ See [Memory](/concepts/memory) for the workflow and automatic memory flush.
 - `canvas/` (optional)
   - Canvas UI files for node displays (for example `canvas/index.html`).
 
-If any bootstrap file is missing, Vilaro injects a "missing file" marker into
+If any bootstrap file is missing, Velaro injects a "missing file" marker into
 the session and continues. Large bootstrap files are truncated when injected;
 adjust limits with `agents.defaults.bootstrapMaxChars` (default: 20000) and
 `agents.defaults.bootstrapTotalMaxChars` (default: 150000).
-`vilaro setup` can recreate missing defaults without overwriting existing
+`velaro setup` can recreate missing defaults without overwriting existing
 files.
 
 ## What is NOT in the workspace
@@ -174,7 +174,7 @@ Option B: GitHub CLI (`gh`)
 
 ```bash
 gh auth login
-gh repo create vilaro-workspace --private --source . --remote origin --push
+gh repo create velaro-workspace --private --source . --remote origin --push
 ```
 
 Option C: GitLab web UI
@@ -224,7 +224,7 @@ Suggested `.gitignore` starter:
 
 1. Clone the repo to the desired path (default `~/.vilaro/workspace`).
 2. Set `agents.defaults.workspace` to that path in `~/.vilaro/vilaro.json`.
-3. Run `vilaro setup --workspace <path>` to seed any missing files.
+3. Run `velaro setup --workspace <path>` to seed any missing files.
 4. If you need sessions, copy `~/.vilaro/agents/<agentId>/sessions/` from the
    old machine separately.
 

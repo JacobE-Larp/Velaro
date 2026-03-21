@@ -1,7 +1,7 @@
 ---
-summary: "Vilaro capabilities across channels, routing, media, and UX."
+summary: "Velaro capabilities across channels, routing, media, and UX."
 read_when:
-  - You want a full list of what Vilaro supports
+  - You want a full list of what Velaro supports
 title: "Features"
 ---
 

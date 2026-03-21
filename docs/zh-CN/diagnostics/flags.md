@@ -64,7 +64,7 @@ VILARO_DIAGNOSTICS=0
 标志将日志输出到标准诊断日志文件。默认位置：
 
 ```
-/tmp/vilaro/vilaro-YYYY-MM-DD.log
+/tmp/velaro/velaro-YYYY-MM-DD.log
 ```
 
 如果你设置了 `logging.file`，则使用该路径。日志为 JSONL 格式（每行一个 JSON 对象）。脱敏仍然根据 `logging.redactSensitive` 应用。
@@ -74,22 +74,22 @@ VILARO_DIAGNOSTICS=0
 选择最新的日志文件：
 
 ```bash
-ls -t /tmp/vilaro/vilaro-*.log | head -n 1
+ls -t /tmp/velaro/velaro-*.log | head -n 1
 ```
 
 过滤 Telegram HTTP 诊断：
 
 ```bash
-rg "telegram http error" /tmp/vilaro/vilaro-*.log
+rg "telegram http error" /tmp/velaro/velaro-*.log
 ```
 
 或在复现时使用 tail：
 
 ```bash
-tail -f /tmp/vilaro/vilaro-$(date +%F).log | rg "telegram http error"
+tail -f /tmp/velaro/velaro-$(date +%F).log | rg "telegram http error"
 ```
 
-对于远程 Gateway 网关，你也可以使用 `vilaro logs --follow`（参见 [/cli/logs](/cli/logs)）。
+对于远程 Gateway 网关，你也可以使用 `velaro logs --follow`（参见 [/cli/logs](/cli/logs)）。
 
 ## 注意事项
 

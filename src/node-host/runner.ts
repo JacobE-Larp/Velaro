@@ -11,7 +11,7 @@ import {
   NODE_EXEC_APPROVALS_COMMANDS,
   NODE_SYSTEM_RUN_COMMANDS,
 } from "../infra/node-commands.js";
-import { ensureVilaroCliOnPath } from "../infra/path-env.js";
+import { ensureVelaroCliOnPath } from "../infra/path-env.js";
 import { GATEWAY_CLIENT_MODES, GATEWAY_CLIENT_NAMES } from "../utils/message-channel.js";
 import { VERSION } from "../version.js";
 import { ensureNodeHostConfig, saveNodeHostConfig, type NodeHostGatewayConfig } from "./config.js";
@@ -100,7 +100,7 @@ class SkillBinsCache implements SkillBinsProvider {
 }
 
 function ensureNodePathEnv(): string {
-  ensureVilaroCliOnPath({ pathEnv: process.env.PATH ?? "" });
+  ensureVelaroCliOnPath({ pathEnv: process.env.PATH ?? "" });
   const current = process.env.PATH ?? "";
   if (current.trim()) {
     return current;

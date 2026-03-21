@@ -396,13 +396,13 @@ function coerceRequest(val: unknown): OpenAiChatCompletionRequest {
 function resolveAgentResponseText(result: unknown): string {
   const payloads = (result as { payloads?: Array<{ text?: string }> } | null)?.payloads;
   if (!Array.isArray(payloads) || payloads.length === 0) {
-    return "No response from Vilaro.";
+    return "No response from Velaro.";
   }
   const content = payloads
     .map((p) => (typeof p.text === "string" ? p.text : ""))
     .filter(Boolean)
     .join("\n\n");
-  return content || "No response from Vilaro.";
+  return content || "No response from Velaro.";
 }
 
 export async function handleOpenAiHttpRequest(

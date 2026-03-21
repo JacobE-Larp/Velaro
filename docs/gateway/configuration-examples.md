@@ -1,9 +1,9 @@
 ---
-summary: "Schema-accurate configuration examples for common Vilaro setups"
+summary: "Schema-accurate configuration examples for common Velaro setups"
 read_when:
-  - Learning how to configure Vilaro
+  - Learning how to configure Velaro
   - Looking for configuration examples
-  - Setting up Vilaro for the first time
+  - Setting up Velaro for the first time
 title: "Configuration Examples"
 ---
 
@@ -29,7 +29,7 @@ Save to `~/.vilaro/vilaro.json` and you can DM the bot from that number.
 ```json5
 {
   identity: {
-    name: "Vilaro",
+    name: "Velaro",
     theme: "helpful assistant",
     emoji: "",
   },
@@ -93,7 +93,7 @@ Save to `~/.vilaro/vilaro.json` and you can DM the bot from that number.
   // Logging
   logging: {
     level: "info",
-    file: "/tmp/vilaro/vilaro.log",
+    file: "/tmp/velaro/velaro.log",
     consoleLevel: "info",
     consoleStyle: "pretty",
     redactSensitive: "tools",
@@ -101,7 +101,7 @@ Save to `~/.vilaro/vilaro.json` and you can DM the bot from that number.
 
   // Message formatting
   messages: {
-    messagePrefix: "[vilaro]",
+    messagePrefix: "[velaro]",
     responsePrefix: ">",
     ackReaction: "👀",
     ackReactionScope: "group-mentions",
@@ -110,7 +110,7 @@ Save to `~/.vilaro/vilaro.json` and you can DM the bot from that number.
   // Routing + queue
   routing: {
     groupChat: {
-      mentionPatterns: ["@vilaro", "vilaro"],
+      mentionPatterns: ["@velaro", "velaro"],
       historyLimit: 50,
     },
     queue: {
@@ -205,7 +205,7 @@ Save to `~/.vilaro/vilaro.json` and you can DM the bot from that number.
       dm: { enabled: true, allowFrom: ["123456789012345678"] },
       guilds: {
         "123456789012345678": {
-          slug: "friends-of-vilaro",
+          slug: "friends-of-velaro",
           requireMention: false,
           channels: {
             general: { allow: true },
@@ -225,7 +225,7 @@ Save to `~/.vilaro/vilaro.json` and you can DM the bot from that number.
       dm: { enabled: true, allowFrom: ["U123"] },
       slashCommand: {
         enabled: true,
-        name: "vilaro",
+        name: "velaro",
         sessionPrefix: "slack:slash",
         ephemeral: true,
       },
@@ -291,7 +291,7 @@ Save to `~/.vilaro/vilaro.json` and you can DM the bot from that number.
         perSession: true,
         workspaceRoot: "~/.vilaro/sandboxes",
         docker: {
-          image: "vilaro-sandbox:bookworm-slim",
+          image: "velaro-sandbox:bookworm-slim",
           workdir: "/workspace",
           readOnlyRoot: true,
           tmpfs: ["/tmp", "/var/tmp", "/run"],
@@ -394,7 +394,7 @@ Save to `~/.vilaro/vilaro.json` and you can DM the bot from that number.
       },
     ],
     gmail: {
-      account: "vilaro@gmail.com",
+      account: "velaro@gmail.com",
       label: "INBOX",
       topic: "projects/<project-id>/topics/gog-gmail-watch",
       subscription: "gog-gmail-watch-push",
@@ -413,7 +413,7 @@ Save to `~/.vilaro/vilaro.json` and you can DM the bot from that number.
     mode: "local",
     port: 18789,
     bind: "loopback",
-    controlUi: { enabled: true, basePath: "/vilaro" },
+    controlUi: { enabled: true, basePath: "/velaro" },
     auth: {
       mode: "token",
       token: "gateway-token",
@@ -581,7 +581,7 @@ terms before depending on subscription auth.
     theme: "professional assistant",
   },
   agent: {
-    workspace: "~/work-vilaro",
+    workspace: "~/work-velaro",
     elevated: { enabled: false },
   },
   channels: {

@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `vilaro nodes` (list/status/approve/invoke, camera/canvas/screen)"
+summary: "CLI reference for `velaro nodes` (list/status/approve/invoke, camera/canvas/screen)"
 read_when:
   - You’re managing paired nodes (cameras, screen, canvas)
   - You need to approve requests or invoke node commands
 title: "nodes"
 ---
 
-# `vilaro nodes`
+# `velaro nodes`
 
 Manage paired nodes (devices) and invoke node capabilities.
 
@@ -23,14 +23,14 @@ Common options:
 ## Common commands
 
 ```bash
-vilaro nodes list
-vilaro nodes list --connected
-vilaro nodes list --last-connected 24h
-vilaro nodes pending
-vilaro nodes approve <requestId>
-vilaro nodes status
-vilaro nodes status --connected
-vilaro nodes status --last-connected 24h
+velaro nodes list
+velaro nodes list --connected
+velaro nodes list --last-connected 24h
+velaro nodes pending
+velaro nodes approve <requestId>
+velaro nodes status
+velaro nodes status --connected
+velaro nodes status --last-connected 24h
 ```
 
 `nodes list` prints pending/paired tables. Paired rows include the most recent connect age (Last Connect).
@@ -40,10 +40,10 @@ filter to nodes that connected within a duration (e.g. `24h`, `7d`).
 ## Invoke / run
 
 ```bash
-vilaro nodes invoke --node <id|name|ip> --command <command> --params <json>
-vilaro nodes run --node <id|name|ip> <command...>
-vilaro nodes run --raw "git status"
-vilaro nodes run --agent main --node <id|name|ip> --raw "git status"
+velaro nodes invoke --node <id|name|ip> --command <command> --params <json>
+velaro nodes run --node <id|name|ip> <command...>
+velaro nodes run --raw "git status"
+velaro nodes run --agent main --node <id|name|ip> --raw "git status"
 ```
 
 Invoke flags:

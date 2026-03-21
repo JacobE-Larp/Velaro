@@ -57,7 +57,7 @@ VILARO_DIAGNOSTICS=0
 Flags emit logs into the standard diagnostics log file. By default:
 
 ```
-/tmp/vilaro/vilaro-YYYY-MM-DD.log
+/tmp/velaro/velaro-YYYY-MM-DD.log
 ```
 
 If you set `logging.file`, use that path instead. Logs are JSONL (one JSON object per line). Redaction still applies based on `logging.redactSensitive`.
@@ -67,22 +67,22 @@ If you set `logging.file`, use that path instead. Logs are JSONL (one JSON objec
 Pick the latest log file:
 
 ```bash
-ls -t /tmp/vilaro/vilaro-*.log | head -n 1
+ls -t /tmp/velaro/velaro-*.log | head -n 1
 ```
 
 Filter for Telegram HTTP diagnostics:
 
 ```bash
-rg "telegram http error" /tmp/vilaro/vilaro-*.log
+rg "telegram http error" /tmp/velaro/velaro-*.log
 ```
 
 Or tail while reproducing:
 
 ```bash
-tail -f /tmp/vilaro/vilaro-$(date +%F).log | rg "telegram http error"
+tail -f /tmp/velaro/velaro-$(date +%F).log | rg "telegram http error"
 ```
 
-For remote gateways, you can also use `vilaro logs --follow` (see [/cli/logs](/cli/logs)).
+For remote gateways, you can also use `velaro logs --follow` (see [/cli/logs](/cli/logs)).
 
 ## Notes
 

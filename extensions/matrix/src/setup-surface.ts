@@ -427,7 +427,7 @@ export const matrixSetupWizard: ChannelSetupWizard = {
     const deviceName = String(
       await prompter.text({
         message: "Matrix device name (optional)",
-        initialValue: existing.deviceName ?? "Vilaro Gateway",
+        initialValue: existing.deviceName ?? "Velaro Gateway",
       }),
     ).trim();
 

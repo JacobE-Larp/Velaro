@@ -45,7 +45,7 @@ if (
 
   installGaxiosFetchCompat();
   process.title = "vilaro";
-  ensureVilaroExecMarkerOnProcess();
+  ensureVelaroExecMarkerOnProcess();
   installProcessWarningFilter();
   normalizeEnv();
   if (!isTruthyEnvValue(process.env.NODE_DISABLE_COMPILE_CACHE)) {
@@ -135,7 +135,7 @@ if (
     Promise.all([import("./version.js"), import("./infra/git-commit.js")])
       .then(([{ VERSION }, { resolveCommitHash }]) => {
         const commit = resolveCommitHash({ moduleUrl: import.meta.url });
-        console.log(commit ? `Vilaro ${VERSION} (${commit})` : `Vilaro ${VERSION}`);
+        console.log(commit ? `Velaro ${VERSION} (${commit})` : `Velaro ${VERSION}`);
         process.exit(0);
       })
       .catch((error) => {

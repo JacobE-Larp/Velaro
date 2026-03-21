@@ -5,7 +5,7 @@ export type ServiceStatusSummary = {
   label: string;
   installed: boolean | null;
   loaded: boolean;
-  managedByVilaro: boolean;
+  managedByVelaro: boolean;
   externallyManaged: boolean;
   loadedText: string;
   runtime: GatewayServiceRuntime | undefined;
@@ -27,9 +27,9 @@ export async function readServiceStatusSummary(
       service.isLoaded({ env: serviceEnv }).catch(() => false),
       service.readRuntime(serviceEnv).catch(() => undefined),
     ]);
-    const managedByVilaro = command != null;
-    const externallyManaged = !managedByVilaro && runtime?.status === "running";
-    const installed = managedByVilaro || externallyManaged;
+    const managedByVelaro = command != null;
+    const externallyManaged = !managedByVelaro && runtime?.status === "running";
+    const installed = managedByVelaro || externallyManaged;
     const loadedText = externallyManaged
       ? "running (externally managed)"
       : loaded
@@ -39,7 +39,7 @@ export async function readServiceStatusSummary(
       label: service.label,
       installed,
       loaded,
-      managedByVilaro,
+      managedByVelaro,
       externallyManaged,
       loadedText,
       runtime,
@@ -49,7 +49,7 @@ export async function readServiceStatusSummary(
       label: fallbackLabel,
       installed: null,
       loaded: false,
-      managedByVilaro: false,
+      managedByVelaro: false,
       externallyManaged: false,
       loadedText: "unknown",
       runtime: undefined,

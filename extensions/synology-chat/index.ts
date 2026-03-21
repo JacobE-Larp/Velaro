@@ -6,7 +6,7 @@ import { setSynologyRuntime } from "./src/runtime.js";
 const plugin = {
   id: "synology-chat",
   name: "Synology Chat",
-  description: "Native Synology Chat channel plugin for Vilaro",
+  description: "Native Synology Chat channel plugin for Velaro",
   configSchema: emptyPluginConfigSchema(),
   register(api: VilaroPluginApi) {
     setSynologyRuntime(api.runtime);

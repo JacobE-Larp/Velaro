@@ -1,5 +1,5 @@
 ---
-summary: "Model providers (LLMs) supported by Vilaro"
+summary: "Model providers (LLMs) supported by Velaro"
 read_when:
   - You want to choose a model provider
   - You want quick setup examples for LLM auth + model selection
@@ -8,12 +8,12 @@ title: "Model Provider Quickstart"
 
 # Model Providers
 
-Vilaro can use many LLM providers. Pick one, authenticate, then set the default
+Velaro can use many LLM providers. Pick one, authenticate, then set the default
 model as `provider/model`.
 
 ## Quick start (two steps)
 
-1. Authenticate with the provider (usually via `vilaro onboard`).
+1. Authenticate with the provider (usually via `velaro onboard`).
 2. Set the default model:
 
 ```json5

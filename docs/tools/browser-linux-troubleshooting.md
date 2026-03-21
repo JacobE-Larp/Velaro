@@ -1,5 +1,5 @@
 ---
-summary: "Fix Chrome/Brave/Edge/Chromium CDP startup issues for Vilaro browser control on Linux"
+summary: "Fix Chrome/Brave/Edge/Chromium CDP startup issues for Velaro browser control on Linux"
 read_when: "Browser control fails on Linux, especially with snap Chromium"
 title: "Browser Troubleshooting"
 ---
@@ -8,15 +8,15 @@ title: "Browser Troubleshooting"
 
 ## Problem: "Failed to start Chrome CDP on port 18800"
 
-Vilaro's browser control server fails to launch Chrome/Brave/Edge/Chromium with the error:
+Velaro's browser control server fails to launch Chrome/Brave/Edge/Chromium with the error:
 
 ```
-{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"vilaro\"."}
+{"error":"Error: Failed to start Chrome CDP on port 18800 for profile \"velaro\"."}
 ```
 
 ### Root Cause
 
-On Ubuntu (and many Linux distros), the default Chromium installation is a **snap package**. Snap's AppArmor confinement interferes with how Vilaro spawns and monitors the browser process.
+On Ubuntu (and many Linux distros), the default Chromium installation is a **snap package**. Snap's AppArmor confinement interferes with how Velaro spawns and monitors the browser process.
 
 The `apt install chromium` command installs a stub package that redirects to snap:
 
@@ -37,7 +37,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt --fix-broken install -y  # if there are dependency errors
 ```
 
-Then update your Vilaro config (`~/.vilaro/vilaro.json`):
+Then update your Velaro config (`~/.vilaro/vilaro.json`):
 
 ```json
 {
@@ -52,7 +52,7 @@ Then update your Vilaro config (`~/.vilaro/vilaro.json`):
 
 ### Solution 2: Use Snap Chromium with Attach-Only Mode
 
-If you must use snap Chromium, configure Vilaro to attach to a manually-started browser:
+If you must use snap Chromium, configure Velaro to attach to a manually-started browser:
 
 1. Update config:
 
@@ -72,20 +72,20 @@ If you must use snap Chromium, configure Vilaro to attach to a manually-started 
 ```bash
 chromium-browser --headless --no-sandbox --disable-gpu \
   --remote-debugging-port=18800 \
-  --user-data-dir=$HOME/.vilaro/browser/vilaro/user-data \
+  --user-data-dir=$HOME/.velaro/browser/velaro/user-data \
   about:blank &
 ```
 
 3. Optionally create a systemd user service to auto-start Chrome:
 
 ```ini
-# ~/.config/systemd/user/vilaro-browser.service
+# ~/.config/systemd/user/velaro-browser.service
 [Unit]
-Description=Vilaro Browser (Chrome CDP)
+Description=Velaro Browser (Chrome CDP)
 After=network.target
 
 [Service]
-ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.vilaro/browser/vilaro/user-data about:blank
+ExecStart=/snap/bin/chromium --headless --no-sandbox --disable-gpu --remote-debugging-port=18800 --user-data-dir=%h/.velaro/browser/velaro/user-data about:blank
 Restart=on-failure
 RestartSec=5
 
@@ -93,7 +93,7 @@ RestartSec=5
 WantedBy=default.target
 ```
 
-Enable with: `systemctl --user enable --now vilaro-browser.service`
+Enable with: `systemctl --user enable --now velaro-browser.service`
 
 ### Verifying the Browser Works
 
@@ -123,16 +123,16 @@ curl -s http://127.0.0.1:18791/tabs
 
 ### Problem: "No Chrome tabs found for profile=\"user\""
 
-You're using an `existing-session` / Chrome MCP profile. Vilaro can see local Chrome,
+You're using an `existing-session` / Chrome MCP profile. Velaro can see local Chrome,
 but there are no open tabs available to attach to.
 
 Fix options:
 
-1. **Use the managed browser:** `vilaro browser start --browser-profile vilaro`
-   (or set `browser.defaultProfile: "vilaro"`).
+1. **Use the managed browser:** `velaro browser start --browser-profile velaro`
+   (or set `browser.defaultProfile: "velaro"`).
 2. **Use Chrome MCP:** make sure local Chrome is running with at least one open tab, then retry with `--browser-profile user`.
 
 Notes:
 
 - `user` is host-only. For Linux servers, containers, or remote hosts, prefer CDP profiles.
-- Local `vilaro` profiles auto-assign `cdpPort`/`cdpUrl`; only set those for remote CDP.
+- Local `velaro` profiles auto-assign `cdpPort`/`cdpUrl`; only set those for remote CDP.

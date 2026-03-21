@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `vilaro hooks` (agent hooks)"
+summary: "CLI reference for `velaro hooks` (agent hooks)"
 read_when:
   - You want to manage agent hooks
   - You want to install or update hooks
 title: "hooks"
 ---
 
-# `vilaro hooks`
+# `velaro hooks`
 
 Manage agent hooks (event-driven automations for commands like `/new`, `/reset`, and gateway startup).
 
@@ -18,7 +18,7 @@ Related:
 ## List All Hooks
 
 ```bash
-vilaro hooks list
+velaro hooks list
 ```
 
 List all discovered hooks from workspace, managed, and bundled directories.
@@ -44,7 +44,7 @@ Ready:
 **Example (verbose):**
 
 ```bash
-vilaro hooks list --verbose
+velaro hooks list --verbose
 ```
 
 Shows missing requirements for ineligible hooks.
@@ -52,7 +52,7 @@ Shows missing requirements for ineligible hooks.
 **Example (JSON):**
 
 ```bash
-vilaro hooks list --json
+velaro hooks list --json
 ```
 
 Returns structured JSON for programmatic use.
@@ -60,7 +60,7 @@ Returns structured JSON for programmatic use.
 ## Get Hook Information
 
 ```bash
-vilaro hooks info <name>
+velaro hooks info <name>
 ```
 
 Show detailed information about a specific hook.
@@ -76,7 +76,7 @@ Show detailed information about a specific hook.
 **Example:**
 
 ```bash
-vilaro hooks info session-memory
+velaro hooks info session-memory
 ```
 
 **Output:**
@@ -87,9 +87,9 @@ vilaro hooks info session-memory
 Save session context to memory when /new command is issued
 
 Details:
-  Source: vilaro-bundled
-  Path: /path/to/vilaro/hooks/bundled/session-memory/HOOK.md
-  Handler: /path/to/vilaro/hooks/bundled/session-memory/handler.ts
+  Source: velaro-bundled
+  Path: /path/to/velaro/hooks/bundled/session-memory/HOOK.md
+  Handler: /path/to/velaro/hooks/bundled/session-memory/handler.ts
   Homepage: https://docs.vilaro.ai/automation/hooks#session-memory
   Events: command:new
 
@@ -100,7 +100,7 @@ Requirements:
 ## Check Hooks Eligibility
 
 ```bash
-vilaro hooks check
+velaro hooks check
 ```
 
 Show summary of hook eligibility status (how many are ready vs. not ready).
@@ -122,12 +122,12 @@ Not ready: 0
 ## Enable a Hook
 
 ```bash
-vilaro hooks enable <name>
+velaro hooks enable <name>
 ```
 
 Enable a specific hook by adding it to your config (`~/.vilaro/config.json`).
 
-**Note:** Hooks managed by plugins show `plugin:<id>` in `vilaro hooks list` and
+**Note:** Hooks managed by plugins show `plugin:<id>` in `velaro hooks list` and
 can’t be enabled/disabled here. Enable/disable the plugin instead.
 
 **Arguments:**
@@ -137,7 +137,7 @@ can’t be enabled/disabled here. Enable/disable the plugin instead.
 **Example:**
 
 ```bash
-vilaro hooks enable session-memory
+velaro hooks enable session-memory
 ```
 
 **Output:**
@@ -159,7 +159,7 @@ vilaro hooks enable session-memory
 ## Disable a Hook
 
 ```bash
-vilaro hooks disable <name>
+velaro hooks disable <name>
 ```
 
 Disable a specific hook by updating your config.
@@ -171,7 +171,7 @@ Disable a specific hook by updating your config.
 **Example:**
 
 ```bash
-vilaro hooks disable command-logger
+velaro hooks disable command-logger
 ```
 
 **Output:**
@@ -187,8 +187,8 @@ vilaro hooks disable command-logger
 ## Install Hooks
 
 ```bash
-vilaro hooks install <path-or-spec>
-vilaro hooks install <npm-spec> --pin
+velaro hooks install <path-or-spec>
+velaro hooks install <npm-spec> --pin
 ```
 
 Install a hook pack from a local folder/archive or npm.
@@ -198,7 +198,7 @@ Npm specs are **registry-only** (package name + optional **exact version** or
 installs run with `--ignore-scripts` for safety.
 
 Bare specs and `@latest` stay on the stable track. If npm resolves either of
-those to a prerelease, Vilaro stops and asks you to opt in explicitly with a
+those to a prerelease, Velaro stops and asks you to opt in explicitly with a
 prerelease tag such as `@beta`/`@rc` or an exact prerelease version.
 
 **What it does:**
@@ -218,23 +218,23 @@ prerelease tag such as `@beta`/`@rc` or an exact prerelease version.
 
 ```bash
 # Local directory
-vilaro hooks install ./my-hook-pack
+velaro hooks install ./my-hook-pack
 
 # Local archive
-vilaro hooks install ./my-hook-pack.zip
+velaro hooks install ./my-hook-pack.zip
 
 # NPM package
-vilaro hooks install @vilaro/my-hook-pack
+velaro hooks install @vilaro/my-hook-pack
 
 # Link a local directory without copying
-vilaro hooks install -l ./my-hook-pack
+velaro hooks install -l ./my-hook-pack
 ```
 
 ## Update Hooks
 
 ```bash
-vilaro hooks update <id>
-vilaro hooks update --all
+velaro hooks update <id>
+velaro hooks update --all
 ```
 
 Update installed hook packs (npm installs only).
@@ -245,7 +245,7 @@ Update installed hook packs (npm installs only).
 - `--dry-run`: Show what would change without writing
 
 When a stored integrity hash exists and the fetched artifact hash changes,
-Vilaro prints a warning and asks for confirmation before proceeding. Use
+Velaro prints a warning and asks for confirmation before proceeding. Use
 global `--yes` to bypass prompts in CI/non-interactive runs.
 
 ## Bundled Hooks
@@ -257,7 +257,7 @@ Saves session context to memory when you issue `/new`.
 **Enable:**
 
 ```bash
-vilaro hooks enable session-memory
+velaro hooks enable session-memory
 ```
 
 **Output:** `~/.vilaro/workspace/memory/YYYY-MM-DD-slug.md`
@@ -271,7 +271,7 @@ Injects additional bootstrap files (for example monorepo-local `AGENTS.md` / `TO
 **Enable:**
 
 ```bash
-vilaro hooks enable bootstrap-extra-files
+velaro hooks enable bootstrap-extra-files
 ```
 
 **See:** [bootstrap-extra-files documentation](/automation/hooks#bootstrap-extra-files)
@@ -283,7 +283,7 @@ Logs all command events to a centralized audit file.
 **Enable:**
 
 ```bash
-vilaro hooks enable command-logger
+velaro hooks enable command-logger
 ```
 
 **Output:** `~/.vilaro/logs/commands.log`
@@ -312,7 +312,7 @@ Runs `BOOT.md` when the gateway starts (after channels start).
 **Enable**:
 
 ```bash
-vilaro hooks enable boot-md
+velaro hooks enable boot-md
 ```
 
 **See:** [boot-md documentation](/automation/hooks#boot-md)

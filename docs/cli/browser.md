@@ -1,15 +1,15 @@
 ---
-summary: "CLI reference for `vilaro browser` (profiles, tabs, actions, Chrome MCP, and CDP)"
+summary: "CLI reference for `velaro browser` (profiles, tabs, actions, Chrome MCP, and CDP)"
 read_when:
-  - You use `vilaro browser` and want examples for common tasks
+  - You use `velaro browser` and want examples for common tasks
   - You want to control a browser running on another machine via a node host
   - You want to attach to your local signed-in Chrome via Chrome MCP
 title: "browser"
 ---
 
-# `vilaro browser`
+# `velaro browser`
 
-Manage Vilaro’s browser control server and run browser actions (tabs, snapshots, screenshots, navigation, clicks, typing).
+Manage Velaro’s browser control server and run browser actions (tabs, snapshots, screenshots, navigation, clicks, typing).
 
 Related:
 
@@ -26,40 +26,40 @@ Related:
 ## Quick start (local)
 
 ```bash
-vilaro browser profiles
-vilaro browser --browser-profile vilaro start
-vilaro browser --browser-profile vilaro open https://example.com
-vilaro browser --browser-profile vilaro snapshot
+velaro browser profiles
+velaro browser --browser-profile velaro start
+velaro browser --browser-profile velaro open https://example.com
+velaro browser --browser-profile velaro snapshot
 ```
 
 ## Profiles
 
 Profiles are named browser routing configs. In practice:
 
-- `vilaro`: launches or attaches to a dedicated Vilaro-managed Chrome instance (isolated user data dir).
+- `velaro`: launches or attaches to a dedicated Velaro-managed Chrome instance (isolated user data dir).
 - `user`: controls your existing signed-in Chrome session via Chrome DevTools MCP.
 - custom CDP profiles: point at a local or remote CDP endpoint.
 
 ```bash
-vilaro browser profiles
-vilaro browser create-profile --name work --color "#FF5A36"
-vilaro browser create-profile --name chrome-live --driver existing-session
-vilaro browser delete-profile --name work
+velaro browser profiles
+velaro browser create-profile --name work --color "#FF5A36"
+velaro browser create-profile --name chrome-live --driver existing-session
+velaro browser delete-profile --name work
 ```
 
 Use a specific profile:
 
 ```bash
-vilaro browser --browser-profile work tabs
+velaro browser --browser-profile work tabs
 ```
 
 ## Tabs
 
 ```bash
-vilaro browser tabs
-vilaro browser open https://docs.vilaro.ai
-vilaro browser focus <targetId>
-vilaro browser close <targetId>
+velaro browser tabs
+velaro browser open https://docs.vilaro.ai
+velaro browser focus <targetId>
+velaro browser close <targetId>
 ```
 
 ## Snapshot / screenshot / actions
@@ -67,21 +67,21 @@ vilaro browser close <targetId>
 Snapshot:
 
 ```bash
-vilaro browser snapshot
+velaro browser snapshot
 ```
 
 Screenshot:
 
 ```bash
-vilaro browser screenshot
+velaro browser screenshot
 ```
 
 Navigate/click/type (ref-based UI automation):
 
 ```bash
-vilaro browser navigate https://example.com
-vilaro browser click <ref>
-vilaro browser type <ref> "hello"
+velaro browser navigate https://example.com
+velaro browser click <ref>
+velaro browser type <ref> "hello"
 ```
 
 ## Existing Chrome via MCP
@@ -89,9 +89,9 @@ vilaro browser type <ref> "hello"
 Use the built-in `user` profile, or create your own `existing-session` profile:
 
 ```bash
-vilaro browser --browser-profile user tabs
-vilaro browser create-profile --name chrome-live --driver existing-session
-vilaro browser --browser-profile chrome-live tabs
+velaro browser --browser-profile user tabs
+velaro browser create-profile --name chrome-live --driver existing-session
+velaro browser --browser-profile chrome-live tabs
 ```
 
 This path is host-only. For Docker, headless servers, Browserless, or other remote setups, use a CDP profile instead.

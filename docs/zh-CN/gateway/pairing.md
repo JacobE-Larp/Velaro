@@ -39,11 +39,11 @@ x-i18n:
 ## CLI 工作流程（支持无头模式）
 
 ```bash
-vilaro nodes pending
-vilaro nodes approve <requestId>
-vilaro nodes reject <requestId>
-vilaro nodes status
-vilaro nodes rename --node <id|name|ip> --name "Living Room iPad"
+velaro nodes pending
+velaro nodes approve <requestId>
+velaro nodes reject <requestId>
+velaro nodes status
+velaro nodes rename --node <id|name|ip> --name "Living Room iPad"
 ```
 
 `nodes status` 显示已配对/已连接的节点及其功能。

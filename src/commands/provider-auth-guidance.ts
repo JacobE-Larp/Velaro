@@ -33,7 +33,7 @@ export function resolveProviderAuthLoginCommand(params: {
   if (!provider || provider.auth.length === 0) {
     return undefined;
   }
-  return formatCliCommand(`vilaro models auth login --provider ${provider.id}`);
+  return formatCliCommand(`velaro models auth login --provider ${provider.id}`);
 }
 
 export function buildProviderAuthRecoveryHint(params: {
@@ -50,13 +50,13 @@ export function buildProviderAuthRecoveryHint(params: {
     parts.push(`Run \`${loginCommand}\``);
   }
   if (params.includeConfigure !== false) {
-    parts.push(`\`${formatCliCommand("vilaro configure")}\``);
+    parts.push(`\`${formatCliCommand("velaro configure")}\``);
   }
   if (params.includeEnvVar) {
     parts.push("set an API key env var");
   }
   if (parts.length === 0) {
-    return `Run \`${formatCliCommand("vilaro configure")}\`.`;
+    return `Run \`${formatCliCommand("velaro configure")}\`.`;
   }
   if (parts.length === 1) {
     return `${parts[0]}.`;

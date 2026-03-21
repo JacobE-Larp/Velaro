@@ -1,26 +1,26 @@
 ---
-summary: "CLI reference for `vilaro daemon` (legacy alias for gateway service management)"
+summary: "CLI reference for `velaro daemon` (legacy alias for gateway service management)"
 read_when:
-  - You still use `vilaro daemon ...` in scripts
+  - You still use `velaro daemon ...` in scripts
   - You need service lifecycle commands (install/start/stop/restart/status)
 title: "daemon"
 ---
 
-# `vilaro daemon`
+# `velaro daemon`
 
 Legacy alias for Gateway service management commands.
 
-`vilaro daemon ...` maps to the same service control surface as `vilaro gateway ...` service commands.
+`velaro daemon ...` maps to the same service control surface as `velaro gateway ...` service commands.
 
 ## Usage
 
 ```bash
-vilaro daemon status
-vilaro daemon install
-vilaro daemon start
-vilaro daemon stop
-vilaro daemon restart
-vilaro daemon uninstall
+velaro daemon status
+velaro daemon install
+velaro daemon start
+velaro daemon stop
+velaro daemon restart
+velaro daemon uninstall
 ```
 
 ## Subcommands
@@ -50,4 +50,4 @@ Notes:
 
 ## Prefer
 
-Use [`vilaro gateway`](/cli/gateway) for current docs and examples.
+Use [`velaro gateway`](/cli/gateway) for current docs and examples.

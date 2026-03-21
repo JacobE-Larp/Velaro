@@ -1,17 +1,17 @@
 import { parseFrontmatterBlock } from "../markdown/frontmatter.js";
 import {
-  applyVilaroManifestInstallCommonFields,
+  applyVelaroManifestInstallCommonFields,
   getFrontmatterString,
   normalizeStringList,
-  parseVilaroManifestInstallBase,
+  parseVelaroManifestInstallBase,
   parseFrontmatterBool,
-  resolveVilaroManifestBlock,
-  resolveVilaroManifestInstall,
-  resolveVilaroManifestOs,
-  resolveVilaroManifestRequires,
+  resolveVelaroManifestBlock,
+  resolveVelaroManifestInstall,
+  resolveVelaroManifestOs,
+  resolveVelaroManifestRequires,
 } from "../shared/frontmatter.js";
 import type {
-  VilaroHookMetadata,
+  VelaroHookMetadata,
   HookEntry,
   HookInstallSpec,
   HookInvocationPolicy,
@@ -23,12 +23,12 @@ export function parseFrontmatter(content: string): ParsedHookFrontmatter {
 }
 
 function parseInstallSpec(input: unknown): HookInstallSpec | undefined {
-  const parsed = parseVilaroManifestInstallBase(input, ["bundled", "npm", "git"]);
+  const parsed = parseVelaroManifestInstallBase(input, ["bundled", "npm", "git"]);
   if (!parsed) {
     return undefined;
   }
   const { raw } = parsed;
-  const spec = applyVilaroManifestInstallCommonFields<HookInstallSpec>(
+  const spec = applyVelaroManifestInstallCommonFields<HookInstallSpec>(
     {
       kind: parsed.kind as HookInstallSpec["kind"],
     },
@@ -44,16 +44,16 @@ function parseInstallSpec(input: unknown): HookInstallSpec | undefined {
   return spec;
 }
 
-export function resolveVilaroMetadata(
+export function resolveVelaroMetadata(
   frontmatter: ParsedHookFrontmatter,
-): VilaroHookMetadata | undefined {
-  const metadataObj = resolveVilaroManifestBlock({ frontmatter });
+): VelaroHookMetadata | undefined {
+  const metadataObj = resolveVelaroManifestBlock({ frontmatter });
   if (!metadataObj) {
     return undefined;
   }
-  const requires = resolveVilaroManifestRequires(metadataObj);
-  const install = resolveVilaroManifestInstall(metadataObj, parseInstallSpec);
-  const osRaw = resolveVilaroManifestOs(metadataObj);
+  const requires = resolveVelaroManifestRequires(metadataObj);
+  const install = resolveVelaroManifestInstall(metadataObj, parseInstallSpec);
+  const osRaw = resolveVelaroManifestOs(metadataObj);
   const eventsRaw = normalizeStringList(metadataObj.events);
   return {
     always: typeof metadataObj.always === "boolean" ? metadataObj.always : undefined,

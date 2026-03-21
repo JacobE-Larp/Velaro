@@ -31,7 +31,7 @@ import {
   resolveBrowserExecutableForPlatform,
 } from "./chrome.executables.js";
 import {
-  decorateVilaroProfile,
+  decorateVelaroProfile,
   ensureProfileCleanExit,
   isProfileDecorated,
 } from "./chrome.profile-decoration.js";
@@ -48,7 +48,7 @@ export {
   resolveBrowserExecutableForPlatform,
 } from "./chrome.executables.js";
 export {
-  decorateVilaroProfile,
+  decorateVelaroProfile,
   ensureProfileCleanExit,
   isProfileDecorated,
 } from "./chrome.profile-decoration.js";
@@ -74,7 +74,7 @@ function resolveBrowserExecutable(resolved: ResolvedBrowserConfig): BrowserExecu
   return resolveBrowserExecutableForPlatform(resolved, process.platform);
 }
 
-export function resolveVilaroUserDataDir(profileName = DEFAULT_VILARO_BROWSER_PROFILE_NAME) {
+export function resolveVelaroUserDataDir(profileName = DEFAULT_VILARO_BROWSER_PROFILE_NAME) {
   return path.join(CONFIG_DIR, "browser", profileName, "user-data");
 }
 
@@ -250,7 +250,7 @@ export async function isChromeCdpReady(
   return await canRunCdpHealthCommand(wsUrl, handshakeTimeoutMs);
 }
 
-export async function launchVilaroChrome(
+export async function launchVelaroChrome(
   resolved: ResolvedBrowserConfig,
   profile: ResolvedBrowserProfile,
 ): Promise<RunningChrome> {
@@ -266,7 +266,7 @@ export async function launchVilaroChrome(
     );
   }
 
-  const userDataDir = resolveVilaroUserDataDir(profile.name);
+  const userDataDir = resolveVelaroUserDataDir(profile.name);
   fs.mkdirSync(userDataDir, { recursive: true });
 
   const needsDecorate = !isProfileDecorated(
@@ -355,20 +355,20 @@ export async function launchVilaroChrome(
 
   if (needsDecorate) {
     try {
-      decorateVilaroProfile(userDataDir, {
+      decorateVelaroProfile(userDataDir, {
         name: profile.name,
         color: profile.color,
       });
-      log.info(`vilaro browser profile decorated (${profile.color})`);
+      log.info(`velaro browser profile decorated (${profile.color})`);
     } catch (err) {
-      log.warn(`vilaro browser profile decoration failed: ${String(err)}`);
+      log.warn(`velaro browser profile decoration failed: ${String(err)}`);
     }
   }
 
   try {
     ensureProfileCleanExit(userDataDir);
   } catch (err) {
-    log.warn(`vilaro browser clean-exit prefs failed: ${String(err)}`);
+    log.warn(`velaro browser clean-exit prefs failed: ${String(err)}`);
   }
 
   const proc = spawnOnce();
@@ -416,7 +416,7 @@ export async function launchVilaroChrome(
 
   const pid = proc.pid ?? -1;
   log.info(
-    `vilaro browser started (${exe.kind}) profile "${profile.name}" on 127.0.0.1:${profile.cdpPort} (pid ${pid})`,
+    `velaro browser started (${exe.kind}) profile "${profile.name}" on 127.0.0.1:${profile.cdpPort} (pid ${pid})`,
   );
 
   return {
@@ -429,7 +429,7 @@ export async function launchVilaroChrome(
   };
 }
 
-export async function stopVilaroChrome(running: RunningChrome, timeoutMs = CHROME_STOP_TIMEOUT_MS) {
+export async function stopVelaroChrome(running: RunningChrome, timeoutMs = CHROME_STOP_TIMEOUT_MS) {
   const proc = running.proc;
   if (proc.killed) {
     return;

@@ -7,7 +7,7 @@ status: active
 
 # Sandbox vs Tool Policy vs Elevated
 
-Vilaro has three related (but different) controls:
+Velaro has three related (but different) controls:
 
 1. **Sandbox** (`agents.defaults.sandbox.*` / `agents.list[].sandbox.*`) decides **where tools run** (Docker vs host).
 2. **Tool policy** (`tools.*`, `tools.sandbox.tools.*`, `agents.list[].tools.*`) decides **which tools are available/allowed**.
@@ -15,13 +15,13 @@ Vilaro has three related (but different) controls:
 
 ## Quick debug
 
-Use the inspector to see what Vilaro is _actually_ doing:
+Use the inspector to see what Velaro is _actually_ doing:
 
 ```bash
-vilaro sandbox explain
-vilaro sandbox explain --session agent:main:main
-vilaro sandbox explain --agent work
-vilaro sandbox explain --json
+velaro sandbox explain
+velaro sandbox explain --session agent:main:main
+velaro sandbox explain --agent work
+velaro sandbox explain --json
 ```
 
 It prints:
@@ -93,7 +93,7 @@ Available groups:
 - `group:automation`: `cron`, `gateway`
 - `group:messaging`: `message`
 - `group:nodes`: `nodes`
-- `group:vilaro`: all built-in Vilaro tools (excludes provider plugins)
+- `group:velaro`: all built-in Velaro tools (excludes provider plugins)
 
 ## Elevated: exec-only “run on host”
 

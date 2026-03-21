@@ -147,7 +147,7 @@ export async function maybeRepairLegacyCronStore(params: {
     [
       `Legacy cron job storage detected at ${shortenHomePath(storePath)}.`,
       ...previewLines,
-      `Repair with ${formatCliCommand("vilaro doctor --fix")} to normalize the store before the next scheduler run.`,
+      `Repair with ${formatCliCommand("velaro doctor --fix")} to normalize the store before the next scheduler run.`,
     ].join("\n"),
     "Cron",
   );

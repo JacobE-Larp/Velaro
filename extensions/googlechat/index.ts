@@ -6,7 +6,7 @@ import { setGoogleChatRuntime } from "./src/runtime.js";
 const plugin = {
   id: "googlechat",
   name: "Google Chat",
-  description: "Vilaro Google Chat channel plugin",
+  description: "Velaro Google Chat channel plugin",
   configSchema: emptyPluginConfigSchema(),
   register(api: VilaroPluginApi) {
     setGoogleChatRuntime(api.runtime);

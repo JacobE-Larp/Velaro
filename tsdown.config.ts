@@ -139,6 +139,9 @@ export default defineConfig([
       "line/accounts": "src/line/accounts.ts",
       "line/send": "src/line/send.ts",
       "line/template-messages": "src/line/template-messages.ts",
+      // Plugin runtime module loaded lazily by the plugin loader at gateway startup.
+      // resolvePluginRuntimeModulePath() expects dist/plugins/runtime/index.js in production.
+      "plugins/runtime/index": "src/plugins/runtime/index.ts",
     },
   }),
   nodeBuildConfig({

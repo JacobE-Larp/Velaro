@@ -1,16 +1,16 @@
 ---
-summary: "Vilaro on DigitalOcean (simple paid VPS option)"
+summary: "Velaro on DigitalOcean (simple paid VPS option)"
 read_when:
-  - Setting up Vilaro on DigitalOcean
-  - Looking for cheap VPS hosting for Vilaro
+  - Setting up Velaro on DigitalOcean
+  - Looking for cheap VPS hosting for Velaro
 title: "DigitalOcean"
 ---
 
-# Vilaro on DigitalOcean
+# Velaro on DigitalOcean
 
 ## Goal
 
-Run a persistent Vilaro Gateway on DigitalOcean for **$6/month** (or $4/mo with reserved pricing).
+Run a persistent Velaro Gateway on DigitalOcean for **$6/month** (or $4/mo with reserved pricing).
 
 If you want a $0/month option and don’t mind ARM + provider-specific setup, see the [Oracle Cloud guide](/platforms/oracle).
 
@@ -60,7 +60,7 @@ Use a clean base image (Ubuntu 24.04 LTS). Avoid third-party Marketplace 1-click
 ssh root@YOUR_DROPLET_IP
 ```
 
-## 3) Install Vilaro
+## 3) Install Velaro
 
 ```bash
 # Update system
@@ -70,17 +70,17 @@ apt update && apt upgrade -y
 curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
 apt install -y nodejs
 
-# Install Vilaro
+# Install Velaro
 curl -fsSL https://vilaro.ai/install.sh | bash
 
 # Verify
-vilaro --version
+velaro --version
 ```
 
 ## 4) Run Onboarding
 
 ```bash
-vilaro onboard --install-daemon
+velaro onboard --install-daemon
 ```
 
 The wizard will walk you through:
@@ -94,7 +94,7 @@ The wizard will walk you through:
 
 ```bash
 # Check status
-vilaro status
+velaro status
 
 # Check service
 systemctl --user status vilaro-gateway.service
@@ -124,8 +124,8 @@ curl -fsSL https://tailscale.com/install.sh | sh
 tailscale up
 
 # Configure Gateway to use Tailscale Serve
-vilaro config set gateway.tailscale.mode serve
-vilaro gateway restart
+velaro config set gateway.tailscale.mode serve
+velaro gateway restart
 ```
 
 Open: `https://<magicdns>/`
@@ -138,8 +138,8 @@ Notes:
 **Option C: Tailnet bind (no Serve)**
 
 ```bash
-vilaro config set gateway.bind tailnet
-vilaro gateway restart
+velaro config set gateway.bind tailnet
+velaro gateway restart
 ```
 
 Open: `http://<tailscale-ip>:18789` (token required).
@@ -149,14 +149,14 @@ Open: `http://<tailscale-ip>:18789` (token required).
 ### Telegram
 
 ```bash
-vilaro pairing list telegram
-vilaro pairing approve telegram <CODE>
+velaro pairing list telegram
+velaro pairing approve telegram <CODE>
 ```
 
 ### WhatsApp
 
 ```bash
-vilaro channels login whatsapp
+velaro channels login whatsapp
 # Scan QR code
 ```
 
@@ -204,7 +204,7 @@ All state lives in:
 These survive reboots. Back them up periodically:
 
 ```bash
-tar -czvf vilaro-backup.tar.gz ~/.vilaro ~/.vilaro/workspace
+tar -czvf velaro-backup.tar.gz ~/.vilaro ~/.vilaro/workspace
 ```
 
 ---
@@ -234,9 +234,9 @@ For the full setup guide, see [Oracle Cloud](/platforms/oracle). For signup tips
 ### Gateway won't start
 
 ```bash
-vilaro gateway status
-vilaro doctor --non-interactive
-journalctl -u vilaro --no-pager -n 50
+velaro gateway status
+velaro doctor --non-interactive
+journalctl -u velaro --no-pager -n 50
 ```
 
 ### Port already in use

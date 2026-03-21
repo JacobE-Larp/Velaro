@@ -509,7 +509,7 @@ export async function installLaunchAgent({
     domain,
     serviceTarget: `${domain}/${label}`,
     plistPath,
-    actionHint: "vilaro gateway install --force",
+    actionHint: "velaro gateway install --force",
   });
   // `bootstrap` already loads RunAtLoad agents. Avoid `kickstart -k` here:
   // on slow macOS guests it SIGTERMs the freshly booted gateway and pushes the
@@ -573,7 +573,7 @@ export async function restartLaunchAgent({
     domain,
     serviceTarget,
     plistPath,
-    actionHint: "vilaro gateway restart",
+    actionHint: "velaro gateway restart",
   });
 
   const retry = await execLaunchctl(["kickstart", "-k", serviceTarget]);

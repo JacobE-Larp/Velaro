@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `vilaro agents` (list/add/delete/bindings/bind/unbind/set identity)"
+summary: "CLI reference for `velaro agents` (list/add/delete/bindings/bind/unbind/set identity)"
 read_when:
   - You want multiple isolated agents (workspaces + routing + auth)
 title: "agents"
 ---
 
-# `vilaro agents`
+# `velaro agents`
 
 Manage isolated agents (workspaces + auth + routing).
 
@@ -17,14 +17,14 @@ Related:
 ## Examples
 
 ```bash
-vilaro agents list
-vilaro agents add work --workspace ~/.vilaro/workspace-work
-vilaro agents bindings
-vilaro agents bind --agent work --bind telegram:ops
-vilaro agents unbind --agent work --bind telegram:ops
-vilaro agents set-identity --workspace ~/.vilaro/workspace --from-identity
-vilaro agents set-identity --agent main --avatar avatars/vilaro.png
-vilaro agents delete work
+velaro agents list
+velaro agents add work --workspace ~/.vilaro/workspace-work
+velaro agents bindings
+velaro agents bind --agent work --bind telegram:ops
+velaro agents unbind --agent work --bind telegram:ops
+velaro agents set-identity --workspace ~/.vilaro/workspace --from-identity
+velaro agents set-identity --agent main --avatar avatars/velaro.png
+velaro agents delete work
 ```
 
 ## Routing bindings
@@ -34,33 +34,33 @@ Use routing bindings to pin inbound channel traffic to a specific agent.
 List bindings:
 
 ```bash
-vilaro agents bindings
-vilaro agents bindings --agent work
-vilaro agents bindings --json
+velaro agents bindings
+velaro agents bindings --agent work
+velaro agents bindings --json
 ```
 
 Add bindings:
 
 ```bash
-vilaro agents bind --agent work --bind telegram:ops --bind discord:guild-a
+velaro agents bind --agent work --bind telegram:ops --bind discord:guild-a
 ```
 
-If you omit `accountId` (`--bind <channel>`), Vilaro resolves it from channel defaults and plugin setup hooks when available.
+If you omit `accountId` (`--bind <channel>`), Velaro resolves it from channel defaults and plugin setup hooks when available.
 
 ### Binding scope behavior
 
 - A binding without `accountId` matches the channel default account only.
 - `accountId: "*"` is the channel-wide fallback (all accounts) and is less specific than an explicit account binding.
-- If the same agent already has a matching channel binding without `accountId`, and you later bind with an explicit or resolved `accountId`, Vilaro upgrades that existing binding in place instead of adding a duplicate.
+- If the same agent already has a matching channel binding without `accountId`, and you later bind with an explicit or resolved `accountId`, Velaro upgrades that existing binding in place instead of adding a duplicate.
 
 Example:
 
 ```bash
 # initial channel-only binding
-vilaro agents bind --agent work --bind telegram
+velaro agents bind --agent work --bind telegram
 
 # later upgrade to account-scoped binding
-vilaro agents bind --agent work --bind telegram:ops
+velaro agents bind --agent work --bind telegram:ops
 ```
 
 After the upgrade, routing for that binding is scoped to `telegram:ops`. If you also want default-account routing, add it explicitly (for example `--bind telegram:default`).
@@ -68,8 +68,8 @@ After the upgrade, routing for that binding is scoped to `telegram:ops`. If you 
 Remove bindings:
 
 ```bash
-vilaro agents unbind --agent work --bind telegram:ops
-vilaro agents unbind --agent work --all
+velaro agents unbind --agent work --bind telegram:ops
+velaro agents unbind --agent work --all
 ```
 
 ## Identity files
@@ -93,13 +93,13 @@ Avatar paths resolve relative to the workspace root.
 Load from `IDENTITY.md`:
 
 ```bash
-vilaro agents set-identity --workspace ~/.vilaro/workspace --from-identity
+velaro agents set-identity --workspace ~/.vilaro/workspace --from-identity
 ```
 
 Override fields explicitly:
 
 ```bash
-vilaro agents set-identity --agent main --name "Vilaro" --emoji "" --avatar avatars/vilaro.png
+velaro agents set-identity --agent main --name "Velaro" --emoji "" --avatar avatars/velaro.png
 ```
 
 Config sample:
@@ -111,10 +111,10 @@ Config sample:
       {
         id: "main",
         identity: {
-          name: "Vilaro",
-          theme: "space vilaro",
+          name: "Velaro",
+          theme: "space velaro",
           emoji: "",
-          avatar: "avatars/vilaro.png",
+          avatar: "avatars/velaro.png",
         },
       },
     ],

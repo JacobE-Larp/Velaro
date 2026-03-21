@@ -15,18 +15,18 @@ x-i18n:
 
 # 飞书机器人
 
-飞书（Lark）是企业用于消息沟通与协作的团队聊天平台。此插件通过平台的 WebSocket 事件订阅将 Vilaro 连接到飞书/Lark 机器人，因此无需暴露公共 webhook URL 即可接收消息。
+飞书（Lark）是企业用于消息沟通与协作的团队聊天平台。此插件通过平台的 WebSocket 事件订阅将 Velaro 连接到飞书/Lark 机器人，因此无需暴露公共 webhook URL 即可接收消息。
 
 ---
 
 ## 捆绑插件
 
-飞书随当前的 Vilaro 版本一同捆绑提供，因此无需单独安装插件。
+飞书随当前的 Velaro 版本一同捆绑提供，因此无需单独安装插件。
 
 如果你使用的是较旧版本，或使用了不包含捆绑飞书的自定义安装，请手动安装：
 
 ```bash
-vilaro plugins install @vilaro/feishu
+velaro plugins install @vilaro/feishu
 ```
 
 ---
@@ -37,38 +37,38 @@ vilaro plugins install @vilaro/feishu
 
 ### 方法 1：设置向导（推荐）
 
-如果你刚安装 Vilaro，请运行设置向导：
+如果你刚安装 Velaro，请运行设置向导：
 
 ```bash
-vilaro onboard
+velaro onboard
 ```
 
 向导会引导你完成以下步骤：
 
 1. 创建飞书应用并收集凭证
-2. 在 Vilaro 中配置应用凭证
+2. 在 Velaro 中配置应用凭证
 3. 启动 Gateway 网关
 
 ✅ **配置完成后**，检查 Gateway 网关状态：
 
-- `vilaro gateway status`
-- `vilaro logs --follow`
+- `velaro gateway status`
+- `velaro logs --follow`
 
 ### 方法 2：CLI 设置
 
 如果你已经完成初始安装，可通过 CLI 添加该渠道：
 
 ```bash
-vilaro channels add
+velaro channels add
 ```
 
 选择 **Feishu**，然后输入 App ID 和 App Secret。
 
 ✅ **配置完成后**，管理 Gateway 网关：
 
-- `vilaro gateway status`
-- `vilaro gateway restart`
-- `vilaro logs --follow`
+- `velaro gateway status`
+- `velaro gateway restart`
+- `velaro logs --follow`
 
 ---
 
@@ -146,8 +146,8 @@ Lark（国际版）租户应使用 [https://open.larksuite.com/app](https://open
 
 ⚠️ **重要：**在设置事件订阅前，请确保：
 
-1. 你已经为飞书运行过 `vilaro channels add`
-2. Gateway 网关正在运行（`vilaro gateway status`）
+1. 你已经为飞书运行过 `velaro channels add`
+2. Gateway 网关正在运行（`velaro gateway status`）
 
 在 **Event Subscription** 中：
 
@@ -166,12 +166,12 @@ Lark（国际版）租户应使用 [https://open.larksuite.com/app](https://open
 
 ---
 
-## 第 2 步：配置 Vilaro
+## 第 2 步：配置 Velaro
 
 ### 使用向导配置（推荐）
 
 ```bash
-vilaro channels add
+velaro channels add
 ```
 
 选择 **Feishu**，然后粘贴你的 App ID 和 App Secret。
@@ -275,7 +275,7 @@ export FEISHU_APP_SECRET="xxx"
 ### 1. 启动 Gateway 网关
 
 ```bash
-vilaro gateway
+velaro gateway
 ```
 
 ### 2. 发送测试消息
@@ -287,7 +287,7 @@ vilaro gateway
 默认情况下，机器人会回复一个配对码。批准它：
 
 ```bash
-vilaro pairing approve feishu <CODE>
+velaro pairing approve feishu <CODE>
 ```
 
 批准后，你就可以正常聊天了。
@@ -311,8 +311,8 @@ vilaro pairing approve feishu <CODE>
 - **批准配对**：
 
   ```bash
-  vilaro pairing list feishu
-  vilaro pairing approve feishu <CODE>
+  velaro pairing list feishu
+  velaro pairing approve feishu <CODE>
   ```
 
 - **Allowlist 模式**：设置 `channels.feishu.allowFrom`，填入允许的 Open ID
@@ -407,7 +407,7 @@ vilaro pairing approve feishu <CODE>
 **方法 1（推荐）**
 
 1. 启动 Gateway 网关并在群里 @ 提及机器人
-2. 运行 `vilaro logs --follow` 并查找 `chat_id`
+2. 运行 `velaro logs --follow` 并查找 `chat_id`
 
 **方法 2**
 
@@ -420,14 +420,14 @@ vilaro pairing approve feishu <CODE>
 **方法 1（推荐）**
 
 1. 启动 Gateway 网关并向机器人发送私信
-2. 运行 `vilaro logs --follow` 并查找 `open_id`
+2. 运行 `velaro logs --follow` 并查找 `open_id`
 
 **方法 2**
 
 检查配对请求中的用户 Open ID：
 
 ```bash
-vilaro pairing list feishu
+velaro pairing list feishu
 ```
 
 ---
@@ -446,11 +446,11 @@ vilaro pairing list feishu
 
 | Command                  | Description                |
 | ------------------------ | -------------------------- |
-| `vilaro gateway status`  | 显示 Gateway 网关状态      |
-| `vilaro gateway install` | 安装/启动 Gateway 网关服务 |
-| `vilaro gateway stop`    | 停止 Gateway 网关服务      |
-| `vilaro gateway restart` | 重启 Gateway 网关服务      |
-| `vilaro logs --follow`   | 跟踪 Gateway 网关日志      |
+| `velaro gateway status`  | 显示 Gateway 网关状态      |
+| `velaro gateway install` | 安装/启动 Gateway 网关服务 |
+| `velaro gateway stop`    | 停止 Gateway 网关服务      |
+| `velaro gateway restart` | 重启 Gateway 网关服务      |
+| `velaro logs --follow`   | 跟踪 Gateway 网关日志      |
 
 ---
 
@@ -461,7 +461,7 @@ vilaro pairing list feishu
 1. 确保机器人已加入群组
 2. 确保你 @ 提及了机器人（默认行为）
 3. 检查 `groupPolicy` 未设置为 `"disabled"`
-4. 检查日志：`vilaro logs --follow`
+4. 检查日志：`velaro logs --follow`
 
 ### 机器人未接收到消息
 
@@ -469,8 +469,8 @@ vilaro pairing list feishu
 2. 确保事件订阅包含 `im.message.receive_v1`
 3. 确保已启用**长连接**
 4. 确保应用权限完整
-5. 确保 Gateway 网关正在运行：`vilaro gateway status`
-6. 检查日志：`vilaro logs --follow`
+5. 确保 Gateway 网关正在运行：`velaro gateway status`
+6. 检查日志：`velaro logs --follow`
 
 ### App Secret 泄露
 
@@ -562,7 +562,7 @@ vilaro pairing list feishu
             agent: "codex",
             backend: "acpx",
             mode: "persistent",
-            cwd: "/workspace/vilaro",
+            cwd: "/workspace/velaro",
           },
         },
       },
@@ -616,14 +616,14 @@ vilaro pairing list feishu
     list: [
       { id: "main" },
       {
-        id: "vilaro-fan",
-        workspace: "/home/user/vilaro-fan",
-        agentDir: "/home/user/.vilaro/agents/vilaro-fan/agent",
+        id: "velaro-fan",
+        workspace: "/home/user/velaro-fan",
+        agentDir: "/home/user/.velaro/agents/velaro-fan/agent",
       },
       {
-        id: "vilaro-xi",
-        workspace: "/home/user/vilaro-xi",
-        agentDir: "/home/user/.vilaro/agents/vilaro-xi/agent",
+        id: "velaro-xi",
+        workspace: "/home/user/velaro-xi",
+        agentDir: "/home/user/.velaro/agents/velaro-xi/agent",
       },
     ],
   },
@@ -636,14 +636,14 @@ vilaro pairing list feishu
       },
     },
     {
-      agentId: "vilaro-fan",
+      agentId: "velaro-fan",
       match: {
         channel: "feishu",
         peer: { kind: "direct", id: "ou_yyy" },
       },
     },
     {
-      agentId: "vilaro-xi",
+      agentId: "velaro-xi",
       match: {
         channel: "feishu",
         peer: { kind: "group", id: "oc_zzz" },

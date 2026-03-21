@@ -243,7 +243,7 @@ export const synologyChatSetupWizard: ChannelSetupWizard = {
       helpTitle: "Synology Chat incoming webhook",
       helpLines: [
         "Use the incoming webhook URL from Synology Chat integrations.",
-        "This is the URL Vilaro uses to send replies back to Chat.",
+        "This is the URL Velaro uses to send replies back to Chat.",
       ],
       currentValue: ({ cfg, accountId }) => getRawAccountConfig(cfg, accountId).incomingUrl?.trim(),
       keepPrompt: (value) => `Incoming webhook URL set (${value}). Keep it?`,

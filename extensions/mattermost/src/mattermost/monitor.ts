@@ -394,7 +394,7 @@ export async function monitorMattermostProvider(opts: MonitorMattermostOpts = {}
     try {
       const teams = await fetchMattermostUserTeams(client, botUserId);
 
-      // Use the *runtime* listener port when available (e.g. `vilaro gateway run --port <port>`).
+      // Use the *runtime* listener port when available (e.g. `velaro gateway run --port <port>`).
       // The gateway sets VILARO_GATEWAY_PORT when it boots, but the config file may still contain
       // a different port.
       const envPortRaw = process.env.VILARO_GATEWAY_PORT?.trim();
@@ -602,7 +602,7 @@ export async function monitorMattermostProvider(opts: MonitorMattermostOpts = {}
               message: post.message ?? "",
               props: post.props as Record<string, unknown> | undefined,
             },
-            ephemeral_text: `Vilaro ignored this action for ${decision.roomLabel}.`,
+            ephemeral_text: `Velaro ignored this action for ${decision.roomLabel}.`,
           },
         };
       },

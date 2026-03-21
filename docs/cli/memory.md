@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `vilaro memory` (status/index/search)"
+summary: "CLI reference for `velaro memory` (status/index/search)"
 read_when:
   - You want to index or search semantic memory
   - You’re debugging memory availability or indexing
 title: "memory"
 ---
 
-# `vilaro memory`
+# `velaro memory`
 
 Manage semantic memory indexing and search.
 Provided by the active memory plugin (default: `memory-core`; set `plugins.slots.memory = "none"` to disable).
@@ -19,16 +19,16 @@ Related:
 ## Examples
 
 ```bash
-vilaro memory status
-vilaro memory status --deep
-vilaro memory index --force
-vilaro memory search "meeting notes"
-vilaro memory search --query "deployment" --max-results 20
-vilaro memory status --json
-vilaro memory status --deep --index
-vilaro memory status --deep --index --verbose
-vilaro memory status --agent main
-vilaro memory index --agent main --verbose
+velaro memory status
+velaro memory status --deep
+velaro memory index --force
+velaro memory search "meeting notes"
+velaro memory search --query "deployment" --max-results 20
+velaro memory status --json
+velaro memory status --deep --index
+velaro memory status --deep --index --verbose
+velaro memory status --agent main
+velaro memory index --agent main --verbose
 ```
 
 ## Options

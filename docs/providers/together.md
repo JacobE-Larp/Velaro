@@ -1,7 +1,7 @@
 ---
 summary: "Together AI setup (auth + model selection)"
 read_when:
-  - You want to use Together AI with Vilaro
+  - You want to use Together AI with Velaro
   - You need the API key env var or CLI auth choice
 ---
 
@@ -18,7 +18,7 @@ The [Together AI](https://together.ai) provides access to leading open-source mo
 1. Set the API key (recommended: store it for the Gateway):
 
 ```bash
-vilaro onboard --auth-choice together-api-key
+velaro onboard --auth-choice together-api-key
 ```
 
 2. Set a default model:
@@ -36,7 +36,7 @@ vilaro onboard --auth-choice together-api-key
 ## Non-interactive example
 
 ```bash
-vilaro onboard --non-interactive \
+velaro onboard --non-interactive \
   --mode local \
   --auth-choice together-api-key \
   --together-api-key "$TOGETHER_API_KEY"

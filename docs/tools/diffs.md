@@ -255,7 +255,7 @@ Example:
 
 ## Artifact lifecycle and storage
 
-- Artifacts are stored under the temp subfolder: `$TMPDIR/vilaro-diffs`.
+- Artifacts are stored under the temp subfolder: `$TMPDIR/velaro-diffs`.
 - Viewer artifact metadata contains:
   - random artifact ID (20 hex chars)
   - random token (48 hex chars)
@@ -316,7 +316,7 @@ File rendering hardening:
 
 Resolution order:
 
-1. `browser.executablePath` in Vilaro config.
+1. `browser.executablePath` in Velaro config.
 2. Environment variables:
    - `VILARO_BROWSER_EXECUTABLE_PATH`
    - `BROWSER_EXECUTABLE_PATH`

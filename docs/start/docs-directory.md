@@ -1,5 +1,5 @@
 ---
-summary: "Curated links to the most used Vilaro docs."
+summary: "Curated links to the most used Velaro docs."
 read_when:
   - You want quick access to key docs pages
 title: "Docs directory"
@@ -21,7 +21,7 @@ For a complete map of the docs, see [Docs hubs](/start/hubs).
 - [Updating and rollback](/install/updating)
 - [Pairing (DM and nodes)](/channels/pairing)
 - [Nix mode](/install/nix)
-- [Vilaro assistant setup](/start/vilaro)
+- [Velaro assistant setup](/start/velaro)
 - [Skills](/tools/skills)
 - [Skills config](/tools/skills-config)
 - [Workspace templates](/reference/templates/AGENTS)

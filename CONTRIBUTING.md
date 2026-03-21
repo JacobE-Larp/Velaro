@@ -1,13 +1,13 @@
-# Contributing to Vilaro
+# Contributing to Velaro
 
-Welcome to the vilaro tank!
+Welcome to the velaro tank!
 
 ## Quick Links
 
 - **GitHub:** https://github.com/vilaro/vilaro
 - **Vision:** [`VISION.md`](VISION.md)
 - **Discord:** https://discord.gg/qkhbAGHRBT
-- **X/Twitter:** [@steipete](https://x.com/steipete) / [@vilaro](https://x.com/vilaro)
+- **X/Twitter:** [@steipete](https://x.com/steipete) / [@velaro](https://x.com/vilaro)
 
 ## Maintainers
 
@@ -17,7 +17,7 @@ Welcome to the vilaro tank!
 - **Shadow** - Discord subsystem, Discord admin, Clawhub, all community moderation
   - GitHub: [@thewilloftheshadow](https://github.com/thewilloftheshadow) · X: [@4shadowed](https://x.com/4shadowed)
 
-- **Vignesh** - Memory (QMD), formal modeling, TUI, IRC, and Vilaro
+- **Vignesh** - Memory (QMD), formal modeling, TUI, IRC, and Velaro
   - GitHub: [@vignesh07](https://github.com/vignesh07) · X: [@\_vgnsh](https://x.com/_vgnsh)
 
 - **Jos** - Telegram, API, Nix mode
@@ -87,7 +87,7 @@ Welcome to the vilaro tank!
 
 ## Before You PR
 
-- Test locally with your Vilaro instance
+- Test locally with your Velaro instance
 - Run tests: `pnpm build && pnpm check && pnpm test`
 - If you have access to Codex, run `codex review --base origin/main` locally before opening or updating your PR. Treat this as the current highest standard of AI review, even if GitHub Codex review also runs.
 - Ensure CI checks pass
@@ -146,7 +146,7 @@ We are currently prioritizing:
 
 - **Stability**: Fixing edge cases in channel connections (WhatsApp/Telegram).
 - **UX**: Improving the onboarding wizard and error messages.
-- **Skills**: For skill contributions, head to [ClawHub](https://clawhub.ai/) — the community hub for Vilaro skills.
+- **Skills**: For skill contributions, head to [ClawHub](https://clawhub.ai/) — the community hub for Velaro skills.
 - **Performance**: Optimizing token usage and compaction logic.
 
 Check the [GitHub Issues](https://github.com/vilaro/vilaro/issues) for "good first issue" labels!
@@ -154,13 +154,13 @@ Check the [GitHub Issues](https://github.com/vilaro/vilaro/issues) for "good fir
 ## Maintainers
 
 We're selectively expanding the maintainer team.
-If you're an experienced contributor who wants to help shape Vilaro's direction — whether through code, docs, or community — we'd like to hear from you.
+If you're an experienced contributor who wants to help shape Velaro's direction — whether through code, docs, or community — we'd like to hear from you.
 
 Being a maintainer is a responsibility, not an honorary title. We expect active, consistent involvement — triaging issues, reviewing PRs, and helping move the project forward.
 
-Still interested? Email contributing@vilaro.ai with:
+Still interested? Email contributing@velaro.ai with:
 
-- Links to your PRs on Vilaro (if you don't have any, start there first)
+- Links to your PRs on Velaro (if you don't have any, start there first)
 - Links to open source projects you maintain or actively contribute to
 - Your GitHub, Discord, and X/Twitter handles
 - A brief intro: background, experience, and areas of interest
@@ -175,14 +175,14 @@ Please allow a few weeks for a response.
 
 We take security reports seriously. Report vulnerabilities directly to the repository where the issue lives:
 
-- **Core CLI and gateway** — [vilaro/vilaro](https://github.com/vilaro/vilaro)
-- **macOS desktop app** — [vilaro/vilaro](https://github.com/vilaro/vilaro) (apps/macos)
-- **iOS app** — [vilaro/vilaro](https://github.com/vilaro/vilaro) (apps/ios)
-- **Android app** — [vilaro/vilaro](https://github.com/vilaro/vilaro) (apps/android)
-- **ClawHub** — [vilaro/clawhub](https://github.com/vilaro/clawhub)
-- **Trust and threat model** — [vilaro/trust](https://github.com/vilaro/trust)
+- **Core CLI and gateway** — [velaro/velaro](https://github.com/vilaro/vilaro)
+- **macOS desktop app** — [velaro/velaro](https://github.com/vilaro/vilaro) (apps/macos)
+- **iOS app** — [velaro/velaro](https://github.com/vilaro/vilaro) (apps/ios)
+- **Android app** — [velaro/velaro](https://github.com/vilaro/vilaro) (apps/android)
+- **ClawHub** — [velaro/clawhub](https://github.com/vilaro/clawhub)
+- **Trust and threat model** — [velaro/trust](https://github.com/vilaro/trust)
 
-For issues that don't fit a specific repo, or if you're unsure, email **security@vilaro.ai** and we'll route it.
+For issues that don't fit a specific repo, or if you're unsure, email **security@velaro.ai** and we'll route it.
 
 ### Required in Reports
 

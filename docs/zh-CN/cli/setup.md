@@ -2,7 +2,7 @@
 read_when:
   - 你正在进行首次运行设置，但不使用完整的设置向导
   - 你想设置默认工作区路径
-summary: "`vilaro setup` 的 CLI 参考（初始化配置 + 工作区）"
+summary: "`velaro setup` 的 CLI 参考（初始化配置 + 工作区）"
 title: setup
 x-i18n:
   generated_at: "2026-03-16T06:21:20Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 15
 ---
 
-# `vilaro setup`
+# `velaro setup`
 
 初始化 `~/.vilaro/vilaro.json` 和智能体工作区。
 
@@ -25,12 +25,12 @@ x-i18n:
 ## 示例
 
 ```bash
-vilaro setup
-vilaro setup --workspace ~/.vilaro/workspace
+velaro setup
+velaro setup --workspace ~/.vilaro/workspace
 ```
 
 通过 setup 运行向导：
 
 ```bash
-vilaro setup --wizard
+velaro setup --wizard
 ```

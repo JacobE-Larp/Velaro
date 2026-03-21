@@ -61,7 +61,7 @@ export async function setupWizardCommand(
       [
         "Non-interactive setup requires explicit risk acknowledgement.",
         "Read: https://docs.vilaro.ai/security",
-        `Re-run with: ${formatCliCommand("vilaro onboard --non-interactive --accept-risk ...")}`,
+        `Re-run with: ${formatCliCommand("velaro onboard --non-interactive --accept-risk ...")}`,
       ].join("\n"),
     );
     runtime.exit(1);
@@ -80,7 +80,7 @@ export async function setupWizardCommand(
   if (process.platform === "win32") {
     runtime.log(
       [
-        "Windows detected - Vilaro runs great on WSL2!",
+        "Windows detected - Velaro runs great on WSL2!",
         "Native Windows might be trickier.",
         "Quick setup: wsl --install (one command, one reboot)",
         "Guide: https://docs.vilaro.ai/windows",

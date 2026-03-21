@@ -3,7 +3,7 @@ import {
   withBundledPluginAllowlistCompat,
   withBundledPluginEnablementCompat,
 } from "./bundled-compat.js";
-import { loadVilaroPlugins, type PluginLoadOptions } from "./loader.js";
+import { loadVelaroPlugins, type PluginLoadOptions } from "./loader.js";
 import { createPluginLoaderLogger } from "./logger.js";
 import type { WebSearchProviderPlugin } from "./types.js";
 
@@ -34,7 +34,7 @@ export function resolvePluginWebSearchProviders(params: {
     config: allowlistCompat,
     pluginIds: BUNDLED_WEB_SEARCH_ALLOWLIST_COMPAT_PLUGIN_IDS,
   });
-  const registry = loadVilaroPlugins({
+  const registry = loadVelaroPlugins({
     config,
     workspaceDir: params.workspaceDir,
     env: params.env,

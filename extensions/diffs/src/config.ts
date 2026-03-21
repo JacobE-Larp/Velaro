@@ -197,7 +197,7 @@ const DIFFS_PLUGIN_CONFIG_JSON_SCHEMA = {
   },
 } as const;
 
-export const diffsPluginConfigSchema: VilaroPluginConfigSchema = {
+export const diffsPluginConfigSchema: VelaroPluginConfigSchema = {
   safeParse(value: unknown) {
     if (value === undefined) {
       return { success: true, data: undefined };

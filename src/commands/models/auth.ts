@@ -133,7 +133,7 @@ function resolveRequestedProviderOrThrow(
     .toSorted((a, b) => a.localeCompare(b));
   const availableText = available.length > 0 ? available.join(", ") : "(none)";
   throw new Error(
-    `Unknown provider "${requested}". Loaded providers: ${availableText}. Verify plugins via \`${formatCliCommand("vilaro plugins list --json")}\`.`,
+    `Unknown provider "${requested}". Loaded providers: ${availableText}. Verify plugins via \`${formatCliCommand("velaro plugins list --json")}\`.`,
   );
 }
 
@@ -311,7 +311,7 @@ export async function modelsAuthSetupTokenCommand(
   const tokenProviders = listProvidersWithTokenMethods(providers);
   if (tokenProviders.length === 0) {
     throw new Error(
-      `No provider token-auth plugins found. Install one via \`${formatCliCommand("vilaro plugins install")}\`.`,
+      `No provider token-auth plugins found. Install one via \`${formatCliCommand("velaro plugins install")}\`.`,
     );
   }
 
@@ -543,7 +543,7 @@ export async function modelsAuthLoginCommand(opts: LoginOptions, runtime: Runtim
   const authProviders = listProvidersWithAuthMethods(providers);
   if (authProviders.length === 0) {
     throw new Error(
-      `No provider plugins found. Install one via \`${formatCliCommand("vilaro plugins install")}\`.`,
+      `No provider plugins found. Install one via \`${formatCliCommand("velaro plugins install")}\`.`,
     );
   }
 

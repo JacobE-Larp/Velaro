@@ -343,7 +343,7 @@ export type DiscordAccountConfig = {
    */
   inboundWorker?: {
     /**
-     * Max time (ms) a queued inbound run may execute before Vilaro aborts it.
+     * Max time (ms) a queued inbound run may execute before Velaro aborts it.
      * Defaults to 1800000 (30 minutes). Set 0 to disable the worker-owned timeout.
      */
     runTimeoutMs?: number;

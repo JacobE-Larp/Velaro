@@ -23,18 +23,18 @@ import {
 } from "./types.js";
 import type {
   VilaroPluginApi,
-  VilaroPluginChannelRegistration,
-  VilaroPluginCliRegistrar,
-  VilaroPluginCommandDefinition,
-  VilaroPluginHttpRouteAuth,
-  VilaroPluginHttpRouteMatch,
-  VilaroPluginHttpRouteHandler,
-  VilaroPluginHttpRouteParams,
-  VilaroPluginHookOptions,
+  VelaroPluginChannelRegistration,
+  VelaroPluginCliRegistrar,
+  VelaroPluginCommandDefinition,
+  VelaroPluginHttpRouteAuth,
+  VelaroPluginHttpRouteMatch,
+  VelaroPluginHttpRouteHandler,
+  VelaroPluginHttpRouteParams,
+  VelaroPluginHookOptions,
   ProviderPlugin,
-  VilaroPluginService,
-  VilaroPluginToolContext,
-  VilaroPluginToolFactory,
+  VelaroPluginService,
+  VelaroPluginToolContext,
+  VelaroPluginToolFactory,
   PluginConfigUiHint,
   PluginDiagnostic,
   PluginBundleFormat,
@@ -52,7 +52,7 @@ import type {
 export type PluginToolRegistration = {
   pluginId: string;
   pluginName?: string;
-  factory: VilaroPluginToolFactory;
+  factory: VelaroPluginToolFactory;
   names: string[];
   optional: boolean;
   source: string;
@@ -62,7 +62,7 @@ export type PluginToolRegistration = {
 export type PluginCliRegistration = {
   pluginId: string;
   pluginName?: string;
-  register: VilaroPluginCliRegistrar;
+  register: VelaroPluginCliRegistrar;
   commands: string[];
   source: string;
   rootDir?: string;
@@ -71,9 +71,9 @@ export type PluginCliRegistration = {
 export type PluginHttpRouteRegistration = {
   pluginId?: string;
   path: string;
-  handler: VilaroPluginHttpRouteHandler;
-  auth: VilaroPluginHttpRouteAuth;
-  match: VilaroPluginHttpRouteMatch;
+  handler: VelaroPluginHttpRouteHandler;
+  auth: VelaroPluginHttpRouteAuth;
+  match: VelaroPluginHttpRouteMatch;
   source?: string;
 };
 
@@ -121,7 +121,7 @@ export type PluginHookRegistration = {
 export type PluginServiceRegistration = {
   pluginId: string;
   pluginName?: string;
-  service: VilaroPluginService;
+  service: VelaroPluginService;
   source: string;
   rootDir?: string;
 };
@@ -129,7 +129,7 @@ export type PluginServiceRegistration = {
 export type PluginCommandRegistration = {
   pluginId: string;
   pluginName?: string;
-  command: VilaroPluginCommandDefinition;
+  command: VelaroPluginCommandDefinition;
   source: string;
   rootDir?: string;
 };
@@ -239,13 +239,13 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
 
   const registerTool = (
     record: PluginRecord,
-    tool: AnyAgentTool | VilaroPluginToolFactory,
+    tool: AnyAgentTool | VelaroPluginToolFactory,
     opts?: { name?: string; names?: string[]; optional?: boolean },
   ) => {
     const names = opts?.names ?? (opts?.name ? [opts.name] : []);
     const optional = opts?.optional === true;
-    const factory: VilaroPluginToolFactory =
-      typeof tool === "function" ? tool : (_ctx: VilaroPluginToolContext) => tool;
+    const factory: VelaroPluginToolFactory =
+      typeof tool === "function" ? tool : (_ctx: VelaroPluginToolContext) => tool;
 
     if (typeof tool !== "function") {
       names.push(tool.name);
@@ -270,7 +270,7 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
     record: PluginRecord,
     events: string | string[],
     handler: Parameters<typeof registerInternalHook>[1],
-    opts: VilaroPluginHookOptions | undefined,
+    opts: VelaroPluginHookOptions | undefined,
     config: VilaroPluginApi["config"],
   ) => {
     const eventList = Array.isArray(events) ? events : [events];
@@ -374,7 +374,7 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
     return `${plugin} (${source})`;
   };
 
-  const registerHttpRoute = (record: PluginRecord, params: VilaroPluginHttpRouteParams) => {
+  const registerHttpRoute = (record: PluginRecord, params: VelaroPluginHttpRouteParams) => {
     const normalizedPath = normalizePluginHttpPath(params.path);
     if (!normalizedPath) {
       pushDiagnostic({
@@ -460,12 +460,12 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
 
   const registerChannel = (
     record: PluginRecord,
-    registration: VilaroPluginChannelRegistration | ChannelPlugin,
+    registration: VelaroPluginChannelRegistration | ChannelPlugin,
     mode: PluginRegistrationMode = "full",
   ) => {
     const normalized =
-      typeof (registration as VilaroPluginChannelRegistration).plugin === "object"
-        ? (registration as VilaroPluginChannelRegistration)
+      typeof (registration as VelaroPluginChannelRegistration).plugin === "object"
+        ? (registration as VelaroPluginChannelRegistration)
         : { plugin: registration as ChannelPlugin };
     const plugin = normalized.plugin;
     const id = typeof plugin?.id === "string" ? plugin.id.trim() : String(plugin?.id ?? "").trim();
@@ -583,7 +583,7 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
 
   const registerCli = (
     record: PluginRecord,
-    registrar: VilaroPluginCliRegistrar,
+    registrar: VelaroPluginCliRegistrar,
     opts?: { commands?: string[] },
   ) => {
     const commands = (opts?.commands ?? []).map((cmd) => cmd.trim()).filter(Boolean);
@@ -620,7 +620,7 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
     });
   };
 
-  const registerService = (record: PluginRecord, service: VilaroPluginService) => {
+  const registerService = (record: PluginRecord, service: VelaroPluginService) => {
     const id = service.id.trim();
     if (!id) {
       return;
@@ -645,7 +645,7 @@ export function createPluginRegistry(registryParams: PluginRegistryParams) {
     });
   };
 
-  const registerCommand = (record: PluginRecord, command: VilaroPluginCommandDefinition) => {
+  const registerCommand = (record: PluginRecord, command: VelaroPluginCommandDefinition) => {
     const name = command.name.trim();
     if (!name) {
       pushDiagnostic({

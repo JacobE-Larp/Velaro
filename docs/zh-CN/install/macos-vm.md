@@ -1,10 +1,10 @@
 ---
 read_when:
-  - 你希望 Vilaro 与你的主 macOS 环境隔离
+  - 你希望 Velaro 与你的主 macOS 环境隔离
   - 你希望在沙箱中集成 iMessage（BlueBubbles）
   - 你希望拥有一个可重置且可克隆的 macOS 环境
   - 你希望比较本地与托管 macOS VM 选项
-summary: 在沙箱化的 macOS VM（本地或托管）中运行 Vilaro，适用于你需要隔离或 iMessage 的场景
+summary: 在沙箱化的 macOS VM（本地或托管）中运行 Velaro，适用于你需要隔离或 iMessage 的场景
 title: macOS VM
 x-i18n:
   generated_at: "2026-03-16T06:23:59Z"
@@ -15,7 +15,7 @@ x-i18n:
   workflow: 15
 ---
 
-# 在 macOS VM 上运行 Vilaro（沙箱隔离）
+# 在 macOS VM 上运行 Velaro（沙箱隔离）
 
 ## 推荐默认方案（适用于大多数用户）
 
@@ -29,7 +29,7 @@ x-i18n:
 
 ### 在你的 Apple Silicon Mac 上运行本地 VM（Lume）
 
-使用 [Lume](https://cua.ai/docs/lume) 在你现有的 Apple Silicon Mac 上的沙箱化 macOS VM 中运行 Vilaro。
+使用 [Lume](https://cua.ai/docs/lume) 在你现有的 Apple Silicon Mac 上的沙箱化 macOS VM 中运行 Velaro。
 
 这样你将获得：
 
@@ -52,10 +52,10 @@ x-i18n:
 ## 快速路径（Lume，适合有经验的用户）
 
 1. 安装 Lume
-2. `lume create vilaro --os macos --ipsw latest`
+2. `lume create velaro --os macos --ipsw latest`
 3. 完成设置助理，启用远程登录（SSH）
-4. `lume run vilaro --no-display`
-5. SSH 登录，安装 Vilaro，配置渠道
+4. `lume run velaro --no-display`
+5. SSH 登录，安装 Velaro，配置渠道
 6. 完成
 
 ---
@@ -94,7 +94,7 @@ lume --version
 ## 2）创建 macOS VM
 
 ```bash
-lume create vilaro --os macos --ipsw latest
+lume create velaro --os macos --ipsw latest
 ```
 
 这会下载 macOS 并创建 VM。VNC 窗口会自动打开。
@@ -122,7 +122,7 @@ lume create vilaro --os macos --ipsw latest
 ## 4）获取 VM 的 IP 地址
 
 ```bash
-lume get vilaro
+lume get velaro
 ```
 
 查找 IP 地址（通常为 `192.168.64.x`）。
@@ -139,13 +139,13 @@ ssh youruser@192.168.64.X
 
 ---
 
-## 6）安装 Vilaro
+## 6）安装 Velaro
 
 在 VM 内：
 
 ```bash
-npm install -g vilaro@latest
-vilaro onboard --install-daemon
+npm install -g velaro@latest
+velaro onboard --install-daemon
 ```
 
 按照新手引导提示设置你的模型提供商（Anthropic、OpenAI 等）。
@@ -179,7 +179,7 @@ nano ~/.vilaro/vilaro.json
 然后登录 WhatsApp（扫描 QR 码）：
 
 ```bash
-vilaro channels login
+velaro channels login
 ```
 
 ---
@@ -189,23 +189,23 @@ vilaro channels login
 停止 VM，然后在无显示模式下重启：
 
 ```bash
-lume stop vilaro
-lume run vilaro --no-display
+lume stop velaro
+lume run velaro --no-display
 ```
 
-VM 会在后台运行。Vilaro 的守护进程会保持 Gateway 网关持续运行。
+VM 会在后台运行。Velaro 的守护进程会保持 Gateway 网关持续运行。
 
 检查状态：
 
 ```bash
-ssh youruser@192.168.64.X "vilaro status"
+ssh youruser@192.168.64.X "velaro status"
 ```
 
 ---
 
 ## 加分项：iMessage 集成
 
-这是在 macOS 上运行的杀手级特性。使用 [BlueBubbles](https://bluebubbles.app) 将 iMessage 添加到 Vilaro。
+这是在 macOS 上运行的杀手级特性。使用 [BlueBubbles](https://bluebubbles.app) 将 iMessage 添加到 Velaro。
 
 在 VM 内：
 
@@ -214,7 +214,7 @@ ssh youruser@192.168.64.X "vilaro status"
 3. 启用 Web API 并设置一个密码
 4. 将 BlueBubbles webhook 指向你的 gateway（示例：`https://your-gateway-host:3000/bluebubbles-webhook?password=<password>`）
 
-添加到你的 Vilaro 配置中：
+添加到你的 Velaro 配置中：
 
 ```json
 {
@@ -239,16 +239,16 @@ ssh youruser@192.168.64.X "vilaro status"
 在进一步自定义之前，为你的干净状态创建快照：
 
 ```bash
-lume stop vilaro
-lume clone vilaro vilaro-golden
+lume stop velaro
+lume clone velaro velaro-golden
 ```
 
 随时重置：
 
 ```bash
-lume stop vilaro && lume delete vilaro
-lume clone vilaro-golden vilaro
-lume run vilaro --no-display
+lume stop velaro && lume delete velaro
+lume clone velaro-golden velaro
+lume run velaro --no-display
 ```
 
 ---
@@ -270,9 +270,9 @@ lume run vilaro --no-display
 | 问题                    | 解决方案                                                        |
 | ----------------------- | --------------------------------------------------------------- |
 | 无法通过 SSH 连接到 VM  | 检查 VM 的“系统设置”中是否已启用“远程登录”                      |
-| 未显示 VM IP            | 等待 VM 完全启动后，再次运行 `lume get vilaro`                  |
+| 未显示 VM IP            | 等待 VM 完全启动后，再次运行 `lume get velaro`                  |
 | 找不到 `lume` 命令      | 将 `~/.local/bin` 添加到你的 PATH                               |
-| 无法扫描 WhatsApp QR 码 | 运行 `vilaro channels login` 时，确保你登录的是 VM 而不是宿主机 |
+| 无法扫描 WhatsApp QR 码 | 运行 `velaro channels login` 时，确保你登录的是 VM 而不是宿主机 |
 
 ---
 

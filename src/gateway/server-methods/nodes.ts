@@ -420,8 +420,8 @@ export async function maybeSendNodeWakeNudge(nodeId: string): Promise<NodeWakeNu
       result = await sendApnsAlert({
         registration,
         nodeId,
-        title: "Vilaro needs a quick reopen",
-        body: "Tap to reopen Vilaro and restore the node connection.",
+        title: "Velaro needs a quick reopen",
+        body: "Tap to reopen Velaro and restore the node connection.",
         relayConfig: relay.relayConfig,
       });
     } else {
@@ -437,8 +437,8 @@ export async function maybeSendNodeWakeNudge(nodeId: string): Promise<NodeWakeNu
       result = await sendApnsAlert({
         registration,
         nodeId,
-        title: "Vilaro needs a quick reopen",
-        body: "Tap to reopen Vilaro and restore the node connection.",
+        title: "Velaro needs a quick reopen",
+        body: "Tap to reopen Velaro and restore the node connection.",
         auth: auth.auth,
       });
     }

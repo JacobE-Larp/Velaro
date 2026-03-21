@@ -37,11 +37,11 @@ Pending requests expire automatically after **5 minutes**.
 ## CLI workflow (headless friendly)
 
 ```bash
-vilaro nodes pending
-vilaro nodes approve <requestId>
-vilaro nodes reject <requestId>
-vilaro nodes status
-vilaro nodes rename --node <id|name|ip> --name "Living Room iPad"
+velaro nodes pending
+velaro nodes approve <requestId>
+velaro nodes reject <requestId>
+velaro nodes status
+velaro nodes rename --node <id|name|ip> --name "Living Room iPad"
 ```
 
 `nodes status` shows paired/connected nodes and their capabilities.

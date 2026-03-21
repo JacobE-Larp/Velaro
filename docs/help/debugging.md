@@ -22,7 +22,7 @@ Examples:
 
 ```
 /debug show
-/debug set messages.responsePrefix="[vilaro]"
+/debug set messages.responsePrefix="[velaro]"
 /debug unset messages.responsePrefix
 /debug reset
 ```
@@ -66,10 +66,10 @@ Recommended flow (dev profile + dev bootstrap):
 
 ```bash
 pnpm gateway:dev
-VILARO_PROFILE=dev vilaro tui
+VILARO_PROFILE=dev velaro tui
 ```
 
-If you don’t have a global install yet, run the CLI via `pnpm vilaro ...`.
+If you don’t have a global install yet, run the CLI via `pnpm velaro ...`.
 
 What this does:
 
@@ -98,7 +98,7 @@ Note: `--dev` is a **global** profile flag and gets eaten by some runners.
 If you need to spell it out, use the env var form:
 
 ```bash
-VILARO_PROFILE=dev vilaro gateway --dev --reset
+VILARO_PROFILE=dev velaro gateway --dev --reset
 ```
 
 `--reset` wipes config, credentials, sessions, and the dev workspace (using
@@ -107,12 +107,12 @@ VILARO_PROFILE=dev vilaro gateway --dev --reset
 Tip: if a non‑dev gateway is already running (launchd/systemd), stop it first:
 
 ```bash
-vilaro gateway stop
+velaro gateway stop
 ```
 
-## Raw stream logging (Vilaro)
+## Raw stream logging (Velaro)
 
-Vilaro can log the **raw assistant stream** before any filtering/formatting.
+Velaro can log the **raw assistant stream** before any filtering/formatting.
 This is the best way to see whether reasoning is arriving as plain text deltas
 (or as separate thinking blocks).
 

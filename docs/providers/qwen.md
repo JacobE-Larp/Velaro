@@ -1,7 +1,7 @@
 ---
-summary: "Use Qwen OAuth (free tier) in Vilaro"
+summary: "Use Qwen OAuth (free tier) in Velaro"
 read_when:
-  - You want to use Qwen with Vilaro
+  - You want to use Qwen with Velaro
   - You want free-tier OAuth access to Qwen Coder
 title: "Qwen"
 ---
@@ -14,7 +14,7 @@ Qwen provides a free-tier OAuth flow for Qwen Coder and Qwen Vision models
 ## Enable the plugin
 
 ```bash
-vilaro plugins enable qwen-portal-auth
+velaro plugins enable qwen-portal-auth
 ```
 
 Restart the Gateway after enabling.
@@ -22,7 +22,7 @@ Restart the Gateway after enabling.
 ## Authenticate
 
 ```bash
-vilaro models auth login --provider qwen-portal --set-default
+velaro models auth login --provider qwen-portal --set-default
 ```
 
 This runs the Qwen device-code OAuth flow and writes a provider entry to your
@@ -36,12 +36,12 @@ This runs the Qwen device-code OAuth flow and writes a provider entry to your
 Switch models with:
 
 ```bash
-vilaro models set qwen-portal/coder-model
+velaro models set qwen-portal/coder-model
 ```
 
 ## Reuse Qwen Code CLI login
 
-If you already logged in with the Qwen Code CLI, Vilaro will sync credentials
+If you already logged in with the Qwen Code CLI, Velaro will sync credentials
 from `~/.qwen/oauth_creds.json` when it loads the auth store. You still need a
 `models.providers.qwen-portal` entry (use the login command above to create one).
 

@@ -1,4 +1,4 @@
-export type VilaroVersion = {
+export type VelaroVersion = {
   major: number;
   minor: number;
   patch: number;
@@ -7,7 +7,7 @@ export type VilaroVersion = {
 
 const VERSION_RE = /^v?(\d+)\.(\d+)\.(\d+)(?:-(\d+))?/;
 
-export function parseVilaroVersion(raw: string | null | undefined): VilaroVersion | null {
+export function parseVelaroVersion(raw: string | null | undefined): VelaroVersion | null {
   if (!raw) {
     return null;
   }
@@ -24,12 +24,12 @@ export function parseVilaroVersion(raw: string | null | undefined): VilaroVersio
   };
 }
 
-export function compareVilaroVersions(
+export function compareVelaroVersions(
   a: string | null | undefined,
   b: string | null | undefined,
 ): number | null {
-  const parsedA = parseVilaroVersion(a);
-  const parsedB = parseVilaroVersion(b);
+  const parsedA = parseVelaroVersion(a);
+  const parsedB = parseVelaroVersion(b);
   if (!parsedA || !parsedB) {
     return null;
   }

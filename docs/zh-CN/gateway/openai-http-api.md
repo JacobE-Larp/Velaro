@@ -14,14 +14,14 @@ x-i18n:
 
 # OpenAI Chat Completions（HTTP）
 
-Vilaro 的 Gateway 网关可以提供一个小型的 OpenAI 兼容 Chat Completions 端点。
+Velaro 的 Gateway 网关可以提供一个小型的 OpenAI 兼容 Chat Completions 端点。
 
 此端点**默认禁用**。请先在配置中启用它。
 
 - `POST /v1/chat/completions`
 - 与 Gateway 网关相同的端口（WS + HTTP 多路复用）：`http://<gateway-host>:<port>/v1/chat/completions`
 
-底层实现中，请求作为普通的 Gateway 网关智能体运行执行（与 `vilaro agent` 相同的代码路径），因此路由/权限/配置与你的 Gateway 网关一致。
+底层实现中，请求作为普通的 Gateway 网关智能体运行执行（与 `velaro agent` 相同的代码路径），因此路由/权限/配置与你的 Gateway 网关一致。
 
 ## 认证
 
@@ -38,16 +38,16 @@ Vilaro 的 Gateway 网关可以提供一个小型的 OpenAI 兼容 Chat Completi
 
 无需自定义头：在 OpenAI `model` 字段中编码智能体 ID：
 
-- `model: "vilaro:<agentId>"`（例如：`"vilaro:main"`、`"vilaro:beta"`）
+- `model: "velaro:<agentId>"`（例如：`"velaro:main"`、`"velaro:beta"`）
 - `model: "agent:<agentId>"`（别名）
 
-或通过头指定特定的 Vilaro 智能体：
+或通过头指定特定的 Velaro 智能体：
 
-- `x-vilaro-agent-id: <agentId>`（默认：`main`）
+- `x-velaro-agent-id: <agentId>`（默认：`main`）
 
 高级选项：
 
-- `x-vilaro-session-key: <sessionKey>` 完全控制会话路由。
+- `x-velaro-session-key: <sessionKey>` 完全控制会话路由。
 
 ## 启用端点
 
@@ -103,9 +103,9 @@ Vilaro 的 Gateway 网关可以提供一个小型的 OpenAI 兼容 Chat Completi
 curl -sS http://127.0.0.1:18789/v1/chat/completions \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-vilaro-agent-id: main' \
+  -H 'x-velaro-agent-id: main' \
   -d '{
-    "model": "vilaro",
+    "model": "velaro",
     "messages": [{"role":"user","content":"hi"}]
   }'
 ```
@@ -116,9 +116,9 @@ curl -sS http://127.0.0.1:18789/v1/chat/completions \
 curl -N http://127.0.0.1:18789/v1/chat/completions \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-vilaro-agent-id: main' \
+  -H 'x-velaro-agent-id: main' \
   -d '{
-    "model": "vilaro",
+    "model": "velaro",
     "stream": true,
     "messages": [{"role":"user","content":"hi"}]
   }'

@@ -1,7 +1,7 @@
 ---
 summary: "Configuration overview: common tasks, quick setup, and links to the full reference"
 read_when:
-  - Setting up Vilaro for the first time
+  - Setting up Velaro for the first time
   - Looking for common configuration patterns
   - Navigating to specific config sections
 title: "Configuration"
@@ -9,9 +9,9 @@ title: "Configuration"
 
 # Configuration
 
-Vilaro reads an optional <Tooltip tip="JSON5 supports comments and trailing commas">**JSON5**</Tooltip> config from `~/.vilaro/vilaro.json`.
+Velaro reads an optional <Tooltip tip="JSON5 supports comments and trailing commas">**JSON5**</Tooltip> config from `~/.vilaro/vilaro.json`.
 
-If the file is missing, Vilaro uses safe defaults. Common reasons to add a config:
+If the file is missing, Velaro uses safe defaults. Common reasons to add a config:
 
 - Connect channels and control who can message the bot
 - Set models, tools, sandboxing, or automation (cron, hooks)
@@ -20,7 +20,7 @@ If the file is missing, Vilaro uses safe defaults. Common reasons to add a confi
 See the [full reference](/gateway/configuration-reference) for every available field.
 
 <Tip>
-**New to configuration?** Start with `vilaro onboard` for interactive setup, or check out the [Configuration Examples](/gateway/configuration-examples) guide for complete copy-paste configs.
+**New to configuration?** Start with `velaro onboard` for interactive setup, or check out the [Configuration Examples](/gateway/configuration-examples) guide for complete copy-paste configs.
 </Tip>
 
 ## Minimal config
@@ -38,15 +38,15 @@ See the [full reference](/gateway/configuration-reference) for every available f
 <Tabs>
   <Tab title="Interactive wizard">
     ```bash
-    vilaro onboard       # full setup wizard
-    vilaro configure     # config wizard
+    velaro onboard       # full setup wizard
+    velaro configure     # config wizard
     ```
   </Tab>
   <Tab title="CLI (one-liners)">
     ```bash
-    vilaro config get agents.defaults.workspace
-    vilaro config set agents.defaults.heartbeat.every "2h"
-    vilaro config unset tools.web.search.apiKey
+    velaro config get agents.defaults.workspace
+    velaro config set agents.defaults.heartbeat.every "2h"
+    velaro config unset tools.web.search.apiKey
     ```
   </Tab>
   <Tab title="Control UI">
@@ -61,15 +61,15 @@ See the [full reference](/gateway/configuration-reference) for every available f
 ## Strict validation
 
 <Warning>
-Vilaro only accepts configurations that fully match the schema. Unknown keys, malformed types, or invalid values cause the Gateway to **refuse to start**. The only root-level exception is `$schema` (string), so editors can attach JSON Schema metadata.
+Velaro only accepts configurations that fully match the schema. Unknown keys, malformed types, or invalid values cause the Gateway to **refuse to start**. The only root-level exception is `$schema` (string), so editors can attach JSON Schema metadata.
 </Warning>
 
 When validation fails:
 
 - The Gateway does not boot
-- Only diagnostic commands work (`vilaro doctor`, `vilaro logs`, `vilaro health`, `vilaro status`)
-- Run `vilaro doctor` to see exact issues
-- Run `vilaro doctor --fix` (or `--yes`) to apply repairs
+- Only diagnostic commands work (`velaro doctor`, `velaro logs`, `velaro health`, `velaro status`)
+- Run `velaro doctor` to see exact issues
+- Run `velaro doctor --fix` (or `--yes`) to apply repairs
 
 ## Common tasks
 
@@ -156,7 +156,7 @@ When validation fails:
           {
             id: "main",
             groupChat: {
-              mentionPatterns: ["@vilaro", "vilaro"],
+              mentionPatterns: ["@velaro", "velaro"],
             },
           },
         ],
@@ -279,7 +279,7 @@ When validation fails:
     CLI equivalent:
 
     ```bash
-    vilaro config set gateway.push.apns.relay.baseUrl https://relay.example.com
+    velaro config set gateway.push.apns.relay.baseUrl https://relay.example.com
     ```
 
     What this does:
@@ -484,7 +484,7 @@ Control-plane write RPCs (`config.apply`, `config.patch`, `update.run`) are rate
     Validates + writes the full config and restarts the Gateway in one step.
 
     <Warning>
-    `config.apply` replaces the **entire config**. Use `config.patch` for partial updates, or `vilaro config set` for single keys.
+    `config.apply` replaces the **entire config**. Use `config.patch` for partial updates, or `velaro config set` for single keys.
     </Warning>
 
     Params:
@@ -498,8 +498,8 @@ Control-plane write RPCs (`config.apply`, `config.patch`, `update.run`) are rate
     Restart requests are coalesced while one is already pending/in-flight, and a 30-second cooldown applies between restart cycles.
 
     ```bash
-    vilaro gateway call config.get --params '{}'  # capture payload.hash
-    vilaro gateway call config.apply --params '{
+    velaro gateway call config.get --params '{}'  # capture payload.hash
+    velaro gateway call config.apply --params '{
       "raw": "{ agents: { defaults: { workspace: \"~/.vilaro/workspace\" } } }",
       "baseHash": "<hash>",
       "sessionKey": "agent:main:whatsapp:direct:+15555550123"
@@ -524,7 +524,7 @@ Control-plane write RPCs (`config.apply`, `config.patch`, `update.run`) are rate
     Restart behavior matches `config.apply`: coalesced pending restarts plus a 30-second cooldown between restart cycles.
 
     ```bash
-    vilaro gateway call config.patch --params '{
+    velaro gateway call config.patch --params '{
       "raw": "{ channels: { telegram: { groups: { \"*\": { requireMention: false } } } } }",
       "baseHash": "<hash>"
     }'
@@ -535,7 +535,7 @@ Control-plane write RPCs (`config.apply`, `config.patch`, `update.run`) are rate
 
 ## Environment variables
 
-Vilaro reads env vars from the parent process plus:
+Velaro reads env vars from the parent process plus:
 
 - `.env` from the current working directory (if present)
 - `~/.vilaro/.env` (global fallback)
@@ -552,7 +552,7 @@ Neither file overrides existing env vars. You can also set inline env vars in co
 ```
 
 <Accordion title="Shell env import (optional)">
-  If enabled and expected keys aren't set, Vilaro runs your login shell and imports only the missing keys:
+  If enabled and expected keys aren't set, Velaro runs your login shell and imports only the missing keys:
 
 ```json5
 {

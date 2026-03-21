@@ -16,7 +16,7 @@ x-i18n:
 
 # 日志
 
-Vilaro 在两个地方记录日志：
+Velaro 在两个地方记录日志：
 
 - **文件日志**（JSON 行）由 Gateway 网关写入。
 - **控制台输出**显示在终端和控制 UI 中。
@@ -27,7 +27,7 @@ Vilaro 在两个地方记录日志：
 
 默认情况下，Gateway 网关在以下位置写入滚动日志文件：
 
-`/tmp/vilaro/vilaro-YYYY-MM-DD.log`
+`/tmp/velaro/velaro-YYYY-MM-DD.log`
 
 日期使用 Gateway 网关主机的本地时区。
 
@@ -36,7 +36,7 @@ Vilaro 在两个地方记录日志：
 ```json
 {
   "logging": {
-    "file": "/path/to/vilaro.log"
+    "file": "/path/to/velaro.log"
   }
 }
 ```
@@ -48,7 +48,7 @@ Vilaro 在两个地方记录日志：
 使用 CLI 通过 RPC 跟踪 Gateway 网关日志文件：
 
 ```bash
-vilaro logs --follow
+velaro logs --follow
 ```
 
 输出模式：
@@ -69,7 +69,7 @@ vilaro logs --follow
 如果 Gateway 网关无法访问，CLI 会打印一个简短提示运行：
 
 ```bash
-vilaro doctor
+velaro doctor
 ```
 
 ### 控制 UI（Web）
@@ -82,7 +82,7 @@ vilaro doctor
 要过滤渠道活动（WhatsApp/Telegram 等），使用：
 
 ```bash
-vilaro channels logs --channel whatsapp
+velaro channels logs --channel whatsapp
 ```
 
 ## 日志格式
@@ -109,7 +109,7 @@ vilaro channels logs --channel whatsapp
 {
   "logging": {
     "level": "info",
-    "file": "/tmp/vilaro/vilaro-YYYY-MM-DD.log",
+    "file": "/tmp/velaro/velaro-YYYY-MM-DD.log",
     "consoleLevel": "info",
     "consoleStyle": "pretty",
     "redactSensitive": "tools",
@@ -152,7 +152,7 @@ vilaro channels logs --channel whatsapp
 
 - **OpenTelemetry（OTel）**：追踪、指标和日志的数据模型 + SDK。
 - **OTLP**：用于将 OTel 数据导出到收集器/后端的线路协议。
-- Vilaro 目前通过 **OTLP/HTTP（protobuf）** 导出。
+- Velaro 目前通过 **OTLP/HTTP（protobuf）** 导出。
 
 ### 导出的信号
 
@@ -253,7 +253,7 @@ VILARO_DIAGNOSTICS=telegram.http,telegram.payload
 
 注意：
 
-- 你也可以使用 `vilaro plugins enable diagnostics-otel` 启用插件。
+- 你也可以使用 `velaro plugins enable diagnostics-otel` 启用插件。
 - `protocol` 目前仅支持 `http/protobuf`。`grpc` 被忽略。
 - 指标包括令牌使用、成本、上下文大小、运行持续时间和消息流计数器/直方图（webhooks、队列、会话状态、队列深度/等待）。
 - 追踪/指标可以通过 `traces` / `metrics` 切换（默认：开启）。启用时，追踪包括模型使用 span 加上 webhook/消息处理 span。
@@ -264,45 +264,45 @@ VILARO_DIAGNOSTICS=telegram.http,telegram.payload
 
 模型使用：
 
-- `vilaro.tokens`（计数器，属性：`vilaro.token`、`vilaro.channel`、`vilaro.provider`、`vilaro.model`）
-- `vilaro.cost.usd`（计数器，属性：`vilaro.channel`、`vilaro.provider`、`vilaro.model`）
-- `vilaro.run.duration_ms`（直方图，属性：`vilaro.channel`、`vilaro.provider`、`vilaro.model`）
-- `vilaro.context.tokens`（直方图，属性：`vilaro.context`、`vilaro.channel`、`vilaro.provider`、`vilaro.model`）
+- `velaro.tokens`（计数器，属性：`velaro.token`、`velaro.channel`、`velaro.provider`、`velaro.model`）
+- `velaro.cost.usd`（计数器，属性：`velaro.channel`、`velaro.provider`、`velaro.model`）
+- `velaro.run.duration_ms`（直方图，属性：`velaro.channel`、`velaro.provider`、`velaro.model`）
+- `velaro.context.tokens`（直方图，属性：`velaro.context`、`velaro.channel`、`velaro.provider`、`velaro.model`）
 
 消息流：
 
-- `vilaro.webhook.received`（计数器，属性：`vilaro.channel`、`vilaro.webhook`）
-- `vilaro.webhook.error`（计数器，属性：`vilaro.channel`、`vilaro.webhook`）
-- `vilaro.webhook.duration_ms`（直方图，属性：`vilaro.channel`、`vilaro.webhook`）
-- `vilaro.message.queued`（计数器，属性：`vilaro.channel`、`vilaro.source`）
-- `vilaro.message.processed`（计数器，属性：`vilaro.channel`、`vilaro.outcome`）
-- `vilaro.message.duration_ms`（直方图，属性：`vilaro.channel`、`vilaro.outcome`）
+- `velaro.webhook.received`（计数器，属性：`velaro.channel`、`velaro.webhook`）
+- `velaro.webhook.error`（计数器，属性：`velaro.channel`、`velaro.webhook`）
+- `velaro.webhook.duration_ms`（直方图，属性：`velaro.channel`、`velaro.webhook`）
+- `velaro.message.queued`（计数器，属性：`velaro.channel`、`velaro.source`）
+- `velaro.message.processed`（计数器，属性：`velaro.channel`、`velaro.outcome`）
+- `velaro.message.duration_ms`（直方图，属性：`velaro.channel`、`velaro.outcome`）
 
 队列 + 会话：
 
-- `vilaro.queue.lane.enqueue`（计数器，属性：`vilaro.lane`）
-- `vilaro.queue.lane.dequeue`（计数器，属性：`vilaro.lane`）
-- `vilaro.queue.depth`（直方图，属性：`vilaro.lane` 或 `vilaro.channel=heartbeat`）
-- `vilaro.queue.wait_ms`（直方图，属性：`vilaro.lane`）
-- `vilaro.session.state`（计数器，属性：`vilaro.state`、`vilaro.reason`）
-- `vilaro.session.stuck`（计数器，属性：`vilaro.state`）
-- `vilaro.session.stuck_age_ms`（直方图，属性：`vilaro.state`）
-- `vilaro.run.attempt`（计数器，属性：`vilaro.attempt`）
+- `velaro.queue.lane.enqueue`（计数器，属性：`velaro.lane`）
+- `velaro.queue.lane.dequeue`（计数器，属性：`velaro.lane`）
+- `velaro.queue.depth`（直方图，属性：`velaro.lane` 或 `velaro.channel=heartbeat`）
+- `velaro.queue.wait_ms`（直方图，属性：`velaro.lane`）
+- `velaro.session.state`（计数器，属性：`velaro.state`、`velaro.reason`）
+- `velaro.session.stuck`（计数器，属性：`velaro.state`）
+- `velaro.session.stuck_age_ms`（直方图，属性：`velaro.state`）
+- `velaro.run.attempt`（计数器，属性：`velaro.attempt`）
 
 ### 导出的 span（名称 + 关键属性）
 
-- `vilaro.model.usage`
-  - `vilaro.channel`、`vilaro.provider`、`vilaro.model`
-  - `vilaro.sessionKey`、`vilaro.sessionId`
-  - `vilaro.tokens.*`（input/output/cache_read/cache_write/total）
-- `vilaro.webhook.processed`
-  - `vilaro.channel`、`vilaro.webhook`、`vilaro.chatId`
-- `vilaro.webhook.error`
-  - `vilaro.channel`、`vilaro.webhook`、`vilaro.chatId`、`vilaro.error`
-- `vilaro.message.processed`
-  - `vilaro.channel`、`vilaro.outcome`、`vilaro.chatId`、`vilaro.messageId`、`vilaro.sessionKey`、`vilaro.sessionId`、`vilaro.reason`
-- `vilaro.session.stuck`
-  - `vilaro.state`、`vilaro.ageMs`、`vilaro.queueDepth`、`vilaro.sessionKey`、`vilaro.sessionId`
+- `velaro.model.usage`
+  - `velaro.channel`、`velaro.provider`、`velaro.model`
+  - `velaro.sessionKey`、`velaro.sessionId`
+  - `velaro.tokens.*`（input/output/cache_read/cache_write/total）
+- `velaro.webhook.processed`
+  - `velaro.channel`、`velaro.webhook`、`velaro.chatId`
+- `velaro.webhook.error`
+  - `velaro.channel`、`velaro.webhook`、`velaro.chatId`、`velaro.error`
+- `velaro.message.processed`
+  - `velaro.channel`、`velaro.outcome`、`velaro.chatId`、`velaro.messageId`、`velaro.sessionKey`、`velaro.sessionId`、`velaro.reason`
+- `velaro.session.stuck`
+  - `velaro.state`、`velaro.ageMs`、`velaro.queueDepth`、`velaro.sessionKey`、`velaro.sessionId`
 
 ### 采样 + 刷新
 
@@ -324,6 +324,6 @@ VILARO_DIAGNOSTICS=telegram.http,telegram.payload
 
 ## 故障排除提示
 
-- **Gateway 网关无法访问？** 先运行 `vilaro doctor`。
+- **Gateway 网关无法访问？** 先运行 `velaro doctor`。
 - **日志为空？** 检查 Gateway 网关是否正在运行并写入 `logging.file` 中的文件路径。
 - **需要更多细节？** 将 `logging.level` 设置为 `debug` 或 `trace` 并重试。

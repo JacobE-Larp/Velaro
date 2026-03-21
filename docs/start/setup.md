@@ -1,5 +1,5 @@
 ---
-summary: "Advanced setup and development workflows for Vilaro"
+summary: "Advanced setup and development workflows for Velaro"
 read_when:
   - Setting up a new machine
   - You want “latest + greatest” without breaking your personal setup
@@ -37,16 +37,16 @@ If you want “100% tailored to me” _and_ easy updates, keep your customizatio
 Bootstrap once:
 
 ```bash
-vilaro setup
+velaro setup
 ```
 
 From inside this repo, use the local CLI entry:
 
 ```bash
-vilaro setup
+velaro setup
 ```
 
-If you don’t have a global install yet, run it via `pnpm vilaro setup`.
+If you don’t have a global install yet, run it via `pnpm velaro setup`.
 
 ## Run the Gateway from this repo
 
@@ -58,24 +58,24 @@ node vilaro.mjs gateway --port 18789 --verbose
 
 ## Stable workflow (macOS app first)
 
-1. Install + launch **Vilaro.app** (menu bar).
+1. Install + launch **Velaro.app** (menu bar).
 2. Complete the onboarding/permissions checklist (TCC prompts).
 3. Ensure Gateway is **Local** and running (the app manages it).
 4. Link surfaces (example: WhatsApp):
 
 ```bash
-vilaro channels login
+velaro channels login
 ```
 
 5. Sanity check:
 
 ```bash
-vilaro health
+velaro health
 ```
 
 If onboarding is not available in your build:
 
-- Run `vilaro setup`, then `vilaro channels login`, then start the Gateway manually (`vilaro gateway`).
+- Run `velaro setup`, then `velaro channels login`, then start the Gateway manually (`velaro gateway`).
 
 ## Bleeding edge workflow (Gateway in a terminal)
 
@@ -101,7 +101,7 @@ config, and bundled-plugin metadata changes.
 
 ### 2) Point the macOS app at your running Gateway
 
-In **Vilaro.app**:
+In **Velaro.app**:
 
 - Connection Mode: **Local**
   The app will attach to the running gateway on the configured port.
@@ -112,7 +112,7 @@ In **Vilaro.app**:
 - Or via CLI:
 
 ```bash
-vilaro health
+velaro health
 ```
 
 ### Common footguns
@@ -121,7 +121,7 @@ vilaro health
 - **Where state lives:**
   - Credentials: `~/.vilaro/credentials/`
   - Sessions: `~/.vilaro/agents/<agentId>/sessions/`
-  - Logs: `/tmp/vilaro/`
+  - Logs: `/tmp/velaro/`
 
 ## Credential storage map
 
@@ -141,7 +141,7 @@ Use this when debugging auth or deciding what to back up:
 
 ## Updating (without wrecking your setup)
 
-- Keep `~/.vilaro/workspace` and `~/.vilaro/` as “your stuff”; don’t put personal prompts/config into the `vilaro` repo.
+- Keep `~/.vilaro/workspace` and `~/.vilaro/` as “your stuff”; don’t put personal prompts/config into the `velaro` repo.
 - Updating source: `git pull` + `pnpm install` (when lockfile changed) + keep using `pnpm gateway:watch`.
 
 ## Linux (systemd user service)
@@ -162,5 +162,5 @@ user service (no lingering needed). See [Gateway runbook](/gateway) for the syst
 - [Gateway runbook](/gateway) (flags, supervision, ports)
 - [Gateway configuration](/gateway/configuration) (config schema + examples)
 - [Discord](/channels/discord) and [Telegram](/channels/telegram) (reply tags + replyToMode settings)
-- [Vilaro assistant setup](/start/vilaro)
+- [Velaro assistant setup](/start/velaro)
 - [macOS app](/platforms/macos) (gateway lifecycle)

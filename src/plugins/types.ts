@@ -55,7 +55,7 @@ export type PluginConfigValidation =
   | { ok: true; value?: unknown }
   | { ok: false; errors: string[] };
 
-export type VilaroPluginConfigSchema = {
+export type VelaroPluginConfigSchema = {
   safeParse?: (value: unknown) => {
     success: boolean;
     data?: unknown;
@@ -69,7 +69,7 @@ export type VilaroPluginConfigSchema = {
   jsonSchema?: Record<string, unknown>;
 };
 
-export type VilaroPluginToolContext = {
+export type VelaroPluginToolContext = {
   config?: VilaroConfig;
   workspaceDir?: string;
   agentDir?: string;
@@ -86,17 +86,17 @@ export type VilaroPluginToolContext = {
   sandboxed?: boolean;
 };
 
-export type VilaroPluginToolFactory = (
-  ctx: VilaroPluginToolContext,
+export type VelaroPluginToolFactory = (
+  ctx: VelaroPluginToolContext,
 ) => AnyAgentTool | AnyAgentTool[] | null | undefined;
 
-export type VilaroPluginToolOptions = {
+export type VelaroPluginToolOptions = {
   name?: string;
   names?: string[];
   optional?: boolean;
 };
 
-export type VilaroPluginHookOptions = {
+export type VelaroPluginHookOptions = {
   entry?: HookEntry;
   name?: string;
   description?: string;
@@ -206,7 +206,7 @@ export type ProviderAuthMethod = {
    * Optional wizard/onboarding metadata for this specific auth method.
    *
    * Use this when one provider exposes multiple setup entries (for example API
-   * key + OAuth, or region-specific login flows). Vilaro uses this to expose
+   * key + OAuth, or region-specific login flows). Velaro uses this to expose
    * method-specific auth choices while keeping the provider id stable.
    */
   wizard?: ProviderPluginWizardSetup;
@@ -286,7 +286,7 @@ export type ProviderPrepareDynamicModelContext = ProviderResolveDynamicModelCont
 /**
  * Last-chance rewrite hook for provider-owned transport normalization.
  *
- * Runs after Vilaro resolves an explicit/discovered/dynamic model and before
+ * Runs after Velaro resolves an explicit/discovered/dynamic model and before
  * the embedded runner uses it. Typical uses: swap API ids, fix base URLs, or
  * patch provider-specific compat bits.
  */
@@ -339,7 +339,7 @@ export type ProviderPreparedRuntimeAuth = {
  * snapshots often need a different credential source than live inference
  * requests, and they run outside the embedded runner.
  *
- * The helper methods cover the common Vilaro auth resolution paths:
+ * The helper methods cover the common Velaro auth resolution paths:
  *
  * - `resolveApiKeyFromConfigAndStore`: env/config/plain token/api_key profiles
  * - `resolveOAuthToken`: oauth/token profiles resolved through the auth store
@@ -394,7 +394,7 @@ export type ProviderFetchUsageSnapshotContext = {
 /**
  * Provider-owned auth-doctor hint input.
  *
- * Called when OAuth refresh fails and Vilaro wants a provider-specific repair
+ * Called when OAuth refresh fails and Velaro wants a provider-specific repair
  * hint to append to the generic re-auth message. Use this for legacy profile-id
  * migrations or other provider-owned auth-store cleanup guidance.
  */
@@ -406,7 +406,7 @@ export type ProviderAuthDoctorHintContext = {
 };
 
 /**
- * Provider-owned extra-param normalization before Vilaro builds its generic
+ * Provider-owned extra-param normalization before Velaro builds its generic
  * stream option wrapper.
  *
  * Use this to set provider defaults or rewrite provider-specific config keys
@@ -423,7 +423,7 @@ export type ProviderPrepareExtraParamsContext = {
 };
 
 /**
- * Provider-owned stream wrapper hook after Vilaro applies its generic
+ * Provider-owned stream wrapper hook after Velaro applies its generic
  * transport-independent wrappers.
  *
  * Use this for provider-specific payload/header/model mutations that still run
@@ -436,7 +436,7 @@ export type ProviderWrapStreamFnContext = ProviderPrepareExtraParamsContext & {
 /**
  * Provider-owned prompt-cache eligibility.
  *
- * Return `true` or `false` to override Vilaro's built-in provider cache TTL
+ * Return `true` or `false` to override Velaro's built-in provider cache TTL
  * detection for this provider. Return `undefined` to fall back to core rules.
  */
 export type ProviderCacheTtlEligibilityContext = {
@@ -447,7 +447,7 @@ export type ProviderCacheTtlEligibilityContext = {
 /**
  * Provider-owned missing-auth message override.
  *
- * Runs only after Vilaro exhausts normal env/profile/config auth resolution
+ * Runs only after Velaro exhausts normal env/profile/config auth resolution
  * for the requested provider. Return a custom message to replace the generic
  * "No API key found" error.
  */
@@ -518,7 +518,7 @@ export type ProviderModernModelPolicyContext = {
 /**
  * Final catalog augmentation hook.
  *
- * Runs after Vilaro loads the discovered model catalog and merges configured
+ * Runs after Velaro loads the discovered model catalog and merges configured
  * opt-in providers. Use this for forward-compat rows or vendor-owned synthetic
  * entries that should appear in `models list` and model pickers even when the
  * upstream registry has not caught up yet.
@@ -634,7 +634,7 @@ export type ProviderPlugin = {
   /**
    * Optional async prefetch for dynamic model resolution.
    *
-   * Vilaro calls this only from async model resolution paths. After it
+   * Velaro calls this only from async model resolution paths. After it
    * completes, `resolveDynamicModel` is called again.
    */
   prepareDynamicModel?: (ctx: ProviderPrepareDynamicModelContext) => Promise<void>;
@@ -668,7 +668,7 @@ export type ProviderPlugin = {
     ctx: ProviderPrepareExtraParamsContext,
   ) => Record<string, unknown> | null | undefined;
   /**
-   * Provider-owned stream wrapper applied after generic Vilaro wrappers.
+   * Provider-owned stream wrapper applied after generic Velaro wrappers.
    *
    * Typical uses: provider attribution headers, request-body rewrites, or
    * provider-specific compat payload patches that do not justify a separate
@@ -678,7 +678,7 @@ export type ProviderPlugin = {
   /**
    * Runtime auth exchange hook.
    *
-   * Called after Vilaro resolves the raw configured credential but before the
+   * Called after Velaro resolves the raw configured credential but before the
    * runner stores it in runtime auth storage. This lets plugins exchange a
    * source credential (for example a GitHub token) into a short-lived runtime
    * token plus optional base URL override.
@@ -722,7 +722,7 @@ export type ProviderPlugin = {
    * Provider-owned missing-auth message override.
    *
    * Return a custom message when the provider wants a more specific recovery
-   * hint than Vilaro's generic auth-store guidance.
+   * hint than Velaro's generic auth-store guidance.
    */
   buildMissingAuthMessage?: (
     ctx: ProviderBuildMissingAuthMessageContext,
@@ -731,7 +731,7 @@ export type ProviderPlugin = {
    * Provider-owned built-in model suppression.
    *
    * Return `{ suppress: true }` to hide a stale upstream row. Include
-   * `errorMessage` when Vilaro should surface a provider-specific hint for
+   * `errorMessage` when Velaro should surface a provider-specific hint for
    * direct model resolution failures.
    */
   suppressBuiltInModel?: (
@@ -741,7 +741,7 @@ export type ProviderPlugin = {
    * Provider-owned final catalog augmentation.
    *
    * Return extra rows to append to the final catalog after discovery/config
-   * merging. Vilaro deduplicates by `provider/id`, so plugins only need to
+   * merging. Velaro deduplicates by `provider/id`, so plugins only need to
    * describe the desired supplemental rows.
    */
   augmentModelCatalog?: (
@@ -785,14 +785,14 @@ export type ProviderPlugin = {
   /**
    * Provider-owned auth-profile API-key formatter.
    *
-   * Vilaro uses this when a stored auth profile is already valid and needs to
+   * Velaro uses this when a stored auth profile is already valid and needs to
    * be converted into the runtime `apiKey` string expected by the provider. Use
    * this for providers whose auth profile stores extra metadata alongside the
    * bearer token (for example Gemini CLI's `{ token, projectId }` payload).
    */
   formatApiKey?: (cred: AuthProfileCredential) => string;
   /**
-   * Legacy auth-profile ids that should be retired by `vilaro doctor`.
+   * Legacy auth-profile ids that should be retired by `velaro doctor`.
    *
    * Use this when a provider plugin replaces an older core-managed profile id
    * and wants cleanup/migration messaging to live with the provider instead of
@@ -802,7 +802,7 @@ export type ProviderPlugin = {
   /**
    * Provider-owned OAuth refresh.
    *
-   * Vilaro calls this before falling back to the shared `pi-ai` OAuth
+   * Velaro calls this before falling back to the shared `pi-ai` OAuth
    * refreshers. Use it when the provider has a custom refresh endpoint, or when
    * the provider needs custom refresh-failure behavior that should stay out of
    * core auth-profile code.
@@ -813,7 +813,7 @@ export type ProviderPlugin = {
    *
    * Return a multiline repair hint when OAuth refresh fails and the provider
    * wants to steer users toward a specific auth-profile migration or recovery
-   * path. Return nothing to keep Vilaro's generic error text.
+   * path. Return nothing to keep Velaro's generic error text.
    */
   buildAuthDoctorHint?: (
     ctx: ProviderAuthDoctorHintContext,
@@ -849,7 +849,7 @@ export type WebSearchProviderPlugin = {
   createTool: (ctx: WebSearchProviderContext) => WebSearchProviderToolDefinition | null;
 };
 
-export type VilaroPluginGatewayMethod = {
+export type VelaroPluginGatewayMethod = {
   method: string;
   handler: GatewayRequestHandler;
 };
@@ -874,7 +874,7 @@ export type PluginCommandContext = {
   args?: string;
   /** The full normalized command body */
   commandBody: string;
-  /** Current Vilaro configuration */
+  /** Current Velaro configuration */
   config: VilaroConfig;
   /** Raw "From" value (channel-scoped id) */
   from?: string;
@@ -941,7 +941,7 @@ export type PluginCommandHandler = (
 /**
  * Definition for a plugin-registered command.
  */
-export type VilaroPluginCommandDefinition = {
+export type VelaroPluginCommandDefinition = {
   /** Command name without leading slash (e.g., "tts") */
   name: string;
   /**
@@ -1121,61 +1121,61 @@ export type PluginInteractiveHandlerRegistration =
   | PluginInteractiveDiscordHandlerRegistration
   | PluginInteractiveSlackHandlerRegistration;
 
-export type VilaroPluginHttpRouteAuth = "gateway" | "plugin";
-export type VilaroPluginHttpRouteMatch = "exact" | "prefix";
+export type VelaroPluginHttpRouteAuth = "gateway" | "plugin";
+export type VelaroPluginHttpRouteMatch = "exact" | "prefix";
 
-export type VilaroPluginHttpRouteHandler = (
+export type VelaroPluginHttpRouteHandler = (
   req: IncomingMessage,
   res: ServerResponse,
 ) => Promise<boolean | void> | boolean | void;
 
-export type VilaroPluginHttpRouteParams = {
+export type VelaroPluginHttpRouteParams = {
   path: string;
-  handler: VilaroPluginHttpRouteHandler;
-  auth: VilaroPluginHttpRouteAuth;
-  match?: VilaroPluginHttpRouteMatch;
+  handler: VelaroPluginHttpRouteHandler;
+  auth: VelaroPluginHttpRouteAuth;
+  match?: VelaroPluginHttpRouteMatch;
   replaceExisting?: boolean;
 };
 
-export type VilaroPluginCliContext = {
+export type VelaroPluginCliContext = {
   program: Command;
   config: VilaroConfig;
   workspaceDir?: string;
   logger: PluginLogger;
 };
 
-export type VilaroPluginCliRegistrar = (ctx: VilaroPluginCliContext) => void | Promise<void>;
+export type VelaroPluginCliRegistrar = (ctx: VelaroPluginCliContext) => void | Promise<void>;
 
-export type VilaroPluginServiceContext = {
+export type VelaroPluginServiceContext = {
   config: VilaroConfig;
   workspaceDir?: string;
   stateDir: string;
   logger: PluginLogger;
 };
 
-export type VilaroPluginService = {
+export type VelaroPluginService = {
   id: string;
-  start: (ctx: VilaroPluginServiceContext) => void | Promise<void>;
-  stop?: (ctx: VilaroPluginServiceContext) => void | Promise<void>;
+  start: (ctx: VelaroPluginServiceContext) => void | Promise<void>;
+  stop?: (ctx: VelaroPluginServiceContext) => void | Promise<void>;
 };
 
-export type VilaroPluginChannelRegistration = {
+export type VelaroPluginChannelRegistration = {
   plugin: ChannelPlugin;
 };
 
-export type VilaroPluginDefinition = {
+export type VelaroPluginDefinition = {
   id?: string;
   name?: string;
   description?: string;
   version?: string;
   kind?: PluginKind;
-  configSchema?: VilaroPluginConfigSchema;
+  configSchema?: VelaroPluginConfigSchema;
   register?: (api: VilaroPluginApi) => void | Promise<void>;
   activate?: (api: VilaroPluginApi) => void | Promise<void>;
 };
 
-export type VilaroPluginModule =
-  | VilaroPluginDefinition
+export type VelaroPluginModule =
+  | VelaroPluginDefinition
   | ((api: VilaroPluginApi) => void | Promise<void>);
 
 export type PluginRegistrationMode = "full" | "setup-only" | "setup-runtime";
@@ -1193,19 +1193,19 @@ export type VilaroPluginApi = {
   runtime: PluginRuntime;
   logger: PluginLogger;
   registerTool: (
-    tool: AnyAgentTool | VilaroPluginToolFactory,
-    opts?: VilaroPluginToolOptions,
+    tool: AnyAgentTool | VelaroPluginToolFactory,
+    opts?: VelaroPluginToolOptions,
   ) => void;
   registerHook: (
     events: string | string[],
     handler: InternalHookHandler,
-    opts?: VilaroPluginHookOptions,
+    opts?: VelaroPluginHookOptions,
   ) => void;
-  registerHttpRoute: (params: VilaroPluginHttpRouteParams) => void;
-  registerChannel: (registration: VilaroPluginChannelRegistration | ChannelPlugin) => void;
+  registerHttpRoute: (params: VelaroPluginHttpRouteParams) => void;
+  registerChannel: (registration: VelaroPluginChannelRegistration | ChannelPlugin) => void;
   registerGatewayMethod: (method: string, handler: GatewayRequestHandler) => void;
-  registerCli: (registrar: VilaroPluginCliRegistrar, opts?: { commands?: string[] }) => void;
-  registerService: (service: VilaroPluginService) => void;
+  registerCli: (registrar: VelaroPluginCliRegistrar, opts?: { commands?: string[] }) => void;
+  registerService: (service: VelaroPluginService) => void;
   registerProvider: (provider: ProviderPlugin) => void;
   registerWebSearchProvider: (provider: WebSearchProviderPlugin) => void;
   registerInteractiveHandler: (registration: PluginInteractiveHandlerRegistration) => void;
@@ -1214,7 +1214,7 @@ export type VilaroPluginApi = {
    * Plugin commands are processed before built-in commands and before agent invocation.
    * Use this for simple state-toggling or status commands that don't need AI reasoning.
    */
-  registerCommand: (command: VilaroPluginCommandDefinition) => void;
+  registerCommand: (command: VelaroPluginCommandDefinition) => void;
   /** Register a context engine implementation (exclusive slot — only one active at a time). */
   registerContextEngine: (
     id: string,

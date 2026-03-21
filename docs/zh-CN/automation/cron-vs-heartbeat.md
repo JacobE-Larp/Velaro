@@ -104,7 +104,7 @@ x-i18n:
 ### 定时任务示例：每日早间简报
 
 ```bash
-vilaro cron add \
+velaro cron add \
   --name "Morning briefing" \
   --cron "0 7 * * *" \
   --tz "America/New_York" \
@@ -121,7 +121,7 @@ vilaro cron add \
 ### 定时任务示例：一次性提醒
 
 ```bash
-vilaro cron add \
+velaro cron add \
   --name "Meeting reminder" \
   --at "20m" \
   --session main \
@@ -180,20 +180,20 @@ vilaro cron add \
 
 ```bash
 # 每天早上 7 点的早间简报
-vilaro cron add --name "Morning brief" --cron "0 7 * * *" --session isolated --message "..." --announce
+velaro cron add --name "Morning brief" --cron "0 7 * * *" --session isolated --message "..." --announce
 
 # 每周一上午 9 点的项目回顾
-vilaro cron add --name "Weekly review" --cron "0 9 * * 1" --session isolated --message "..." --model opus
+velaro cron add --name "Weekly review" --cron "0 9 * * 1" --session isolated --message "..." --model opus
 
 # 一次性提醒
-vilaro cron add --name "Call back" --at "2h" --session main --system-event "Call back the client" --wake now
+velaro cron add --name "Call back" --at "2h" --session main --system-event "Call back the client" --wake now
 ```
 
-## Vilaro：带审批的确定性工作流
+## Velaro：带审批的确定性工作流
 
-Vilaro 是用于**多步骤工具管道**的工作流运行时，适用于需要确定性执行和明确审批的场景。当任务不只是单次智能体轮次，且你需要可恢复的带人工检查点的工作流时，使用它。
+Velaro 是用于**多步骤工具管道**的工作流运行时，适用于需要确定性执行和明确审批的场景。当任务不只是单次智能体轮次，且你需要可恢复的带人工检查点的工作流时，使用它。
 
-### 何时适合使用 Vilaro
+### 何时适合使用 Velaro
 
 - **多步骤自动化**：你需要一个固定的工具调用管道，而不是一次性提示。
 - **审批关卡**：副作用应暂停直到你批准，然后继续执行。
@@ -202,18 +202,18 @@ Vilaro 是用于**多步骤工具管道**的工作流运行时，适用于需要
 ### 如何与心跳和定时任务配合
 
 - **心跳/定时任务**决定*何时*运行。
-- **Vilaro** 定义运行开始后*执行哪些步骤*。
+- **Velaro** 定义运行开始后*执行哪些步骤*。
 
-对于计划性工作流，使用定时任务或心跳触发一次调用 Vilaro 的智能体轮次。对于临时工作流，直接调用 Vilaro。
+对于计划性工作流，使用定时任务或心跳触发一次调用 Velaro 的智能体轮次。对于临时工作流，直接调用 Velaro。
 
 ### 操作说明（来自代码）
 
-- Vilaro 以**本地子进程**（`vilaro` CLI）在工具模式下运行，并返回 **JSON 信封**。
+- Velaro 以**本地子进程**（`velaro` CLI）在工具模式下运行，并返回 **JSON 信封**。
 - 如果工具返回 `needs_approval`，你需要使用 `resumeToken` 和 `approve` 标志来恢复。
-- 该工具是**可选插件**；建议通过 `tools.alsoAllow: ["vilaro"]` 附加启用。
-- 如果传入 `vilaroPath`，必须是**绝对路径**。
+- 该工具是**可选插件**；建议通过 `tools.alsoAllow: ["velaro"]` 附加启用。
+- 如果传入 `velaroPath`，必须是**绝对路径**。
 
-完整用法和示例请参阅 [Vilaro](/tools/vilaro)。
+完整用法和示例请参阅 [Velaro](/tools/velaro)。
 
 ## 主会话与隔离会话
 
@@ -236,7 +236,7 @@ Vilaro 是用于**多步骤工具管道**的工作流运行时，适用于需要
 - 不需要单独的隔离运行
 
 ```bash
-vilaro cron add \
+velaro cron add \
   --name "Check project" \
   --every "4h" \
   --session main \
@@ -254,7 +254,7 @@ vilaro cron add \
 - 不会把主会话搞得杂乱的历史记录
 
 ```bash
-vilaro cron add \
+velaro cron add \
   --name "Deep analysis" \
   --cron "0 6 * * 0" \
   --session isolated \

@@ -22,17 +22,17 @@ macOS 应用使用 `WKWebView` 嵌入一个智能体控制的 **Canvas 面板**�
 
 Canvas 状态存储在 Application Support 下：
 
-- `~/Library/Application Support/Vilaro/canvas/<session>/...`
+- `~/Library/Application Support/Velaro/canvas/<session>/...`
 
 Canvas 面板通过**自定义 URL 方案**提供这些文件：
 
-- `vilaro-canvas://<session>/<path>`
+- `velaro-canvas://<session>/<path>`
 
 示例：
 
-- `vilaro-canvas://main/` → `<canvasRoot>/main/index.html`
-- `vilaro-canvas://main/assets/app.css` → `<canvasRoot>/main/assets/app.css`
-- `vilaro-canvas://main/widgets/todo/` → `<canvasRoot>/main/widgets/todo/index.html`
+- `velaro-canvas://main/` → `<canvasRoot>/main/index.html`
+- `velaro-canvas://main/assets/app.css` → `<canvasRoot>/main/assets/app.css`
+- `velaro-canvas://main/widgets/todo/` → `<canvasRoot>/main/widgets/todo/index.html`
 
 如果根目录下没有 `index.html`，应用会显示一个**内置脚手架页面**。
 
@@ -57,10 +57,10 @@ Canvas 通过 **Gateway 网关 WebSocket** 暴露，因此智能体可以：
 CLI 示例：
 
 ```bash
-vilaro nodes canvas present --node <id>
-vilaro nodes canvas navigate --node <id> --url "/"
-vilaro nodes canvas eval --node <id> --js "document.title"
-vilaro nodes canvas snapshot --node <id>
+velaro nodes canvas present --node <id>
+velaro nodes canvas navigate --node <id> --url "/"
+velaro nodes canvas eval --node <id> --js "document.title"
+velaro nodes canvas snapshot --node <id>
 ```
 
 注意事项：
@@ -98,25 +98,25 @@ cat > /tmp/a2ui-v0.8.jsonl <<'EOFA2'
 {"beginRendering":{"surfaceId":"main","root":"root"}}
 EOFA2
 
-vilaro nodes canvas a2ui push --jsonl /tmp/a2ui-v0.8.jsonl --node <id>
+velaro nodes canvas a2ui push --jsonl /tmp/a2ui-v0.8.jsonl --node <id>
 ```
 
 快速测试：
 
 ```bash
-vilaro nodes canvas a2ui push --node <id> --text "Hello from A2UI"
+velaro nodes canvas a2ui push --node <id> --text "Hello from A2UI"
 ```
 
 ## 从 Canvas 触发智能体运行
 
 Canvas 可以通过深层链接触发新的智能体运行：
 
-- `vilaro://agent?...`
+- `velaro://agent?...`
 
 示例（在 JS 中）：
 
 ```js
-window.location.href = "vilaro://agent?message=Review%20this%20design";
+window.location.href = "velaro://agent?message=Review%20this%20design";
 ```
 
 除非提供有效密钥，否则应用会提示确认。

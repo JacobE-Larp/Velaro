@@ -1,5 +1,5 @@
 ---
-summary: "Install Vilaro — installer script, npm/pnpm, from source, Docker, and more"
+summary: "Install Velaro — installer script, npm/pnpm, from source, Docker, and more"
 read_when:
   - You need an install method other than the Getting Started quickstart
   - You want to deploy to a cloud platform
@@ -18,17 +18,17 @@ Already followed [Getting Started](/start/getting-started)? You're all set — t
 - `pnpm` only if you build from source
 
 <Note>
-On Windows, we strongly recommend running Vilaro under [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install).
+On Windows, we strongly recommend running Velaro under [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install).
 </Note>
 
 ## Install methods
 
 <Tip>
-The **installer script** is the recommended way to install Vilaro. It handles Node detection, installation, and onboarding in one step.
+The **installer script** is the recommended way to install Velaro. It handles Node detection, installation, and onboarding in one step.
 </Tip>
 
 <Warning>
-For VPS/cloud hosts, avoid third-party "1-click" marketplace images when possible. Prefer a clean base OS image (for example Ubuntu LTS), then install Vilaro yourself with the installer script.
+For VPS/cloud hosts, avoid third-party "1-click" marketplace images when possible. Prefer a clean base OS image (for example Ubuntu LTS), then install Velaro yourself with the installer script.
 </Warning>
 
 <AccordionGroup>
@@ -70,20 +70,20 @@ For VPS/cloud hosts, avoid third-party "1-click" marketplace images when possibl
   </Accordion>
 
   <Accordion title="npm / pnpm" icon="package">
-    If you already manage Node yourself, we recommend Node 24. Vilaro still supports Node 22 LTS, currently `22.16+`, for compatibility:
+    If you already manage Node yourself, we recommend Node 24. Velaro still supports Node 22 LTS, currently `22.16+`, for compatibility:
 
     <Tabs>
       <Tab title="npm">
         ```bash
-        npm install -g vilaro@latest
-        vilaro onboard --install-daemon
+        npm install -g velaro@latest
+        velaro onboard --install-daemon
         ```
 
         <Accordion title="sharp build errors?">
           If you have libvips installed globally (common on macOS via Homebrew) and `sharp` fails, force prebuilt binaries:
 
           ```bash
-          SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g vilaro@latest
+          SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g velaro@latest
           ```
 
           If you see `sharp: Please add node-gyp to your dependencies`, either install build tooling (macOS: Xcode CLT + `npm install -g node-gyp`) or use the env var above.
@@ -91,9 +91,9 @@ For VPS/cloud hosts, avoid third-party "1-click" marketplace images when possibl
       </Tab>
       <Tab title="pnpm">
         ```bash
-        pnpm add -g vilaro@latest
-        pnpm approve-builds -g        # approve vilaro, node-llama-cpp, sharp, etc.
-        vilaro onboard --install-daemon
+        pnpm add -g velaro@latest
+        pnpm approve-builds -g        # approve velaro, node-llama-cpp, sharp, etc.
+        velaro onboard --install-daemon
         ```
 
         <Note>
@@ -105,11 +105,11 @@ For VPS/cloud hosts, avoid third-party "1-click" marketplace images when possibl
     Want the current GitHub `main` head with a package-manager install?
 
     ```bash
-    npm install -g github:vilaro/vilaro#main
+    npm install -g github:velaro/velaro#main
     ```
 
     ```bash
-    pnpm add -g github:vilaro/vilaro#main
+    pnpm add -g github:velaro/velaro#main
     ```
 
   </Accordion>
@@ -119,28 +119,28 @@ For VPS/cloud hosts, avoid third-party "1-click" marketplace images when possibl
 
     <Steps>
       <Step title="Clone and build">
-        Clone the [Vilaro repo](https://github.com/vilaro/vilaro) and build:
+        Clone the [Velaro repo](https://github.com/vilaro/vilaro) and build:
 
         ```bash
         git clone https://github.com/vilaro/vilaro.git
-        cd vilaro
+        cd velaro
         pnpm install
         pnpm ui:build
         pnpm build
         ```
       </Step>
       <Step title="Link the CLI">
-        Make the `vilaro` command available globally:
+        Make the `velaro` command available globally:
 
         ```bash
         pnpm link --global
         ```
 
-        Alternatively, skip the link and run commands via `pnpm vilaro ...` from inside the repo.
+        Alternatively, skip the link and run commands via `pnpm velaro ...` from inside the repo.
       </Step>
       <Step title="Run onboarding">
         ```bash
-        vilaro onboard --install-daemon
+        velaro onboard --install-daemon
         ```
       </Step>
     </Steps>
@@ -175,9 +175,9 @@ For VPS/cloud hosts, avoid third-party "1-click" marketplace images when possibl
 Verify everything is working:
 
 ```bash
-vilaro doctor         # check for config issues
-vilaro status         # gateway status
-vilaro dashboard      # open the browser UI
+velaro doctor         # check for config issues
+velaro status         # gateway status
+velaro dashboard      # open the browser UI
 ```
 
 If you need custom runtime paths, use:
@@ -188,7 +188,7 @@ If you need custom runtime paths, use:
 
 See [Environment vars](/help/environment) for precedence and full details.
 
-## Troubleshooting: `vilaro` not found
+## Troubleshooting: `velaro` not found
 
 <Accordion title="PATH diagnosis and fix">
   Quick diagnosis:
@@ -200,7 +200,7 @@ npm prefix -g
 echo "$PATH"
 ```
 
-If `$(npm prefix -g)/bin` (macOS/Linux) or `$(npm prefix -g)` (Windows) is **not** in your `$PATH`, your shell can't find global npm binaries (including `vilaro`).
+If `$(npm prefix -g)/bin` (macOS/Linux) or `$(npm prefix -g)` (Windows) is **not** in your `$PATH`, your shell can't find global npm binaries (including `velaro`).
 
 Fix — add it to your shell startup file (`~/.zshrc` or `~/.bashrc`):
 
@@ -217,12 +217,12 @@ Then open a new terminal (or `rehash` in zsh / `hash -r` in bash).
 
 <CardGroup cols={3}>
   <Card title="Updating" href="/install/updating" icon="refresh-cw">
-    Keep Vilaro up to date.
+    Keep Velaro up to date.
   </Card>
   <Card title="Migrating" href="/install/migrating" icon="arrow-right">
     Move to a new machine.
   </Card>
   <Card title="Uninstall" href="/install/uninstall" icon="trash-2">
-    Remove Vilaro completely.
+    Remove Velaro completely.
   </Card>
 </CardGroup>

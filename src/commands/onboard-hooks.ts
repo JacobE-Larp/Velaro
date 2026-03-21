@@ -74,9 +74,9 @@ export async function setupInternalHooks(
       `Enabled ${selected.length} hook${selected.length > 1 ? "s" : ""}: ${selected.join(", ")}`,
       "",
       "You can manage hooks later with:",
-      `  ${formatCliCommand("vilaro hooks list")}`,
-      `  ${formatCliCommand("vilaro hooks enable <name>")}`,
-      `  ${formatCliCommand("vilaro hooks disable <name>")}`,
+      `  ${formatCliCommand("velaro hooks list")}`,
+      `  ${formatCliCommand("velaro hooks enable <name>")}`,
+      `  ${formatCliCommand("velaro hooks disable <name>")}`,
     ].join("\n"),
     "Hooks Configured",
   );

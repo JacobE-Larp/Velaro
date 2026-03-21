@@ -1,5 +1,5 @@
 ---
-summary: "VPS hosting hub for Vilaro (Oracle/Fly/Hetzner/GCP/exe.dev)"
+summary: "VPS hosting hub for Velaro (Oracle/Fly/Hetzner/GCP/exe.dev)"
 read_when:
   - You want to run the Gateway in the cloud
   - You need a quick map of VPS/hosting guides
@@ -57,9 +57,9 @@ Docs: [Nodes](/nodes), [Nodes CLI](/cli/nodes)
 If CLI commands feel slow on low-power VMs (or ARM hosts), enable Node's module compile cache:
 
 ```bash
-grep -q 'NODE_COMPILE_CACHE=/var/tmp/vilaro-compile-cache' ~/.bashrc || cat >> ~/.bashrc <<'EOF'
-export NODE_COMPILE_CACHE=/var/tmp/vilaro-compile-cache
-mkdir -p /var/tmp/vilaro-compile-cache
+grep -q 'NODE_COMPILE_CACHE=/var/tmp/velaro-compile-cache' ~/.bashrc || cat >> ~/.bashrc <<'EOF'
+export NODE_COMPILE_CACHE=/var/tmp/velaro-compile-cache
+mkdir -p /var/tmp/velaro-compile-cache
 export VILARO_NO_RESPAWN=1
 EOF
 source ~/.bashrc
@@ -76,7 +76,7 @@ For VM hosts using `systemd`, consider:
 
 - Add service env for stable startup path:
   - `VILARO_NO_RESPAWN=1`
-  - `NODE_COMPILE_CACHE=/var/tmp/vilaro-compile-cache`
+  - `NODE_COMPILE_CACHE=/var/tmp/velaro-compile-cache`
 - Keep restart behavior explicit:
   - `Restart=always`
   - `RestartSec=2`
@@ -86,13 +86,13 @@ For VM hosts using `systemd`, consider:
 Example:
 
 ```bash
-sudo systemctl edit vilaro
+sudo systemctl edit velaro
 ```
 
 ```ini
 [Service]
 Environment=VILARO_NO_RESPAWN=1
-Environment=NODE_COMPILE_CACHE=/var/tmp/vilaro-compile-cache
+Environment=NODE_COMPILE_CACHE=/var/tmp/velaro-compile-cache
 Restart=always
 RestartSec=2
 TimeoutStartSec=90

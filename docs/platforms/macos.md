@@ -1,14 +1,14 @@
 ---
-summary: "Vilaro macOS companion app (menu bar + gateway broker)"
+summary: "Velaro macOS companion app (menu bar + gateway broker)"
 read_when:
   - Implementing macOS app features
   - Changing gateway lifecycle or node bridging on macOS
 title: "macOS App"
 ---
 
-# Vilaro macOS Companion (menu bar + gateway broker)
+# Velaro macOS Companion (menu bar + gateway broker)
 
-The macOS app is the **menu‑bar companion** for Vilaro. It owns permissions,
+The macOS app is the **menu‑bar companion** for Velaro. It owns permissions,
 manages/attaches to the Gateway locally (launchd or manual), and exposes macOS
 capabilities to the agent as a node.
 
@@ -21,12 +21,12 @@ capabilities to the agent as a node.
 - Exposes macOS‑only tools (Canvas, Camera, Screen Recording, `system.run`).
 - Starts the local node host service in **remote** mode (launchd), and stops it in **local** mode.
 - Optionally hosts **PeekabooBridge** for UI automation.
-- Installs the global CLI (`vilaro`) via npm/pnpm on request (bun not recommended for the Gateway runtime).
+- Installs the global CLI (`velaro`) via npm/pnpm on request (bun not recommended for the Gateway runtime).
 
 ## Local vs remote mode
 
 - **Local** (default): the app attaches to a running local Gateway if present;
-  otherwise it enables the launchd service via `vilaro gateway install`.
+  otherwise it enables the launchd service via `velaro gateway install`.
 - **Remote**: the app connects to a Gateway over SSH/Tailscale and never starts
   a local process.
   The app starts the local **node host service** so the remote Gateway can reach this Mac.
@@ -35,17 +35,17 @@ capabilities to the agent as a node.
 ## Launchd control
 
 The app manages a per‑user LaunchAgent labeled `ai.vilaro.gateway`
-(or `ai.vilaro.<profile>` when using `--profile`/`VILARO_PROFILE`; legacy `com.vilaro.*` still unloads).
+(or `ai.velaro.<profile>` when using `--profile`/`VILARO_PROFILE`; legacy `com.velaro.*` still unloads).
 
 ```bash
 launchctl kickstart -k gui/$UID/ai.vilaro.gateway
 launchctl bootout gui/$UID/ai.vilaro.gateway
 ```
 
-Replace the label with `ai.vilaro.<profile>` when running a named profile.
+Replace the label with `ai.velaro.<profile>` when running a named profile.
 
 If the LaunchAgent isn’t installed, enable it from the app or run
-`vilaro gateway install`.
+`velaro gateway install`.
 
 ## Node capabilities (mac)
 
@@ -111,14 +111,14 @@ Notes:
 
 ## Deep links
 
-The app registers the `vilaro://` URL scheme for local actions.
+The app registers the `velaro://` URL scheme for local actions.
 
-### `vilaro://agent`
+### `velaro://agent`
 
 Triggers a Gateway `agent` request.
 
 ```bash
-open 'vilaro://agent?message=Hello%20from%20deep%20link'
+open 'velaro://agent?message=Hello%20from%20deep%20link'
 ```
 
 Query parameters:
@@ -138,14 +138,14 @@ Safety:
 
 ## Onboarding flow (typical)
 
-1. Install and launch **Vilaro.app**.
+1. Install and launch **Velaro.app**.
 2. Complete the permissions checklist (TCC prompts).
 3. Ensure **Local** mode is active and the Gateway is running.
 4. Install the CLI if you want terminal access.
 
 ## State dir placement (macOS)
 
-Avoid putting your Vilaro state dir in iCloud or other cloud-synced folders.
+Avoid putting your Velaro state dir in iCloud or other cloud-synced folders.
 Sync-backed paths can add latency and occasionally cause file-lock/sync races for
 sessions and credentials.
 
@@ -155,7 +155,7 @@ Prefer a local non-synced state path such as:
 VILARO_STATE_DIR=~/.vilaro
 ```
 
-If `vilaro doctor` detects state under:
+If `velaro doctor` detects state under:
 
 - `~/Library/Mobile Documents/com~apple~CloudDocs/...`
 - `~/Library/CloudStorage/...`
@@ -165,7 +165,7 @@ it will warn and recommend moving back to a local path.
 ## Build & dev workflow (native)
 
 - `cd apps/macos && swift build`
-- `swift run Vilaro` (or Xcode)
+- `swift run Velaro` (or Xcode)
 - Package app: `scripts/package-mac-app.sh`
 
 ## Debug gateway connectivity (macOS CLI)
@@ -175,8 +175,8 @@ logic that the macOS app uses, without launching the app.
 
 ```bash
 cd apps/macos
-swift run vilaro-mac connect --json
-swift run vilaro-mac discover --timeout 3000 --json
+swift run velaro-mac connect --json
+swift run velaro-mac discover --timeout 3000 --json
 ```
 
 Connect options:
@@ -193,7 +193,7 @@ Discovery options:
 - `--timeout <ms>`: overall discovery window (default: `2000`)
 - `--json`: structured output for diffing
 
-Tip: compare against `vilaro gateway discover --json` to see whether the
+Tip: compare against `velaro gateway discover --json` to see whether the
 macOS app’s discovery pipeline (NWBrowser + tailnet DNS‑SD fallback) differs from
 the Node CLI’s `dns-sd` based discovery.
 

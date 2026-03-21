@@ -69,13 +69,13 @@ export function registerChannelsCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["vilaro channels list", "List configured channels and auth profiles."],
-          ["vilaro channels status --probe", "Run channel status checks and probes."],
+          ["velaro channels list", "List configured channels and auth profiles."],
+          ["velaro channels status --probe", "Run channel status checks and probes."],
           [
-            "vilaro channels add --channel telegram --token <token>",
+            "velaro channels add --channel telegram --token <token>",
             "Add or update a channel account non-interactively.",
           ],
-          ["vilaro channels login --channel whatsapp", "Link a WhatsApp Web account."],
+          ["velaro channels login --channel whatsapp", "Link a WhatsApp Web account."],
         ])}\n\n${theme.muted("Docs:")} ${formatDocsLink(
           "/cli/channels",
           "docs.vilaro.ai/cli/channels",

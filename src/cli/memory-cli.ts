@@ -581,15 +581,15 @@ export function registerMemoryCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["vilaro memory status", "Show index and provider status."],
-          ["vilaro memory status --deep", "Probe embedding provider readiness."],
-          ["vilaro memory index --force", "Force a full reindex."],
+          ["velaro memory status", "Show index and provider status."],
+          ["velaro memory status --deep", "Probe embedding provider readiness."],
+          ["velaro memory index --force", "Force a full reindex."],
           ['vilaro memory search "meeting notes"', "Quick search using positional query."],
           [
             'vilaro memory search --query "deployment" --max-results 20',
             "Limit results for focused troubleshooting.",
           ],
-          ["vilaro memory status --json", "Output machine-readable JSON (good for scripts)."],
+          ["velaro memory status --json", "Output machine-readable JSON (good for scripts)."],
         ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/memory", "docs.vilaro.ai/cli/memory")}\n`,
     );
 

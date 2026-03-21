@@ -37,7 +37,7 @@ export const pushHandlers: GatewayRequestHandlers = {
       return;
     }
 
-    const title = normalizeOptionalString(params.title) ?? "Vilaro";
+    const title = normalizeOptionalString(params.title) ?? "Velaro";
     const body = normalizeOptionalString(params.body) ?? `Push test for node ${nodeId}`;
 
     await respondUnavailableOnThrow(respond, async () => {

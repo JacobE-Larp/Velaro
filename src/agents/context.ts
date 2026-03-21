@@ -5,9 +5,9 @@ import { loadConfig } from "../config/config.js";
 import type { VilaroConfig } from "../config/config.js";
 import { computeBackoff, type BackoffPolicy } from "../infra/backoff.js";
 import { consumeRootOptionToken, FLAG_TERMINATOR } from "../infra/cli-root-options.js";
-import { resolveVilaroAgentDir } from "./agent-paths.js";
+import { resolveVelaroAgentDir } from "./agent-paths.js";
 import { normalizeProviderId } from "./model-selection.js";
-import { ensureVilaroModelsJson } from "./models-config.js";
+import { ensureVelaroModelsJson } from "./models-config.js";
 
 type ModelEntry = { id: string; contextWindow?: number };
 type ModelRegistryLike = {
@@ -168,7 +168,7 @@ function ensureContextWindowCacheLoaded(): Promise<void> {
 
   loadPromise = (async () => {
     try {
-      await ensureVilaroModelsJson(cfg);
+      await ensureVelaroModelsJson(cfg);
     } catch {
       // Continue with best-effort discovery/overrides.
     }
@@ -176,7 +176,7 @@ function ensureContextWindowCacheLoaded(): Promise<void> {
     try {
       const { discoverAuthStorage, discoverModels } =
         await import("./pi-model-discovery-runtime.js");
-      const agentDir = resolveVilaroAgentDir();
+      const agentDir = resolveVelaroAgentDir();
       const authStorage = discoverAuthStorage(agentDir);
       const modelRegistry = discoverModels(authStorage, agentDir) as unknown as ModelRegistryLike;
       const models =

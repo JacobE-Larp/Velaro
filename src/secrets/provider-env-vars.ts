@@ -47,7 +47,7 @@ const KNOWN_SECRET_ENV_VARS = [
   ...new Set(Object.values(PROVIDER_ENV_VARS).flatMap((keys) => keys)),
 ];
 
-// VILARO_API_KEY authenticates the local Vilaro bridge itself and must
+// VILARO_API_KEY authenticates the local Velaro bridge itself and must
 // remain available to child bridge/runtime processes.
 const KNOWN_PROVIDER_AUTH_ENV_VARS = [
   ...new Set([

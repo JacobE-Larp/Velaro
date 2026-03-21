@@ -48,8 +48,8 @@ title: "Strict Config Validation"
 - Doctor runs **every time** config is loaded (dry-run by default).
 - If config invalid:
   - Print a summary + actionable errors.
-  - Instruct: `vilaro doctor --fix`.
-- `vilaro doctor --fix`:
+  - Instruct: `velaro doctor --fix`.
+- `velaro doctor --fix`:
   - Applies migrations.
   - Removes unknown keys.
   - Writes updated config.
@@ -58,14 +58,14 @@ title: "Strict Config Validation"
 
 Allowed (diagnostic-only):
 
-- `vilaro doctor`
-- `vilaro logs`
-- `vilaro health`
-- `vilaro help`
-- `vilaro status`
-- `vilaro gateway status`
+- `velaro doctor`
+- `velaro logs`
+- `velaro health`
+- `velaro help`
+- `velaro status`
+- `velaro gateway status`
 
-Everything else must hard-fail with: “Config invalid. Run `vilaro doctor --fix`.”
+Everything else must hard-fail with: “Config invalid. Run `velaro doctor --fix`.”
 
 ## Error UX format
 

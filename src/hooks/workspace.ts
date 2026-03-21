@@ -10,7 +10,7 @@ import { resolveBundledHooksDir } from "./bundled-dir.js";
 import { shouldIncludeHook } from "./config.js";
 import {
   parseFrontmatter,
-  resolveVilaroMetadata,
+  resolveVelaroMetadata,
   resolveHookInvocationPolicy,
 } from "./frontmatter.js";
 import { resolvePluginHookDirs } from "./plugin-hooks.js";
@@ -221,7 +221,7 @@ export function loadHookEntriesFromDir(params: {
         pluginId: params.pluginId,
       },
       frontmatter,
-      metadata: resolveVilaroMetadata(frontmatter),
+      metadata: resolveVelaroMetadata(frontmatter),
       invocation: resolveHookInvocationPolicy(frontmatter),
     };
     return entry;
@@ -308,7 +308,7 @@ function loadHookEntries(
     return {
       hook,
       frontmatter,
-      metadata: resolveVilaroMetadata(frontmatter),
+      metadata: resolveVelaroMetadata(frontmatter),
       invocation: resolveHookInvocationPolicy(frontmatter),
     };
   });

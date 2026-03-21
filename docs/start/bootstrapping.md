@@ -16,7 +16,7 @@ for the first time.
 
 ## What bootstrapping does
 
-On the first agent run, Vilaro bootstraps the workspace (default
+On the first agent run, Velaro bootstraps the workspace (default
 `~/.vilaro/workspace`):
 
 - Seeds `AGENTS.md`, `BOOTSTRAP.md`, `IDENTITY.md`, `USER.md`.

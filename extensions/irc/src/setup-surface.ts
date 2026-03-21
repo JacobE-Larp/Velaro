@@ -333,7 +333,7 @@ export const ircSetupWizard: ChannelSetupWizard = {
         resolveIrcAccount({ cfg: cfg as CoreConfig, accountId }).config.realname || undefined,
       shouldPrompt: ({ credentialValues }) => credentialValues[USE_ENV_FLAG] !== "1",
       initialValue: ({ cfg, accountId }) =>
-        resolveIrcAccount({ cfg: cfg as CoreConfig, accountId }).config.realname || "Vilaro",
+        resolveIrcAccount({ cfg: cfg as CoreConfig, accountId }).config.realname || "Velaro",
       validate: ({ value }) => (String(value ?? "").trim() ? undefined : "Required"),
       normalizeValue: ({ value }) => String(value).trim(),
       applySet: async ({ cfg, accountId, value }) =>

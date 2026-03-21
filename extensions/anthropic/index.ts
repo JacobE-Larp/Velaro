@@ -167,7 +167,7 @@ function buildAnthropicAuthDoctorHint(params: {
     }`,
     `- auth store oauth profiles: ${storeOauthProfiles || "(none)"}`,
     `- suggested profile: ${suggested}`,
-    `Fix: run "${formatCliCommand("vilaro doctor --yes")}"`,
+    `Fix: run "${formatCliCommand("velaro doctor --yes")}"`,
   ].join("\n");
 }
 

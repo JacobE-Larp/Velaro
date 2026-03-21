@@ -20,22 +20,22 @@ x-i18n:
 按顺序运行这些命令：
 
 ```bash
-vilaro status
-vilaro status --all
-vilaro gateway probe
-vilaro logs --follow
-vilaro doctor
+velaro status
+velaro status --all
+velaro gateway probe
+velaro logs --follow
+velaro doctor
 ```
 
 如果 Gateway 网关可达，进行深度探测：
 
 ```bash
-vilaro status --deep
+velaro status --deep
 ```
 
 ## 常见的“它坏了”情况
 
-### `vilaro: command not found`
+### `velaro: command not found`
 
 几乎总是 Node/npm PATH 问题。从这里开始：
 
@@ -67,10 +67,10 @@ curl -fsSL https://vilaro.ai/install.sh | bash -s -- --beta --verbose
 - [Gateway 网关故障排除](/gateway/troubleshooting)
 - [控制 UI](/web/control-ui#insecure-http)
 
-### `docs.vilaro.ai` 显示 SSL 错误（Comcast/Xfinity）
+### `docs.velaro.ai` 显示 SSL 错误（Comcast/Xfinity）
 
-一些 Comcast/Xfinity 连接通过 Xfinity Advanced Security 阻止 `docs.vilaro.ai`。
-禁用 Advanced Security 或将 `docs.vilaro.ai` 添加到允许列表，然后重试。
+一些 Comcast/Xfinity 连接通过 Xfinity Advanced Security 阻止 `docs.velaro.ai`。
+禁用 Advanced Security 或将 `docs.velaro.ai` 添加到允许列表，然后重试。
 
 - Xfinity Advanced Security 帮助：https://www.xfinity.com/support/articles/using-xfinity-xfi-advanced-security
 - 快速检查：尝试移动热点或 VPN 以确认这是 ISP 级别的过滤
@@ -89,7 +89,7 @@ curl -fsSL https://vilaro.ai/install.sh | bash -s -- --beta --verbose
 
 这通常意味着 `agents.defaults.models` 配置为允许列表。当它非空时，只能选择那些提供商/模型键。
 
-- 检查允许列表：`vilaro config get agents.defaults.models`
+- 检查允许列表：`velaro config get agents.defaults.models`
 - 添加你想要的模型（或清除允许列表）然后重试 `/model`
 - 使用 `/models` 浏览允许的提供商/模型
 
@@ -98,7 +98,7 @@ curl -fsSL https://vilaro.ai/install.sh | bash -s -- --beta --verbose
 粘贴一份安全报告：
 
 ```bash
-vilaro status --all
+velaro status --all
 ```
 
-如果可以的话，包含来自 `vilaro logs --follow` 的相关日志尾部。
+如果可以的话，包含来自 `velaro logs --follow` 的相关日志尾部。

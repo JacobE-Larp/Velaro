@@ -60,7 +60,7 @@ const resolveLineDmPolicy = createScopedDmSecurityResolver<ResolvedLineAccount>(
   resolvePolicy: (account) => account.config.dmPolicy,
   resolveAllowFrom: (account) => account.config.allowFrom,
   policyPathSuffix: "dmPolicy",
-  approveHint: "vilaro pairing approve line <code>",
+  approveHint: "velaro pairing approve line <code>",
   normalizeEntry: (raw) => raw.replace(/^line:(?:user:)?/i, ""),
 });
 
@@ -82,7 +82,7 @@ export const linePlugin: ChannelPlugin<ResolvedLineAccount> = {
       if (!account.channelAccessToken) {
         throw new Error("LINE channel access token not configured");
       }
-      await line.pushMessageLine(id, "Vilaro: your access has been approved.", {
+      await line.pushMessageLine(id, "Velaro: your access has been approved.", {
         channelAccessToken: account.channelAccessToken,
       });
     },

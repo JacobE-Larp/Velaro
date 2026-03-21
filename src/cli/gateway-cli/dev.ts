@@ -60,7 +60,7 @@ async function ensureDevWorkspace(dir: string) {
   const [agents, soul, tools, identity, user] = await Promise.all([
     loadDevTemplate(
       "AGENTS.dev.md",
-      `# AGENTS.md - Vilaro Dev Workspace\n\nDefault dev workspace for vilaro gateway --dev.\n`,
+      `# AGENTS.md - Velaro Dev Workspace\n\nDefault dev workspace for vilaro gateway --dev.\n`,
     ),
     loadDevTemplate(
       "SOUL.dev.md",

@@ -1,5 +1,5 @@
 ---
-description: Deploy Vilaro on Fly.io
+description: Deploy Velaro on Fly.io
 title: Fly.io
 x-i18n:
   generated_at: "2026-02-03T07:52:55Z"
@@ -12,7 +12,7 @@ x-i18n:
 
 # Fly.io 部署
 
-**目标：** Vilaro Gateway 网关运行在 [Fly.io](https://fly.io) 机器上，具有持久存储、自动 HTTPS 和 Discord/渠道访问。
+**目标：** Velaro Gateway 网关运行在 [Fly.io](https://fly.io) 机器上，具有持久存储、自动 HTTPS 和 Discord/渠道访问。
 
 ## 你需要什么
 
@@ -33,10 +33,10 @@ x-i18n:
 ```bash
 # Clone the repo
 git clone https://github.com/vilaro/vilaro.git
-cd vilaro
+cd velaro
 
 # Create a new Fly app (pick your own name)
-fly apps create my-vilaro
+fly apps create my-velaro
 
 # Create a persistent volume (1GB is usually enough)
 fly volumes create vilaro_data --size 1 --region iad
@@ -51,7 +51,7 @@ fly volumes create vilaro_data --size 1 --region iad
 **安全注意事项：** 默认配置暴露公共 URL。对于没有公共 IP 的加固部署，参见[私有部署](#私有部署加固)或使用 `fly.private.toml`。
 
 ```toml
-app = "my-vilaro"  # Your app name
+app = "my-velaro"  # Your app name
 primary_region = "iad"
 
 [build]
@@ -385,18 +385,18 @@ fly deploy -c fly.private.toml
 
 ```bash
 # List current IPs
-fly ips list -a my-vilaro
+fly ips list -a my-velaro
 
 # Release public IPs
-fly ips release <public-ipv4> -a my-vilaro
-fly ips release <public-ipv6> -a my-vilaro
+fly ips release <public-ipv4> -a my-velaro
+fly ips release <public-ipv6> -a my-velaro
 
 # Switch to private config so future deploys don't re-allocate public IPs
 # (remove [http_service] or deploy with the private template)
 fly deploy -c fly.private.toml
 
 # Allocate private-only IPv6
-fly ips allocate-v6 --private -a my-vilaro
+fly ips allocate-v6 --private -a my-velaro
 ```
 
 此后，`fly ips list` 应该只显示 `private` 类型的 IP：
@@ -414,7 +414,7 @@ v6       fdaa:x:x:x:x::x      private          global
 
 ```bash
 # Forward local port 3000 to the app
-fly proxy 3000:3000 -a my-vilaro
+fly proxy 3000:3000 -a my-velaro
 
 # Then open http://localhost:3000 in browser
 ```
@@ -432,7 +432,7 @@ fly wireguard create
 **选项 3：仅 SSH**
 
 ```bash
-fly ssh console -a my-vilaro
+fly ssh console -a my-velaro
 ```
 
 ### 私有部署的 Webhooks

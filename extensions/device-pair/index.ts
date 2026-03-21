@@ -437,7 +437,7 @@ export default function register(api: VilaroPluginApi) {
             if (send) {
               await send(
                 target,
-                ["Scan this QR code with the Vilaro iOS app:", "", "```", qrAscii, "```"].join(
+                ["Scan this QR code with the Velaro iOS app:", "", "```", qrAscii, "```"].join(
                   "\n",
                 ),
                 {
@@ -491,7 +491,7 @@ export default function register(api: VilaroPluginApi) {
         // WebUI + CLI/TUI: ASCII QR
         return {
           text: [
-            "Scan this QR code with the Vilaro iOS app:",
+            "Scan this QR code with the Velaro iOS app:",
             "",
             "```",
             qrAscii,

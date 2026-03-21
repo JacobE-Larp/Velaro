@@ -9,6 +9,6 @@ export {
 export type {
   AnyAgentTool,
   VilaroPluginApi,
-  VilaroPluginToolContext,
-  VilaroPluginToolFactory,
+  VelaroPluginToolContext,
+  VelaroPluginToolFactory,
 } from "../plugins/types.js";

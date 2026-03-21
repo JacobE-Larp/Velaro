@@ -21,16 +21,16 @@ const ROOT_COMMANDS_HINT =
   "Hint: commands suffixed with * have subcommands. Run <command> --help for details.";
 
 const EXAMPLES = [
-  ["vilaro models --help", "Show detailed help for the models command."],
-  ["vilaro channels login --verbose", "Link personal WhatsApp Web and show QR + connection logs."],
+  ["velaro models --help", "Show detailed help for the models command."],
+  ["velaro channels login --verbose", "Link personal WhatsApp Web and show QR + connection logs."],
   [
     'vilaro message send --target +15555550123 --message "Hi" --json',
     "Send via your web session and print JSON result.",
   ],
-  ["vilaro gateway --port 18789", "Run the WebSocket Gateway locally."],
-  ["vilaro --dev gateway", "Run a dev Gateway (isolated state/config) on ws://127.0.0.1:19001."],
-  ["vilaro gateway --force", "Kill anything bound to the default gateway port, then start it."],
-  ["vilaro gateway ...", "Gateway control via WebSocket."],
+  ["velaro gateway --port 18789", "Run the WebSocket Gateway locally."],
+  ["velaro --dev gateway", "Run a dev Gateway (isolated state/config) on ws://127.0.0.1:19001."],
+  ["velaro gateway --force", "Kill anything bound to the default gateway port, then start it."],
+  ["velaro gateway ...", "Gateway control via WebSocket."],
   [
     'vilaro agent --to +15555550123 --message "Run summary" --deliver',
     "Talk directly to the agent using the Gateway; optionally send the WhatsApp reply.",
@@ -109,7 +109,7 @@ export function configureProgramHelp(program: Command, ctx: ProgramContext) {
   ) {
     const commit = resolveCommitHash({ moduleUrl: import.meta.url });
     console.log(
-      commit ? `Vilaro ${ctx.programVersion} (${commit})` : `Vilaro ${ctx.programVersion}`,
+      commit ? `Velaro ${ctx.programVersion} (${commit})` : `Velaro ${ctx.programVersion}`,
     );
     process.exit(0);
   }

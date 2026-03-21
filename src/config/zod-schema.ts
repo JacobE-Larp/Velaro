@@ -203,7 +203,7 @@ const TalkSchema = z
     }
   });
 
-export const VilaroSchema = z
+export const VelaroSchema = z
   .object({
     $schema: z.string().optional(),
     meta: z

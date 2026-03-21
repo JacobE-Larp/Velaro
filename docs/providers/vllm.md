@@ -1,16 +1,16 @@
 ---
-summary: "Run Vilaro with vLLM (OpenAI-compatible local server)"
+summary: "Run Velaro with vLLM (OpenAI-compatible local server)"
 read_when:
-  - You want to run Vilaro against a local vLLM server
+  - You want to run Velaro against a local vLLM server
   - You want OpenAI-compatible /v1 endpoints with your own models
 title: "vLLM"
 ---
 
 # vLLM
 
-vLLM can serve open-source (and some custom) models via an **OpenAI-compatible** HTTP API. Vilaro can connect to vLLM using the `openai-completions` API.
+vLLM can serve open-source (and some custom) models via an **OpenAI-compatible** HTTP API. Velaro can connect to vLLM using the `openai-completions` API.
 
-Vilaro can also **auto-discover** available models from vLLM when you opt in with `VLLM_API_KEY` (any value works if your server doesn’t enforce auth) and you do not define an explicit `models.providers.vllm` entry.
+Velaro can also **auto-discover** available models from vLLM when you opt in with `VLLM_API_KEY` (any value works if your server doesn’t enforce auth) and you do not define an explicit `models.providers.vllm` entry.
 
 ## Quick start
 
@@ -40,7 +40,7 @@ export VLLM_API_KEY="vllm-local"
 
 ## Model discovery (implicit provider)
 
-When `VLLM_API_KEY` is set (or an auth profile exists) and you **do not** define `models.providers.vllm`, Vilaro will query:
+When `VLLM_API_KEY` is set (or an auth profile exists) and you **do not** define `models.providers.vllm`, Velaro will query:
 
 - `GET http://127.0.0.1:8000/v1/models`
 

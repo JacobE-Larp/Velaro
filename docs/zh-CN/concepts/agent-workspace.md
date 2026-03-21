@@ -36,7 +36,7 @@ x-i18n:
 }
 ```
 
-`vilaro onboard`、`vilaro configure` 或 `vilaro setup` 会在工作区缺失时创建工作区并植入引导文件。
+`velaro onboard`、`velaro configure` 或 `velaro setup` 会在工作区缺失时创建工作区并植入引导文件。
 沙箱种子复制仅接受工作区内的常规文件；解析到源工作区外部的符号链接/硬链接别名会被忽略。
 
 如果你已经自行管理工作区文件，可以禁用引导文件创建：
@@ -47,17 +47,17 @@ x-i18n:
 
 ## 额外的工作区文件夹
 
-较旧的安装可能创建过 `~/vilaro`。保留多个工作区目录可能会导致令人困惑的凭证或状态漂移，因为同一时间只有一个工作区处于活动状态。
+较旧的安装可能创建过 `~/velaro`。保留多个工作区目录可能会导致令人困惑的凭证或状态漂移，因为同一时间只有一个工作区处于活动状态。
 
-**建议：**只保留一个活动工作区。如果你不再使用额外的文件夹，请将其归档或移到废纸篓（例如 `trash ~/vilaro`）。
+**建议：**只保留一个活动工作区。如果你不再使用额外的文件夹，请将其归档或移到废纸篓（例如 `trash ~/velaro`）。
 如果你有意保留多个工作区，请确保
 `agents.defaults.workspace` 指向当前活动的那个。
 
-当 `vilaro doctor` 检测到额外的工作区目录时，会发出警告。
+当 `velaro doctor` 检测到额外的工作区目录时，会发出警告。
 
 ## 工作区文件映射（每个文件的含义）
 
-以下是 Vilaro 在工作区内预期的标准文件：
+以下是 Velaro 在工作区内预期的标准文件：
 
 - `AGENTS.md`
   - 智能体的操作说明，以及它应如何使用记忆。
@@ -110,8 +110,8 @@ x-i18n:
 - `canvas/`（可选）
   - 用于节点显示的 Canvas UI 文件（例如 `canvas/index.html`）。
 
-如果任何引导文件缺失，Vilaro 会在会话中注入一个“缺失文件”标记并继续执行。注入时，大型引导文件会被截断；可使用 `agents.defaults.bootstrapMaxChars`（默认：20000）和 `agents.defaults.bootstrapTotalMaxChars`（默认：150000）调整限制。
-`vilaro setup` 可以重新创建缺失的默认文件，而不会覆盖现有文件。
+如果任何引导文件缺失，Velaro 会在会话中注入一个“缺失文件”标记并继续执行。注入时，大型引导文件会被截断；可使用 `agents.defaults.bootstrapMaxChars`（默认：20000）和 `agents.defaults.bootstrapTotalMaxChars`（默认：150000）调整限制。
+`velaro setup` 可以重新创建缺失的默认文件，而不会覆盖现有文件。
 
 ## 不在工作区中的内容
 
@@ -160,7 +160,7 @@ git push -u origin main
 
 ```bash
 gh auth login
-gh repo create vilaro-workspace --private --source . --remote origin --push
+gh repo create velaro-workspace --private --source . --remote origin --push
 ```
 
 选项 C：GitLab Web UI
@@ -209,7 +209,7 @@ git push
 
 1. 将仓库克隆到所需路径（默认是 `~/.vilaro/workspace`）。
 2. 在 `~/.vilaro/vilaro.json` 中将 `agents.defaults.workspace` 设置为该路径。
-3. 运行 `vilaro setup --workspace <path>` 以植入任何缺失的文件。
+3. 运行 `velaro setup --workspace <path>` 以植入任何缺失的文件。
 4. 如果你需要会话，请将旧机器上的 `~/.vilaro/agents/<agentId>/sessions/` 单独复制过来。
 
 ## 高级说明

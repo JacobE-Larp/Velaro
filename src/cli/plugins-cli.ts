@@ -434,7 +434,7 @@ async function runPluginInstallCommand(params: {
 export function registerPluginsCli(program: Command) {
   const plugins = program
     .command("plugins")
-    .description("Manage Vilaro plugins and extensions")
+    .description("Manage Velaro plugins and extensions")
     .addHelpText(
       "after",
       () =>

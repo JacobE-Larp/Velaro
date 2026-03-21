@@ -241,7 +241,7 @@ export async function setupSearch(
     const ref = buildSearchEnvRef(choice);
     await prompter.note(
       [
-        "Secret references enabled — Vilaro will store a reference instead of the API key.",
+        "Secret references enabled — Velaro will store a reference instead of the API key.",
         `Env var: ${ref.id}${envAvailable ? " (detected)" : ""}.`,
         ...(envAvailable ? [] : [`Set ${ref.id} in the Gateway environment.`]),
         "Docs: https://docs.vilaro.ai/tools/web",

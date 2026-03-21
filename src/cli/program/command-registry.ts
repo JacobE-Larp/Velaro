@@ -97,7 +97,7 @@ const coreEntries: CoreCliEntry[] = [
     commands: [
       {
         name: "backup",
-        description: "Create and verify local backup archives for Vilaro state",
+        description: "Create and verify local backup archives for Velaro state",
         hasSubcommands: true,
       },
     ],
@@ -207,7 +207,7 @@ const coreEntries: CoreCliEntry[] = [
     commands: [
       {
         name: "browser",
-        description: "Manage Vilaro's dedicated browser (Chrome/Chromium)",
+        description: "Manage Velaro's dedicated browser (Chrome/Chromium)",
         hasSubcommands: true,
       },
     ],

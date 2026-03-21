@@ -2,7 +2,7 @@ import type { VilaroConfig } from "../config/config.js";
 import { STATE_DIR } from "../config/paths.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import type { PluginRegistry } from "./registry.js";
-import type { VilaroPluginServiceContext, PluginLogger } from "./types.js";
+import type { VelaroPluginServiceContext, PluginLogger } from "./types.js";
 
 const log = createSubsystemLogger("plugins");
 
@@ -18,7 +18,7 @@ function createPluginLogger(): PluginLogger {
 function createServiceContext(params: {
   config: VilaroConfig;
   workspaceDir?: string;
-}): VilaroPluginServiceContext {
+}): VelaroPluginServiceContext {
   return {
     config: params.config,
     workspaceDir: params.workspaceDir,

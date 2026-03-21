@@ -11,18 +11,18 @@ Short guide to verify channel connectivity without guessing.
 
 ## Quick checks
 
-- `vilaro status` — local summary: gateway reachability/mode, update hint, linked channel auth age, sessions + recent activity.
-- `vilaro status --all` — full local diagnosis (read-only, color, safe to paste for debugging).
-- `vilaro status --deep` — also probes the running Gateway (per-channel probes when supported).
-- `vilaro health --json` — asks the running Gateway for a full health snapshot (WS-only; no direct Baileys socket).
+- `velaro status` — local summary: gateway reachability/mode, update hint, linked channel auth age, sessions + recent activity.
+- `velaro status --all` — full local diagnosis (read-only, color, safe to paste for debugging).
+- `velaro status --deep` — also probes the running Gateway (per-channel probes when supported).
+- `velaro health --json` — asks the running Gateway for a full health snapshot (WS-only; no direct Baileys socket).
 - Send `/status` as a standalone message in WhatsApp/WebChat to get a status reply without invoking the agent.
-- Logs: tail `/tmp/vilaro/vilaro-*.log` and filter for `web-heartbeat`, `web-reconnect`, `web-auto-reply`, `web-inbound`.
+- Logs: tail `/tmp/velaro/velaro-*.log` and filter for `web-heartbeat`, `web-reconnect`, `web-auto-reply`, `web-inbound`.
 
 ## Deep diagnostics
 
 - Creds on disk: `ls -l ~/.vilaro/credentials/whatsapp/<accountId>/creds.json` (mtime should be recent).
 - Session store: `ls -l ~/.vilaro/agents/<agentId>/sessions/sessions.json` (path can be overridden in config). Count and recent recipients are surfaced via `status`.
-- Relink flow: `vilaro channels logout && vilaro channels login --verbose` when status codes 409–515 or `loggedOut` appear in logs. (Note: the QR login flow auto-restarts once for status 515 after pairing.)
+- Relink flow: `velaro channels logout && velaro channels login --verbose` when status codes 409–515 or `loggedOut` appear in logs. (Note: the QR login flow auto-restarts once for status 515 after pairing.)
 
 ## Health monitor config
 
@@ -35,10 +35,10 @@ Short guide to verify channel connectivity without guessing.
 
 ## When something fails
 
-- `logged out` or status 409–515 → relink with `vilaro channels logout` then `vilaro channels login`.
-- Gateway unreachable → start it: `vilaro gateway --port 18789` (use `--force` if the port is busy).
+- `logged out` or status 409–515 → relink with `velaro channels logout` then `velaro channels login`.
+- Gateway unreachable → start it: `velaro gateway --port 18789` (use `--force` if the port is busy).
 - No inbound messages → confirm linked phone is online and the sender is allowed (`channels.whatsapp.allowFrom`); for group chats, ensure allowlist + mention rules match (`channels.whatsapp.groups`, `agents.list[].groupChat.mentionPatterns`).
 
 ## Dedicated "health" command
 
-`vilaro health --json` asks the running Gateway for its health snapshot (no direct channel sockets from the CLI). It reports linked creds/auth age when available, per-channel probe summaries, session-store summary, and a probe duration. It exits non-zero if the Gateway is unreachable or the probe fails/timeouts. Use `--timeout <ms>` to override the 10s default.
+`velaro health --json` asks the running Gateway for its health snapshot (no direct channel sockets from the CLI). It reports linked creds/auth age when available, per-channel probe summaries, session-store summary, and a probe duration. It exits non-zero if the Gateway is unreachable or the probe fails/timeouts. Use `--timeout <ms>` to override the 10s default.

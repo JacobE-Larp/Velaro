@@ -18,7 +18,7 @@ import {
 import { diagnosticLogger as diag } from "../logging/diagnostic.js";
 import { resolveSessionAuthProfileOverride } from "./auth-profiles/session-override.js";
 import { getApiKeyForModel, requireApiKey } from "./model-auth.js";
-import { ensureVilaroModelsJson } from "./models-config.js";
+import { ensureVelaroModelsJson } from "./models-config.js";
 import { EmbeddedBlockChunker, type BlockReplyChunking } from "./pi-embedded-block-chunker.js";
 import { resolveModelWithRegistry } from "./pi-embedded-runner/model.js";
 import { getActiveEmbeddedRunSnapshot } from "./pi-embedded-runner/runs.js";
@@ -140,7 +140,7 @@ async function resolveRuntimeModel(params: {
   authProfileId?: string;
   authProfileIdSource?: "auto" | "user";
 }> {
-  await ensureVilaroModelsJson(params.cfg, params.agentDir);
+  await ensureVelaroModelsJson(params.cfg, params.agentDir);
   const authStorage = discoverAuthStorage(params.agentDir);
   const modelRegistry = discoverModels(authStorage, params.agentDir);
   const model = resolveModelWithRegistry({

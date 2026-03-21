@@ -78,7 +78,7 @@ function hasGatewayServiceMarker(content: string): boolean {
   );
 }
 
-function isVilaroGatewayLaunchdService(label: string, contents: string): boolean {
+function isVelaroGatewayLaunchdService(label: string, contents: string): boolean {
   if (hasGatewayServiceMarker(contents)) {
     return true;
   }
@@ -89,7 +89,7 @@ function isVilaroGatewayLaunchdService(label: string, contents: string): boolean
   return label.startsWith("ai.vilaro.");
 }
 
-function isVilaroGatewaySystemdService(name: string, contents: string): boolean {
+function isVelaroGatewaySystemdService(name: string, contents: string): boolean {
   if (hasGatewayServiceMarker(contents)) {
     return true;
   }
@@ -99,13 +99,13 @@ function isVilaroGatewaySystemdService(name: string, contents: string): boolean 
   return contents.toLowerCase().includes("gateway");
 }
 
-function isVilaroGatewayTaskName(name: string): boolean {
+function isVelaroGatewayTaskName(name: string): boolean {
   const normalized = name.trim().toLowerCase();
   if (!normalized) {
     return false;
   }
   const defaultName = resolveGatewayWindowsTaskName().toLowerCase();
-  return normalized === defaultName || normalized.startsWith("vilaro gateway");
+  return normalized === defaultName || normalized.startsWith("velaro gateway");
 }
 
 function tryExtractPlistLabel(contents: string): string | null {
@@ -209,7 +209,7 @@ async function scanLaunchdDir(params: {
     if (isIgnoredLaunchdLabel(label)) {
       continue;
     }
-    if (marker === "vilaro" && isVilaroGatewayLaunchdService(label, contents)) {
+    if (marker === "vilaro" && isVelaroGatewayLaunchdService(label, contents)) {
       continue;
     }
     results.push({
@@ -241,7 +241,7 @@ async function scanSystemdDir(params: {
     if (!marker) {
       continue;
     }
-    if (marker === "vilaro" && isVilaroGatewaySystemdService(name, contents)) {
+    if (marker === "vilaro" && isVelaroGatewaySystemdService(name, contents)) {
       continue;
     }
     results.push({
@@ -394,7 +394,7 @@ export async function findExtraGatewayServices(
       if (!name) {
         continue;
       }
-      if (isVilaroGatewayTaskName(name)) {
+      if (isVelaroGatewayTaskName(name)) {
         continue;
       }
       const lowerName = name.toLowerCase();

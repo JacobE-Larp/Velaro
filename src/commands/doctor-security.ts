@@ -50,13 +50,13 @@ function collectImplicitHeartbeatDirectPolicyWarnings(cfg: VilaroConfig): string
 
 export async function noteSecurityWarnings(cfg: VilaroConfig) {
   const warnings: string[] = [];
-  const auditHint = `- Run: ${formatCliCommand("vilaro security audit --deep")}`;
+  const auditHint = `- Run: ${formatCliCommand("velaro security audit --deep")}`;
 
   if (cfg.approvals?.exec?.enabled === false) {
     warnings.push(
       "- Note: approvals.exec.enabled=false disables approval forwarding only.",
       "  Host exec gating still comes from ~/.vilaro/exec-approvals.json.",
-      `  Check local policy with: ${formatCliCommand("vilaro approvals get --gateway")}`,
+      `  Check local policy with: ${formatCliCommand("velaro approvals get --gateway")}`,
     );
   }
 
@@ -107,19 +107,19 @@ export async function noteSecurityWarnings(cfg: VilaroConfig) {
       const authFixLines =
         resolvedAuth.mode === "password"
           ? [
-              `  Fix: ${formatCliCommand("vilaro configure")} to set a password`,
-              `  Or switch to token: ${formatCliCommand("vilaro config set gateway.auth.mode token")}`,
+              `  Fix: ${formatCliCommand("velaro configure")} to set a password`,
+              `  Or switch to token: ${formatCliCommand("velaro config set gateway.auth.mode token")}`,
             ]
           : [
-              `  Fix: ${formatCliCommand("vilaro doctor --fix")} to generate a token`,
+              `  Fix: ${formatCliCommand("velaro doctor --fix")} to generate a token`,
               `  Or set token directly: ${formatCliCommand(
-                "vilaro config set gateway.auth.mode token",
+                "velaro config set gateway.auth.mode token",
               )}`,
             ];
       warnings.push(
         `- CRITICAL: Gateway bound to ${bindDescriptor} without authentication.`,
         `  Anyone on your network (or internet if port-forwarded) can fully control your agent.`,
-        `  Fix: ${formatCliCommand("vilaro config set gateway.bind loopback")}`,
+        `  Fix: ${formatCliCommand("velaro config set gateway.bind loopback")}`,
         ...saferRemoteAccessLines,
         ...authFixLines,
       );

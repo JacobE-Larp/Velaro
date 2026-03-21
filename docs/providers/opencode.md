@@ -1,5 +1,5 @@
 ---
-summary: "Use OpenCode Zen and Go catalogs with Vilaro"
+summary: "Use OpenCode Zen and Go catalogs with Velaro"
 read_when:
   - You want OpenCode-hosted model access
   - You want to pick between the Zen and Go catalogs
@@ -8,12 +8,12 @@ title: "OpenCode"
 
 # OpenCode
 
-OpenCode exposes two hosted catalogs in Vilaro:
+OpenCode exposes two hosted catalogs in Velaro:
 
 - `opencode/...` for the **Zen** catalog
 - `opencode-go/...` for the **Go** catalog
 
-Both catalogs use the same OpenCode API key. Vilaro keeps the runtime provider ids
+Both catalogs use the same OpenCode API key. Velaro keeps the runtime provider ids
 split so upstream per-model routing stays correct, but onboarding and docs treat them
 as one OpenCode setup.
 
@@ -22,15 +22,15 @@ as one OpenCode setup.
 ### Zen catalog
 
 ```bash
-vilaro onboard --auth-choice opencode-zen
-vilaro onboard --opencode-zen-api-key "$OPENCODE_API_KEY"
+velaro onboard --auth-choice opencode-zen
+velaro onboard --opencode-zen-api-key "$OPENCODE_API_KEY"
 ```
 
 ### Go catalog
 
 ```bash
-vilaro onboard --auth-choice opencode-go
-vilaro onboard --opencode-go-api-key "$OPENCODE_API_KEY"
+velaro onboard --auth-choice opencode-go
+velaro onboard --opencode-go-api-key "$OPENCODE_API_KEY"
 ```
 
 ## Config snippet

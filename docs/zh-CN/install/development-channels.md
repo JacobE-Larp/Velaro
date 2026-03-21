@@ -17,7 +17,7 @@ x-i18n:
 
 最后更新：2026-01-21
 
-Vilaro 提供三个更新渠道：
+Velaro 提供三个更新渠道：
 
 - **stable**：npm dist-tag `latest`。
 - **beta**：npm dist-tag `beta`（测试中的构建）。
@@ -31,9 +31,9 @@ Vilaro 提供三个更新渠道：
 Git checkout：
 
 ```bash
-vilaro update --channel stable
-vilaro update --channel beta
-vilaro update --channel dev
+velaro update --channel stable
+velaro update --channel beta
+velaro update --channel dev
 ```
 
 - `stable`/`beta` 检出最新匹配的标签（通常是同一个标签）。
@@ -42,16 +42,16 @@ vilaro update --channel dev
 npm/pnpm 全局安装：
 
 ```bash
-vilaro update --channel stable
-vilaro update --channel beta
-vilaro update --channel dev
+velaro update --channel stable
+velaro update --channel beta
+velaro update --channel dev
 ```
 
 这会通过相应的 npm dist-tag（`latest`、`beta`、`dev`）进行更新。
 
-当你使用 `--channel` **显式**切换渠道时，Vilaro 还会对齐安装方式：
+当你使用 `--channel` **显式**切换渠道时，Velaro 还会对齐安装方式：
 
-- `dev` 确保有一个 git checkout（默认 `~/vilaro`，可通过 `VILARO_GIT_DIR` 覆盖），
+- `dev` 确保有一个 git checkout（默认 `~/velaro`，可通过 `VILARO_GIT_DIR` 覆盖），
   更新它，并从该 checkout 安装全局 CLI。
 - `stable`/`beta` 使用匹配的 dist-tag 从 npm 安装。
 
@@ -59,7 +59,7 @@ vilaro update --channel dev
 
 ## 插件和渠道
 
-当你使用 `vilaro update` 切换渠道时，Vilaro 还会同步插件来源：
+当你使用 `velaro update` 切换渠道时，Velaro 还会同步插件来源：
 
 - `dev` 优先使用 git checkout 中的内置插件。
 - `stable` 和 `beta` 恢复 npm 安装的插件包。

@@ -287,8 +287,8 @@ export async function createBackupArchive(
   if (plan.included.length === 0) {
     throw new Error(
       onlyConfig
-        ? "No Vilaro config file was found to back up."
-        : "No local Vilaro state was found to back up.",
+        ? "No Velaro config file was found to back up."
+        : "No local Velaro state was found to back up.",
     );
   }
 
@@ -324,7 +324,7 @@ export async function createBackupArchive(
   }
 
   await fs.mkdir(path.dirname(outputPath), { recursive: true });
-  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "vilaro-backup-"));
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "velaro-backup-"));
   const manifestPath = path.join(tempDir, "manifest.json");
   const tempArchivePath = buildTempArchivePath(outputPath);
   try {

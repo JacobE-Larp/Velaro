@@ -1,7 +1,7 @@
 ---
-summary: "Run Vilaro with SGLang (OpenAI-compatible self-hosted server)"
+summary: "Run Velaro with SGLang (OpenAI-compatible self-hosted server)"
 read_when:
-  - You want to run Vilaro against a local SGLang server
+  - You want to run Velaro against a local SGLang server
   - You want OpenAI-compatible /v1 endpoints with your own models
 title: "SGLang"
 ---
@@ -9,9 +9,9 @@ title: "SGLang"
 # SGLang
 
 SGLang can serve open-source models via an **OpenAI-compatible** HTTP API.
-Vilaro can connect to SGLang using the `openai-completions` API.
+Velaro can connect to SGLang using the `openai-completions` API.
 
-Vilaro can also **auto-discover** available models from SGLang when you opt
+Velaro can also **auto-discover** available models from SGLang when you opt
 in with `SGLANG_API_KEY` (any value works if your server does not enforce auth)
 and you do not define an explicit `models.providers.sglang` entry.
 
@@ -33,7 +33,7 @@ export SGLANG_API_KEY="sglang-local"
 3. Run onboarding and choose `SGLang`, or set a model directly:
 
 ```bash
-vilaro onboard
+velaro onboard
 ```
 
 ```json5
@@ -49,7 +49,7 @@ vilaro onboard
 ## Model discovery (implicit provider)
 
 When `SGLANG_API_KEY` is set (or an auth profile exists) and you **do not**
-define `models.providers.sglang`, Vilaro will query:
+define `models.providers.sglang`, Velaro will query:
 
 - `GET http://127.0.0.1:30000/v1/models`
 

@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { resolveVilaroPackageRoot } from "../infra/vilaro-root.js";
 
-export async function resolveVilaroDocsPath(params: {
+export async function resolveVelaroDocsPath(params: {
   workspaceDir?: string;
   argv1?: string;
   cwd?: string;

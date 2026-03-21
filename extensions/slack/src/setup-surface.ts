@@ -33,11 +33,11 @@ import { slackSetupAdapter } from "./setup-core.js";
 const channel = "slack" as const;
 
 function buildSlackManifest(botName: string) {
-  const safeName = botName.trim() || "Vilaro";
+  const safeName = botName.trim() || "Velaro";
   const manifest = {
     display_information: {
       name: safeName,
-      description: `${safeName} connector for Vilaro`,
+      description: `${safeName} connector for Velaro`,
     },
     features: {
       bot_user: {
@@ -51,7 +51,7 @@ function buildSlackManifest(botName: string) {
       slash_commands: [
         {
           command: "/vilaro",
-          description: "Send a message to Vilaro",
+          description: "Send a message to Velaro",
           should_escape: false,
         },
       ],
@@ -101,7 +101,7 @@ function buildSlackManifest(botName: string) {
   return JSON.stringify(manifest, null, 2);
 }
 
-function buildSlackSetupLines(botName = "Vilaro"): string[] {
+function buildSlackSetupLines(botName = "Velaro"): string[] {
   return [
     "1) Slack API -> Create App -> From scratch or From manifest (with the JSON below)",
     "2) Add Socket Mode + enable it to get the app-level token (xapp-...)",

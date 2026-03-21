@@ -10,7 +10,7 @@ title: "API Usage and Costs"
 # API usage & costs
 
 This doc lists **features that can invoke API keys** and where their costs show up. It focuses on
-Vilaro features that can generate provider usage or paid API calls.
+Velaro features that can generate provider usage or paid API calls.
 
 ## Where costs show up (chat + CLI)
 
@@ -26,14 +26,14 @@ Vilaro features that can generate provider usage or paid API calls.
 
 **CLI usage windows (provider quotas)**
 
-- `vilaro status --usage` and `vilaro channels list` show provider **usage windows**
+- `velaro status --usage` and `velaro channels list` show provider **usage windows**
   (quota snapshots, not per-message costs).
 
 See [Token use & costs](/reference/token-use) for details and examples.
 
 ## How keys are discovered
 
-Vilaro can pick up credentials from:
+Velaro can pick up credentials from:
 
 - **Auth profiles** (per-agent, stored in `auth-profiles.json`).
 - **Environment variables** (e.g. `OPENAI_API_KEY`, `BRAVE_API_KEY`, `FIRECRAWL_API_KEY`).
@@ -107,8 +107,8 @@ See [Web tools](/tools/web).
 Some status commands call **provider usage endpoints** to display quota windows or auth health.
 These are typically low-volume calls but still hit provider APIs:
 
-- `vilaro status --usage`
-- `vilaro models status --json`
+- `velaro status --usage`
+- `velaro models status --json`
 
 See [Models CLI](/cli/models).
 
@@ -121,7 +121,7 @@ See [Session management + compaction](/reference/session-management-compaction).
 
 ### 8) Model scan / probe
 
-`vilaro models scan` can probe OpenRouter models and uses `OPENROUTER_API_KEY` when
+`velaro models scan` can probe OpenRouter models and uses `OPENROUTER_API_KEY` when
 probing is enabled.
 
 See [Models CLI](/cli/models).

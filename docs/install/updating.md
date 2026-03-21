@@ -1,19 +1,19 @@
 ---
-summary: "Updating Vilaro safely (global install or source), plus rollback strategy"
+summary: "Updating Velaro safely (global install or source), plus rollback strategy"
 read_when:
-  - Updating Vilaro
+  - Updating Velaro
   - Something breaks after an update
 title: "Updating"
 ---
 
 # Updating
 
-Vilaro is moving fast (pre “1.0”). Treat updates like shipping infra: update → run checks → restart (or use `vilaro update`, which restarts) → verify.
+Velaro is moving fast (pre “1.0”). Treat updates like shipping infra: update → run checks → restart (or use `velaro update`, which restarts) → verify.
 
 ## Recommended: re-run the website installer (upgrade in place)
 
 The **preferred** update path is to re-run the installer from the website. It
-detects existing installs, upgrades in place, and runs `vilaro doctor` when
+detects existing installs, upgrades in place, and runs `velaro doctor` when
 needed.
 
 ```bash
@@ -31,8 +31,8 @@ Notes:
 
   The installer will `git pull --rebase` **only** if the repo is clean.
 
-- For **global installs**, the script uses `npm install -g vilaro@latest` under the hood.
-- Legacy note: `vilaro` remains available as a compatibility shim.
+- For **global installs**, the script uses `npm install -g velaro@latest` under the hood.
+- Legacy note: `velaro` remains available as a compatibility shim.
 
 ## Before you update
 
@@ -48,11 +48,11 @@ Notes:
 Global install (pick one):
 
 ```bash
-npm i -g vilaro@latest
+npm i -g velaro@latest
 ```
 
 ```bash
-pnpm add -g vilaro@latest
+pnpm add -g velaro@latest
 ```
 
 We do **not** recommend Bun for the Gateway runtime (WhatsApp/Telegram bugs).
@@ -60,9 +60,9 @@ We do **not** recommend Bun for the Gateway runtime (WhatsApp/Telegram bugs).
 To switch update channels (git + npm installs):
 
 ```bash
-vilaro update --channel beta
-vilaro update --channel dev
-vilaro update --channel stable
+velaro update --channel beta
+velaro update --channel dev
+velaro update --channel stable
 ```
 
 Use `--tag <dist-tag|version|spec>` for a one-off package target override.
@@ -70,17 +70,17 @@ Use `--tag <dist-tag|version|spec>` for a one-off package target override.
 For the current GitHub `main` head via a package-manager install:
 
 ```bash
-vilaro update --tag main
+velaro update --tag main
 ```
 
 Manual equivalents:
 
 ```bash
-npm i -g github:vilaro/vilaro#main
+npm i -g github:velaro/velaro#main
 ```
 
 ```bash
-pnpm add -g github:vilaro/vilaro#main
+pnpm add -g github:velaro/velaro#main
 ```
 
 You can also pass an explicit package spec to `--tag` for one-off updates (for example a GitHub ref or tarball URL).
@@ -109,31 +109,31 @@ Auto-updater is **off by default** and is a core Gateway feature (not a plugin).
 
 Behavior:
 
-- `stable`: when a new version is seen, Vilaro waits `stableDelayHours` and then applies a deterministic per-install jitter in `stableJitterHours` (spread rollout).
+- `stable`: when a new version is seen, Velaro waits `stableDelayHours` and then applies a deterministic per-install jitter in `stableJitterHours` (spread rollout).
 - `beta`: checks on `betaCheckIntervalHours` cadence (default: hourly) and applies when an update is available.
-- `dev`: no automatic apply; use manual `vilaro update`.
+- `dev`: no automatic apply; use manual `velaro update`.
 
-Use `vilaro update --dry-run` to preview update actions before enabling automation.
+Use `velaro update --dry-run` to preview update actions before enabling automation.
 
 Then:
 
 ```bash
-vilaro doctor
-vilaro gateway restart
-vilaro health
+velaro doctor
+velaro gateway restart
+velaro health
 ```
 
 Notes:
 
-- If your Gateway runs as a service, `vilaro gateway restart` is preferred over killing PIDs.
+- If your Gateway runs as a service, `velaro gateway restart` is preferred over killing PIDs.
 - If you’re pinned to a specific version, see “Rollback / pinning” below.
 
-## Update (`vilaro update`)
+## Update (`velaro update`)
 
 For **source installs** (git checkout), prefer:
 
 ```bash
-vilaro update
+velaro update
 ```
 
 It runs a safe-ish update flow:
@@ -141,16 +141,16 @@ It runs a safe-ish update flow:
 - Requires a clean worktree.
 - Switches to the selected channel (tag or branch).
 - Fetches + rebases against the configured upstream (dev channel).
-- Installs deps, builds, builds the Control UI, and runs `vilaro doctor`.
+- Installs deps, builds, builds the Control UI, and runs `velaro doctor`.
 - Restarts the gateway by default (use `--no-restart` to skip).
 
-If you installed via **npm/pnpm** (no git metadata), `vilaro update` will try to update via your package manager. If it can’t detect the install, use “Update (global install)” instead.
+If you installed via **npm/pnpm** (no git metadata), `velaro update` will try to update via your package manager. If it can’t detect the install, use “Update (global install)” instead.
 
 ## Update (Control UI / RPC)
 
 The Control UI has **Update & Restart** (RPC: `update.run`). It:
 
-1. Runs the same source-update flow as `vilaro update` (git checkout only).
+1. Runs the same source-update flow as `velaro update` (git checkout only).
 2. Writes a restart sentinel with a structured report (stdout/stderr tail).
 3. Restarts the gateway and pings the last active session with the report.
 
@@ -163,7 +163,7 @@ From the repo checkout:
 Preferred:
 
 ```bash
-vilaro update
+velaro update
 ```
 
 Manual (equivalent-ish):
@@ -173,29 +173,29 @@ git pull
 pnpm install
 pnpm build
 pnpm ui:build # auto-installs UI deps on first run
-vilaro doctor
-vilaro health
+velaro doctor
+velaro health
 ```
 
 Notes:
 
-- `pnpm build` matters when you run the packaged `vilaro` binary ([`vilaro.mjs`](https://github.com/vilaro/vilaro/blob/main/vilaro.mjs)) or use Node to run `dist/`.
-- If you run from a repo checkout without a global install, use `pnpm vilaro ...` for CLI commands.
-- If you run directly from TypeScript (`pnpm vilaro ...`), a rebuild is usually unnecessary, but **config migrations still apply** → run doctor.
-- Switching between global and git installs is easy: install the other flavor, then run `vilaro doctor` so the gateway service entrypoint is rewritten to the current install.
+- `pnpm build` matters when you run the packaged `velaro` binary ([`vilaro.mjs`](https://github.com/vilaro/vilaro/blob/main/vilaro.mjs)) or use Node to run `dist/`.
+- If you run from a repo checkout without a global install, use `pnpm velaro ...` for CLI commands.
+- If you run directly from TypeScript (`pnpm velaro ...`), a rebuild is usually unnecessary, but **config migrations still apply** → run doctor.
+- Switching between global and git installs is easy: install the other flavor, then run `velaro doctor` so the gateway service entrypoint is rewritten to the current install.
 
-## Always Run: `vilaro doctor`
+## Always Run: `velaro doctor`
 
 Doctor is the “safe update” command. It’s intentionally boring: repair + migrate + warn.
 
-Note: if you’re on a **source install** (git checkout), `vilaro doctor` will offer to run `vilaro update` first.
+Note: if you’re on a **source install** (git checkout), `velaro doctor` will offer to run `velaro update` first.
 
 Typical things it does:
 
 - Migrate deprecated config keys / legacy config file locations.
 - Audit DM policies and warn on risky “open” settings.
 - Check Gateway health and can offer to restart.
-- Detect and migrate older gateway services (launchd/systemd; legacy schtasks) to current Vilaro services.
+- Detect and migrate older gateway services (launchd/systemd; legacy schtasks) to current Velaro services.
 - On Linux, ensure systemd user lingering (so the Gateway survives logout).
 
 Details: [Doctor](/gateway/doctor)
@@ -205,19 +205,19 @@ Details: [Doctor](/gateway/doctor)
 CLI (works regardless of OS):
 
 ```bash
-vilaro gateway status
-vilaro gateway stop
-vilaro gateway restart
-vilaro gateway --port 18789
-vilaro logs --follow
+velaro gateway status
+velaro gateway stop
+velaro gateway restart
+velaro gateway --port 18789
+velaro logs --follow
 ```
 
 If you’re supervised:
 
-- macOS launchd (app-bundled LaunchAgent): `launchctl kickstart -k gui/$UID/ai.vilaro.gateway` (use `ai.vilaro.<profile>`; legacy `com.vilaro.*` still works)
+- macOS launchd (app-bundled LaunchAgent): `launchctl kickstart -k gui/$UID/ai.vilaro.gateway` (use `ai.velaro.<profile>`; legacy `com.velaro.*` still works)
 - Linux systemd user service: `systemctl --user restart vilaro-gateway[-<profile>].service`
 - Windows (WSL2): `systemctl --user restart vilaro-gateway[-<profile>].service`
-  - `launchctl`/`systemctl` only work if the service is installed; otherwise run `vilaro gateway install`.
+  - `launchctl`/`systemctl` only work if the service is installed; otherwise run `velaro gateway install`.
 
 Runbook + exact service labels: [Gateway runbook](/gateway)
 
@@ -228,11 +228,11 @@ Runbook + exact service labels: [Gateway runbook](/gateway)
 Install a known-good version (replace `<version>` with the last working one):
 
 ```bash
-npm i -g vilaro@<version>
+npm i -g velaro@<version>
 ```
 
 ```bash
-pnpm add -g vilaro@<version>
+pnpm add -g velaro@<version>
 ```
 
 Tip: to see the current published version, run `npm view vilaro version`.
@@ -240,8 +240,8 @@ Tip: to see the current published version, run `npm view vilaro version`.
 Then restart + re-run doctor:
 
 ```bash
-vilaro doctor
-vilaro gateway restart
+velaro doctor
+velaro gateway restart
 ```
 
 ### Pin (source) by date
@@ -258,7 +258,7 @@ Then reinstall deps + restart:
 ```bash
 pnpm install
 pnpm build
-vilaro gateway restart
+velaro gateway restart
 ```
 
 If you want to go back to latest later:
@@ -270,6 +270,6 @@ git pull
 
 ## If you’re stuck
 
-- Run `vilaro doctor` again and read the output carefully (it often tells you the fix).
+- Run `velaro doctor` again and read the output carefully (it often tells you the fix).
 - Check: [Troubleshooting](/gateway/troubleshooting)
 - Ask in Discord: [https://discord.gg/vilaro](https://discord.gg/vilaro)

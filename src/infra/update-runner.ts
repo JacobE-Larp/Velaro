@@ -534,7 +534,7 @@ export async function runGatewayUpdate(opts: UpdateRunnerOptions = {}): Promise<
       }
 
       const manager = await detectPackageManager(gitRoot);
-      const preflightRoot = await fs.mkdtemp(path.join(os.tmpdir(), "vilaro-update-preflight-"));
+      const preflightRoot = await fs.mkdtemp(path.join(os.tmpdir(), "velaro-update-preflight-"));
       const worktreeDir = path.join(preflightRoot, "worktree");
       const worktreeStep = await runStep(
         step(
@@ -752,7 +752,7 @@ export async function runGatewayUpdate(opts: UpdateRunnerOptions = {}): Promise<
       .catch(() => false);
     if (!doctorEntryExists) {
       steps.push({
-        name: "vilaro doctor entry",
+        name: "velaro doctor entry",
         command: `verify ${doctorEntry}`,
         cwd: gitRoot,
         durationMs: 0,
@@ -775,7 +775,7 @@ export async function runGatewayUpdate(opts: UpdateRunnerOptions = {}): Promise<
     const doctorNodePath = await resolveStableNodePath(process.execPath);
     const doctorArgv = [doctorNodePath, doctorEntry, "doctor", "--non-interactive", "--fix"];
     const doctorStep = await runStep(
-      step("vilaro doctor", doctorArgv, gitRoot, { VILARO_UPDATE_IN_PROGRESS: "1" }),
+      step("velaro doctor", doctorArgv, gitRoot, { VILARO_UPDATE_IN_PROGRESS: "1" }),
     );
     steps.push(doctorStep);
 

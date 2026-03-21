@@ -9,7 +9,7 @@ title: "Logging"
 
 # Logging
 
-Vilaro logs in two places:
+Velaro logs in two places:
 
 - **File logs** (JSON lines) written by the Gateway.
 - **Console output** shown in terminals and the Control UI.
@@ -21,7 +21,7 @@ levels and formats.
 
 By default, the Gateway writes a rolling log file under:
 
-`/tmp/vilaro/vilaro-YYYY-MM-DD.log`
+`/tmp/velaro/velaro-YYYY-MM-DD.log`
 
 The date uses the gateway host's local timezone.
 
@@ -30,7 +30,7 @@ You can override this in `~/.vilaro/vilaro.json`:
 ```json
 {
   "logging": {
-    "file": "/path/to/vilaro.log"
+    "file": "/path/to/velaro.log"
   }
 }
 ```
@@ -42,7 +42,7 @@ You can override this in `~/.vilaro/vilaro.json`:
 Use the CLI to tail the gateway log file via RPC:
 
 ```bash
-vilaro logs --follow
+velaro logs --follow
 ```
 
 Output modes:
@@ -63,7 +63,7 @@ In JSON mode, the CLI emits `type`-tagged objects:
 If the Gateway is unreachable, the CLI prints a short hint to run:
 
 ```bash
-vilaro doctor
+velaro doctor
 ```
 
 ### Control UI (web)
@@ -76,7 +76,7 @@ See [/web/control-ui](/web/control-ui) for how to open it.
 To filter channel activity (WhatsApp/Telegram/etc), use:
 
 ```bash
-vilaro channels logs --channel whatsapp
+velaro channels logs --channel whatsapp
 ```
 
 ## Log formats
@@ -104,7 +104,7 @@ All logging configuration lives under `logging` in `~/.vilaro/vilaro.json`.
 {
   "logging": {
     "level": "info",
-    "file": "/tmp/vilaro/vilaro-YYYY-MM-DD.log",
+    "file": "/tmp/velaro/velaro-YYYY-MM-DD.log",
     "consoleLevel": "info",
     "consoleStyle": "pretty",
     "redactSensitive": "tools",
@@ -118,7 +118,7 @@ All logging configuration lives under `logging` in `~/.vilaro/vilaro.json`.
 - `logging.level`: **file logs** (JSONL) level.
 - `logging.consoleLevel`: **console** verbosity level.
 
-You can override both via the **`VILARO_LOG_LEVEL`** environment variable (e.g. `VILARO_LOG_LEVEL=debug`). The env var takes precedence over the config file, so you can raise verbosity for a single run without editing `vilaro.json`. You can also pass the global CLI option **`--log-level <level>`** (for example, `vilaro --log-level debug gateway run`), which overrides the environment variable for that command.
+You can override both via the **`VILARO_LOG_LEVEL`** environment variable (e.g. `VILARO_LOG_LEVEL=debug`). The env var takes precedence over the config file, so you can raise verbosity for a single run without editing `vilaro.json`. You can also pass the global CLI option **`--log-level <level>`** (for example, `velaro --log-level debug gateway run`), which overrides the environment variable for that command.
 
 `--verbose` only affects console output; it does not change file log levels.
 
@@ -152,7 +152,7 @@ diagnostics + the exporter plugin are enabled.
 
 - **OpenTelemetry (OTel)**: the data model + SDKs for traces, metrics, and logs.
 - **OTLP**: the wire protocol used to export OTel data to a collector/backend.
-- Vilaro exports via **OTLP/HTTP (protobuf)** today.
+- Velaro exports via **OTLP/HTTP (protobuf)** today.
 
 ### Signals exported
 
@@ -255,7 +255,7 @@ works with any OpenTelemetry collector/backend that accepts OTLP/HTTP.
 
 Notes:
 
-- You can also enable the plugin with `vilaro plugins enable diagnostics-otel`.
+- You can also enable the plugin with `velaro plugins enable diagnostics-otel`.
 - `protocol` currently supports `http/protobuf` only. `grpc` is ignored.
 - Metrics include token usage, cost, context size, run duration, and message-flow
   counters/histograms (webhooks, queueing, session state, queue depth/wait).
@@ -269,60 +269,60 @@ Notes:
 
 Model usage:
 
-- `vilaro.tokens` (counter, attrs: `vilaro.token`, `vilaro.channel`,
-  `vilaro.provider`, `vilaro.model`)
-- `vilaro.cost.usd` (counter, attrs: `vilaro.channel`, `vilaro.provider`,
-  `vilaro.model`)
-- `vilaro.run.duration_ms` (histogram, attrs: `vilaro.channel`,
-  `vilaro.provider`, `vilaro.model`)
-- `vilaro.context.tokens` (histogram, attrs: `vilaro.context`,
-  `vilaro.channel`, `vilaro.provider`, `vilaro.model`)
+- `velaro.tokens` (counter, attrs: `velaro.token`, `velaro.channel`,
+  `velaro.provider`, `velaro.model`)
+- `velaro.cost.usd` (counter, attrs: `velaro.channel`, `velaro.provider`,
+  `velaro.model`)
+- `velaro.run.duration_ms` (histogram, attrs: `velaro.channel`,
+  `velaro.provider`, `velaro.model`)
+- `velaro.context.tokens` (histogram, attrs: `velaro.context`,
+  `velaro.channel`, `velaro.provider`, `velaro.model`)
 
 Message flow:
 
-- `vilaro.webhook.received` (counter, attrs: `vilaro.channel`,
-  `vilaro.webhook`)
-- `vilaro.webhook.error` (counter, attrs: `vilaro.channel`,
-  `vilaro.webhook`)
-- `vilaro.webhook.duration_ms` (histogram, attrs: `vilaro.channel`,
-  `vilaro.webhook`)
-- `vilaro.message.queued` (counter, attrs: `vilaro.channel`,
-  `vilaro.source`)
-- `vilaro.message.processed` (counter, attrs: `vilaro.channel`,
-  `vilaro.outcome`)
-- `vilaro.message.duration_ms` (histogram, attrs: `vilaro.channel`,
-  `vilaro.outcome`)
+- `velaro.webhook.received` (counter, attrs: `velaro.channel`,
+  `velaro.webhook`)
+- `velaro.webhook.error` (counter, attrs: `velaro.channel`,
+  `velaro.webhook`)
+- `velaro.webhook.duration_ms` (histogram, attrs: `velaro.channel`,
+  `velaro.webhook`)
+- `velaro.message.queued` (counter, attrs: `velaro.channel`,
+  `velaro.source`)
+- `velaro.message.processed` (counter, attrs: `velaro.channel`,
+  `velaro.outcome`)
+- `velaro.message.duration_ms` (histogram, attrs: `velaro.channel`,
+  `velaro.outcome`)
 
 Queues + sessions:
 
-- `vilaro.queue.lane.enqueue` (counter, attrs: `vilaro.lane`)
-- `vilaro.queue.lane.dequeue` (counter, attrs: `vilaro.lane`)
-- `vilaro.queue.depth` (histogram, attrs: `vilaro.lane` or
-  `vilaro.channel=heartbeat`)
-- `vilaro.queue.wait_ms` (histogram, attrs: `vilaro.lane`)
-- `vilaro.session.state` (counter, attrs: `vilaro.state`, `vilaro.reason`)
-- `vilaro.session.stuck` (counter, attrs: `vilaro.state`)
-- `vilaro.session.stuck_age_ms` (histogram, attrs: `vilaro.state`)
-- `vilaro.run.attempt` (counter, attrs: `vilaro.attempt`)
+- `velaro.queue.lane.enqueue` (counter, attrs: `velaro.lane`)
+- `velaro.queue.lane.dequeue` (counter, attrs: `velaro.lane`)
+- `velaro.queue.depth` (histogram, attrs: `velaro.lane` or
+  `velaro.channel=heartbeat`)
+- `velaro.queue.wait_ms` (histogram, attrs: `velaro.lane`)
+- `velaro.session.state` (counter, attrs: `velaro.state`, `velaro.reason`)
+- `velaro.session.stuck` (counter, attrs: `velaro.state`)
+- `velaro.session.stuck_age_ms` (histogram, attrs: `velaro.state`)
+- `velaro.run.attempt` (counter, attrs: `velaro.attempt`)
 
 ### Exported spans (names + key attributes)
 
-- `vilaro.model.usage`
-  - `vilaro.channel`, `vilaro.provider`, `vilaro.model`
-  - `vilaro.sessionKey`, `vilaro.sessionId`
-  - `vilaro.tokens.*` (input/output/cache_read/cache_write/total)
-- `vilaro.webhook.processed`
-  - `vilaro.channel`, `vilaro.webhook`, `vilaro.chatId`
-- `vilaro.webhook.error`
-  - `vilaro.channel`, `vilaro.webhook`, `vilaro.chatId`,
-    `vilaro.error`
-- `vilaro.message.processed`
-  - `vilaro.channel`, `vilaro.outcome`, `vilaro.chatId`,
-    `vilaro.messageId`, `vilaro.sessionKey`, `vilaro.sessionId`,
-    `vilaro.reason`
-- `vilaro.session.stuck`
-  - `vilaro.state`, `vilaro.ageMs`, `vilaro.queueDepth`,
-    `vilaro.sessionKey`, `vilaro.sessionId`
+- `velaro.model.usage`
+  - `velaro.channel`, `velaro.provider`, `velaro.model`
+  - `velaro.sessionKey`, `velaro.sessionId`
+  - `velaro.tokens.*` (input/output/cache_read/cache_write/total)
+- `velaro.webhook.processed`
+  - `velaro.channel`, `velaro.webhook`, `velaro.chatId`
+- `velaro.webhook.error`
+  - `velaro.channel`, `velaro.webhook`, `velaro.chatId`,
+    `velaro.error`
+- `velaro.message.processed`
+  - `velaro.channel`, `velaro.outcome`, `velaro.chatId`,
+    `velaro.messageId`, `velaro.sessionKey`, `velaro.sessionId`,
+    `velaro.reason`
+- `velaro.session.stuck`
+  - `velaro.state`, `velaro.ageMs`, `velaro.queueDepth`,
+    `velaro.sessionKey`, `velaro.sessionId`
 
 ### Sampling + flushing
 
@@ -346,7 +346,7 @@ Queues + sessions:
 
 ## Troubleshooting tips
 
-- **Gateway not reachable?** Run `vilaro doctor` first.
+- **Gateway not reachable?** Run `velaro doctor` first.
 - **Logs empty?** Check that the Gateway is running and writing to the file path
   in `logging.file`.
 - **Need more detail?** Set `logging.level` to `debug` or `trace` and retry.

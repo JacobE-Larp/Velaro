@@ -3,7 +3,7 @@ import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent
 import type { VilaroConfig } from "../config/config.js";
 import { loadConfig } from "../config/config.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
-import { loadVilaroPlugins } from "./loader.js";
+import { loadVelaroPlugins } from "./loader.js";
 import type { PluginLogger } from "./types.js";
 
 const log = createSubsystemLogger("plugins");
@@ -21,7 +21,7 @@ export function registerPluginCliCommands(
     error: (msg: string) => log.error(msg),
     debug: (msg: string) => log.debug(msg),
   };
-  const registry = loadVilaroPlugins({
+  const registry = loadVelaroPlugins({
     config,
     workspaceDir,
     env,

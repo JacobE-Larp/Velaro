@@ -18,7 +18,7 @@ Broadcast Groups enable multiple agents to process and respond to the same messa
 
 Current scope: **WhatsApp only** (web channel).
 
-Broadcast groups are evaluated after channel allowlists and group activation rules. In WhatsApp groups, this means broadcasts happen when Vilaro would normally reply (for example: on mention, depending on your group settings).
+Broadcast groups are evaluated after channel allowlists and group activation rules. In WhatsApp groups, this means broadcasts happen when Velaro would normally reply (for example: on mention, depending on your group settings).
 
 ## Use Cases
 
@@ -83,7 +83,7 @@ Add a top-level `broadcast` section (next to `bindings`). Keys are WhatsApp peer
 }
 ```
 
-**Result:** When Vilaro would reply in this chat, it will run all three agents.
+**Result:** When Velaro would reply in this chat, it will run all three agents.
 
 ### Processing Strategy
 
@@ -192,7 +192,7 @@ In group `120363403215116621@g.us` with agents `["alfred", "baerbel"]`:
 ```
 Session: agent:alfred:whatsapp:group:120363403215116621@g.us
 History: [user message, alfred's previous responses]
-Workspace: /Users/pascal/vilaro-alfred/
+Workspace: /Users/pascal/velaro-alfred/
 Tools: read, write, exec
 ```
 
@@ -201,7 +201,7 @@ Tools: read, write, exec
 ```
 Session: agent:baerbel:whatsapp:group:120363403215116621@g.us
 History: [user message, baerbel's previous responses]
-Workspace: /Users/pascal/vilaro-baerbel/
+Workspace: /Users/pascal/velaro-baerbel/
 Tools: read only
 ```
 
@@ -403,7 +403,7 @@ tail -f ~/.vilaro/logs/gateway.log | grep broadcast
 ### Config Schema
 
 ```typescript
-interface VilaroConfig {
+interface VelaroConfig {
   broadcast?: {
     strategy?: "parallel" | "sequential";
     [peerId: string]: string[];

@@ -238,7 +238,7 @@ async function noteChannelPrimer(
   await prompter.note(
     [
       "DM security: default is pairing; unknown DMs get a pairing code.",
-      `Approve with: ${formatCliCommand("vilaro pairing approve <channel> <code>")}`,
+      `Approve with: ${formatCliCommand("velaro pairing approve <channel> <code>")}`,
       'Public DMs require dmPolicy="open" + allowFrom=["*"].',
       "Multi-user DMs: run: " +
         formatCliCommand('vilaro config set session.dmScope "per-channel-peer"') +
@@ -295,7 +295,7 @@ async function maybeConfigureDmPolicies(params: {
     await prompter.note(
       [
         "Default: pairing (unknown DMs get a pairing code).",
-        `Approve: ${formatCliCommand(`vilaro pairing approve ${policy.channel} <code>`)}`,
+        `Approve: ${formatCliCommand(`velaro pairing approve ${policy.channel} <code>`)}`,
         `Allowlist DMs: ${policy.policyKey}="allowlist" + ${policy.allowFromKey} entries.`,
         `Public DMs: ${policy.policyKey}="open" + ${policy.allowFromKey} includes "*".`,
         "Multi-user DMs: run: " +
@@ -585,8 +585,8 @@ export async function setupChannels(
       if (adapter) {
         await prompter.note(
           `${channel} plugin not available (continuing with setup). If the channel still doesn't work after setup, run \`${formatCliCommand(
-            "vilaro plugins list",
-          )}\` and \`${formatCliCommand("vilaro plugins enable " + channel)}\`, then restart the gateway.`,
+            "velaro plugins list",
+          )}\` and \`${formatCliCommand("velaro plugins enable " + channel)}\`, then restart the gateway.`,
           "Channel setup",
         );
         await refreshStatus(channel);
@@ -800,7 +800,7 @@ export async function setupChannels(
         {
           value: "__skip__",
           label: "Skip for now",
-          hint: `You can add channels later via \`${formatCliCommand("vilaro channels add")}\``,
+          hint: `You can add channels later via \`${formatCliCommand("velaro channels add")}\``,
         },
       ],
       initialValue: quickstartDefault,

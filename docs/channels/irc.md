@@ -1,13 +1,13 @@
 ---
 title: IRC
-description: Connect Vilaro to IRC channels and direct messages.
+description: Connect Velaro to IRC channels and direct messages.
 summary: "IRC plugin setup, access controls, and troubleshooting"
 read_when:
-  - You want to connect Vilaro to IRC channels or DMs
+  - You want to connect Velaro to IRC channels or DMs
   - You are configuring IRC allowlists, group policy, or mention gating
 ---
 
-Use IRC when you want Vilaro in classic channels (`#room`) and direct messages.
+Use IRC when you want Velaro in classic channels (`#room`) and direct messages.
 IRC ships as an extension plugin, but it is configured in the main config under `channels.irc`.
 
 ## Quick start
@@ -23,8 +23,8 @@ IRC ships as an extension plugin, but it is configured in the main config under 
       "host": "irc.libera.chat",
       "port": 6697,
       "tls": true,
-      "nick": "vilaro-bot",
-      "channels": ["#vilaro"]
+      "nick": "velaro-bot",
+      "channels": ["#velaro"]
     }
   }
 }
@@ -33,7 +33,7 @@ IRC ships as an extension plugin, but it is configured in the main config under 
 3. Start/restart gateway:
 
 ```bash
-vilaro gateway run
+velaro gateway run
 ```
 
 ## Security defaults
@@ -88,7 +88,7 @@ Example (allow anyone in `#tuirc-dev` to talk to the bot):
 
 ## Reply triggering (mentions)
 
-Even if a channel is allowed (via `groupPolicy` + `groups`) and the sender is allowed, Vilaro defaults to **mention-gating** in group contexts.
+Even if a channel is allowed (via `groupPolicy` + `groups`) and the sender is allowed, Velaro defaults to **mention-gating** in group contexts.
 
 That means you may see logs like `drop channel … (missing-mention)` unless the message includes a mention pattern that matches the bot.
 

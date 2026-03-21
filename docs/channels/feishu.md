@@ -8,20 +8,20 @@ title: Feishu
 
 # Feishu bot
 
-Feishu (Lark) is a team chat platform used by companies for messaging and collaboration. This plugin connects Vilaro to a Feishu/Lark bot using the platform’s WebSocket event subscription so messages can be received without exposing a public webhook URL.
+Feishu (Lark) is a team chat platform used by companies for messaging and collaboration. This plugin connects Velaro to a Feishu/Lark bot using the platform’s WebSocket event subscription so messages can be received without exposing a public webhook URL.
 
 ---
 
 ## Bundled plugin
 
-Feishu ships bundled with current Vilaro releases, so no separate plugin install
+Feishu ships bundled with current Velaro releases, so no separate plugin install
 is required.
 
 If you are using an older build or a custom install that does not include bundled
 Feishu, install it manually:
 
 ```bash
-vilaro plugins install @vilaro/feishu
+velaro plugins install @vilaro/feishu
 ```
 
 ---
@@ -32,38 +32,38 @@ There are two ways to add the Feishu channel:
 
 ### Method 1: setup wizard (recommended)
 
-If you just installed Vilaro, run the setup wizard:
+If you just installed Velaro, run the setup wizard:
 
 ```bash
-vilaro onboard
+velaro onboard
 ```
 
 The wizard guides you through:
 
 1. Creating a Feishu app and collecting credentials
-2. Configuring app credentials in Vilaro
+2. Configuring app credentials in Velaro
 3. Starting the gateway
 
 ✅ **After configuration**, check gateway status:
 
-- `vilaro gateway status`
-- `vilaro logs --follow`
+- `velaro gateway status`
+- `velaro logs --follow`
 
 ### Method 2: CLI setup
 
 If you already completed initial install, add the channel via CLI:
 
 ```bash
-vilaro channels add
+velaro channels add
 ```
 
 Choose **Feishu**, then enter the App ID and App Secret.
 
 ✅ **After configuration**, manage the gateway:
 
-- `vilaro gateway status`
-- `vilaro gateway restart`
-- `vilaro logs --follow`
+- `velaro gateway status`
+- `velaro gateway restart`
+- `velaro logs --follow`
 
 ---
 
@@ -141,8 +141,8 @@ In **App Capability** > **Bot**:
 
 ⚠️ **Important:** before setting event subscription, make sure:
 
-1. You already ran `vilaro channels add` for Feishu
-2. The gateway is running (`vilaro gateway status`)
+1. You already ran `velaro channels add` for Feishu
+2. The gateway is running (`velaro gateway status`)
 
 In **Event Subscription**:
 
@@ -161,12 +161,12 @@ In **Event Subscription**:
 
 ---
 
-## Step 2: Configure Vilaro
+## Step 2: Configure Velaro
 
 ### Configure with the wizard (recommended)
 
 ```bash
-vilaro channels add
+velaro channels add
 ```
 
 Choose **Feishu** and paste your App ID + App Secret.
@@ -270,7 +270,7 @@ Set them at top level or per account:
 ### 1. Start the gateway
 
 ```bash
-vilaro gateway
+velaro gateway
 ```
 
 ### 2. Send a test message
@@ -282,7 +282,7 @@ In Feishu, find your bot and send a message.
 By default, the bot replies with a pairing code. Approve it:
 
 ```bash
-vilaro pairing approve feishu <CODE>
+velaro pairing approve feishu <CODE>
 ```
 
 After approval, you can chat normally.
@@ -306,8 +306,8 @@ After approval, you can chat normally.
 - **Approve pairing**:
 
   ```bash
-  vilaro pairing list feishu
-  vilaro pairing approve feishu <CODE>
+  velaro pairing list feishu
+  velaro pairing approve feishu <CODE>
   ```
 
 - **Allowlist mode**: set `channels.feishu.allowFrom` with allowed Open IDs
@@ -402,7 +402,7 @@ Group IDs look like `oc_xxx`.
 **Method 1 (recommended)**
 
 1. Start the gateway and @mention the bot in the group
-2. Run `vilaro logs --follow` and look for `chat_id`
+2. Run `velaro logs --follow` and look for `chat_id`
 
 **Method 2**
 
@@ -415,14 +415,14 @@ User IDs look like `ou_xxx`.
 **Method 1 (recommended)**
 
 1. Start the gateway and DM the bot
-2. Run `vilaro logs --follow` and look for `open_id`
+2. Run `velaro logs --follow` and look for `open_id`
 
 **Method 2**
 
 Check pairing requests for user Open IDs:
 
 ```bash
-vilaro pairing list feishu
+velaro pairing list feishu
 ```
 
 ---
@@ -441,11 +441,11 @@ vilaro pairing list feishu
 
 | Command                  | Description                   |
 | ------------------------ | ----------------------------- |
-| `vilaro gateway status`  | Show gateway status           |
-| `vilaro gateway install` | Install/start gateway service |
-| `vilaro gateway stop`    | Stop gateway service          |
-| `vilaro gateway restart` | Restart gateway service       |
-| `vilaro logs --follow`   | Tail gateway logs             |
+| `velaro gateway status`  | Show gateway status           |
+| `velaro gateway install` | Install/start gateway service |
+| `velaro gateway stop`    | Stop gateway service          |
+| `velaro gateway restart` | Restart gateway service       |
+| `velaro logs --follow`   | Tail gateway logs             |
 
 ---
 
@@ -456,7 +456,7 @@ vilaro pairing list feishu
 1. Ensure the bot is added to the group
 2. Ensure you @mention the bot (default behavior)
 3. Check `groupPolicy` is not set to `"disabled"`
-4. Check logs: `vilaro logs --follow`
+4. Check logs: `velaro logs --follow`
 
 ### Bot does not receive messages
 
@@ -464,8 +464,8 @@ vilaro pairing list feishu
 2. Ensure event subscription includes `im.message.receive_v1`
 3. Ensure **long connection** is enabled
 4. Ensure app permissions are complete
-5. Ensure the gateway is running: `vilaro gateway status`
-6. Check logs: `vilaro logs --follow`
+5. Ensure the gateway is running: `velaro gateway status`
+6. Check logs: `velaro logs --follow`
 
 ### App Secret leak
 
@@ -557,7 +557,7 @@ Use top-level typed ACP bindings to pin a Feishu DM or topic conversation to a p
             agent: "codex",
             backend: "acpx",
             mode: "persistent",
-            cwd: "/workspace/vilaro",
+            cwd: "/workspace/velaro",
           },
         },
       },
@@ -611,14 +611,14 @@ Use `bindings` to route Feishu DMs or groups to different agents.
     list: [
       { id: "main" },
       {
-        id: "vilaro-fan",
-        workspace: "/home/user/vilaro-fan",
-        agentDir: "/home/user/.vilaro/agents/vilaro-fan/agent",
+        id: "velaro-fan",
+        workspace: "/home/user/velaro-fan",
+        agentDir: "/home/user/.velaro/agents/velaro-fan/agent",
       },
       {
-        id: "vilaro-xi",
-        workspace: "/home/user/vilaro-xi",
-        agentDir: "/home/user/.vilaro/agents/vilaro-xi/agent",
+        id: "velaro-xi",
+        workspace: "/home/user/velaro-xi",
+        agentDir: "/home/user/.velaro/agents/velaro-xi/agent",
       },
     ],
   },
@@ -631,14 +631,14 @@ Use `bindings` to route Feishu DMs or groups to different agents.
       },
     },
     {
-      agentId: "vilaro-fan",
+      agentId: "velaro-fan",
       match: {
         channel: "feishu",
         peer: { kind: "direct", id: "ou_yyy" },
       },
     },
     {
-      agentId: "vilaro-xi",
+      agentId: "velaro-xi",
       match: {
         channel: "feishu",
         peer: { kind: "group", id: "oc_zzz" },

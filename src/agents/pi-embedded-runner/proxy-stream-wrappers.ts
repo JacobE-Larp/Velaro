@@ -4,7 +4,7 @@ import type { ThinkLevel } from "../../auto-reply/thinking.js";
 
 const OPENROUTER_APP_HEADERS: Record<string, string> = {
   "HTTP-Referer": "https://vilaro.ai",
-  "X-Title": "Vilaro",
+  "X-Title": "Velaro",
 };
 const KILOCODE_FEATURE_HEADER = "X-KILOCODE-FEATURE";
 const KILOCODE_FEATURE_DEFAULT = "vilaro";

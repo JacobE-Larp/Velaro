@@ -7,8 +7,8 @@ import {
   loadConfig,
 } from "../config/config.js";
 import { createConfigRuntimeEnv } from "../config/env-vars.js";
-import { resolveVilaroAgentDir } from "./agent-paths.js";
-import { planVilaroModelsJson } from "./models-config.plan.js";
+import { resolveVelaroAgentDir } from "./agent-paths.js";
+import { planVelaroModelsJson } from "./models-config.plan.js";
 
 const MODELS_JSON_WRITE_LOCKS = new Map<string, Promise<void>>();
 
@@ -88,13 +88,13 @@ async function withModelsJsonWriteLock<T>(targetPath: string, run: () => Promise
   }
 }
 
-export async function ensureVilaroModelsJson(
+export async function ensureVelaroModelsJson(
   config?: VilaroConfig,
   agentDirOverride?: string,
 ): Promise<{ agentDir: string; wrote: boolean }> {
   const resolved = resolveModelsConfigInput(config);
   const cfg = resolved.config;
-  const agentDir = agentDirOverride?.trim() ? agentDirOverride.trim() : resolveVilaroAgentDir();
+  const agentDir = agentDirOverride?.trim() ? agentDirOverride.trim() : resolveVelaroAgentDir();
   const targetPath = path.join(agentDir, "models.json");
 
   return await withModelsJsonWriteLock(targetPath, async () => {
@@ -102,7 +102,7 @@ export async function ensureVilaroModelsJson(
     // are available to provider discovery without mutating process.env.
     const env = createConfigRuntimeEnv(cfg);
     const existingModelsFile = await readExistingModelsFile(targetPath);
-    const plan = await planVilaroModelsJson({
+    const plan = await planVelaroModelsJson({
       cfg,
       sourceConfigForSecrets: resolved.sourceConfigForSecrets,
       agentDir,

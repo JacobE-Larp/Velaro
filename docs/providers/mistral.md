@@ -1,23 +1,23 @@
 ---
-summary: "Use Mistral models and Voxtral transcription with Vilaro"
+summary: "Use Mistral models and Voxtral transcription with Velaro"
 read_when:
-  - You want to use Mistral models in Vilaro
+  - You want to use Mistral models in Velaro
   - You need Mistral API key onboarding and model refs
 title: "Mistral"
 ---
 
 # Mistral
 
-Vilaro supports Mistral for both text/image model routing (`mistral/...`) and
+Velaro supports Mistral for both text/image model routing (`mistral/...`) and
 audio transcription via Voxtral in media understanding.
 Mistral can also be used for memory embeddings (`memorySearch.provider = "mistral"`).
 
 ## CLI setup
 
 ```bash
-vilaro onboard --auth-choice mistral-api-key
+velaro onboard --auth-choice mistral-api-key
 # or non-interactive
-vilaro onboard --mistral-api-key "$MISTRAL_API_KEY"
+velaro onboard --mistral-api-key "$MISTRAL_API_KEY"
 ```
 
 ## Config snippet (LLM provider)

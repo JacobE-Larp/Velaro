@@ -14,28 +14,28 @@ Use this page for scheduler and delivery issues (`cron` + `heartbeat`).
 ## Command ladder
 
 ```bash
-vilaro status
-vilaro gateway status
-vilaro logs --follow
-vilaro doctor
-vilaro channels status --probe
+velaro status
+velaro gateway status
+velaro logs --follow
+velaro doctor
+velaro channels status --probe
 ```
 
 Then run automation checks:
 
 ```bash
-vilaro cron status
-vilaro cron list
-vilaro system heartbeat last
+velaro cron status
+velaro cron list
+velaro system heartbeat last
 ```
 
 ## Cron not firing
 
 ```bash
-vilaro cron status
-vilaro cron list
-vilaro cron runs --id <jobId> --limit 20
-vilaro logs --follow
+velaro cron status
+velaro cron list
+velaro cron runs --id <jobId> --limit 20
+velaro logs --follow
 ```
 
 Good output looks like:
@@ -53,10 +53,10 @@ Common signatures:
 ## Cron fired but no delivery
 
 ```bash
-vilaro cron runs --id <jobId> --limit 20
-vilaro cron list
-vilaro channels status --probe
-vilaro logs --follow
+velaro cron runs --id <jobId> --limit 20
+velaro cron list
+velaro channels status --probe
+velaro logs --follow
 ```
 
 Good output looks like:
@@ -74,10 +74,10 @@ Common signatures:
 ## Heartbeat suppressed or skipped
 
 ```bash
-vilaro system heartbeat last
-vilaro logs --follow
-vilaro config get agents.defaults.heartbeat
-vilaro channels status --probe
+velaro system heartbeat last
+velaro logs --follow
+velaro config get agents.defaults.heartbeat
+velaro channels status --probe
 ```
 
 Good output looks like:
@@ -95,11 +95,11 @@ Common signatures:
 ## Timezone and activeHours gotchas
 
 ```bash
-vilaro config get agents.defaults.heartbeat.activeHours
-vilaro config get agents.defaults.heartbeat.activeHours.timezone
-vilaro config get agents.defaults.userTimezone || echo "agents.defaults.userTimezone not set"
-vilaro cron list
-vilaro logs --follow
+velaro config get agents.defaults.heartbeat.activeHours
+velaro config get agents.defaults.heartbeat.activeHours.timezone
+velaro config get agents.defaults.userTimezone || echo "agents.defaults.userTimezone not set"
+velaro cron list
+velaro logs --follow
 ```
 
 Quick rules:

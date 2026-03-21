@@ -8,7 +8,7 @@ title: "Platforms"
 
 # Platforms
 
-Vilaro core is written in TypeScript. **Node is the recommended runtime**.
+Velaro core is written in TypeScript. **Node is the recommended runtime**.
 Bun is not recommended for the Gateway (WhatsApp/Telegram bugs).
 
 Companion apps exist for macOS (menu bar app) and mobile nodes (iOS/Android). Windows and
@@ -36,18 +36,18 @@ Native companion apps for Windows are also planned; the Gateway is recommended v
 - Install guide: [Getting Started](/start/getting-started)
 - Gateway runbook: [Gateway](/gateway)
 - Gateway configuration: [Configuration](/gateway/configuration)
-- Service status: `vilaro gateway status`
+- Service status: `velaro gateway status`
 
 ## Gateway service install (CLI)
 
 Use one of these (all supported):
 
-- Wizard (recommended): `vilaro onboard --install-daemon`
-- Direct: `vilaro gateway install`
-- Configure flow: `vilaro configure` → select **Gateway service**
-- Repair/migrate: `vilaro doctor` (offers to install or fix the service)
+- Wizard (recommended): `velaro onboard --install-daemon`
+- Direct: `velaro gateway install`
+- Configure flow: `velaro configure` → select **Gateway service**
+- Repair/migrate: `velaro doctor` (offers to install or fix the service)
 
 The service target depends on OS:
 
-- macOS: LaunchAgent (`ai.vilaro.gateway` or `ai.vilaro.<profile>`; legacy `com.vilaro.*`)
+- macOS: LaunchAgent (`ai.vilaro.gateway` or `ai.velaro.<profile>`; legacy `com.velaro.*`)
 - Linux/WSL2: systemd user service (`vilaro-gateway[-<profile>].service`)

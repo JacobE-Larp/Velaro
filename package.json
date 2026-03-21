@@ -1,6 +1,6 @@
 {
-  "name": "vilaro",
-  "version": "2026.3.14",
+  "name": "velaro",
+  "version": "2026.3.20",
   "description": "Multi-channel AI gateway with extensible messaging integrations",
   "keywords": [],
   "homepage": "https://github.com/JacobE-Larp/Velaro#readme",
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/JacobE-Larp/Velaro.git"
   },
   "bin": {
-    "vilaro": "vilaro.mjs"
+    "velaro": "vilaro.mjs"
   },
   "directories": {
     "doc": "docs",
@@ -345,8 +345,8 @@
     "ui:build": "node scripts/ui.js build",
     "ui:dev": "node scripts/ui.js dev",
     "ui:install": "node scripts/ui.js install",
-    "vilaro": "node scripts/run-node.mjs",
-    "vilaro:rpc": "node scripts/run-node.mjs agent --mode rpc --json"
+    "velaro": "node scripts/run-node.mjs",
+    "velaro:rpc": "node scripts/run-node.mjs agent --mode rpc --json"
   },
   "dependencies": {
     "@agentclientprotocol/sdk": "0.16.1",

@@ -1,7 +1,7 @@
 import type {
   AnyAgentTool,
   VilaroPluginApi,
-  VilaroPluginToolFactory,
+  VelaroPluginToolFactory,
 } from "vilaro/plugin-sdk/pipeline";
 import { createPipelineTool } from "./src/pipeline-tool.js";
 
@@ -12,7 +12,7 @@ export default function register(api: VilaroPluginApi) {
         return null;
       }
       return createPipelineTool(api) as AnyAgentTool;
-    }) as VilaroPluginToolFactory,
+    }) as VelaroPluginToolFactory,
     { optional: true },
   );
 }

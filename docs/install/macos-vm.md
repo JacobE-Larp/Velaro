@@ -1,14 +1,14 @@
 ---
-summary: "Run Vilaro in a sandboxed macOS VM (local or hosted) when you need isolation or iMessage"
+summary: "Run Velaro in a sandboxed macOS VM (local or hosted) when you need isolation or iMessage"
 read_when:
-  - You want Vilaro isolated from your main macOS environment
+  - You want Velaro isolated from your main macOS environment
   - You want iMessage integration (BlueBubbles) in a sandbox
   - You want a resettable macOS environment you can clone
   - You want to compare local vs hosted macOS VM options
 title: "macOS VMs"
 ---
 
-# Vilaro on macOS VMs (Sandboxing)
+# Velaro on macOS VMs (Sandboxing)
 
 ## Recommended default (most users)
 
@@ -22,7 +22,7 @@ Use a macOS VM when you specifically need macOS-only capabilities (iMessage/Blue
 
 ### Local VM on your Apple Silicon Mac (Lume)
 
-Run Vilaro in a sandboxed macOS VM on your existing Apple Silicon Mac using [Lume](https://cua.ai/docs/lume).
+Run Velaro in a sandboxed macOS VM on your existing Apple Silicon Mac using [Lume](https://cua.ai/docs/lume).
 
 This gives you:
 
@@ -45,10 +45,10 @@ Once you have SSH access to a macOS VM, continue at step 6 below.
 ## Quick path (Lume, experienced users)
 
 1. Install Lume
-2. `lume create vilaro --os macos --ipsw latest`
+2. `lume create velaro --os macos --ipsw latest`
 3. Complete Setup Assistant, enable Remote Login (SSH)
-4. `lume run vilaro --no-display`
-5. SSH in, install Vilaro, configure channels
+4. `lume run velaro --no-display`
+5. SSH in, install Velaro, configure channels
 6. Done
 
 ---
@@ -87,7 +87,7 @@ Docs: [Lume Installation](https://cua.ai/docs/lume/guide/getting-started/install
 ## 2) Create the macOS VM
 
 ```bash
-lume create vilaro --os macos --ipsw latest
+lume create velaro --os macos --ipsw latest
 ```
 
 This downloads macOS and creates the VM. A VNC window opens automatically.
@@ -115,7 +115,7 @@ After setup completes, enable SSH:
 ## 4) Get the VM's IP address
 
 ```bash
-lume get vilaro
+lume get velaro
 ```
 
 Look for the IP address (usually `192.168.64.x`).
@@ -132,13 +132,13 @@ Replace `youruser` with the account you created, and the IP with your VM's IP.
 
 ---
 
-## 6) Install Vilaro
+## 6) Install Velaro
 
 Inside the VM:
 
 ```bash
-npm install -g vilaro@latest
-vilaro onboard --install-daemon
+npm install -g velaro@latest
+velaro onboard --install-daemon
 ```
 
 Follow the onboarding prompts to set up your model provider (Anthropic, OpenAI, etc.).
@@ -172,7 +172,7 @@ Add your channels:
 Then login to WhatsApp (scan QR):
 
 ```bash
-vilaro channels login
+velaro channels login
 ```
 
 ---
@@ -182,23 +182,23 @@ vilaro channels login
 Stop the VM and restart without display:
 
 ```bash
-lume stop vilaro
-lume run vilaro --no-display
+lume stop velaro
+lume run velaro --no-display
 ```
 
-The VM runs in the background. Vilaro's daemon keeps the gateway running.
+The VM runs in the background. Velaro's daemon keeps the gateway running.
 
 To check status:
 
 ```bash
-ssh youruser@192.168.64.X "vilaro status"
+ssh youruser@192.168.64.X "velaro status"
 ```
 
 ---
 
 ## Bonus: iMessage integration
 
-This is the killer feature of running on macOS. Use [BlueBubbles](https://bluebubbles.app) to add iMessage to Vilaro.
+This is the killer feature of running on macOS. Use [BlueBubbles](https://bluebubbles.app) to add iMessage to Velaro.
 
 Inside the VM:
 
@@ -207,7 +207,7 @@ Inside the VM:
 3. Enable the Web API and set a password
 4. Point BlueBubbles webhooks at your gateway (example: `https://your-gateway-host:3000/bluebubbles-webhook?password=<password>`)
 
-Add to your Vilaro config:
+Add to your Velaro config:
 
 ```json
 {
@@ -232,16 +232,16 @@ Full setup details: [BlueBubbles channel](/channels/bluebubbles)
 Before customizing further, snapshot your clean state:
 
 ```bash
-lume stop vilaro
-lume clone vilaro vilaro-golden
+lume stop velaro
+lume clone velaro velaro-golden
 ```
 
 Reset anytime:
 
 ```bash
-lume stop vilaro && lume delete vilaro
-lume clone vilaro-golden vilaro
-lume run vilaro --no-display
+lume stop velaro && lume delete velaro
+lume clone velaro-golden velaro
+lume run velaro --no-display
 ```
 
 ---
@@ -263,9 +263,9 @@ For true always-on, consider a dedicated Mac mini or a small VPS. See [VPS hosti
 | Problem                  | Solution                                                                         |
 | ------------------------ | -------------------------------------------------------------------------------- |
 | Can't SSH into VM        | Check "Remote Login" is enabled in VM's System Settings                          |
-| VM IP not showing        | Wait for VM to fully boot, run `lume get vilaro` again                           |
+| VM IP not showing        | Wait for VM to fully boot, run `lume get velaro` again                           |
 | Lume command not found   | Add `~/.local/bin` to your PATH                                                  |
-| WhatsApp QR not scanning | Ensure you're logged into the VM (not host) when running `vilaro channels login` |
+| WhatsApp QR not scanning | Ensure you're logged into the VM (not host) when running `velaro channels login` |
 
 ---
 

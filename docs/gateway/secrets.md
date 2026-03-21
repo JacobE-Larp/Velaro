@@ -9,7 +9,7 @@ title: "Secrets Management"
 
 # Secrets management
 
-Vilaro supports additive SecretRefs so supported credentials do not need to be stored as plaintext in configuration.
+Velaro supports additive SecretRefs so supported credentials do not need to be stored as plaintext in configuration.
 
 Plaintext still works. SecretRefs are opt-in per credential.
 
@@ -68,7 +68,7 @@ active-surface policy, so you can see why a credential was treated as active or 
 
 ## Onboarding reference preflight
 
-When onboarding runs in interactive mode and you choose SecretRef storage, Vilaro runs preflight validation before saving:
+When onboarding runs in interactive mode and you choose SecretRef storage, Velaro runs preflight validation before saving:
 
 - Env refs: validates env var name and confirms a non-empty value is visible during setup.
 - Provider refs (`file` or `exec`): validates provider selection, resolves `id`, and checks resolved value type.
@@ -135,7 +135,7 @@ Define providers under `secrets.providers`:
       },
       vault: {
         source: "exec",
-        command: "/usr/local/bin/vilaro-vault-resolver",
+        command: "/usr/local/bin/velaro-vault-resolver",
         args: ["--profile", "prod"],
         passEnv: ["PATH", "VAULT_ADDR"],
         jsonOnly: true,
@@ -172,7 +172,7 @@ Define providers under `secrets.providers`:
 
 - Runs configured absolute binary path, no shell.
 - By default, `command` must point to a regular file (not a symlink).
-- Set `allowSymlinkCommand: true` to allow symlink command paths (for example Homebrew shims). Vilaro validates the resolved target path.
+- Set `allowSymlinkCommand: true` to allow symlink command paths (for example Homebrew shims). Velaro validates the resolved target path.
 - Pair `allowSymlinkCommand` with `trustedDirs` for package-manager paths (for example `["/opt/homebrew"]`).
 - Supports timeout, no-output timeout, output byte limits, env allowlist, and trusted dirs.
 - Windows fail-closed note: if ACL verification is unavailable for the command path, resolution fails. For trusted paths only, set `allowInsecurePath: true` on that provider to bypass path security checks.
@@ -212,7 +212,7 @@ Optional per-id errors:
         command: "/opt/homebrew/bin/op",
         allowSymlinkCommand: true, // required for Homebrew symlinked binaries
         trustedDirs: ["/opt/homebrew"],
-        args: ["read", "op://Personal/Vilaro QA API Key/password"],
+        args: ["read", "op://Personal/Velaro QA API Key/password"],
         passEnv: ["HOME"],
         jsonOnly: false,
       },
@@ -241,7 +241,7 @@ Optional per-id errors:
         command: "/opt/homebrew/bin/vault",
         allowSymlinkCommand: true, // required for Homebrew symlinked binaries
         trustedDirs: ["/opt/homebrew"],
-        args: ["kv", "get", "-field=OPENAI_API_KEY", "secret/vilaro"],
+        args: ["kv", "get", "-field=OPENAI_API_KEY", "secret/velaro"],
         passEnv: ["VAULT_ADDR", "VAULT_TOKEN"],
         jsonOnly: false,
       },
@@ -313,7 +313,7 @@ The core `ssh` sandbox backend also supports SecretRefs for SSH auth material:
 
 Runtime behavior:
 
-- Vilaro resolves these refs during sandbox activation, not lazily during each SSH call.
+- Velaro resolves these refs during sandbox activation, not lazily during each SSH call.
 - Resolved values are written to temp files with restrictive permissions and used in generated SSH config.
 - If the effective sandbox backend is not `ssh`, these refs stay inactive and do not block startup.
 
@@ -359,7 +359,7 @@ Activation contract:
 
 ## Degraded and recovered signals
 
-When reload-time activation fails after a healthy state, Vilaro enters degraded secrets state.
+When reload-time activation fails after a healthy state, Velaro enters degraded secrets state.
 
 One-shot system event and log codes:
 
@@ -379,8 +379,8 @@ Command paths can opt into supported SecretRef resolution via gateway snapshot R
 
 There are two broad behaviors:
 
-- Strict command paths (for example `vilaro memory` remote-memory paths and `vilaro qr --remote`) read from the active snapshot and fail fast when a required SecretRef is unavailable.
-- Read-only command paths (for example `vilaro status`, `vilaro status --all`, `vilaro channels status`, `vilaro channels resolve`, `vilaro security audit`, and read-only doctor/config repair flows) also prefer the active snapshot, but degrade instead of aborting when a targeted SecretRef is unavailable in that command path.
+- Strict command paths (for example `velaro memory` remote-memory paths and `velaro qr --remote`) read from the active snapshot and fail fast when a required SecretRef is unavailable.
+- Read-only command paths (for example `velaro status`, `velaro status --all`, `velaro channels status`, `velaro channels resolve`, `velaro security audit`, and read-only doctor/config repair flows) also prefer the active snapshot, but degrade instead of aborting when a targeted SecretRef is unavailable in that command path.
 
 Read-only behavior:
 
@@ -391,7 +391,7 @@ Read-only behavior:
 
 Other notes:
 
-- Snapshot refresh after backend secret rotation is handled by `vilaro secrets reload`.
+- Snapshot refresh after backend secret rotation is handled by `velaro secrets reload`.
 - Gateway RPC method used by these command paths: `secrets.resolve`.
 
 ## Audit and configure workflow
@@ -399,9 +399,9 @@ Other notes:
 Default operator flow:
 
 ```bash
-vilaro secrets audit --check
-vilaro secrets configure
-vilaro secrets audit --check
+velaro secrets audit --check
+velaro secrets configure
+velaro secrets audit --check
 ```
 
 ### `secrets audit`
@@ -431,9 +431,9 @@ Interactive helper that:
 
 Helpful modes:
 
-- `vilaro secrets configure --providers-only`
-- `vilaro secrets configure --skip-provider-setup`
-- `vilaro secrets configure --agent <id>`
+- `velaro secrets configure --providers-only`
+- `velaro secrets configure --skip-provider-setup`
+- `velaro secrets configure --agent <id>`
 
 `configure` apply defaults:
 
@@ -446,8 +446,8 @@ Helpful modes:
 Apply a saved plan:
 
 ```bash
-vilaro secrets apply --from /tmp/vilaro-secrets-plan.json
-vilaro secrets apply --from /tmp/vilaro-secrets-plan.json --dry-run
+velaro secrets apply --from /tmp/velaro-secrets-plan.json
+velaro secrets apply --from /tmp/velaro-secrets-plan.json --dry-run
 ```
 
 For strict target/path contract details and exact rejection rules, see:
@@ -456,7 +456,7 @@ For strict target/path contract details and exact rejection rules, see:
 
 ## One-way safety policy
 
-Vilaro intentionally does not write rollback backups containing historical plaintext secret values.
+Velaro intentionally does not write rollback backups containing historical plaintext secret values.
 
 Safety model:
 

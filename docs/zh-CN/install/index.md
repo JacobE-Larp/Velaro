@@ -3,7 +3,7 @@ read_when:
   - 你需要一种不同于“入门指南”快速开始的安装方式
   - 你想部署到云平台
   - 你需要更新、迁移或卸载
-summary: 安装 Vilaro —— 安装脚本、npm/pnpm、从源码、Docker 等
+summary: 安装 Velaro —— 安装脚本、npm/pnpm、从源码、Docker 等
 title: 安装
 x-i18n:
   generated_at: "2026-03-16T06:23:36Z"
@@ -25,17 +25,17 @@ x-i18n:
 - 仅当你从源码构建时需要 `pnpm`
 
 <Note>
-在 Windows 上，我们强烈建议你在 [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install) 下运行 Vilaro。
+在 Windows 上，我们强烈建议你在 [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install) 下运行 Velaro。
 </Note>
 
 ## 安装方法
 
 <Tip>
-**安装脚本** 是安装 Vilaro 的推荐方式。它会一步完成 Node 检测、安装和新手引导。
+**安装脚本** 是安装 Velaro 的推荐方式。它会一步完成 Node 检测、安装和新手引导。
 </Tip>
 
 <Warning>
-对于 VPS/云主机，尽量避免使用第三方“一键式”市场镜像。优先选择干净的基础 OS 镜像（例如 Ubuntu LTS），然后使用安装脚本自行安装 Vilaro。
+对于 VPS/云主机，尽量避免使用第三方“一键式”市场镜像。优先选择干净的基础 OS 镜像（例如 Ubuntu LTS），然后使用安装脚本自行安装 Velaro。
 </Warning>
 
 <AccordionGroup>
@@ -77,20 +77,20 @@ x-i18n:
   </Accordion>
 
   <Accordion title="npm / pnpm" icon="package">
-    如果你已经自行管理 Node，我们推荐使用 Node 24。出于兼容性考虑，Vilaro 仍支持 Node 22 LTS，目前为 `22.16+`：
+    如果你已经自行管理 Node，我们推荐使用 Node 24。出于兼容性考虑，Velaro 仍支持 Node 22 LTS，目前为 `22.16+`：
 
     <Tabs>
       <Tab title="npm">
         ```bash
-        npm install -g vilaro@latest
-        vilaro onboard --install-daemon
+        npm install -g velaro@latest
+        velaro onboard --install-daemon
         ```
 
         <Accordion title="sharp 构建错误？">
           如果你全局安装了 libvips（在 macOS 上通过 Homebrew 很常见），并且 `sharp` 失败，请强制使用预构建二进制文件：
 
           ```bash
-          SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g vilaro@latest
+          SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install -g velaro@latest
           ```
 
           如果你看到 `sharp: Please add node-gyp to your dependencies`，请安装构建工具链（macOS：Xcode CLT + `npm install -g node-gyp`），或者使用上面的环境变量。
@@ -98,9 +98,9 @@ x-i18n:
       </Tab>
       <Tab title="pnpm">
         ```bash
-        pnpm add -g vilaro@latest
-        pnpm approve-builds -g        # 批准 vilaro、node-llama-cpp、sharp 等
-        vilaro onboard --install-daemon
+        pnpm add -g velaro@latest
+        pnpm approve-builds -g        # 批准 velaro、node-llama-cpp、sharp 等
+        velaro onboard --install-daemon
         ```
 
         <Note>
@@ -112,11 +112,11 @@ x-i18n:
     想通过包管理器安装当前 GitHub `main` 分支最新版本？
 
     ```bash
-    npm install -g github:vilaro/vilaro#main
+    npm install -g github:velaro/velaro#main
     ```
 
     ```bash
-    pnpm add -g github:vilaro/vilaro#main
+    pnpm add -g github:velaro/velaro#main
     ```
 
   </Accordion>
@@ -126,28 +126,28 @@ x-i18n:
 
     <Steps>
       <Step title="克隆并构建">
-        克隆 [Vilaro 仓库](https://github.com/vilaro/vilaro) 并构建：
+        克隆 [Velaro 仓库](https://github.com/vilaro/vilaro) 并构建：
 
         ```bash
         git clone https://github.com/vilaro/vilaro.git
-        cd vilaro
+        cd velaro
         pnpm install
         pnpm ui:build
         pnpm build
         ```
       </Step>
       <Step title="链接 CLI">
-        让 `vilaro` 命令在全局可用：
+        让 `velaro` 命令在全局可用：
 
         ```bash
         pnpm link --global
         ```
 
-        或者，你也可以跳过链接，直接在仓库内通过 `pnpm vilaro ...` 运行命令。
+        或者，你也可以跳过链接，直接在仓库内通过 `pnpm velaro ...` 运行命令。
       </Step>
       <Step title="运行新手引导">
         ```bash
-        vilaro onboard --install-daemon
+        velaro onboard --install-daemon
         ```
       </Step>
     </Steps>
@@ -182,9 +182,9 @@ x-i18n:
 验证一切是否正常工作：
 
 ```bash
-vilaro doctor         # 检查配置问题
-vilaro status         # Gateway 网关状态
-vilaro dashboard      # 打开浏览器 UI
+velaro doctor         # 检查配置问题
+velaro status         # Gateway 网关状态
+velaro dashboard      # 打开浏览器 UI
 ```
 
 如果你需要自定义运行时路径，请使用：
@@ -195,7 +195,7 @@ vilaro dashboard      # 打开浏览器 UI
 
 有关优先级和完整细节，请参阅 [Environment vars](/help/environment)。
 
-## 故障排除：找不到 `vilaro`
+## 故障排除：找不到 `velaro`
 
 <Accordion title="PATH 诊断与修复">
   快速诊断：
@@ -207,7 +207,7 @@ npm prefix -g
 echo "$PATH"
 ```
 
-如果 `$(npm prefix -g)/bin`（macOS/Linux）或 `$(npm prefix -g)`（Windows）**不在**你的 `$PATH` 中，那么你的 shell 就找不到全局 npm 二进制文件（包括 `vilaro`）。
+如果 `$(npm prefix -g)/bin`（macOS/Linux）或 `$(npm prefix -g)`（Windows）**不在**你的 `$PATH` 中，那么你的 shell 就找不到全局 npm 二进制文件（包括 `velaro`）。
 
 修复方法 —— 将其添加到你的 shell 启动文件（`~/.zshrc` 或 `~/.bashrc`）中：
 
@@ -224,12 +224,12 @@ export PATH="$(npm prefix -g)/bin:$PATH"
 
 <CardGroup cols={3}>
   <Card title="更新" href="/install/updating" icon="refresh-cw">
-    让 Vilaro 保持最新。
+    让 Velaro 保持最新。
   </Card>
   <Card title="迁移" href="/install/migrating" icon="arrow-right">
     迁移到新机器。
   </Card>
   <Card title="卸载" href="/install/uninstall" icon="trash-2">
-    完全移除 Vilaro。
+    完全移除 Velaro。
   </Card>
 </CardGroup>

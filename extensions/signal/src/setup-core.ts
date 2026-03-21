@@ -263,9 +263,9 @@ export function createSignalSetupWizardProxy(
     completionNote: {
       title: "Signal next steps",
       lines: [
-        'Link device with: signal-cli link -n "Vilaro"',
+        'Link device with: signal-cli link -n "Velaro"',
         "Scan QR in Signal -> Linked Devices",
-        `Then run: ${formatCliCommand("vilaro gateway call channels.status --params '{\"probe\":true}'")}`,
+        `Then run: ${formatCliCommand("velaro gateway call channels.status --params '{\"probe\":true}'")}`,
         `Docs: ${formatDocsLink("/signal", "signal")}`,
       ],
     },

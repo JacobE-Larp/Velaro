@@ -1,5 +1,5 @@
 import type { VilaroConfig } from "../config/config.js";
-import { loadVilaroPlugins } from "../plugins/loader.js";
+import { loadVelaroPlugins } from "../plugins/loader.js";
 import { resolveUserPath } from "../utils.js";
 
 export function ensureRuntimePluginsLoaded(params: {
@@ -11,7 +11,7 @@ export function ensureRuntimePluginsLoaded(params: {
       ? resolveUserPath(params.workspaceDir)
       : undefined;
 
-  loadVilaroPlugins({
+  loadVelaroPlugins({
     config: params.config,
     workspaceDir,
   });

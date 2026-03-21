@@ -59,7 +59,7 @@ async function resolvePortableGitPathPrepend(
   if (!localAppData) {
     return [];
   }
-  const portableGitRoot = path.join(localAppData, "Vilaro", "deps", "portable-git");
+  const portableGitRoot = path.join(localAppData, "Velaro", "deps", "portable-git");
   const candidates = [
     path.join(portableGitRoot, "mingw64", "bin"),
     path.join(portableGitRoot, "usr", "bin"),

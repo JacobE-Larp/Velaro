@@ -2,7 +2,7 @@
 read_when:
   - 你正在管理已配对的节点（摄像头、屏幕、画布）
   - 你需要批准请求或调用节点命令
-summary: "`vilaro nodes` 的 CLI 参考（列表/状态/批准/调用，摄像头/画布/屏幕）"
+summary: "`velaro nodes` 的 CLI 参考（列表/状态/批准/调用，摄像头/画布/屏幕）"
 title: nodes
 x-i18n:
   generated_at: "2026-02-03T10:04:26Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 15
 ---
 
-# `vilaro nodes`
+# `velaro nodes`
 
 管理已配对的节点（设备）并调用节点功能。
 
@@ -30,14 +30,14 @@ x-i18n:
 ## 常用命令
 
 ```bash
-vilaro nodes list
-vilaro nodes list --connected
-vilaro nodes list --last-connected 24h
-vilaro nodes pending
-vilaro nodes approve <requestId>
-vilaro nodes status
-vilaro nodes status --connected
-vilaro nodes status --last-connected 24h
+velaro nodes list
+velaro nodes list --connected
+velaro nodes list --last-connected 24h
+velaro nodes pending
+velaro nodes approve <requestId>
+velaro nodes status
+velaro nodes status --connected
+velaro nodes status --last-connected 24h
 ```
 
 `nodes list` 打印待处理/已配对表格。已配对行包含最近连接时长（Last Connect）。
@@ -47,10 +47,10 @@ vilaro nodes status --last-connected 24h
 ## 调用 / 运行
 
 ```bash
-vilaro nodes invoke --node <id|name|ip> --command <command> --params <json>
-vilaro nodes run --node <id|name|ip> <command...>
-vilaro nodes run --raw "git status"
-vilaro nodes run --agent main --node <id|name|ip> --raw "git status"
+velaro nodes invoke --node <id|name|ip> --command <command> --params <json>
+velaro nodes run --node <id|name|ip> <command...>
+velaro nodes run --raw "git status"
+velaro nodes run --agent main --node <id|name|ip> --raw "git status"
 ```
 
 调用标志：

@@ -3,7 +3,7 @@ import path from "node:path";
 import type { BrowserProfileConfig, VilaroConfig } from "../config/config.js";
 import { loadConfig, writeConfigFile } from "../config/config.js";
 import { deriveDefaultBrowserCdpPortRange } from "../config/port-defaults.js";
-import { resolveVilaroUserDataDir } from "./chrome.js";
+import { resolveVelaroUserDataDir } from "./chrome.js";
 import { parseHttpUrl, resolveProfile } from "./config.js";
 import {
   BrowserConflictError,
@@ -207,7 +207,7 @@ export function createBrowserProfilesService(ctx: BrowserRouteContext) {
         // ignore
       }
 
-      const userDataDir = resolveVilaroUserDataDir(name);
+      const userDataDir = resolveVelaroUserDataDir(name);
       const profileDir = path.dirname(userDataDir);
       if (fs.existsSync(profileDir)) {
         await movePathToTrash(profileDir);

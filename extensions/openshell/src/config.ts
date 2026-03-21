@@ -90,7 +90,7 @@ function normalizeRemotePath(value: string | undefined, fallback: string): strin
   return normalized;
 }
 
-export function createOpenShellPluginConfigSchema(): VilaroPluginConfigSchema {
+export function createOpenShellPluginConfigSchema(): VelaroPluginConfigSchema {
   const safeParse = (value: unknown): ParseSuccess | ParseFailure => {
     if (value === undefined) {
       return { success: true, data: undefined };

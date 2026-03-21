@@ -1,15 +1,15 @@
 ---
 title: "Node.js"
-summary: "Install and configure Node.js for Vilaro — version requirements, install options, and PATH troubleshooting"
+summary: "Install and configure Node.js for Velaro — version requirements, install options, and PATH troubleshooting"
 read_when:
-  - "You need to install Node.js before installing Vilaro"
-  - "You installed Vilaro but `vilaro` is command not found"
+  - "You need to install Node.js before installing Velaro"
+  - "You installed Velaro but `velaro` is command not found"
   - "npm install -g fails with permissions or PATH issues"
 ---
 
 # Node.js
 
-Vilaro requires **Node 22.16 or newer**. **Node 24 is the default and recommended runtime** for installs, CI, and release workflows. Node 22 remains supported via the active LTS line. The [installer script](/install#install-methods) will detect and install Node automatically — this page is for when you want to set up Node yourself and make sure everything is wired up correctly (versions, PATH, global installs).
+Velaro requires **Node 22.16 or newer**. **Node 24 is the default and recommended runtime** for installs, CI, and release workflows. Node 22 remains supported via the active LTS line. The [installer script](/install#install-methods) will detect and install Node automatically — this page is for when you want to set up Node yourself and make sure everything is wired up correctly (versions, PATH, global installs).
 
 ## Check your version
 
@@ -82,13 +82,13 @@ fnm use 24
 ```
 
   <Warning>
-  Make sure your version manager is initialized in your shell startup file (`~/.zshrc` or `~/.bashrc`). If it isn't, `vilaro` may not be found in new terminal sessions because the PATH won't include Node's bin directory.
+  Make sure your version manager is initialized in your shell startup file (`~/.zshrc` or `~/.bashrc`). If it isn't, `velaro` may not be found in new terminal sessions because the PATH won't include Node's bin directory.
   </Warning>
 </Accordion>
 
 ## Troubleshooting
 
-### `vilaro: command not found`
+### `velaro: command not found`
 
 This almost always means npm's global bin directory isn't on your PATH.
 

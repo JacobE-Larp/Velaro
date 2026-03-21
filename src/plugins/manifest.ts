@@ -242,7 +242,7 @@ export type PluginPackageInstall = {
   defaultChoice?: "npm" | "local";
 };
 
-export type VilaroPackageManifest = {
+export type VelaroPackageManifest = {
   extensions?: string[];
   setupEntry?: string;
   channel?: PluginPackageChannel;
@@ -267,11 +267,11 @@ export type PackageManifest = {
   name?: string;
   version?: string;
   description?: string;
-} & Partial<Record<ManifestKey, VilaroPackageManifest>>;
+} & Partial<Record<ManifestKey, VelaroPackageManifest>>;
 
 export function getPackageManifestMetadata(
   manifest: PackageManifest | undefined,
-): VilaroPackageManifest | undefined {
+): VelaroPackageManifest | undefined {
   if (!manifest) {
     return undefined;
   }

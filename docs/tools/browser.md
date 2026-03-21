@@ -2,30 +2,30 @@
 summary: "Integrated browser control service + action commands"
 read_when:
   - Adding agent-controlled browser automation
-  - Debugging why vilaro is interfering with your own Chrome
+  - Debugging why velaro is interfering with your own Chrome
   - Implementing browser settings + lifecycle in the macOS app
-title: "Browser (Vilaro-managed)"
+title: "Browser (Velaro-managed)"
 ---
 
-# Browser (vilaro-managed)
+# Browser (velaro-managed)
 
-Vilaro can run a **dedicated Chrome/Brave/Edge/Chromium profile** that the agent controls.
+Velaro can run a **dedicated Chrome/Brave/Edge/Chromium profile** that the agent controls.
 It is isolated from your personal browser and is managed through a small local
 control service inside the Gateway (loopback only).
 
 Beginner view:
 
 - Think of it as a **separate, agent-only browser**.
-- The `vilaro` profile does **not** touch your personal browser profile.
+- The `velaro` profile does **not** touch your personal browser profile.
 - The agent can **open tabs, read pages, click, and type** in a safe lane.
 - The built-in `user` profile attaches to your real signed-in Chrome session via Chrome MCP.
 
 ## What you get
 
-- A separate browser profile named **vilaro** (orange accent by default).
+- A separate browser profile named **velaro** (orange accent by default).
 - Deterministic tab control (list/open/focus/close).
 - Agent actions (click/type/drag/select), snapshots, screenshots, PDFs.
-- Optional multi-profile support (`vilaro`, `work`, `remote`, ...).
+- Optional multi-profile support (`velaro`, `work`, `remote`, ...).
 
 This browser is **not** your daily driver. It is a safe, isolated surface for
 agent automation and verification.
@@ -33,29 +33,29 @@ agent automation and verification.
 ## Quick start
 
 ```bash
-vilaro browser --browser-profile vilaro status
-vilaro browser --browser-profile vilaro start
-vilaro browser --browser-profile vilaro open https://example.com
-vilaro browser --browser-profile vilaro snapshot
+velaro browser --browser-profile velaro status
+velaro browser --browser-profile velaro start
+velaro browser --browser-profile velaro open https://example.com
+velaro browser --browser-profile velaro snapshot
 ```
 
 If you get “Browser disabled”, enable it in config (see below) and restart the
 Gateway.
 
-## Profiles: `vilaro` vs `user`
+## Profiles: `velaro` vs `user`
 
-- `vilaro`: managed, isolated browser (no extension required).
+- `velaro`: managed, isolated browser (no extension required).
 - `user`: built-in Chrome MCP attach profile for your **real signed-in Chrome**
   session.
 
 For agent browser tool calls:
 
-- Default: use the isolated `vilaro` browser.
+- Default: use the isolated `velaro` browser.
 - Prefer `profile="user"` when existing logged-in sessions matter and the user
   is at the computer to click/approve any attach prompt.
 - `profile` is the explicit override when you want a specific browser mode.
 
-Set `browser.defaultProfile: "vilaro"` if you want managed mode by default.
+Set `browser.defaultProfile: "velaro"` if you want managed mode by default.
 
 ## Configuration
 
@@ -74,14 +74,14 @@ Browser settings live in `~/.vilaro/vilaro.json`.
     // cdpUrl: "http://127.0.0.1:18792", // legacy single-profile override
     remoteCdpTimeoutMs: 1500, // remote CDP HTTP timeout (ms)
     remoteCdpHandshakeTimeoutMs: 3000, // remote CDP WebSocket handshake timeout (ms)
-    defaultProfile: "vilaro",
+    defaultProfile: "velaro",
     color: "#FF4500",
     headless: false,
     noSandbox: false,
     attachOnly: false,
     executablePath: "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
     profiles: {
-      vilaro: { cdpPort: 18800, color: "#FF4500" },
+      velaro: { cdpPort: 18800, color: "#FF4500" },
       work: { cdpPort: 18801, color: "#0066CC" },
       user: {
         driver: "existing-session",
@@ -109,22 +109,22 @@ Notes:
 - `browser.ssrfPolicy.allowPrivateNetwork` remains supported as a legacy alias for compatibility.
 - `attachOnly: true` means “never launch a local browser; only attach if it is already running.”
 - `color` + per-profile `color` tint the browser UI so you can see which profile is active.
-- Default profile is `vilaro` (Vilaro-managed standalone browser). Use `defaultProfile: "user"` to opt into the signed-in user browser.
+- Default profile is `velaro` (Velaro-managed standalone browser). Use `defaultProfile: "user"` to opt into the signed-in user browser.
 - Auto-detect order: system default browser if Chromium-based; otherwise Chrome → Brave → Edge → Chromium → Chrome Canary.
-- Local `vilaro` profiles auto-assign `cdpPort`/`cdpUrl` — set those only for remote CDP.
+- Local `velaro` profiles auto-assign `cdpPort`/`cdpUrl` — set those only for remote CDP.
 - `driver: "existing-session"` uses Chrome DevTools MCP instead of raw CDP. Do
   not set `cdpUrl` for that driver.
 
 ## Use Brave (or another Chromium-based browser)
 
 If your **system default** browser is Chromium-based (Chrome/Brave/Edge/etc),
-Vilaro uses it automatically. Set `browser.executablePath` to override
+Velaro uses it automatically. Set `browser.executablePath` to override
 auto-detection:
 
 CLI example:
 
 ```bash
-vilaro config set browser.executablePath "/usr/bin/google-chrome"
+velaro config set browser.executablePath "/usr/bin/google-chrome"
 ```
 
 ```json5
@@ -155,20 +155,20 @@ vilaro config set browser.executablePath "/usr/bin/google-chrome"
 - **Local control (default):** the Gateway starts the loopback control service and can launch a local browser.
 - **Remote control (node host):** run a node host on the machine that has the browser; the Gateway proxies browser actions to it.
 - **Remote CDP:** set `browser.profiles.<name>.cdpUrl` (or `browser.cdpUrl`) to
-  attach to a remote Chromium-based browser. In this case, Vilaro will not launch a local browser.
+  attach to a remote Chromium-based browser. In this case, Velaro will not launch a local browser.
 
 Remote CDP URLs can include auth:
 
 - Query tokens (e.g., `https://provider.example?token=<token>`)
 - HTTP Basic auth (e.g., `https://user:pass@provider.example`)
 
-Vilaro preserves the auth when calling `/json/*` endpoints and when connecting
+Velaro preserves the auth when calling `/json/*` endpoints and when connecting
 to the CDP WebSocket. Prefer environment variables or secrets managers for
 tokens instead of committing them to config files.
 
 ## Node browser proxy (zero-config default)
 
-If you run a **node host** on the machine that has your browser, Vilaro can
+If you run a **node host** on the machine that has your browser, Velaro can
 auto-route browser tool calls to that node without any extra browser config.
 This is the default path for remote gateways.
 
@@ -183,7 +183,7 @@ Notes:
 ## Browserless (hosted remote CDP)
 
 [Browserless](https://browserless.io) is a hosted Chromium service that exposes
-CDP endpoints over HTTPS. You can point a Vilaro browser profile at a
+CDP endpoints over HTTPS. You can point a Velaro browser profile at a
 Browserless region endpoint and authenticate with your API key.
 
 Example:
@@ -213,11 +213,11 @@ Notes:
 ## Direct WebSocket CDP providers
 
 Some hosted browser services expose a **direct WebSocket** endpoint rather than
-the standard HTTP-based CDP discovery (`/json/version`). Vilaro supports both:
+the standard HTTP-based CDP discovery (`/json/version`). Velaro supports both:
 
-- **HTTP(S) endpoints** (e.g. Browserless) — Vilaro calls `/json/version` to
+- **HTTP(S) endpoints** (e.g. Browserless) — Velaro calls `/json/version` to
   discover the WebSocket debugger URL, then connects.
-- **WebSocket endpoints** (`ws://` / `wss://`) — Vilaro connects directly,
+- **WebSocket endpoints** (`ws://` / `wss://`) — Velaro connects directly,
   skipping `/json/version`. Use this for services like
   [Browserbase](https://www.browserbase.com) or any provider that hands you a
   WebSocket URL.
@@ -262,7 +262,7 @@ Notes:
 Key ideas:
 
 - Browser control is loopback-only; access flows through the Gateway’s auth or node pairing.
-- If browser control is enabled and no auth is configured, Vilaro auto-generates `gateway.auth.token` on startup and persists it to config.
+- If browser control is enabled and no auth is configured, Velaro auto-generates `gateway.auth.token` on startup and persists it to config.
 - Keep the Gateway and any node hosts on a private network (Tailscale); avoid public exposure.
 - Treat remote CDP URLs/tokens as secrets; prefer env vars or a secrets manager.
 
@@ -273,15 +273,15 @@ Remote CDP tips:
 
 ## Profiles (multi-browser)
 
-Vilaro supports multiple named profiles (routing configs). Profiles can be:
+Velaro supports multiple named profiles (routing configs). Profiles can be:
 
-- **vilaro-managed**: a dedicated Chromium-based browser instance with its own user data directory + CDP port
+- **velaro-managed**: a dedicated Chromium-based browser instance with its own user data directory + CDP port
 - **remote**: an explicit CDP URL (Chromium-based browser running elsewhere)
 - **existing session**: your existing Chrome profile via Chrome DevTools MCP auto-connect
 
 Defaults:
 
-- The `vilaro` profile is auto-created if missing.
+- The `velaro` profile is auto-created if missing.
 - The `user` profile is built-in for Chrome MCP existing-session attach.
 - Existing-session profiles are opt-in beyond `user`; create them with `--driver existing-session`.
 - Local CDP ports allocate from **18800–18899** by default.
@@ -291,7 +291,7 @@ All control endpoints accept `?profile=<name>`; the CLI uses `--browser-profile`
 
 ## Chrome existing-session via MCP
 
-Vilaro can also attach to a running Chrome profile through the official
+Velaro can also attach to a running Chrome profile through the official
 Chrome DevTools MCP server. This reuses the tabs and login state already open in
 that Chrome profile.
 
@@ -311,15 +311,15 @@ Then in Chrome:
 
 1. Open `chrome://inspect/#remote-debugging`
 2. Enable remote debugging
-3. Keep Chrome running and approve the connection prompt when Vilaro attaches
+3. Keep Chrome running and approve the connection prompt when Velaro attaches
 
 Live attach smoke test:
 
 ```bash
-vilaro browser --browser-profile user start
-vilaro browser --browser-profile user status
-vilaro browser --browser-profile user tabs
-vilaro browser --browser-profile user snapshot --format ai
+velaro browser --browser-profile user start
+velaro browser --browser-profile user status
+velaro browser --browser-profile user tabs
+velaro browser --browser-profile user snapshot --format ai
 ```
 
 What success looks like:
@@ -335,7 +335,7 @@ What to check if attach does not work:
 - Chrome is version `144+`
 - remote debugging is enabled at `chrome://inspect/#remote-debugging`
 - Chrome showed and you accepted the attach consent prompt
-- `vilaro doctor` migrates old extension-based browser config and checks that
+- `velaro doctor` migrates old extension-based browser config and checks that
   Chrome is installed locally with a compatible version, but it cannot enable
   Chrome-side remote debugging for you
 
@@ -349,11 +349,11 @@ Agent use:
 
 Notes:
 
-- This path is higher-risk than the isolated `vilaro` profile because it can
+- This path is higher-risk than the isolated `velaro` profile because it can
   act inside your signed-in browser session.
-- Vilaro does not launch Chrome for this driver; it attaches to an existing
+- Velaro does not launch Chrome for this driver; it attaches to an existing
   session only.
-- Vilaro uses the official Chrome DevTools MCP `--autoConnect` flow here, not
+- Velaro uses the official Chrome DevTools MCP `--autoConnect` flow here, not
   the legacy default-profile remote debugging port workflow.
 - Existing-session screenshots support page captures and `--ref` element
   captures from snapshots, but not CSS `--element` selectors.
@@ -372,7 +372,7 @@ Notes:
 
 ## Browser selection
 
-When launching locally, Vilaro picks the first available:
+When launching locally, Velaro picks the first available:
 
 1. Chrome
 2. Brave
@@ -410,17 +410,17 @@ All endpoints accept `?profile=<name>`.
 If gateway auth is configured, browser HTTP routes require auth too:
 
 - `Authorization: Bearer <gateway token>`
-- `x-vilaro-password: <gateway password>` or HTTP Basic auth with that password
+- `x-velaro-password: <gateway password>` or HTTP Basic auth with that password
 
 ### Playwright requirement
 
 Some features (navigate/act/AI snapshot/role snapshot, element screenshots, PDF) require
 Playwright. If Playwright isn’t installed, those endpoints return a clear 501
-error. ARIA snapshots and basic screenshots still work for vilaro-managed Chrome.
+error. ARIA snapshots and basic screenshots still work for velaro-managed Chrome.
 
 If you see `Playwright is not available in this gateway build`, install the full
 Playwright package (not `playwright-core`) and restart the gateway, or reinstall
-Vilaro with browser support.
+Velaro with browser support.
 
 #### Docker Playwright install
 
@@ -428,7 +428,7 @@ If your Gateway runs in Docker, avoid `npx playwright` (npm override conflicts).
 Use the bundled CLI instead:
 
 ```bash
-docker compose run --rm vilaro-cli \
+docker compose run --rm velaro-cli \
   node /app/node_modules/playwright-core/cli.js install chromium
 ```
 
@@ -456,95 +456,95 @@ All commands also accept `--json` for machine-readable output (stable payloads).
 
 Basics:
 
-- `vilaro browser status`
-- `vilaro browser start`
-- `vilaro browser stop`
-- `vilaro browser tabs`
-- `vilaro browser tab`
-- `vilaro browser tab new`
-- `vilaro browser tab select 2`
-- `vilaro browser tab close 2`
-- `vilaro browser open https://example.com`
-- `vilaro browser focus abcd1234`
-- `vilaro browser close abcd1234`
+- `velaro browser status`
+- `velaro browser start`
+- `velaro browser stop`
+- `velaro browser tabs`
+- `velaro browser tab`
+- `velaro browser tab new`
+- `velaro browser tab select 2`
+- `velaro browser tab close 2`
+- `velaro browser open https://example.com`
+- `velaro browser focus abcd1234`
+- `velaro browser close abcd1234`
 
 Inspection:
 
-- `vilaro browser screenshot`
-- `vilaro browser screenshot --full-page`
-- `vilaro browser screenshot --ref 12`
-- `vilaro browser screenshot --ref e12`
-- `vilaro browser snapshot`
-- `vilaro browser snapshot --format aria --limit 200`
-- `vilaro browser snapshot --interactive --compact --depth 6`
-- `vilaro browser snapshot --efficient`
-- `vilaro browser snapshot --labels`
-- `vilaro browser snapshot --selector "#main" --interactive`
-- `vilaro browser snapshot --frame "iframe#main" --interactive`
-- `vilaro browser console --level error`
-- `vilaro browser errors --clear`
-- `vilaro browser requests --filter api --clear`
-- `vilaro browser pdf`
-- `vilaro browser responsebody "**/api" --max-chars 5000`
+- `velaro browser screenshot`
+- `velaro browser screenshot --full-page`
+- `velaro browser screenshot --ref 12`
+- `velaro browser screenshot --ref e12`
+- `velaro browser snapshot`
+- `velaro browser snapshot --format aria --limit 200`
+- `velaro browser snapshot --interactive --compact --depth 6`
+- `velaro browser snapshot --efficient`
+- `velaro browser snapshot --labels`
+- `velaro browser snapshot --selector "#main" --interactive`
+- `velaro browser snapshot --frame "iframe#main" --interactive`
+- `velaro browser console --level error`
+- `velaro browser errors --clear`
+- `velaro browser requests --filter api --clear`
+- `velaro browser pdf`
+- `velaro browser responsebody "**/api" --max-chars 5000`
 
 Actions:
 
-- `vilaro browser navigate https://example.com`
-- `vilaro browser resize 1280 720`
-- `vilaro browser click 12 --double`
-- `vilaro browser click e12 --double`
-- `vilaro browser type 23 "hello" --submit`
-- `vilaro browser press Enter`
-- `vilaro browser hover 44`
-- `vilaro browser scrollintoview e12`
-- `vilaro browser drag 10 11`
-- `vilaro browser select 9 OptionA OptionB`
-- `vilaro browser download e12 report.pdf`
-- `vilaro browser waitfordownload report.pdf`
-- `vilaro browser upload /tmp/vilaro/uploads/file.pdf`
-- `vilaro browser fill --fields '[{"ref":"1","type":"text","value":"Ada"}]'`
-- `vilaro browser dialog --accept`
-- `vilaro browser wait --text "Done"`
-- `vilaro browser wait "#main" --url "**/dash" --load networkidle --fn "window.ready===true"`
-- `vilaro browser evaluate --fn '(el) => el.textContent' --ref 7`
-- `vilaro browser highlight e12`
-- `vilaro browser trace start`
-- `vilaro browser trace stop`
+- `velaro browser navigate https://example.com`
+- `velaro browser resize 1280 720`
+- `velaro browser click 12 --double`
+- `velaro browser click e12 --double`
+- `velaro browser type 23 "hello" --submit`
+- `velaro browser press Enter`
+- `velaro browser hover 44`
+- `velaro browser scrollintoview e12`
+- `velaro browser drag 10 11`
+- `velaro browser select 9 OptionA OptionB`
+- `velaro browser download e12 report.pdf`
+- `velaro browser waitfordownload report.pdf`
+- `velaro browser upload /tmp/velaro/uploads/file.pdf`
+- `velaro browser fill --fields '[{"ref":"1","type":"text","value":"Ada"}]'`
+- `velaro browser dialog --accept`
+- `velaro browser wait --text "Done"`
+- `velaro browser wait "#main" --url "**/dash" --load networkidle --fn "window.ready===true"`
+- `velaro browser evaluate --fn '(el) => el.textContent' --ref 7`
+- `velaro browser highlight e12`
+- `velaro browser trace start`
+- `velaro browser trace stop`
 
 State:
 
-- `vilaro browser cookies`
-- `vilaro browser cookies set session abc123 --url "https://example.com"`
-- `vilaro browser cookies clear`
-- `vilaro browser storage local get`
-- `vilaro browser storage local set theme dark`
-- `vilaro browser storage session clear`
-- `vilaro browser set offline on`
-- `vilaro browser set headers --headers-json '{"X-Debug":"1"}'`
-- `vilaro browser set credentials user pass`
-- `vilaro browser set credentials --clear`
-- `vilaro browser set geo 37.7749 -122.4194 --origin "https://example.com"`
-- `vilaro browser set geo --clear`
-- `vilaro browser set media dark`
-- `vilaro browser set timezone America/New_York`
-- `vilaro browser set locale en-US`
-- `vilaro browser set device "iPhone 14"`
+- `velaro browser cookies`
+- `velaro browser cookies set session abc123 --url "https://example.com"`
+- `velaro browser cookies clear`
+- `velaro browser storage local get`
+- `velaro browser storage local set theme dark`
+- `velaro browser storage session clear`
+- `velaro browser set offline on`
+- `velaro browser set headers --headers-json '{"X-Debug":"1"}'`
+- `velaro browser set credentials user pass`
+- `velaro browser set credentials --clear`
+- `velaro browser set geo 37.7749 -122.4194 --origin "https://example.com"`
+- `velaro browser set geo --clear`
+- `velaro browser set media dark`
+- `velaro browser set timezone America/New_York`
+- `velaro browser set locale en-US`
+- `velaro browser set device "iPhone 14"`
 
 Notes:
 
 - `upload` and `dialog` are **arming** calls; run them before the click/press
   that triggers the chooser/dialog.
-- Download and trace output paths are constrained to Vilaro temp roots:
-  - traces: `/tmp/vilaro` (fallback: `${os.tmpdir()}/vilaro`)
-  - downloads: `/tmp/vilaro/downloads` (fallback: `${os.tmpdir()}/vilaro/downloads`)
-- Upload paths are constrained to an Vilaro temp uploads root:
-  - uploads: `/tmp/vilaro/uploads` (fallback: `${os.tmpdir()}/vilaro/uploads`)
+- Download and trace output paths are constrained to Velaro temp roots:
+  - traces: `/tmp/velaro` (fallback: `${os.tmpdir()}/velaro`)
+  - downloads: `/tmp/velaro/downloads` (fallback: `${os.tmpdir()}/velaro/downloads`)
+- Upload paths are constrained to an Velaro temp uploads root:
+  - uploads: `/tmp/velaro/uploads` (fallback: `${os.tmpdir()}/velaro/uploads`)
 - `upload` can also set file inputs directly via `--input-ref` or `--element`.
 - `snapshot`:
   - `--format ai` (default when Playwright is installed): returns an AI snapshot with numeric refs (`aria-ref="<n>"`).
   - `--format aria`: returns the accessibility tree (no refs; inspection only).
   - `--efficient` (or `--mode efficient`): compact role snapshot preset (interactive + compact + depth + lower maxChars).
-  - Config default (tool/CLI only): set `browser.snapshotDefaults.mode: "efficient"` to use efficient snapshots when the caller does not pass a mode (see [Gateway configuration](/gateway/configuration#browser-vilaro-managed-browser)).
+  - Config default (tool/CLI only): set `browser.snapshotDefaults.mode: "efficient"` to use efficient snapshots when the caller does not pass a mode (see [Gateway configuration](/gateway/configuration#browser-velaro-managed-browser)).
   - Role snapshot options (`--interactive`, `--compact`, `--depth`, `--selector`) force a role-based snapshot with refs like `ref=e12`.
   - `--frame "<iframe selector>"` scopes role snapshots to an iframe (pairs with role refs like `e12`).
   - `--interactive` outputs a flat, easy-to-pick list of interactive elements (best for driving actions).
@@ -554,16 +554,16 @@ Notes:
 
 ## Snapshots and refs
 
-Vilaro supports two “snapshot” styles:
+Velaro supports two “snapshot” styles:
 
-- **AI snapshot (numeric refs)**: `vilaro browser snapshot` (default; `--format ai`)
+- **AI snapshot (numeric refs)**: `velaro browser snapshot` (default; `--format ai`)
   - Output: a text snapshot that includes numeric refs.
-  - Actions: `vilaro browser click 12`, `vilaro browser type 23 "hello"`.
+  - Actions: `velaro browser click 12`, `velaro browser type 23 "hello"`.
   - Internally, the ref is resolved via Playwright’s `aria-ref`.
 
-- **Role snapshot (role refs like `e12`)**: `vilaro browser snapshot --interactive` (or `--compact`, `--depth`, `--selector`, `--frame`)
+- **Role snapshot (role refs like `e12`)**: `velaro browser snapshot --interactive` (or `--compact`, `--depth`, `--selector`, `--frame`)
   - Output: a role-based list/tree with `[ref=e12]` (and optional `[nth=1]`).
-  - Actions: `vilaro browser click e12`, `vilaro browser highlight e12`.
+  - Actions: `velaro browser click e12`, `velaro browser highlight e12`.
   - Internally, the ref is resolved via `getByRole(...)` (plus `nth()` for duplicates).
   - Add `--labels` to include a viewport screenshot with overlayed `e12` labels.
 
@@ -577,18 +577,18 @@ Ref behavior:
 You can wait on more than just time/text:
 
 - Wait for URL (globs supported by Playwright):
-  - `vilaro browser wait --url "**/dash"`
+  - `velaro browser wait --url "**/dash"`
 - Wait for load state:
-  - `vilaro browser wait --load networkidle`
+  - `velaro browser wait --load networkidle`
 - Wait for a JS predicate:
-  - `vilaro browser wait --fn "window.ready===true"`
+  - `velaro browser wait --fn "window.ready===true"`
 - Wait for a selector to become visible:
-  - `vilaro browser wait "#main"`
+  - `velaro browser wait "#main"`
 
 These can be combined:
 
 ```bash
-vilaro browser wait "#main" \
+velaro browser wait "#main" \
   --url "**/dash" \
   --load networkidle \
   --fn "window.ready===true" \
@@ -599,16 +599,16 @@ vilaro browser wait "#main" \
 
 When an action fails (e.g. “not visible”, “strict mode violation”, “covered”):
 
-1. `vilaro browser snapshot --interactive`
+1. `velaro browser snapshot --interactive`
 2. Use `click <ref>` / `type <ref>` (prefer role refs in interactive mode)
-3. If it still fails: `vilaro browser highlight <ref>` to see what Playwright is targeting
+3. If it still fails: `velaro browser highlight <ref>` to see what Playwright is targeting
 4. If the page behaves oddly:
-   - `vilaro browser errors --clear`
-   - `vilaro browser requests --filter api --clear`
+   - `velaro browser errors --clear`
+   - `velaro browser requests --filter api --clear`
 5. For deep debugging: record a trace:
-   - `vilaro browser trace start`
+   - `velaro browser trace start`
    - reproduce the issue
-   - `vilaro browser trace stop` (prints `TRACE:<path>`)
+   - `velaro browser trace stop` (prints `TRACE:<path>`)
 
 ## JSON output
 
@@ -617,10 +617,10 @@ When an action fails (e.g. “not visible”, “strict mode violation”, “co
 Examples:
 
 ```bash
-vilaro browser status --json
-vilaro browser snapshot --interactive --json
-vilaro browser requests --filter api --json
-vilaro browser cookies --json
+velaro browser status --json
+velaro browser snapshot --interactive --json
+velaro browser requests --filter api --json
+velaro browser cookies --json
 ```
 
 Role snapshots in JSON include `refs` plus a small `stats` block (lines/chars/refs/interactive) so tools can reason about payload size and density.
@@ -643,8 +643,8 @@ These are useful for “make the site behave like X” workflows:
 
 ## Security & privacy
 
-- The vilaro browser profile may contain logged-in sessions; treat it as sensitive.
-- `browser act kind=evaluate` / `vilaro browser evaluate` and `wait --fn`
+- The velaro browser profile may contain logged-in sessions; treat it as sensitive.
+- `browser act kind=evaluate` / `velaro browser evaluate` and `wait --fn`
   execute arbitrary JavaScript in the page context. Prompt injection can steer
   this. Disable it with `browser.evaluateEnabled=false` if you do not need it.
 - For logins and anti-bot notes (X/Twitter, etc.), see [Browser login + X/Twitter posting](/tools/browser-login).
@@ -685,7 +685,7 @@ How it maps:
 - `browser act` uses the snapshot `ref` IDs to click/type/drag/select.
 - `browser screenshot` captures pixels (full page or element).
 - `browser` accepts:
-  - `profile` to choose a named browser profile (vilaro, chrome, or remote CDP).
+  - `profile` to choose a named browser profile (velaro, chrome, or remote CDP).
   - `target` (`sandbox` | `host` | `node`) to select where the browser lives.
   - In sandboxed sessions, `target: "host"` requires `agents.defaults.sandbox.browser.allowHostControl=true`.
   - If `target` is omitted: sandboxed sessions default to `sandbox`, non-sandbox sessions default to `host`.

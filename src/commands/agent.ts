@@ -150,7 +150,7 @@ function prependInternalEventContext(
   body: string,
   events: AgentCommandOpts["internalEvents"],
 ): string {
-  if (body.includes("Vilaro runtime context (internal):")) {
+  if (body.includes("Velaro runtime context (internal):")) {
     return body;
   }
   const renderedEvents = formatAgentInternalEventsForPrompt(events);
@@ -548,7 +548,7 @@ async function prepareAgentCommandExecution(
     const knownAgents = listAgentIds(cfg);
     if (!knownAgents.includes(agentIdOverride)) {
       throw new Error(
-        `Unknown agent id "${agentIdOverrideRaw}". Use "${formatCliCommand("vilaro agents list")}" to see configured agents.`,
+        `Unknown agent id "${agentIdOverrideRaw}". Use "${formatCliCommand("velaro agents list")}" to see configured agents.`,
       );
     }
   }

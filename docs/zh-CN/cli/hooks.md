@@ -2,7 +2,7 @@
 read_when:
   - 你想管理智能体钩子
   - 你想安装或更新钩子
-summary: CLI 参考：`vilaro hooks`（智能体钩子）
+summary: CLI 参考：`velaro hooks`（智能体钩子）
 title: hooks
 x-i18n:
   generated_at: "2026-02-03T10:04:32Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 15
 ---
 
-# `vilaro hooks`
+# `velaro hooks`
 
 管理智能体钩子（针对 `/new`、`/reset` 等命令以及 Gateway 网关启动的事件驱动自动化）。
 
@@ -25,7 +25,7 @@ x-i18n:
 ## 列出所有钩子
 
 ```bash
-vilaro hooks list
+velaro hooks list
 ```
 
 列出从工作区、托管目录和内置目录中发现的所有钩子。
@@ -50,7 +50,7 @@ Ready:
 **示例（详细模式）：**
 
 ```bash
-vilaro hooks list --verbose
+velaro hooks list --verbose
 ```
 
 显示不符合条件的钩子缺失的要求。
@@ -58,7 +58,7 @@ vilaro hooks list --verbose
 **示例（JSON）：**
 
 ```bash
-vilaro hooks list --json
+velaro hooks list --json
 ```
 
 返回结构化 JSON，供程序化使用。
@@ -66,7 +66,7 @@ vilaro hooks list --json
 ## 获取钩子信息
 
 ```bash
-vilaro hooks info <name>
+velaro hooks info <name>
 ```
 
 显示特定钩子的详细信息。
@@ -82,7 +82,7 @@ vilaro hooks info <name>
 **示例：**
 
 ```bash
-vilaro hooks info session-memory
+velaro hooks info session-memory
 ```
 
 **输出：**
@@ -93,9 +93,9 @@ vilaro hooks info session-memory
 Save session context to memory when /new command is issued
 
 Details:
-  Source: vilaro-bundled
-  Path: /path/to/vilaro/hooks/bundled/session-memory/HOOK.md
-  Handler: /path/to/vilaro/hooks/bundled/session-memory/handler.ts
+  Source: velaro-bundled
+  Path: /path/to/velaro/hooks/bundled/session-memory/HOOK.md
+  Handler: /path/to/velaro/hooks/bundled/session-memory/handler.ts
   Homepage: https://docs.vilaro.ai/automation/hooks#session-memory
   Events: command:new
 
@@ -106,7 +106,7 @@ Requirements:
 ## 检查钩子资格
 
 ```bash
-vilaro hooks check
+velaro hooks check
 ```
 
 显示钩子资格状态摘要（有多少已就绪，有多少未就绪）。
@@ -128,12 +128,12 @@ Not ready: 0
 ## 启用钩子
 
 ```bash
-vilaro hooks enable <name>
+velaro hooks enable <name>
 ```
 
 通过将特定钩子添加到配置（`~/.vilaro/config.json`）来启用它。
 
-**注意：** 由插件管理的钩子在 `vilaro hooks list` 中显示 `plugin:<id>`，
+**注意：** 由插件管理的钩子在 `velaro hooks list` 中显示 `plugin:<id>`，
 无法在此处启用/禁用。请改为启用/禁用该插件。
 
 **参数：**
@@ -143,7 +143,7 @@ vilaro hooks enable <name>
 **示例：**
 
 ```bash
-vilaro hooks enable session-memory
+velaro hooks enable session-memory
 ```
 
 **输出：**
@@ -165,7 +165,7 @@ vilaro hooks enable session-memory
 ## 禁用钩子
 
 ```bash
-vilaro hooks disable <name>
+velaro hooks disable <name>
 ```
 
 通过更新配置来禁用特定钩子。
@@ -177,7 +177,7 @@ vilaro hooks disable <name>
 **示例：**
 
 ```bash
-vilaro hooks disable command-logger
+velaro hooks disable command-logger
 ```
 
 **输出：**
@@ -193,7 +193,7 @@ vilaro hooks disable command-logger
 ## 安装钩子
 
 ```bash
-vilaro hooks install <path-or-spec>
+velaro hooks install <path-or-spec>
 ```
 
 从本地文件夹/压缩包或 npm 安装钩子包。
@@ -214,23 +214,23 @@ vilaro hooks install <path-or-spec>
 
 ```bash
 # 本地目录
-vilaro hooks install ./my-hook-pack
+velaro hooks install ./my-hook-pack
 
 # 本地压缩包
-vilaro hooks install ./my-hook-pack.zip
+velaro hooks install ./my-hook-pack.zip
 
 # NPM 包
-vilaro hooks install @vilaro/my-hook-pack
+velaro hooks install @vilaro/my-hook-pack
 
 # 链接本地目录而不复制
-vilaro hooks install -l ./my-hook-pack
+velaro hooks install -l ./my-hook-pack
 ```
 
 ## 更新钩子
 
 ```bash
-vilaro hooks update <id>
-vilaro hooks update --all
+velaro hooks update <id>
+velaro hooks update --all
 ```
 
 更新已安装的钩子包（仅限 npm 安装）。
@@ -249,7 +249,7 @@ vilaro hooks update --all
 **启用：**
 
 ```bash
-vilaro hooks enable session-memory
+velaro hooks enable session-memory
 ```
 
 **输出：** `~/.vilaro/workspace/memory/YYYY-MM-DD-slug.md`
@@ -263,7 +263,7 @@ vilaro hooks enable session-memory
 **启用：**
 
 ```bash
-vilaro hooks enable command-logger
+velaro hooks enable command-logger
 ```
 
 **输出：** `~/.vilaro/logs/commands.log`
@@ -292,7 +292,7 @@ grep '"action":"new"' ~/.vilaro/logs/commands.log | jq .
 **启用**：
 
 ```bash
-vilaro hooks enable boot-md
+velaro hooks enable boot-md
 ```
 
 **参见：** [boot-md 文档](/automation/hooks#boot-md)

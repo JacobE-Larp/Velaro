@@ -1,7 +1,7 @@
 import type {
   AcpRuntime,
-  VilaroPluginService,
-  VilaroPluginServiceContext,
+  VelaroPluginService,
+  VelaroPluginServiceContext,
   PluginLogger,
 } from "vilaro/plugin-sdk/acpx";
 import { registerAcpRuntimeBackend, unregisterAcpRuntimeBackend } from "vilaro/plugin-sdk/acpx";
@@ -34,13 +34,13 @@ function createDefaultRuntime(params: AcpxRuntimeFactoryParams): AcpxRuntimeLike
 
 export function createAcpxRuntimeService(
   params: CreateAcpxRuntimeServiceParams = {},
-): VilaroPluginService {
+): VelaroPluginService {
   let runtime: AcpxRuntimeLike | null = null;
   let lifecycleRevision = 0;
 
   return {
     id: "acpx-runtime",
-    async start(ctx: VilaroPluginServiceContext): Promise<void> {
+    async start(ctx: VelaroPluginServiceContext): Promise<void> {
       const pluginConfig = resolveAcpxPluginConfig({
         rawConfig: params.pluginConfig,
         workspaceDir: ctx.workspaceDir,
@@ -96,7 +96,7 @@ export function createAcpxRuntimeService(
         }
       })();
     },
-    async stop(_ctx: VilaroPluginServiceContext): Promise<void> {
+    async stop(_ctx: VelaroPluginServiceContext): Promise<void> {
       lifecycleRevision += 1;
       unregisterAcpRuntimeBackend(ACPX_BACKEND_ID);
       runtime = null;

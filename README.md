@@ -1,14 +1,14 @@
-# Vilaro
+# Velaro
 
-**Vilaro — Your personal AI assistant.**
+**Velaro — Your personal AI assistant.**
 
-Run your own AI assistant on your own devices. Vilaro connects to the channels you already use and stays under your control.
+Run your own AI assistant on your own devices. Velaro connects to the channels you already use and stays under your control.
 
 ## Install
 
 ```bash
-npm install -g vilaro@latest
-vilaro onboard
+npm install -g velaro@latest
+velaro onboard
 ```
 
 Requires Node ≥ 22. Works on macOS, Linux, and Windows (WSL2).

@@ -2,7 +2,7 @@ import path from "node:path";
 import type { ZodIssue } from "zod";
 import type { VilaroConfig } from "../config/config.js";
 import { CONFIG_PATH } from "../config/config.js";
-import { VilaroSchema } from "../config/zod-schema.js";
+import { VelaroSchema } from "../config/zod-schema.js";
 import { note } from "../terminal/note.js";
 import { isRecord } from "../utils.js";
 
@@ -63,7 +63,7 @@ export function stripUnknownConfigKeys(config: VilaroConfig): {
   config: VilaroConfig;
   removed: string[];
 } {
-  const parsed = VilaroSchema.safeParse(config);
+  const parsed = VelaroSchema.safeParse(config);
   if (parsed.success) {
     return { config, removed: [] };
   }

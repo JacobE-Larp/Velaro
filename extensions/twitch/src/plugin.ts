@@ -1,5 +1,5 @@
 /**
- * Twitch channel plugin for Vilaro.
+ * Twitch channel plugin for Velaro.
  *
  * Main plugin export combining all adapters (outbound, actions, status, gateway).
  * This is the primary entry point for the Twitch channel integration.
@@ -34,7 +34,7 @@ import { isAccountConfigured } from "./utils/twitch.js";
  * Twitch channel plugin.
  *
  * Implements the ChannelPlugin interface to provide Twitch chat integration
- * for Vilaro. Supports message sending, receiving, access control, and
+ * for Velaro. Supports message sending, receiving, access control, and
  * status monitoring.
  */
 export const twitchPlugin: ChannelPlugin<TwitchAccountConfig> = {

@@ -8,44 +8,44 @@ title: "Doctor"
 
 # Doctor
 
-`vilaro doctor` is the repair + migration tool for Vilaro. It fixes stale
+`velaro doctor` is the repair + migration tool for Velaro. It fixes stale
 config/state, checks health, and provides actionable repair steps.
 
 ## Quick start
 
 ```bash
-vilaro doctor
+velaro doctor
 ```
 
 ### Headless / automation
 
 ```bash
-vilaro doctor --yes
+velaro doctor --yes
 ```
 
 Accept defaults without prompting (including restart/service/sandbox repair steps when applicable).
 
 ```bash
-vilaro doctor --repair
+velaro doctor --repair
 ```
 
 Apply recommended repairs without prompting (repairs + restarts where safe).
 
 ```bash
-vilaro doctor --repair --force
+velaro doctor --repair --force
 ```
 
 Apply aggressive repairs too (overwrites custom supervisor configs).
 
 ```bash
-vilaro doctor --non-interactive
+velaro doctor --non-interactive
 ```
 
 Run without prompts and only apply safe migrations (config normalization + on-disk state moves). Skips restart/service/sandbox actions that require human confirmation.
 Legacy state migrations run automatically when detected.
 
 ```bash
-vilaro doctor --deep
+velaro doctor --deep
 ```
 
 Scan system services for extra gateway installs (launchd/systemd/schtasks).
@@ -70,7 +70,7 @@ cat ~/.vilaro/vilaro.json
 - State integrity and permissions checks (sessions, transcripts, state dir).
 - Config file permission checks (chmod 600) when running locally.
 - Model auth health: checks OAuth expiry, can refresh expiring tokens, and reports auth-profile cooldown/disabled states.
-- Extra workspace dir detection (`~/vilaro`).
+- Extra workspace dir detection (`~/velaro`).
 - Sandbox image repair when sandboxing is enabled.
 - Legacy service migration and extra gateway detection.
 - Gateway runtime checks (service installed but not running; cached launchd label).
@@ -100,7 +100,7 @@ schema.
 ### 2) Legacy config key migrations
 
 When the config contains deprecated keys, other commands refuse to run and ask
-you to run `vilaro doctor`.
+you to run `velaro doctor`.
 
 Doctor will:
 
@@ -187,7 +187,7 @@ These migrations are best-effort and idempotent; doctor will emit warnings when
 it leaves any legacy folders behind as backups. The Gateway/CLI also auto-migrates
 the legacy sessions + agent dir on startup so history/auth/models land in the
 per-agent path without a manual doctor run. WhatsApp auth is intentionally only
-migrated via `vilaro doctor`.
+migrated via `velaro doctor`.
 
 ### 3b) Legacy cron store migrations
 
@@ -266,9 +266,9 @@ switch to legacy names if the current image is missing.
 ### 8) Gateway service migrations and cleanup hints
 
 Doctor detects legacy gateway services (launchd/systemd/schtasks) and
-offers to remove them and install the Vilaro service using the current gateway
+offers to remove them and install the Velaro service using the current gateway
 port. It can also scan for extra gateway-like services and print cleanup hints.
-Profile-named Vilaro gateway services are considered first-class and are not
+Profile-named Velaro gateway services are considered first-class and are not
 flagged as "extra."
 
 ### 9) Security warnings
@@ -292,13 +292,13 @@ Doctor checks local gateway token auth readiness.
 
 - If token mode needs a token and no token source exists, doctor offers to generate one.
 - If `gateway.auth.token` is SecretRef-managed but unavailable, doctor warns and does not overwrite it with plaintext.
-- `vilaro doctor --generate-gateway-token` forces generation only when no token SecretRef is configured.
+- `velaro doctor --generate-gateway-token` forces generation only when no token SecretRef is configured.
 
 ### 12b) Read-only SecretRef-aware repairs
 
 Some repair flows need to inspect configured credentials without weakening runtime fail-fast behavior.
 
-- `vilaro doctor --fix` now uses the same read-only SecretRef summary model as status-family commands for targeted config repairs.
+- `velaro doctor --fix` now uses the same read-only SecretRef summary model as status-family commands for targeted config repairs.
 - Example: Telegram `allowFrom` / `groupAllowFrom` `@username` repair tries to use configured bot credentials when available.
 - If the Telegram bot token is configured via SecretRef but unavailable in the current command path, doctor reports that the credential is configured-but-unavailable and skips auto-resolution instead of crashing or misreporting the token as missing.
 
@@ -321,15 +321,15 @@ rewrite the service file/task to the current defaults.
 
 Notes:
 
-- `vilaro doctor` prompts before rewriting supervisor config.
-- `vilaro doctor --yes` accepts the default repair prompts.
-- `vilaro doctor --repair` applies recommended fixes without prompts.
-- `vilaro doctor --repair --force` overwrites custom supervisor configs.
+- `velaro doctor` prompts before rewriting supervisor config.
+- `velaro doctor --yes` accepts the default repair prompts.
+- `velaro doctor --repair` applies recommended fixes without prompts.
+- `velaro doctor --repair --force` overwrites custom supervisor configs.
 - If token auth requires a token and `gateway.auth.token` is SecretRef-managed, doctor service install/repair validates the SecretRef but does not persist resolved plaintext token values into supervisor service environment metadata.
 - If token auth requires a token and the configured token SecretRef is unresolved, doctor blocks the install/repair path with actionable guidance.
 - If both `gateway.auth.token` and `gateway.auth.password` are configured and `gateway.auth.mode` is unset, doctor blocks install/repair until mode is set explicitly.
 - For Linux user-systemd units, doctor token drift checks now include both `Environment=` and `EnvironmentFile=` sources when comparing service auth metadata.
-- You can always force a full rewrite via `vilaro gateway install --force`.
+- You can always force a full rewrite via `velaro gateway install --force`.
 
 ### 16) Gateway runtime + port diagnostics
 

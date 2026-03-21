@@ -30,11 +30,11 @@ Use this page for day-1 startup and day-2 operations of the Gateway service.
   <Step title="Start the Gateway">
 
 ```bash
-vilaro gateway --port 18789
+velaro gateway --port 18789
 # debug/trace mirrored to stdio
-vilaro gateway --port 18789 --verbose
+velaro gateway --port 18789 --verbose
 # force-kill listener on selected port, then start
-vilaro gateway --force
+velaro gateway --force
 ```
 
   </Step>
@@ -42,9 +42,9 @@ vilaro gateway --force
   <Step title="Verify service health">
 
 ```bash
-vilaro gateway status
-vilaro status
-vilaro logs --follow
+velaro gateway status
+velaro status
+velaro logs --follow
 ```
 
 Healthy baseline: `Runtime: running` and `RPC probe: ok`.
@@ -54,7 +54,7 @@ Healthy baseline: `Runtime: running` and `RPC probe: ok`.
   <Step title="Validate channel readiness">
 
 ```bash
-vilaro channels status --probe
+velaro channels status --probe
 ```
 
   </Step>
@@ -94,15 +94,15 @@ Default mode is `gateway.reload.mode="hybrid"`.
 ## Operator command set
 
 ```bash
-vilaro gateway status
-vilaro gateway status --deep
-vilaro gateway status --json
-vilaro gateway install
-vilaro gateway restart
-vilaro gateway stop
-vilaro secrets reload
-vilaro logs --follow
-vilaro doctor
+velaro gateway status
+velaro gateway status --deep
+velaro gateway status --json
+velaro gateway install
+velaro gateway restart
+velaro gateway stop
+velaro secrets reload
+velaro logs --follow
+velaro doctor
 ```
 
 ## Remote access
@@ -130,22 +130,22 @@ Use supervised runs for production-like reliability.
   <Tab title="macOS (launchd)">
 
 ```bash
-vilaro gateway install
-vilaro gateway status
-vilaro gateway restart
-vilaro gateway stop
+velaro gateway install
+velaro gateway status
+velaro gateway restart
+velaro gateway stop
 ```
 
-LaunchAgent labels are `ai.vilaro.gateway` (default) or `ai.vilaro.<profile>` (named profile). `vilaro doctor` audits and repairs service config drift.
+LaunchAgent labels are `ai.vilaro.gateway` (default) or `ai.velaro.<profile>` (named profile). `velaro doctor` audits and repairs service config drift.
 
   </Tab>
 
   <Tab title="Linux (systemd user)">
 
 ```bash
-vilaro gateway install
+velaro gateway install
 systemctl --user enable --now vilaro-gateway[-<profile>].service
-vilaro gateway status
+velaro gateway status
 ```
 
 For persistence after logout, enable lingering:
@@ -183,8 +183,8 @@ Checklist per instance:
 Example:
 
 ```bash
-VILARO_CONFIG_PATH=~/.vilaro/a.json VILARO_STATE_DIR=~/.vilaro-a vilaro gateway --port 19001
-VILARO_CONFIG_PATH=~/.vilaro/b.json VILARO_STATE_DIR=~/.vilaro-b vilaro gateway --port 19002
+VILARO_CONFIG_PATH=~/.vilaro/a.json VILARO_STATE_DIR=~/.vilaro-a velaro gateway --port 19001
+VILARO_CONFIG_PATH=~/.vilaro/b.json VILARO_STATE_DIR=~/.vilaro-b velaro gateway --port 19002
 ```
 
 See: [Multiple gateways](/gateway/multiple-gateways).
@@ -192,9 +192,9 @@ See: [Multiple gateways](/gateway/multiple-gateways).
 ### Dev profile quick path
 
 ```bash
-vilaro --dev setup
-vilaro --dev gateway --allow-unconfigured
-vilaro --dev status
+velaro --dev setup
+velaro --dev gateway --allow-unconfigured
+velaro --dev status
 ```
 
 Defaults include isolated state/config and base gateway port `19001`.
@@ -223,9 +223,9 @@ See full protocol docs: [Gateway Protocol](/gateway/protocol).
 ### Readiness
 
 ```bash
-vilaro gateway status
-vilaro channels status --probe
-vilaro health
+velaro gateway status
+velaro channels status --probe
+velaro health
 ```
 
 ### Gap recovery

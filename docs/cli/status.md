@@ -1,20 +1,20 @@
 ---
-summary: "CLI reference for `vilaro status` (diagnostics, probes, usage snapshots)"
+summary: "CLI reference for `velaro status` (diagnostics, probes, usage snapshots)"
 read_when:
   - You want a quick diagnosis of channel health + recent session recipients
   - You want a pasteable “all” status for debugging
 title: "status"
 ---
 
-# `vilaro status`
+# `velaro status`
 
 Diagnostics for channels + sessions.
 
 ```bash
-vilaro status
-vilaro status --all
-vilaro status --deep
-vilaro status --usage
+velaro status
+velaro status --all
+velaro status --deep
+velaro status --usage
 ```
 
 Notes:
@@ -23,7 +23,7 @@ Notes:
 - Output includes per-agent session stores when multiple agents are configured.
 - Overview includes Gateway + node host service install/runtime status when available.
 - Overview includes update channel + git SHA (for source checkouts).
-- Update info surfaces in the Overview; if an update is available, status prints a hint to run `vilaro update` (see [Updating](/install/updating)).
+- Update info surfaces in the Overview; if an update is available, status prints a hint to run `velaro update` (see [Updating](/install/updating)).
 - Read-only status surfaces (`status`, `status --json`, `status --all`) resolve supported SecretRefs for their targeted config paths when possible.
 - If a supported channel SecretRef is configured but unavailable in the current command path, status stays read-only and reports degraded output instead of crashing. Human output shows warnings such as “configured token unavailable in this command path”, and JSON output includes `secretDiagnostics`.
 - When command-local SecretRef resolution succeeds, status prefers the resolved snapshot and clears transient “secret unavailable” channel markers from the final output.

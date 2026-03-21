@@ -135,12 +135,12 @@ export function registerPairingCli(program: Command) {
           : codeOrChannel;
       if (!channelRaw || !resolvedCode) {
         throw new Error(
-          `Usage: ${formatCliCommand("vilaro pairing approve <channel> <code>")} (or: ${formatCliCommand("vilaro pairing approve --channel <channel> <code>")})`,
+          `Usage: ${formatCliCommand("velaro pairing approve <channel> <code>")} (or: ${formatCliCommand("velaro pairing approve --channel <channel> <code>")})`,
         );
       }
       if (opts.channel && code != null) {
         throw new Error(
-          `Too many arguments. Use: ${formatCliCommand("vilaro pairing approve --channel <channel> <code>")}`,
+          `Too many arguments. Use: ${formatCliCommand("velaro pairing approve --channel <channel> <code>")}`,
         );
       }
       const channel = parseChannel(channelRaw, channels);

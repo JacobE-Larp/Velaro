@@ -19,7 +19,7 @@ import {
   resolveMemorySlotDecision,
   type NormalizedPluginsConfig,
 } from "./config-state.js";
-import { discoverVilaroPlugins } from "./discovery.js";
+import { discoverVelaroPlugins } from "./discovery.js";
 import { initializeGlobalHookRunner } from "./hook-runner-global.js";
 import { clearPluginInteractiveHandlers } from "./interactive.js";
 import { loadPluginManifestRegistry } from "./manifest-registry.js";
@@ -31,8 +31,8 @@ import type { CreatePluginRuntimeOptions } from "./runtime/index.js";
 import type { PluginRuntime } from "./runtime/types.js";
 import { validateJsonSchemaValue } from "./schema-validator.js";
 import type {
-  VilaroPluginDefinition,
-  VilaroPluginModule,
+  VelaroPluginDefinition,
+  VelaroPluginModule,
   PluginDiagnostic,
   PluginBundleFormat,
   PluginFormat,
@@ -382,8 +382,8 @@ function validatePluginConfig(params: {
 }
 
 function resolvePluginModuleExport(moduleExport: unknown): {
-  definition?: VilaroPluginDefinition;
-  register?: VilaroPluginDefinition["register"];
+  definition?: VelaroPluginDefinition;
+  register?: VelaroPluginDefinition["register"];
 } {
   const resolved =
     moduleExport &&
@@ -393,11 +393,11 @@ function resolvePluginModuleExport(moduleExport: unknown): {
       : moduleExport;
   if (typeof resolved === "function") {
     return {
-      register: resolved as VilaroPluginDefinition["register"],
+      register: resolved as VelaroPluginDefinition["register"],
     };
   }
   if (resolved && typeof resolved === "object") {
-    const def = resolved as VilaroPluginDefinition;
+    const def = resolved as VelaroPluginDefinition;
     const register = def.register ?? def.activate;
     return { definition: def, register };
   }
@@ -638,7 +638,7 @@ function matchesExplicitInstallRule(params: {
 }
 
 function resolveCandidateDuplicateRank(params: {
-  candidate: ReturnType<typeof discoverVilaroPlugins>["candidates"][number];
+  candidate: ReturnType<typeof discoverVelaroPlugins>["candidates"][number];
   manifestByRoot: Map<string, ReturnType<typeof loadPluginManifestRegistry>["plugins"][number]>;
   provenance: PluginProvenanceIndex;
   env: NodeJS.ProcessEnv;
@@ -672,8 +672,8 @@ function resolveCandidateDuplicateRank(params: {
 }
 
 function compareDuplicateCandidateOrder(params: {
-  left: ReturnType<typeof discoverVilaroPlugins>["candidates"][number];
-  right: ReturnType<typeof discoverVilaroPlugins>["candidates"][number];
+  left: ReturnType<typeof discoverVelaroPlugins>["candidates"][number];
+  right: ReturnType<typeof discoverVelaroPlugins>["candidates"][number];
   manifestByRoot: Map<string, ReturnType<typeof loadPluginManifestRegistry>["plugins"][number]>;
   provenance: PluginProvenanceIndex;
   env: NodeJS.ProcessEnv;
@@ -767,12 +767,12 @@ function activatePluginRegistry(registry: PluginRegistry, cacheKey: string): voi
   initializeGlobalHookRunner(registry);
 }
 
-export function loadVilaroPlugins(options: PluginLoadOptions = {}): PluginRegistry {
+export function loadVelaroPlugins(options: PluginLoadOptions = {}): PluginRegistry {
   // Snapshot (non-activating) loads must disable the cache to avoid storing a registry
   // whose commands were never globally registered.
   if (options.activate === false && options.cache !== false) {
     throw new Error(
-      "loadVilaroPlugins: activate:false requires cache:false to prevent command registry divergence",
+      "loadVelaroPlugins: activate:false requires cache:false to prevent command registry divergence",
     );
   }
   const env = options.env ?? process.env;
@@ -904,7 +904,7 @@ export function loadVilaroPlugins(options: PluginLoadOptions = {}): PluginRegist
     suppressGlobalCommands: !shouldActivate,
   });
 
-  const discovery = discoverVilaroPlugins({
+  const discovery = discoverVelaroPlugins({
     workspaceDir: options.workspaceDir,
     extraPaths: normalized.loadPaths,
     cache: options.cache,
@@ -1072,7 +1072,7 @@ export function loadVilaroPlugins(options: PluginLoadOptions = {}): PluginRegist
           level: "warn",
           pluginId: record.id,
           source: record.source,
-          message: `bundle capability detected but not wired into Vilaro yet: ${capability}`,
+          message: `bundle capability detected but not wired into Velaro yet: ${capability}`,
         });
       }
       registry.plugins.push(record);
@@ -1127,9 +1127,9 @@ export function loadVilaroPlugins(options: PluginLoadOptions = {}): PluginRegist
     const safeSource = opened.path;
     fs.closeSync(opened.fd);
 
-    let mod: VilaroPluginModule | null = null;
+    let mod: VelaroPluginModule | null = null;
     try {
-      mod = getJiti()(safeSource) as VilaroPluginModule;
+      mod = getJiti()(safeSource) as VelaroPluginModule;
     } catch (err) {
       recordPluginError({
         logger,

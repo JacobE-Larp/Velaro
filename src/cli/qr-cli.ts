@@ -242,7 +242,7 @@ export function registerQrCli(program: Command) {
 
         const lines: string[] = [
           theme.heading("Pairing QR"),
-          "Scan this with the Vilaro iOS app (Onboarding -> Scan QR).",
+          "Scan this with the Velaro iOS app (Onboarding -> Scan QR).",
           "",
         ];
 
@@ -258,8 +258,8 @@ export function registerQrCli(program: Command) {
           `${theme.muted("Source:")} ${resolved.urlSource}`,
           "",
           "Approve after scan with:",
-          `  ${theme.command("vilaro devices list")}`,
-          `  ${theme.command("vilaro devices approve <requestId>")}`,
+          `  ${theme.command("velaro devices list")}`,
+          `  ${theme.command("velaro devices approve <requestId>")}`,
         );
 
         defaultRuntime.log(lines.join("\n"));

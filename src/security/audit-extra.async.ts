@@ -498,7 +498,7 @@ export async function collectSandboxBrowserHashLabelFindings(params?: {
       detail:
         `Containers: ${missingHash.join(", ")}. ` +
         "These browser containers predate hash-based drift checks and may miss security remediations until recreated.",
-      remediation: `${formatCliCommand("vilaro sandbox recreate --browser --all")} (add --force to skip prompt).`,
+      remediation: `${formatCliCommand("velaro sandbox recreate --browser --all")} (add --force to skip prompt).`,
     });
   }
 
@@ -510,7 +510,7 @@ export async function collectSandboxBrowserHashLabelFindings(params?: {
       detail:
         `Containers: ${staleEpoch.join(", ")}. ` +
         `Expected vilaro.browserConfigEpoch=${SANDBOX_BROWSER_SECURITY_HASH_EPOCH}.`,
-      remediation: `${formatCliCommand("vilaro sandbox recreate --browser --all")} (add --force to skip prompt).`,
+      remediation: `${formatCliCommand("velaro sandbox recreate --browser --all")} (add --force to skip prompt).`,
     });
   }
 
@@ -523,7 +523,7 @@ export async function collectSandboxBrowserHashLabelFindings(params?: {
         `Containers: ${nonLoopbackPublished.join(", ")}. ` +
         "Sandbox browser observer/control ports should stay loopback-only to avoid unintended remote access.",
       remediation:
-        `${formatCliCommand("vilaro sandbox recreate --browser --all")} (add --force to skip prompt), ` +
+        `${formatCliCommand("velaro sandbox recreate --browser --all")} (add --force to skip prompt), ` +
         "then verify published ports are bound to 127.0.0.1.",
     });
   }
@@ -757,7 +757,7 @@ export async function collectPluginsTrustFindings(params: {
         title: "Plugin install records drift from installed package versions",
         detail: `Detected plugin install metadata drift:\n${pluginVersionDrift.map((entry) => `- ${entry}`).join("\n")}`,
         remediation:
-          "Run `vilaro plugins update --all` (or reinstall affected plugins) to refresh install metadata.",
+          "Run `velaro plugins update --all` (or reinstall affected plugins) to refresh install metadata.",
       });
     }
   }
@@ -820,7 +820,7 @@ export async function collectPluginsTrustFindings(params: {
         title: "Hook install records drift from installed package versions",
         detail: `Detected hook install metadata drift:\n${hookVersionDrift.map((entry) => `- ${entry}`).join("\n")}`,
         remediation:
-          "Run `vilaro hooks update --all` (or reinstall affected hooks) to refresh install metadata.",
+          "Run `velaro hooks update --all` (or reinstall affected hooks) to refresh install metadata.",
       });
     }
   }
@@ -1159,7 +1159,7 @@ export async function collectPluginsCodeSafetyFindings(params: {
         title: "Plugin extensions directory scan failed",
         detail: `Static code scan could not list extensions directory: ${String(err)}`,
         remediation:
-          "Check file permissions and plugin layout, then rerun `vilaro security audit --deep`.",
+          "Check file permissions and plugin layout, then rerun `velaro security audit --deep`.",
       });
     },
   });
@@ -1210,7 +1210,7 @@ export async function collectPluginsCodeSafetyFindings(params: {
         title: `Plugin "${pluginName}" code scan failed`,
         detail: `Static code scan could not complete: ${String(err)}`,
         remediation:
-          "Check file permissions and plugin layout, then rerun `vilaro security audit --deep`.",
+          "Check file permissions and plugin layout, then rerun `velaro security audit --deep`.",
       });
       return null;
     });
@@ -1228,7 +1228,7 @@ export async function collectPluginsCodeSafetyFindings(params: {
         title: `Plugin "${pluginName}" contains dangerous code patterns`,
         detail: `Found ${summary.critical} critical issue(s) in ${summary.scannedFiles} scanned file(s):\n${details}`,
         remediation:
-          "Review the plugin source code carefully before use. If untrusted, remove the plugin from your Vilaro extensions state directory.",
+          "Review the plugin source code carefully before use. If untrusted, remove the plugin from your Velaro extensions state directory.",
       });
     } else if (summary.warn > 0) {
       const warnFindings = summary.findings.filter((f) => f.severity === "warn");
@@ -1286,7 +1286,7 @@ export async function collectInstalledSkillsCodeSafetyFindings(params: {
           title: `Skill "${skillName}" code scan failed`,
           detail: `Static code scan could not complete for ${skillDir}: ${String(err)}`,
           remediation:
-            "Check file permissions and skill layout, then rerun `vilaro security audit --deep`.",
+            "Check file permissions and skill layout, then rerun `velaro security audit --deep`.",
         });
         return null;
       });

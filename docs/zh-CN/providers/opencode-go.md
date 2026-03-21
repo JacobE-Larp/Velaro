@@ -28,9 +28,9 @@ OpenCode Go 是 [OpenCode](/providers/opencode) 中的 Go 目录。
 ## CLI 设置
 
 ```bash
-vilaro onboard --auth-choice opencode-go
+velaro onboard --auth-choice opencode-go
 # 或非交互式
-vilaro onboard --opencode-go-api-key "$OPENCODE_API_KEY"
+velaro onboard --opencode-go-api-key "$OPENCODE_API_KEY"
 ```
 
 ## 配置片段
@@ -44,7 +44,7 @@ vilaro onboard --opencode-go-api-key "$OPENCODE_API_KEY"
 
 ## 路由行为
 
-当模型引用使用 `opencode-go/...` 时，Vilaro 会自动处理按模型路由。
+当模型引用使用 `opencode-go/...` 时，Velaro 会自动处理按模型路由。
 
 ## 说明
 

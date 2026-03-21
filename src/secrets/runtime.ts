@@ -1,4 +1,4 @@
-import { resolveVilaroAgentDir } from "../agents/agent-paths.js";
+import { resolveVelaroAgentDir } from "../agents/agent-paths.js";
 import { listAgentIds, resolveAgentDir } from "../agents/agent-scope.js";
 import type { AuthProfileStore } from "../agents/auth-profiles.js";
 import {
@@ -81,7 +81,7 @@ function clearActiveSecretsRuntimeState(): void {
 
 function collectCandidateAgentDirs(config: VilaroConfig): string[] {
   const dirs = new Set<string>();
-  dirs.add(resolveUserPath(resolveVilaroAgentDir()));
+  dirs.add(resolveUserPath(resolveVelaroAgentDir()));
   for (const agentId of listAgentIds(config)) {
     dirs.add(resolveUserPath(resolveAgentDir(config, agentId)));
   }

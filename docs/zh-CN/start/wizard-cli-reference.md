@@ -1,6 +1,6 @@
 ---
 read_when:
-  - 你需要了解 `vilaro onboard` 的详细行为
+  - 你需要了解 `velaro onboard` 的详细行为
   - 你正在调试新手引导结果或集成新手引导客户端
 sidebarTitle: CLI reference
 summary: CLI 设置流程、身份验证/模型设置、输出和内部机制的完整参考
@@ -16,7 +16,7 @@ x-i18n:
 
 # CLI 设置参考
 
-本页是 `vilaro onboard` 的完整参考。
+本页是 `velaro onboard` 的完整参考。
 简短指南请参见 [设置向导（CLI）](/start/wizard)。
 
 ## 向导会执行什么
@@ -41,7 +41,7 @@ x-i18n:
     - 如果 `~/.vilaro/vilaro.json` 存在，可选择 Keep、Modify 或 Reset。
     - 重新运行向导不会清除任何内容，除非你明确选择 Reset（或传递 `--reset`）。
     - CLI `--reset` 默认作用于 `config+creds+sessions`；使用 `--reset-scope full` 还会删除工作区。
-    - 如果配置无效或包含旧版键，向导会停止，并要求你先运行 `vilaro doctor` 再继续。
+    - 如果配置无效或包含旧版键，向导会停止，并要求你先运行 `velaro doctor` 再继续。
     - Reset 使用 `trash`，并提供以下范围：
       - 仅配置
       - 配置 + 凭证 + 会话
@@ -78,7 +78,7 @@ x-i18n:
     - [BlueBubbles](/channels/bluebubbles)：推荐用于 iMessage；服务器 URL + 密码 + webhook
     - [iMessage](/channels/imessage)：旧版 `imsg` CLI 路径 + 数据库访问
     - 私信安全：默认是配对。首次私信会发送一个代码；通过
-      `vilaro pairing approve <channel> <code>` 批准，或使用 allowlist。
+      `velaro pairing approve <channel> <code>` 批准，或使用 allowlist。
   </Step>
   <Step title="守护进程安装">
     - macOS：LaunchAgent
@@ -89,8 +89,8 @@ x-i18n:
     - 运行时选择：Node（推荐；WhatsApp 和 Telegram 必需）。不建议使用 Bun。
   </Step>
   <Step title="健康检查">
-    - 启动 Gateway 网关（如有需要），并运行 `vilaro health`。
-    - `vilaro status --deep` 会在状态输出中添加 Gateway 网关健康探测。
+    - 启动 Gateway 网关（如有需要），并运行 `velaro health`。
+    - `velaro status --deep` 会在状态输出中添加 Gateway 网关健康探测。
   </Step>
   <Step title="Skills">
     - 读取可用的 Skills 并检查要求。
@@ -271,7 +271,7 @@ x-i18n:
 - `wizard.lastRunCommand`
 - `wizard.lastRunMode`
 
-`vilaro agents add` 会写入 `agents.list[]` 和可选的 `bindings`。
+`velaro agents add` 会写入 `agents.list[]` 和可选的 `bindings`。
 
 WhatsApp 凭证位于 `~/.vilaro/credentials/whatsapp/<accountId>/`。
 会话存储在 `~/.vilaro/agents/<agentId>/sessions/` 下。
@@ -303,4 +303,4 @@ Signal 设置行为：
 
 - 新手引导中心：[设置向导（CLI）](/start/wizard)
 - 自动化和脚本：[CLI 自动化](/start/wizard-cli-automation)
-- 命令参考：[`vilaro onboard`](/cli/onboard)
+- 命令参考：[`velaro onboard`](/cli/onboard)

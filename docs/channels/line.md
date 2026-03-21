@@ -1,7 +1,7 @@
 ---
 summary: "LINE Messaging API plugin setup, config, and usage"
 read_when:
-  - You want to connect Vilaro to LINE
+  - You want to connect Velaro to LINE
   - You need LINE webhook + credential setup
   - You want LINE-specific message options
 title: LINE
@@ -9,7 +9,7 @@ title: LINE
 
 # LINE (plugin)
 
-LINE connects to Vilaro via the LINE Messaging API. The plugin runs as a webhook
+LINE connects to Velaro via the LINE Messaging API. The plugin runs as a webhook
 receiver on the gateway and uses your channel access token + channel secret for
 authentication.
 
@@ -22,13 +22,13 @@ are not supported.
 Install the LINE plugin:
 
 ```bash
-vilaro plugins install @vilaro/line
+velaro plugins install @vilaro/line
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-vilaro plugins install ./extensions/line
+velaro plugins install ./extensions/line
 ```
 
 ## Setup
@@ -50,7 +50,7 @@ If you need a custom path, set `channels.line.webhookPath` or
 
 Security note:
 
-- LINE signature verification is body-dependent (HMAC over the raw body), so Vilaro applies strict pre-auth body limits and timeout before verification.
+- LINE signature verification is body-dependent (HMAC over the raw body), so Velaro applies strict pre-auth body limits and timeout before verification.
 
 ## Configure
 
@@ -113,8 +113,8 @@ Direct messages default to pairing. Unknown senders get a pairing code and their
 messages are ignored until approved.
 
 ```bash
-vilaro pairing list line
-vilaro pairing approve line <CODE>
+velaro pairing list line
+velaro pairing approve line <CODE>
 ```
 
 Allowlists and policies:

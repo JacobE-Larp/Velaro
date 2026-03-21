@@ -100,7 +100,7 @@ function hasOwnPathKey(value: Record<string, unknown>, key: string): boolean {
 }
 
 function formatDoctorHint(message: string): string {
-  return `Run \`${formatCliCommand("vilaro doctor")}\` ${message}`;
+  return `Run \`${formatCliCommand("velaro doctor")}\` ${message}`;
 }
 
 function validatePathSegments(path: PathSegment[]): void {

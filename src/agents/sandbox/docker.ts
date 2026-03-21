@@ -480,13 +480,13 @@ async function readContainerConfigHash(containerName: string): Promise<string | 
 
 function formatSandboxRecreateHint(params: { scope: SandboxConfig["scope"]; sessionKey: string }) {
   if (params.scope === "session") {
-    return formatCliCommand(`vilaro sandbox recreate --session ${params.sessionKey}`);
+    return formatCliCommand(`velaro sandbox recreate --session ${params.sessionKey}`);
   }
   if (params.scope === "agent") {
     const agentId = resolveSandboxAgentId(params.sessionKey) ?? "main";
-    return formatCliCommand(`vilaro sandbox recreate --agent ${agentId}`);
+    return formatCliCommand(`velaro sandbox recreate --agent ${agentId}`);
   }
-  return formatCliCommand("vilaro sandbox recreate --all");
+  return formatCliCommand("velaro sandbox recreate --all");
 }
 
 export async function ensureSandboxContainer(params: {

@@ -18,7 +18,7 @@ export function resolveWindowsVilaroSpawn(
   const candidate = resolveWindowsSpawnProgramCandidate({
     command: execPath,
     env,
-    packageName: "vilaro",
+    packageName: "velaro",
   });
   const program = applyWindowsSpawnProgramPolicy({
     candidate,
@@ -26,7 +26,7 @@ export function resolveWindowsVilaroSpawn(
   });
   const resolved = materializeWindowsSpawnProgram(program, argv);
   if (resolved.shell) {
-    throw new Error("vilaro wrapper resolved to shell fallback unexpectedly");
+    throw new Error("velaro wrapper resolved to shell fallback unexpectedly");
   }
   return {
     command: resolved.command,

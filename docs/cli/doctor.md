@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `vilaro doctor` (health checks + guided repairs)"
+summary: "CLI reference for `velaro doctor` (health checks + guided repairs)"
 read_when:
   - You have connectivity/auth issues and want guided fixes
   - You updated and want a sanity check
 title: "doctor"
 ---
 
-# `vilaro doctor`
+# `velaro doctor`
 
 Health checks + quick fixes for the gateway and channels.
 
@@ -18,9 +18,9 @@ Related:
 ## Examples
 
 ```bash
-vilaro doctor
-vilaro doctor --repair
-vilaro doctor --deep
+velaro doctor
+velaro doctor --repair
+velaro doctor --deep
 ```
 
 Notes:
@@ -29,8 +29,8 @@ Notes:
 - `--fix` (alias for `--repair`) writes a backup to `~/.vilaro/vilaro.json.bak` and drops unknown config keys, listing each removal.
 - State integrity checks now detect orphan transcript files in the sessions directory and can archive them as `.deleted.<timestamp>` to reclaim space safely.
 - Doctor also scans `~/.vilaro/cron/jobs.json` (or `cron.store`) for legacy cron job shapes and can rewrite them in place before the scheduler has to auto-normalize them at runtime.
-- Doctor includes a memory-search readiness check and can recommend `vilaro configure --section model` when embedding credentials are missing.
-- If sandbox mode is enabled but Docker is unavailable, doctor reports a high-signal warning with remediation (`install Docker` or `vilaro config set agents.defaults.sandbox.mode off`).
+- Doctor includes a memory-search readiness check and can recommend `velaro configure --section model` when embedding credentials are missing.
+- If sandbox mode is enabled but Docker is unavailable, doctor reports a high-signal warning with remediation (`install Docker` or `velaro config set agents.defaults.sandbox.mode off`).
 - If `gateway.auth.token`/`gateway.auth.password` are SecretRef-managed and unavailable in the current command path, doctor reports a read-only warning and does not write plaintext fallback credentials.
 
 ## macOS: `launchctl` env overrides

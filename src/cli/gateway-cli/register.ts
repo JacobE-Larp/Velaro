@@ -95,10 +95,10 @@ export function registerGatewayCli(program: Command) {
         "after",
         () =>
           `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-            ["vilaro gateway run", "Run the gateway in the foreground."],
-            ["vilaro gateway status", "Show service status and probe reachability."],
-            ["vilaro gateway discover", "Find local and wide-area gateway beacons."],
-            ["vilaro gateway call health", "Call a gateway RPC method directly."],
+            ["velaro gateway run", "Run the gateway in the foreground."],
+            ["velaro gateway status", "Show service status and probe reachability."],
+            ["velaro gateway discover", "Find local and wide-area gateway beacons."],
+            ["velaro gateway call health", "Call a gateway RPC method directly."],
           ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/gateway", "docs.vilaro.ai/cli/gateway")}\n`,
       ),
   );

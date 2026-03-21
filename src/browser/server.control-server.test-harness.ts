@@ -253,7 +253,7 @@ export function getLaunchCalls() {
 vi.mock("./chrome.js", () => ({
   isChromeCdpReady: vi.fn(async () => state.reachable),
   isChromeReachable: vi.fn(async () => state.reachable),
-  launchVilaroChrome: vi.fn(async (_resolved: unknown, profile: { cdpPort: number }) => {
+  launchVelaroChrome: vi.fn(async (_resolved: unknown, profile: { cdpPort: number }) => {
     launchCalls.push({ port: profile.cdpPort });
     state.reachable = true;
     return {
@@ -265,8 +265,8 @@ vi.mock("./chrome.js", () => ({
       proc,
     };
   }),
-  resolveVilaroUserDataDir: vi.fn(() => chromeUserDataDir.dir),
-  stopVilaroChrome: vi.fn(async () => {
+  resolveVelaroUserDataDir: vi.fn(() => chromeUserDataDir.dir),
+  stopVelaroChrome: vi.fn(async () => {
     state.reachable = false;
   }),
 }));

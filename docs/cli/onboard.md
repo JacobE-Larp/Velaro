@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `vilaro onboard` (interactive setup wizard)"
+summary: "CLI reference for `velaro onboard` (interactive setup wizard)"
 read_when:
   - You want guided setup for gateway, workspace, auth, channels, and skills
 title: "onboard"
 ---
 
-# `vilaro onboard`
+# `velaro onboard`
 
 Interactive setup wizard (local or remote Gateway setup).
 
@@ -20,10 +20,10 @@ Interactive setup wizard (local or remote Gateway setup).
 ## Examples
 
 ```bash
-vilaro onboard
-vilaro onboard --flow quickstart
-vilaro onboard --flow manual
-vilaro onboard --mode remote --remote-url wss://gateway-host:18789
+velaro onboard
+velaro onboard --flow quickstart
+velaro onboard --flow manual
+velaro onboard --mode remote --remote-url wss://gateway-host:18789
 ```
 
 For plaintext private-network `ws://` targets (trusted networks only), set
@@ -32,7 +32,7 @@ For plaintext private-network `ws://` targets (trusted networks only), set
 Non-interactive custom provider:
 
 ```bash
-vilaro onboard --non-interactive \
+velaro onboard --non-interactive \
   --auth-choice custom-api-key \
   --custom-base-url "https://llm.example.com/v1" \
   --custom-model-id "foo-large" \
@@ -46,7 +46,7 @@ vilaro onboard --non-interactive \
 Non-interactive Ollama:
 
 ```bash
-vilaro onboard --non-interactive \
+velaro onboard --non-interactive \
   --auth-choice ollama \
   --custom-base-url "http://ollama-host:11434" \
   --custom-model-id "qwen3.5:27b" \
@@ -58,7 +58,7 @@ vilaro onboard --non-interactive \
 Store provider keys as refs instead of plaintext:
 
 ```bash
-vilaro onboard --non-interactive \
+velaro onboard --non-interactive \
   --auth-choice openai-api-key \
   --secret-input-mode ref \
   --accept-risk
@@ -87,7 +87,7 @@ Example:
 
 ```bash
 export VILARO_GATEWAY_TOKEN="your-token"
-vilaro onboard --non-interactive \
+velaro onboard --non-interactive \
   --mode local \
   --auth-choice skip \
   --gateway-auth token \
@@ -98,7 +98,7 @@ vilaro onboard --non-interactive \
 Non-interactive local gateway health:
 
 - Unless you pass `--skip-health`, onboarding waits for a reachable local gateway before it exits successfully.
-- `--install-daemon` starts the managed gateway install path first. Without it, you must already have a local gateway running, for example `vilaro gateway run`.
+- `--install-daemon` starts the managed gateway install path first. Without it, you must already have a local gateway running, for example `velaro gateway run`.
 - If you only want config/workspace/bootstrap writes in automation, use `--skip-health`.
 - On native Windows, `--install-daemon` tries Scheduled Tasks first and falls back to a per-user Startup-folder login item if task creation is denied.
 
@@ -118,7 +118,7 @@ If you specifically want the GLM Coding Plan endpoints, pick `zai-coding-global`
 
 ```bash
 # Promptless endpoint selection
-vilaro onboard --non-interactive \
+velaro onboard --non-interactive \
   --auth-choice zai-coding-global \
   --zai-api-key "$ZAI_API_KEY"
 
@@ -131,7 +131,7 @@ vilaro onboard --non-interactive \
 Non-interactive Mistral example:
 
 ```bash
-vilaro onboard --non-interactive \
+velaro onboard --non-interactive \
   --auth-choice mistral-api-key \
   --mistral-api-key "$MISTRAL_API_KEY"
 ```
@@ -141,15 +141,15 @@ Flow notes:
 - `quickstart`: minimal prompts, auto-generates a gateway token.
 - `manual`: full prompts for port/bind/auth (alias of `advanced`).
 - Local onboarding DM scope behavior: [CLI Setup Reference](/start/wizard-cli-reference#outputs-and-internals).
-- Fastest first chat: `vilaro dashboard` (Control UI, no channel setup).
+- Fastest first chat: `velaro dashboard` (Control UI, no channel setup).
 - Custom Provider: connect any OpenAI or Anthropic compatible endpoint,
   including hosted providers not listed. Use Unknown to auto-detect.
 
 ## Common follow-up commands
 
 ```bash
-vilaro configure
-vilaro agents add <name>
+velaro configure
+velaro agents add <name>
 ```
 
 <Note>

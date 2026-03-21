@@ -1,12 +1,12 @@
 ---
-summary: "SSH tunnel setup for Vilaro.app connecting to a remote gateway"
+summary: "SSH tunnel setup for Velaro.app connecting to a remote gateway"
 read_when: "Connecting the macOS app to a remote gateway over SSH"
 title: "Remote Gateway Setup"
 ---
 
-# Running Vilaro.app with a Remote Gateway
+# Running Velaro.app with a Remote Gateway
 
-Vilaro.app uses SSH tunneling to connect to a remote gateway. This guide shows you how to set it up.
+Velaro.app uses SSH tunneling to connect to a remote gateway. This guide shows you how to set it up.
 
 ## Overview
 
@@ -14,7 +14,7 @@ Vilaro.app uses SSH tunneling to connect to a remote gateway. This guide shows y
 flowchart TB
     subgraph Client["Client Machine"]
         direction TB
-        A["Vilaro.app"]
+        A["Velaro.app"]
         B["ws://127.0.0.1:18789\n(local port)"]
         T["SSH Tunnel"]
 
@@ -67,11 +67,11 @@ launchctl setenv VILARO_GATEWAY_TOKEN "<your-token>"
 ssh -N remote-gateway &
 ```
 
-### Step 5: Restart Vilaro.app
+### Step 5: Restart Velaro.app
 
 ```bash
-# Quit Vilaro.app (⌘Q), then reopen:
-open /path/to/Vilaro.app
+# Quit Velaro.app (⌘Q), then reopen:
+open /path/to/Velaro.app
 ```
 
 The app will now connect to the remote gateway through the SSH tunnel.
@@ -84,7 +84,7 @@ To have the SSH tunnel start automatically when you log in, create a Launch Agen
 
 ### Create the PLIST file
 
-Save this as `~/Library/LaunchAgents/ai.vilaro.ssh-tunnel.plist`:
+Save this as `~/Library/LaunchAgents/ai.velaro.ssh-tunnel.plist`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -92,7 +92,7 @@ Save this as `~/Library/LaunchAgents/ai.vilaro.ssh-tunnel.plist`:
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>ai.vilaro.ssh-tunnel</string>
+    <string>ai.velaro.ssh-tunnel</string>
     <key>ProgramArguments</key>
     <array>
         <string>/usr/bin/ssh</string>
@@ -110,7 +110,7 @@ Save this as `~/Library/LaunchAgents/ai.vilaro.ssh-tunnel.plist`:
 ### Load the Launch Agent
 
 ```bash
-launchctl bootstrap gui/$UID ~/Library/LaunchAgents/ai.vilaro.ssh-tunnel.plist
+launchctl bootstrap gui/$UID ~/Library/LaunchAgents/ai.velaro.ssh-tunnel.plist
 ```
 
 The tunnel will now:
@@ -119,7 +119,7 @@ The tunnel will now:
 - Restart if it crashes
 - Keep running in the background
 
-Legacy note: remove any leftover `com.vilaro.ssh-tunnel` LaunchAgent if present.
+Legacy note: remove any leftover `com.velaro.ssh-tunnel` LaunchAgent if present.
 
 ---
 
@@ -135,13 +135,13 @@ lsof -i :18789
 **Restart the tunnel:**
 
 ```bash
-launchctl kickstart -k gui/$UID/ai.vilaro.ssh-tunnel
+launchctl kickstart -k gui/$UID/ai.velaro.ssh-tunnel
 ```
 
 **Stop the tunnel:**
 
 ```bash
-launchctl bootout gui/$UID/ai.vilaro.ssh-tunnel
+launchctl bootout gui/$UID/ai.velaro.ssh-tunnel
 ```
 
 ---
@@ -155,4 +155,4 @@ launchctl bootout gui/$UID/ai.vilaro.ssh-tunnel
 | `KeepAlive`                          | Automatically restarts tunnel if it crashes                  |
 | `RunAtLoad`                          | Starts tunnel when the agent loads                           |
 
-Vilaro.app connects to `ws://127.0.0.1:18789` on your client machine. The SSH tunnel forwards that connection to port 18789 on the remote machine where the Gateway is running.
+Velaro.app connects to `ws://127.0.0.1:18789` on your client machine. The SSH tunnel forwards that connection to port 18789 on the remote machine where the Gateway is running.

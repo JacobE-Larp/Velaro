@@ -1,6 +1,6 @@
 import type { Api, Model } from "@mariozechner/pi-ai";
 import type { ModelRegistry } from "@mariozechner/pi-coding-agent";
-import { resolveVilaroAgentDir } from "../../agents/agent-paths.js";
+import { resolveVelaroAgentDir } from "../../agents/agent-paths.js";
 import type { AuthProfileStore } from "../../agents/auth-profiles.js";
 import { listProfilesForProvider } from "../../agents/auth-profiles.js";
 import {
@@ -96,7 +96,7 @@ export async function loadModelRegistry(
   _cfg: VilaroConfig,
   _opts?: { sourceConfig?: VilaroConfig },
 ) {
-  const agentDir = resolveVilaroAgentDir();
+  const agentDir = resolveVelaroAgentDir();
   const authStorage = discoverAuthStorage(agentDir);
   const registry = discoverModels(authStorage, agentDir);
   const models = registry

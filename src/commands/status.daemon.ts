@@ -6,7 +6,7 @@ import { readServiceStatusSummary } from "./status.service-summary.js";
 type DaemonStatusSummary = {
   label: string;
   installed: boolean | null;
-  managedByVilaro: boolean;
+  managedByVelaro: boolean;
   externallyManaged: boolean;
   loadedText: string;
   runtimeShort: string | null;
@@ -21,7 +21,7 @@ async function buildDaemonStatusSummary(
   return {
     label: summary.label,
     installed: summary.installed,
-    managedByVilaro: summary.managedByVilaro,
+    managedByVelaro: summary.managedByVelaro,
     externallyManaged: summary.externallyManaged,
     loadedText: summary.loadedText,
     runtimeShort: formatDaemonRuntimeShort(summary.runtime),

@@ -5,7 +5,7 @@ import { isRestartEnabled } from "../../config/commands.js";
 import { logVerbose } from "../../globals.js";
 import { getSessionBindingService } from "../../infra/outbound/session-binding-service.js";
 import type { SessionBindingRecord } from "../../infra/outbound/session-binding-service.js";
-import { scheduleGatewaySigusr1Restart, triggerVilaroRestart } from "../../infra/restart.js";
+import { scheduleGatewaySigusr1Restart, triggerVelaroRestart } from "../../infra/restart.js";
 import { loadCostUsageSummary, loadSessionCostSummary } from "../../infra/session-cost-usage.js";
 import { createPluginRuntime } from "../../plugins/runtime/index.js";
 import { formatTokenCount, formatUsd } from "../../utils/usage-format.js";
@@ -618,11 +618,11 @@ export const handleRestartCommand: CommandHandler = async (params, allowTextComm
     return {
       shouldContinue: false,
       reply: {
-        text: "⚙️ Restarting Vilaro in-process (SIGUSR1); back in a few seconds.",
+        text: "⚙️ Restarting Velaro in-process (SIGUSR1); back in a few seconds.",
       },
     };
   }
-  const restartMethod = triggerVilaroRestart();
+  const restartMethod = triggerVelaroRestart();
   if (!restartMethod.ok) {
     const detail = restartMethod.detail ? ` Details: ${restartMethod.detail}` : "";
     return {
@@ -635,7 +635,7 @@ export const handleRestartCommand: CommandHandler = async (params, allowTextComm
   return {
     shouldContinue: false,
     reply: {
-      text: `⚙️ Restarting Vilaro via ${restartMethod.method}; give me a few seconds to come back online.`,
+      text: `⚙️ Restarting Velaro via ${restartMethod.method}; give me a few seconds to come back online.`,
     },
   };
 };

@@ -9,7 +9,7 @@ title: "Network"
 
 # Network hub
 
-This hub links the core docs for how Vilaro connects, pairs, and secures
+This hub links the core docs for how Velaro connects, pairs, and secures
 devices across localhost, LAN, and tailnet.
 
 ## Core model

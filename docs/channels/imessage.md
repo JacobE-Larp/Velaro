@@ -42,7 +42,7 @@ imsg rpc --help
 
       </Step>
 
-      <Step title="Configure Vilaro">
+      <Step title="Configure Velaro">
 
 ```json5
 {
@@ -61,7 +61,7 @@ imsg rpc --help
       <Step title="Start gateway">
 
 ```bash
-vilaro gateway
+velaro gateway
 ```
 
       </Step>
@@ -69,8 +69,8 @@ vilaro gateway
       <Step title="Approve first DM pairing (default dmPolicy)">
 
 ```bash
-vilaro pairing list imessage
-vilaro pairing approve imessage <CODE>
+velaro pairing list imessage
+velaro pairing approve imessage <CODE>
 ```
 
         Pairing requests expire after 1 hour.
@@ -80,7 +80,7 @@ vilaro pairing approve imessage <CODE>
   </Tab>
 
   <Tab title="Remote Mac over SSH">
-    Vilaro only requires a stdio-compatible `cliPath`, so you can point `cliPath` at a wrapper script that SSHes to a remote Mac and runs `imsg`.
+    Velaro only requires a stdio-compatible `cliPath`, so you can point `cliPath` at a wrapper script that SSHes to a remote Mac and runs `imsg`.
 
 ```bash
 #!/usr/bin/env bash
@@ -106,9 +106,9 @@ exec ssh -T gateway-host imsg "$@"
 }
 ```
 
-    If `remoteHost` is not set, Vilaro attempts to auto-detect it by parsing the SSH wrapper script.
+    If `remoteHost` is not set, Velaro attempts to auto-detect it by parsing the SSH wrapper script.
     `remoteHost` must be `host` or `user@host` (no spaces or SSH options).
-    Vilaro uses strict host-key checking for SCP, so the relay host key must already exist in `~/.ssh/known_hosts`.
+    Velaro uses strict host-key checking for SCP, so the relay host key must already exist in `~/.ssh/known_hosts`.
     Attachment paths are validated against allowed roots (`attachmentRoots` / `remoteAttachmentRoots`).
 
   </Tab>
@@ -117,7 +117,7 @@ exec ssh -T gateway-host imsg "$@"
 ## Requirements and permissions (macOS)
 
 - Messages must be signed in on the Mac running `imsg`.
-- Full Disk Access is required for the process context running Vilaro/`imsg` (Messages DB access).
+- Full Disk Access is required for the process context running Velaro/`imsg` (Messages DB access).
 - Automation permission is required to send messages through Messages.app.
 
 <Tip>
@@ -179,7 +179,7 @@ imsg send <handle> "test"
     Group-ish thread behavior:
 
     Some multi-participant iMessage threads can arrive with `is_group=false`.
-    If that `chat_id` is explicitly configured under `channels.imessage.groups`, Vilaro treats it as group traffic (group gating + group session isolation).
+    If that `chat_id` is explicitly configured under `channels.imessage.groups`, Velaro treats it as group traffic (group gating + group session isolation).
 
   </Tab>
 </Tabs>
@@ -195,7 +195,7 @@ imsg send <handle> "test"
     1. Create/sign in a dedicated macOS user.
     2. Sign into Messages with the bot Apple ID in that user.
     3. Install `imsg` in that user.
-    4. Create SSH wrapper so Vilaro can run `imsg` in that user context.
+    4. Create SSH wrapper so Velaro can run `imsg` in that user context.
     5. Point `channels.imessage.accounts.<id>.cliPath` and `.dbPath` to that user profile.
 
     First run may require GUI approvals (Automation + Full Disk Access) in that bot user session.
@@ -309,7 +309,7 @@ Disable:
 
 ```bash
 imsg rpc --help
-vilaro channels status --probe
+velaro channels status --probe
 ```
 
     If probe reports RPC unsupported, update `imsg`.
@@ -321,7 +321,7 @@ vilaro channels status --probe
 
     - `channels.imessage.dmPolicy`
     - `channels.imessage.allowFrom`
-    - pairing approvals (`vilaro pairing list imessage`)
+    - pairing approvals (`velaro pairing list imessage`)
 
   </Accordion>
 
@@ -354,7 +354,7 @@ imsg chats --limit 1
 imsg send <handle> "test"
 ```
 
-    Confirm Full Disk Access + Automation are granted for the process context that runs Vilaro/`imsg`.
+    Confirm Full Disk Access + Automation are granted for the process context that runs Velaro/`imsg`.
 
   </Accordion>
 </AccordionGroup>

@@ -1,5 +1,5 @@
 ---
-summary: "Menu bar icon states and animations for Vilaro on macOS"
+summary: "Menu bar icon states and animations for Velaro on macOS"
 read_when:
   - Changing menu bar icon behavior
 title: "Menu Bar Icon"

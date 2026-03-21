@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `vilaro node` (headless node host)"
+summary: "CLI reference for `velaro node` (headless node host)"
 read_when:
   - Running the headless node host
   - Pairing a non-macOS node for system.run
 title: "node"
 ---
 
-# `vilaro node`
+# `velaro node`
 
 Run a **headless node host** that connects to the Gateway WebSocket and exposes
 `system.run` / `system.which` on this machine.
@@ -46,7 +46,7 @@ Disable it on the node if needed:
 ## Run (foreground)
 
 ```bash
-vilaro node run --host <gateway-host> --port 18789
+velaro node run --host <gateway-host> --port 18789
 ```
 
 Options:
@@ -60,7 +60,7 @@ Options:
 
 ## Gateway auth for node host
 
-`vilaro node run` and `vilaro node install` resolve gateway auth from config/env (no `--token`/`--password` flags on node commands):
+`velaro node run` and `velaro node install` resolve gateway auth from config/env (no `--token`/`--password` flags on node commands):
 
 - `VILARO_GATEWAY_TOKEN` / `VILARO_GATEWAY_PASSWORD` are checked first.
 - Then local config fallback: `gateway.auth.token` / `gateway.auth.password`.
@@ -74,7 +74,7 @@ Options:
 Install a headless node host as a user service.
 
 ```bash
-vilaro node install --host <gateway-host> --port 18789
+velaro node install --host <gateway-host> --port 18789
 ```
 
 Options:
@@ -91,13 +91,13 @@ Options:
 Manage the service:
 
 ```bash
-vilaro node status
-vilaro node stop
-vilaro node restart
-vilaro node uninstall
+velaro node status
+velaro node stop
+velaro node restart
+velaro node uninstall
 ```
 
-Use `vilaro node run` for a foreground node host (no service).
+Use `velaro node run` for a foreground node host (no service).
 
 Service commands accept `--json` for machine-readable output.
 
@@ -107,8 +107,8 @@ The first connection creates a pending device pairing request (`role: node`) on 
 Approve it via:
 
 ```bash
-vilaro devices list
-vilaro devices approve <requestId>
+velaro devices list
+velaro devices approve <requestId>
 ```
 
 The node host stores its node id, token, display name, and gateway connection info in
@@ -120,4 +120,4 @@ The node host stores its node id, token, display name, and gateway connection in
 
 - `~/.vilaro/exec-approvals.json`
 - [Exec approvals](/tools/exec-approvals)
-- `vilaro approvals --node <id|name|ip>` (edit from the Gateway)
+- `velaro approvals --node <id|name|ip>` (edit from the Gateway)

@@ -216,7 +216,7 @@ export async function promptGatewayConfig(
         }),
         id: envVarName,
       };
-      note(`Validated ${envVarName}. Vilaro will store a token SecretRef.`, "Gateway token");
+      note(`Validated ${envVarName}. Velaro will store a token SecretRef.`, "Gateway token");
     } else {
       const tokenInput = guardCancel(
         await text({
@@ -244,7 +244,7 @@ export async function promptGatewayConfig(
   if (authMode === "trusted-proxy") {
     note(
       [
-        "Trusted proxy mode: Vilaro trusts user identity from a reverse proxy.",
+        "Trusted proxy mode: Velaro trusts user identity from a reverse proxy.",
         "The proxy must authenticate users and pass identity via headers.",
         "Only requests from specified proxy IPs will be trusted.",
         "",

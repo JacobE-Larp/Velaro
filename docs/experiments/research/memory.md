@@ -1,15 +1,15 @@
 ---
-summary: "Research notes: offline memory system for Vilaro workspaces (Markdown source-of-truth + derived index)"
+summary: "Research notes: offline memory system for Velaro workspaces (Markdown source-of-truth + derived index)"
 read_when:
   - Designing workspace memory (~/.vilaro/workspace) beyond daily Markdown logs
-  - Deciding: standalone CLI vs deep Vilaro integration
+  - Deciding: standalone CLI vs deep Velaro integration
   - Adding offline recall + reflection (retain/recall/reflect)
 title: "Workspace Memory Research"
 ---
 
 # Workspace Memory v2 (offline): research notes
 
-Target: Vilaro-style workspace (`agents.defaults.workspace`, default `~/.vilaro/workspace`) where “memory” is stored as one Markdown file per day (`memory/YYYY-MM-DD.md`) plus a small set of stable files (e.g. `memory.md`, `SOUL.md`).
+Target: Velaro-style workspace (`agents.defaults.workspace`, default `~/.vilaro/workspace`) where “memory” is stored as one Markdown file per day (`memory/YYYY-MM-DD.md`) plus a small set of stable files (e.g. `memory.md`, `SOUL.md`).
 
 This doc proposes an **offline-first** memory architecture that keeps Markdown as the canonical, reviewable source of truth, but adds **structured recall** (search, entity summaries, confidence updates) via a derived index.
 
@@ -82,7 +82,7 @@ Notes:
 
 - **Daily log stays daily log**. No need to turn it into JSON.
 - The `bank/` files are **curated**, produced by reflection jobs, and can still be edited by hand.
-- `memory.md` remains “small + core-ish”: the things you want Vilaro to see every session.
+- `memory.md` remains “small + core-ish”: the things you want Velaro to see every session.
 
 ### Derived store (machine recall)
 
@@ -168,17 +168,17 @@ Opinion evolution (simple, explainable):
 
 ## CLI integration: standalone vs deep integration
 
-Recommendation: **deep integration in Vilaro**, but keep a separable core library.
+Recommendation: **deep integration in Velaro**, but keep a separable core library.
 
-### Why integrate into Vilaro?
+### Why integrate into Velaro?
 
-- Vilaro already knows:
+- Velaro already knows:
   - the workspace path (`agents.defaults.workspace`)
   - the session model + heartbeats
   - logging + troubleshooting patterns
 - You want the agent itself to call the tools:
-  - `vilaro memory recall "…" --k 25 --since 30d`
-  - `vilaro memory reflect --since 7d`
+  - `velaro memory recall "…" --k 25 --since 30d`
+  - `velaro memory reflect --since 7d`
 
 ### Why still split a library?
 

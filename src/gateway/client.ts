@@ -184,7 +184,7 @@ export class GatewayClient {
           (allowPrivateWs
             ? ""
             : "Break-glass (trusted private networks only): set VILARO_ALLOW_INSECURE_PRIVATE_WS=1. ") +
-          "Run `vilaro doctor --fix` for guidance.",
+          "Run `velaro doctor --fix` for guidance.",
       );
       this.opts.onConnectError?.(error);
       return;

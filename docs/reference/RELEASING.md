@@ -8,7 +8,7 @@ read_when:
 
 # Release Policy
 
-Vilaro has three public release lanes:
+Velaro has three public release lanes:
 
 - stable: tagged releases that publish to npm `latest`
 - beta: prerelease tags that publish to npm `beta`
@@ -34,9 +34,9 @@ Vilaro has three public release lanes:
 
 ## Public references
 
-- [`.github/workflows/vilaro-npm-release.yml`](https://github.com/vilaro/vilaro/blob/main/.github/workflows/vilaro-npm-release.yml)
-- [`scripts/vilaro-npm-release-check.ts`](https://github.com/vilaro/vilaro/blob/main/scripts/vilaro-npm-release-check.ts)
+- [`.github/workflows/velaro-npm-release.yml`](https://github.com/vilaro/vilaro/blob/main/.github/workflows/vilaro-npm-release.yml)
+- [`scripts/velaro-npm-release-check.ts`](https://github.com/vilaro/vilaro/blob/main/scripts/vilaro-npm-release-check.ts)
 
 Maintainers use the private release docs in
-[`vilaro/maintainers/release/README.md`](https://github.com/vilaro/maintainers/blob/main/release/README.md)
+[`velaro/maintainers/release/README.md`](https://github.com/vilaro/maintainers/blob/main/release/README.md)
 for the actual runbook.

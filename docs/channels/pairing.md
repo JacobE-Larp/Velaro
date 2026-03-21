@@ -3,13 +3,13 @@ summary: "Pairing overview: approve who can DM you + which nodes can join"
 read_when:
   - Setting up DM access control
   - Pairing a new iOS/Android node
-  - Reviewing Vilaro security posture
+  - Reviewing Velaro security posture
 title: "Pairing"
 ---
 
 # Pairing
 
-“Pairing” is Vilaro’s explicit **owner approval** step.
+“Pairing” is Velaro’s explicit **owner approval** step.
 It is used in two places:
 
 1. **DM pairing** (who is allowed to talk to the bot)
@@ -32,8 +32,8 @@ Pairing codes:
 ### Approve a sender
 
 ```bash
-vilaro pairing list telegram
-vilaro pairing approve telegram <CODE>
+velaro pairing list telegram
+velaro pairing approve telegram <CODE>
 ```
 
 Supported channels: `telegram`, `whatsapp`, `signal`, `imessage`, `discord`, `slack`, `feishu`.
@@ -65,7 +65,7 @@ If you use the `device-pair` plugin, you can do first-time device pairing entire
 
 1. In Telegram, message your bot: `/pair`
 2. The bot replies with two messages: an instruction message and a separate **setup code** message (easy to copy/paste in Telegram).
-3. On your phone, open the Vilaro iOS app → Settings → Gateway.
+3. On your phone, open the Velaro iOS app → Settings → Gateway.
 4. Paste the setup code and connect.
 5. Back in Telegram: `/pair approve`
 
@@ -79,9 +79,9 @@ Treat the setup code like a password while it is valid.
 ### Approve a node device
 
 ```bash
-vilaro devices list
-vilaro devices approve <requestId>
-vilaro devices reject <requestId>
+velaro devices list
+velaro devices approve <requestId>
+velaro devices reject <requestId>
 ```
 
 ### Node pairing state storage
@@ -93,7 +93,7 @@ Stored under `~/.vilaro/devices/`:
 
 ### Notes
 
-- The legacy `node.pair.*` API (CLI: `vilaro nodes pending/approve`) is a
+- The legacy `node.pair.*` API (CLI: `velaro nodes pending/approve`) is a
   separate gateway-owned pairing store. WS nodes still require device pairing.
 
 ## Related docs

@@ -7,7 +7,7 @@ title: "Matrix"
 
 # Matrix (plugin)
 
-Matrix is an open, decentralized messaging protocol. Vilaro connects as a Matrix **user**
+Matrix is an open, decentralized messaging protocol. Velaro connects as a Matrix **user**
 on any homeserver, so you need a Matrix account for the bot. Once it is logged in, you can DM
 the bot directly or invite it to rooms (Matrix "groups"). Beeper is a valid client option too,
 but it requires E2EE to be enabled.
@@ -22,25 +22,25 @@ Matrix ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-vilaro plugins install @vilaro/matrix
+velaro plugins install @vilaro/matrix
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-vilaro plugins install ./extensions/matrix
+velaro plugins install ./extensions/matrix
 ```
 
 If you choose Matrix during setup and a git checkout is detected,
-Vilaro will offer the local install path automatically.
+Velaro will offer the local install path automatically.
 
 Details: [Plugins](/tools/plugin)
 
 ## Setup
 
 1. Install the Matrix plugin:
-   - From npm: `vilaro plugins install @vilaro/matrix`
-   - From a local checkout: `vilaro plugins install ./extensions/matrix`
+   - From npm: `velaro plugins install @vilaro/matrix`
+   - From a local checkout: `velaro plugins install ./extensions/matrix`
 2. Create a Matrix account on a homeserver:
    - Browse hosting options at [https://matrix.org/ecosystem/hosting/](https://matrix.org/ecosystem/hosting/)
    - Or host it yourself.
@@ -62,7 +62,7 @@ Details: [Plugins](/tools/plugin)
    ```
 
    - Replace `matrix.example.org` with your homeserver URL.
-   - Or set `channels.matrix.userId` + `channels.matrix.password`: Vilaro calls the same
+   - Or set `channels.matrix.userId` + `channels.matrix.password`: Velaro calls the same
      login endpoint, stores the access token in `~/.vilaro/credentials/matrix/credentials.json`,
      and reuses it on next start.
 
@@ -116,10 +116,10 @@ Enable with `channels.matrix.encryption: true`:
 
 - If the crypto module loads, encrypted rooms are decrypted automatically.
 - Outbound media is encrypted when sending to encrypted rooms.
-- On first connection, Vilaro requests device verification from your other sessions.
+- On first connection, Velaro requests device verification from your other sessions.
 - Verify the device in another Matrix client (Element, etc.) to enable key sharing.
 - If the crypto module cannot be loaded, E2EE is disabled and encrypted rooms will not decrypt;
-  Vilaro logs a warning.
+  Velaro logs a warning.
 - If you see missing crypto module errors (for example, `@matrix-org/matrix-sdk-crypto-nodejs-*`),
   allow build scripts for `@matrix-org/matrix-sdk-crypto-nodejs` and run
   `pnpm rebuild @matrix-org/matrix-sdk-crypto-nodejs` or fetch the binary with
@@ -186,8 +186,8 @@ Notes:
 
 - Default: `channels.matrix.dm.policy = "pairing"`. Unknown senders get a pairing code.
 - Approve via:
-  - `vilaro pairing list matrix`
-  - `vilaro pairing approve matrix <CODE>`
+  - `velaro pairing list matrix`
+  - `velaro pairing approve matrix <CODE>`
 - Public DMs: `channels.matrix.dm.policy="open"` plus `channels.matrix.dm.allowFrom=["*"]`.
 - `channels.matrix.dm.allowFrom` accepts full Matrix user IDs (example: `@user:server`). The wizard resolves display names to user IDs when directory search finds a single exact match.
 - Do not use display names or bare localparts (example: `"Alice"` or `"alice"`). They are ambiguous and are ignored for allowlist matching. Use full `@user:server` IDs.
@@ -218,7 +218,7 @@ Notes:
 - `groupAllowFrom` restricts which senders can trigger the bot in rooms (full Matrix user IDs).
 - Per-room `users` allowlists can further restrict senders inside a specific room (use full Matrix user IDs).
 - The configure wizard prompts for room allowlists (room IDs, aliases, or names) and resolves names only on an exact, unique match.
-- On startup, Vilaro resolves room/user names in allowlists to IDs and logs the mapping; unresolved entries are ignored for allowlist matching.
+- On startup, Velaro resolves room/user names in allowlists to IDs and logs the mapping; unresolved entries are ignored for allowlist matching.
 - Invites are auto-joined by default; control with `channels.matrix.autoJoin` and `channels.matrix.autoJoinAllowlist`.
 - To allow **no rooms**, set `channels.matrix.groupPolicy: "disabled"` (or keep an empty allowlist).
 - Legacy key: `channels.matrix.rooms` (same shape as `groups`).
@@ -250,17 +250,17 @@ Notes:
 Run this ladder first:
 
 ```bash
-vilaro status
-vilaro gateway status
-vilaro logs --follow
-vilaro doctor
-vilaro channels status --probe
+velaro status
+velaro gateway status
+velaro logs --follow
+velaro doctor
+velaro channels status --probe
 ```
 
 Then confirm DM pairing state if needed:
 
 ```bash
-vilaro pairing list matrix
+velaro pairing list matrix
 ```
 
 Common failures:

@@ -1,9 +1,9 @@
 ---
 read_when:
-  - 你想在 GCP 上 24/7 运行 Vilaro
+  - 你想在 GCP 上 24/7 运行 Velaro
   - 你想要在自己的 VM 上运行生产级、常驻的 Gateway 网关
   - 你想完全控制持久化、二进制文件和重启行为
-summary: 在 GCP Compute Engine VM（Docker）上 24/7 运行 Vilaro Gateway 网关并持久化状态
+summary: 在 GCP Compute Engine VM（Docker）上 24/7 运行 Velaro Gateway 网关并持久化状态
 title: GCP
 x-i18n:
   generated_at: "2026-02-03T07:52:50Z"
@@ -14,13 +14,13 @@ x-i18n:
   workflow: 15
 ---
 
-# 在 GCP Compute Engine 上运行 Vilaro（Docker，生产 VPS 指南）
+# 在 GCP Compute Engine 上运行 Velaro（Docker，生产 VPS 指南）
 
 ## 目标
 
-使用 Docker 在 GCP Compute Engine VM 上运行持久化的 Vilaro Gateway 网关，具有持久状态、内置二进制文件和安全的重启行为。
+使用 Docker 在 GCP Compute Engine VM 上运行持久化的 Velaro Gateway 网关，具有持久状态、内置二进制文件和安全的重启行为。
 
-如果你想要"Vilaro 24/7 大约 $5-12/月"，这是在 Google Cloud 上的可靠设置。
+如果你想要"Velaro 24/7 大约 $5-12/月"，这是在 Google Cloud 上的可靠设置。
 价格因机器类型和区域而异；选择适合你工作负载的最小 VM，如果遇到 OOM 则扩容。
 
 ## 我们在做什么（简单说明）？
@@ -28,7 +28,7 @@ x-i18n:
 - 创建 GCP 项目并启用计费
 - 创建 Compute Engine VM
 - 安装 Docker（隔离的应用运行时）
-- 在 Docker 中启动 Vilaro Gateway 网关
+- 在 Docker 中启动 Velaro Gateway 网关
 - 在主机上持久化 `~/.vilaro` + `~/.vilaro/workspace`（重启/重建后仍保留）
 - 通过 SSH 隧道从你的笔记本电脑访问控制 UI
 
@@ -49,7 +49,7 @@ Ubuntu 也可以；请相应地映射软件包。
 2. 创建 Compute Engine VM（e2-small，Debian 12，20GB）
 3. SSH 进入 VM
 4. 安装 Docker
-5. 克隆 Vilaro 仓库
+5. 克隆 Velaro 仓库
 6. 创建持久化主机目录
 7. 配置 `.env` 和 `docker-compose.yml`
 8. 内置所需二进制文件、构建并启动
@@ -96,8 +96,8 @@ gcloud auth login
 **CLI：**
 
 ```bash
-gcloud projects create my-vilaro-project --name="Vilaro Gateway"
-gcloud config set project my-vilaro-project
+gcloud projects create my-velaro-project --name="Velaro Gateway"
+gcloud config set project my-velaro-project
 ```
 
 在 https://console.cloud.google.com/billing 启用计费（Compute Engine 必需）。
@@ -194,11 +194,11 @@ docker compose version
 
 ---
 
-## 6) 克隆 Vilaro 仓库
+## 6) 克隆 Velaro 仓库
 
 ```bash
 git clone https://github.com/vilaro/vilaro.git
-cd vilaro
+cd velaro
 ```
 
 本指南假设你将构建自定义镜像以保证二进制文件持久化。
@@ -222,16 +222,16 @@ mkdir -p ~/.vilaro/workspace
 在仓库根目录创建 `.env`。
 
 ```bash
-VILARO_IMAGE=vilaro:latest
+VILARO_IMAGE=velaro:latest
 VILARO_GATEWAY_TOKEN=change-me-now
 VILARO_GATEWAY_BIND=lan
 VILARO_GATEWAY_PORT=18789
 
-VILARO_CONFIG_DIR=/home/$USER/.vilaro
-VILARO_WORKSPACE_DIR=/home/$USER/.vilaro/workspace
+VILARO_CONFIG_DIR=/home/$USER/.velaro
+VILARO_WORKSPACE_DIR=/home/$USER/.velaro/workspace
 
 GOG_KEYRING_PASSWORD=change-me-now
-XDG_CONFIG_HOME=/home/node/.vilaro
+XDG_CONFIG_HOME=/home/node/.velaro
 ```
 
 生成强密钥：
@@ -267,8 +267,8 @@ services:
       - XDG_CONFIG_HOME=${XDG_CONFIG_HOME}
       - PATH=/home/linuxbrew/.linuxbrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     volumes:
-      - ${VILARO_CONFIG_DIR}:/home/node/.vilaro
-      - ${VILARO_WORKSPACE_DIR}:/home/node/.vilaro/workspace
+      - ${VILARO_CONFIG_DIR}:/home/node/.velaro
+      - ${VILARO_WORKSPACE_DIR}:/home/node/.velaro/workspace
     ports:
       # 推荐：在 VM 上保持 Gateway 网关仅绑定 loopback；通过 SSH 隧道访问。
       # 要公开暴露，移除 `127.0.0.1:` 前缀并相应配置防火墙。
@@ -411,17 +411,17 @@ gcloud compute ssh vilaro-gateway --zone=us-central1-a -- -L 18789:127.0.0.1:187
 
 ## 什么持久化在哪里（真实来源）
 
-Vilaro 在 Docker 中运行，但 Docker 不是真实来源。
+Velaro 在 Docker 中运行，但 Docker 不是真实来源。
 所有长期状态必须在重启、重建和重启后仍然存在。
 
 | 组件             | 位置                            | 持久化机制    | 说明                        |
 | ---------------- | ------------------------------- | ------------- | --------------------------- |
-| Gateway 网关配置 | `/home/node/.vilaro/`           | 主机卷挂载    | 包括 `vilaro.json`、令牌    |
-| 模型认证配置文件 | `/home/node/.vilaro/`           | 主机卷挂载    | OAuth 令牌、API 密钥        |
-| Skill 配置       | `/home/node/.vilaro/skills/`    | 主机卷挂载    | Skill 级别状态              |
-| 智能体工作区     | `/home/node/.vilaro/workspace/` | 主机卷挂载    | 代码和智能体产物            |
-| WhatsApp 会话    | `/home/node/.vilaro/`           | 主机卷挂载    | 保留 QR 登录                |
-| Gmail 密钥环     | `/home/node/.vilaro/`           | 主机卷 + 密码 | 需要 `GOG_KEYRING_PASSWORD` |
+| Gateway 网关配置 | `/home/node/.velaro/`           | 主机卷挂载    | 包括 `vilaro.json`、令牌    |
+| 模型认证配置文件 | `/home/node/.velaro/`           | 主机卷挂载    | OAuth 令牌、API 密钥        |
+| Skill 配置       | `/home/node/.velaro/skills/`    | 主机卷挂载    | Skill 级别状态              |
+| 智能体工作区     | `/home/node/.velaro/workspace/` | 主机卷挂载    | 代码和智能体产物            |
+| WhatsApp 会话    | `/home/node/.velaro/`           | 主机卷挂载    | 保留 QR 登录                |
+| Gmail 密钥环     | `/home/node/.velaro/`           | 主机卷 + 密码 | 需要 `GOG_KEYRING_PASSWORD` |
 | 外部二进制文件   | `/usr/local/bin/`               | Docker 镜像   | 必须在构建时内置            |
 | Node 运行时      | 容器文件系统                    | Docker 镜像   | 每次镜像构建时重建          |
 | OS 包            | 容器文件系统                    | Docker 镜像   | 不要在运行时安装            |
@@ -431,10 +431,10 @@ Vilaro 在 Docker 中运行，但 Docker 不是真实来源。
 
 ## 更新
 
-在 VM 上更新 Vilaro：
+在 VM 上更新 Velaro：
 
 ```bash
-cd ~/vilaro
+cd ~/velaro
 git pull
 docker compose build
 docker compose up -d
@@ -486,14 +486,14 @@ gcloud compute instances start vilaro-gateway --zone=us-central1-a
 1. 创建服务账户：
 
    ```bash
-   gcloud iam service-accounts create vilaro-deploy \
-     --display-name="Vilaro Deployment"
+   gcloud iam service-accounts create velaro-deploy \
+     --display-name="Velaro Deployment"
    ```
 
 2. 授予 Compute Instance Admin 角色（或更窄的自定义角色）：
    ```bash
-   gcloud projects add-iam-policy-binding my-vilaro-project \
-     --member="serviceAccount:vilaro-deploy@my-vilaro-project.iam.gserviceaccount.com" \
+   gcloud projects add-iam-policy-binding my-velaro-project \
+     --member="serviceAccount:velaro-deploy@my-velaro-project.iam.gserviceaccount.com" \
      --role="roles/compute.instanceAdmin.v1"
    ```
 

@@ -266,7 +266,7 @@ function resolveConfiguredCommand(params: { configured?: string; workspaceDir?: 
   return configured;
 }
 
-export function createAcpxPluginConfigSchema(): VilaroPluginConfigSchema {
+export function createAcpxPluginConfigSchema(): VelaroPluginConfigSchema {
   return {
     safeParse(value: unknown):
       | { success: true; data?: unknown }

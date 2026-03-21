@@ -34,7 +34,7 @@ Status: production-ready for DMs + channels via Slack app integrations. Default 
         - install app and copy **Bot Token** (`xoxb-...`)
       </Step>
 
-      <Step title="Configure Vilaro">
+      <Step title="Configure Velaro">
 
 ```json5
 {
@@ -74,7 +74,7 @@ SLACK_BOT_TOKEN=xoxb-...
       <Step title="Start gateway">
 
 ```bash
-vilaro gateway
+velaro gateway
 ```
 
       </Step>
@@ -92,7 +92,7 @@ vilaro gateway
 
       </Step>
 
-      <Step title="Configure Vilaro HTTP mode">
+      <Step title="Configure Velaro HTTP mode">
 
 ```json5
 {
@@ -158,7 +158,7 @@ For actions/directory reads, user token can be preferred when configured. For wr
     - Named accounts inherit `channels.slack.allowFrom` when their own `allowFrom` is unset.
     - Named accounts do not inherit `channels.slack.accounts.default.allowFrom`.
 
-    Pairing in DMs uses `vilaro pairing approve slack <code>`.
+    Pairing in DMs uses `velaro pairing approve slack <code>`.
 
   </Tab>
 
@@ -264,13 +264,13 @@ These directives compile into Slack Block Kit and route clicks or selections bac
 Notes:
 
 - This is Slack-specific UI. Other channels do not translate Slack Block Kit directives into their own button systems.
-- The interactive callback values are Vilaro-generated opaque tokens, not raw agent-authored values.
-- If generated interactive blocks would exceed Slack Block Kit limits, Vilaro falls back to the original text reply instead of sending an invalid blocks payload.
+- The interactive callback values are Velaro-generated opaque tokens, not raw agent-authored values.
+- If generated interactive blocks would exceed Slack Block Kit limits, Velaro falls back to the original text reply instead of sending an invalid blocks payload.
 
 Default slash command settings:
 
 - `enabled: false`
-- `name: "vilaro"`
+- `name: "velaro"`
 - `sessionPrefix: "slack:slash"`
 - `ephemeral: true`
 
@@ -358,7 +358,7 @@ Available action groups in current Slack tooling:
 
 ## Ack reactions
 
-`ackReaction` sends an acknowledgement emoji while Vilaro is processing an inbound message.
+`ackReaction` sends an acknowledgement emoji while Velaro is processing an inbound message.
 
 Resolution order:
 
@@ -374,7 +374,7 @@ Notes:
 
 ## Typing reaction fallback
 
-`typingReaction` adds a temporary reaction to the inbound Slack message while Vilaro is processing a reply, then removes it when the run finishes. This is a useful fallback when Slack native assistant typing is unavailable, especially in DMs.
+`typingReaction` adds a temporary reaction to the inbound Slack message while Velaro is processing a reply, then removes it when the run finishes. This is a useful fallback when Slack native assistant typing is unavailable, especially in DMs.
 
 Resolution order:
 
@@ -394,12 +394,12 @@ Notes:
 ```json
 {
   "display_information": {
-    "name": "Vilaro",
-    "description": "Slack connector for Vilaro"
+    "name": "Velaro",
+    "description": "Slack connector for Velaro"
   },
   "features": {
     "bot_user": {
-      "display_name": "Vilaro",
+      "display_name": "Velaro",
       "always_online": false
     },
     "app_home": {
@@ -408,8 +408,8 @@ Notes:
     },
     "slash_commands": [
       {
-        "command": "/vilaro",
-        "description": "Send a message to Vilaro",
+        "command": "/velaro",
+        "description": "Send a message to Velaro",
         "should_escape": false
       }
     ]
@@ -493,9 +493,9 @@ Notes:
     Useful commands:
 
 ```bash
-vilaro channels status --probe
-vilaro logs --follow
-vilaro doctor
+velaro channels status --probe
+velaro logs --follow
+velaro doctor
 ```
 
   </Accordion>
@@ -508,7 +508,7 @@ vilaro doctor
     - pairing approvals / allowlist entries
 
 ```bash
-vilaro pairing list slack
+velaro pairing list slack
 ```
 
   </Accordion>
@@ -540,7 +540,7 @@ vilaro pairing list slack
 
 ## Text streaming
 
-Vilaro supports Slack native text streaming via the Agents and AI Apps API.
+Velaro supports Slack native text streaming via the Agents and AI Apps API.
 
 `channels.slack.streaming` controls live preview behavior:
 
@@ -577,7 +577,7 @@ Legacy keys:
 - Later text chunks append to the same stream (`chat.appendStream`).
 - End of reply finalizes stream (`chat.stopStream`).
 - Media and non-text payloads fall back to normal delivery.
-- If streaming fails mid-reply, Vilaro falls back to normal delivery for remaining payloads.
+- If streaming fails mid-reply, Velaro falls back to normal delivery for remaining payloads.
 
 ## Configuration reference pointers
 

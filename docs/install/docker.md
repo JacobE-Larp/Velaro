@@ -1,5 +1,5 @@
 ---
-summary: "Optional Docker-based setup and onboarding for Vilaro"
+summary: "Optional Docker-based setup and onboarding for Velaro"
 read_when:
   - You want a containerized gateway instead of local installs
   - You are validating the Docker flow
@@ -12,13 +12,13 @@ Docker is **optional**. Use it only if you want a containerized gateway or to va
 
 ## Is Docker right for me?
 
-- **Yes**: you want an isolated, throwaway gateway environment or to run Vilaro on a host without local installs.
+- **Yes**: you want an isolated, throwaway gateway environment or to run Velaro on a host without local installs.
 - **No**: you’re running on your own machine and just want the fastest dev loop. Use the normal install flow instead.
 - **Sandboxing note**: agent sandboxing uses Docker too, but it does **not** require the full gateway to run in Docker. See [Sandboxing](/gateway/sandboxing).
 
 This guide covers:
 
-- Containerized Gateway (full Vilaro in Docker)
+- Containerized Gateway (full Velaro in Docker)
 - Per-session Agent Sandbox (host gateway + Docker-isolated agent tools)
 
 Sandboxing details: [Sandboxing](/gateway/sandboxing)
@@ -58,7 +58,7 @@ This script:
 
 Optional env vars:
 
-- `VILARO_IMAGE` — use a remote image instead of building locally (e.g. `ghcr.io/vilaro/vilaro:latest`)
+- `VILARO_IMAGE` — use a remote image instead of building locally (e.g. `ghcr.io/velaro/velaro:latest`)
 - `VILARO_DOCKER_APT_PACKAGES` — install extra apt packages during build
 - `VILARO_EXTENSIONS` — pre-install extension dependencies at build time (space-separated extension names, e.g. `diagnostics-otel matrix`)
 - `VILARO_EXTRA_MOUNTS` — add extra host bind mounts
@@ -80,7 +80,7 @@ After it finishes:
 
 - Open `http://127.0.0.1:18789/` in your browser.
 - Paste the token into the Control UI (Settings → token).
-- Need the URL again? Run `docker compose run --rm vilaro-cli dashboard --no-open`.
+- Need the URL again? Run `docker compose run --rm velaro-cli dashboard --no-open`.
 
 ### Enable agent sandbox for Docker gateway (opt-in)
 
@@ -109,7 +109,7 @@ Notes:
   `agents.defaults.sandbox.mode` to `off` to avoid stale/broken sandbox config
   on reruns.
 - If `Dockerfile.sandbox` is missing, the script prints a warning and continues;
-  build `vilaro-sandbox:bookworm-slim` with `scripts/sandbox-setup.sh` if
+  build `velaro-sandbox:bookworm-slim` with `scripts/sandbox-setup.sh` if
   needed.
 - For non-local `VILARO_IMAGE` values, the image must already contain Docker
   CLI support for sandbox execution.
@@ -119,8 +119,8 @@ Notes:
 For scripts and CI, disable Compose pseudo-TTY allocation with `-T`:
 
 ```bash
-docker compose run -T --rm vilaro-cli gateway probe
-docker compose run -T --rm vilaro-cli devices list --json
+docker compose run -T --rm velaro-cli gateway probe
+docker compose run -T --rm velaro-cli devices list --json
 ```
 
 If your automation exports no Claude session vars, leaving them unset now resolves to
@@ -129,15 +129,15 @@ warnings.
 
 ### Shared-network security note (CLI + gateway)
 
-`vilaro-cli` uses `network_mode: "service:vilaro-gateway"` so CLI commands can
+`velaro-cli` uses `network_mode: "service:vilaro-gateway"` so CLI commands can
 reliably reach the gateway over `127.0.0.1` in Docker.
 
 Treat this as a shared trust boundary: loopback binding is not isolation between these two
 containers. If you need stronger separation, run commands from a separate container/host
-network path instead of the bundled `vilaro-cli` service.
+network path instead of the bundled `velaro-cli` service.
 
 To reduce impact if the CLI process is compromised, the compose config drops
-`NET_RAW`/`NET_ADMIN` and enables `no-new-privileges` on `vilaro-cli`.
+`NET_RAW`/`NET_ADMIN` and enables `no-new-privileges` on `velaro-cli`.
 
 It writes config/workspace on the host:
 
@@ -152,7 +152,7 @@ Official pre-built images are published at:
 
 - [GitHub Container Registry package](https://github.com/vilaro/vilaro/pkgs/container/vilaro)
 
-Use image name `ghcr.io/vilaro/vilaro` (not similarly named Docker Hub
+Use image name `ghcr.io/velaro/velaro` (not similarly named Docker Hub
 images).
 
 Common tags:
@@ -176,8 +176,8 @@ and points at the pinned multi-arch manifest list for that tag):
 - `org.opencontainers.image.url=https://vilaro.ai`
 - `org.opencontainers.image.documentation=https://docs.vilaro.ai/install/docker`
 - `org.opencontainers.image.licenses=MIT`
-- `org.opencontainers.image.title=Vilaro`
-- `org.opencontainers.image.description=Vilaro gateway and CLI runtime container image`
+- `org.opencontainers.image.title=Velaro`
+- `org.opencontainers.image.description=Velaro gateway and CLI runtime container image`
 - `org.opencontainers.image.revision=<git-sha>`
 - `org.opencontainers.image.version=<tag-or-main>`
 - `org.opencontainers.image.created=<rfc3339 timestamp>`
@@ -191,11 +191,11 @@ By default the setup script builds the image from source. To pull a pre-built
 image instead, set `VILARO_IMAGE` before running the script:
 
 ```bash
-export VILARO_IMAGE="ghcr.io/vilaro/vilaro:latest"
+export VILARO_IMAGE="ghcr.io/velaro/velaro:latest"
 ./docker-setup.sh
 ```
 
-The script detects that `VILARO_IMAGE` is not the default `vilaro:local` and
+The script detects that `VILARO_IMAGE` is not the default `velaro:local` and
 runs `docker pull` instead of `docker build`. Everything else (onboarding,
 gateway start, token generation) works the same way.
 
@@ -217,15 +217,15 @@ mkdir -p ~/.vilaroock && curl -sL https://raw.githubusercontent.com/vilaro/vilar
 echo 'source ~/.vilaroock/vilaroock-helpers.sh' >> ~/.zshrc && source ~/.zshrc
 ```
 
-Then use `vilaroock-start`, `vilaroock-stop`, `vilaroock-dashboard`, etc. Run `vilaroock-help` for all commands.
+Then use `velaroock-start`, `velaroock-stop`, `velaroock-dashboard`, etc. Run `velaroock-help` for all commands.
 
 See [`ClawDock` Helper README](https://github.com/vilaro/vilaro/blob/main/scripts/shell-helpers/README.md) for details.
 
 ### Manual flow (compose)
 
 ```bash
-docker build -t vilaro:local -f Dockerfile .
-docker compose run --rm vilaro-cli onboard
+docker build -t velaro:local -f Dockerfile .
+docker compose run --rm velaro-cli onboard
 docker compose up -d vilaro-gateway
 ```
 
@@ -243,9 +243,9 @@ If you see “unauthorized” or “disconnected (1008): pairing required”, fe
 fresh dashboard link and approve the browser device:
 
 ```bash
-docker compose run --rm vilaro-cli dashboard --no-open
-docker compose run --rm vilaro-cli devices list
-docker compose run --rm vilaro-cli devices approve <requestId>
+docker compose run --rm velaro-cli dashboard --no-open
+docker compose run --rm velaro-cli devices list
+docker compose run --rm velaro-cli devices approve <requestId>
 ```
 
 More detail: [Dashboard](/web/dashboard), [Devices](/cli/devices).
@@ -255,7 +255,7 @@ More detail: [Dashboard](/web/dashboard), [Devices](/cli/devices).
 If you want to mount additional host directories into the containers, set
 `VILARO_EXTRA_MOUNTS` before running `docker-setup.sh`. This accepts a
 comma-separated list of Docker bind mounts and applies them to both
-`vilaro-gateway` and `vilaro-cli` by generating `docker-compose.extra.yml`.
+`vilaro-gateway` and `velaro-cli` by generating `docker-compose.extra.yml`.
 
 Example:
 
@@ -375,7 +375,7 @@ export VILARO_DOCKER_APT_PACKAGES="git curl jq"
 3. **Install Playwright browsers without `npx`** (avoids npm override conflicts):
 
 ```bash
-docker compose run --rm vilaro-cli \
+docker compose run --rm velaro-cli \
   node /app/node_modules/playwright-core/cli.js install chromium
 ```
 
@@ -392,12 +392,12 @@ If you need Playwright to install system deps, rebuild the image with
 ### Permissions + EACCES
 
 The image runs as `node` (uid 1000). If you see permission errors on
-`/home/node/.vilaro`, make sure your host bind mounts are owned by uid 1000.
+`/home/node/.velaro`, make sure your host bind mounts are owned by uid 1000.
 
 Example (Linux host):
 
 ```bash
-sudo chown -R 1000:1000 /path/to/vilaro-config /path/to/vilaro-workspace
+sudo chown -R 1000:1000 /path/to/velaro-config /path/to/velaro-workspace
 ```
 
 If you choose to run as root for convenience, you accept the security tradeoff.
@@ -442,19 +442,19 @@ Use the CLI container to configure channels, then restart the gateway if needed.
 WhatsApp (QR):
 
 ```bash
-docker compose run --rm vilaro-cli channels login
+docker compose run --rm velaro-cli channels login
 ```
 
 Telegram (bot token):
 
 ```bash
-docker compose run --rm vilaro-cli channels add --channel telegram --token "<token>"
+docker compose run --rm velaro-cli channels add --channel telegram --token "<token>"
 ```
 
 Discord (bot token):
 
 ```bash
-docker compose run --rm vilaro-cli channels add --channel discord --token "<token>"
+docker compose run --rm velaro-cli channels add --channel discord --token "<token>"
 ```
 
 Docs: [WhatsApp](/channels/whatsapp), [Telegram](/channels/telegram), [Discord](/channels/discord)
@@ -482,7 +482,7 @@ Aliases: `/health` and `/ready`.
 managed channels are still disconnected after grace or disconnect later.
 
 The Docker image includes a built-in `HEALTHCHECK` that pings `/healthz` in the
-background. In plain terms: Docker keeps checking if Vilaro is still
+background. In plain terms: Docker keeps checking if Velaro is still
 responsive. If checks keep failing, Docker marks the container as `unhealthy`,
 and orchestration systems (Docker Compose restart policy, Swarm, Kubernetes,
 etc.) can automatically restart or replace it.
@@ -525,9 +525,9 @@ If you see `Gateway target: ws://172.x.x.x:18789` or repeated `pairing required`
 errors from Docker CLI commands, run:
 
 ```bash
-docker compose run --rm vilaro-cli config set gateway.mode local
-docker compose run --rm vilaro-cli config set gateway.bind lan
-docker compose run --rm vilaro-cli devices list --url ws://127.0.0.1:18789
+docker compose run --rm velaro-cli config set gateway.mode local
+docker compose run --rm velaro-cli config set gateway.bind lan
+docker compose run --rm velaro-cli devices list --url ws://127.0.0.1:18789
 ```
 
 ### Notes
@@ -538,9 +538,9 @@ docker compose run --rm vilaro-cli devices list --url ws://127.0.0.1:18789
 
 ### Storage model
 
-- **Persistent host data:** Docker Compose bind-mounts `VILARO_CONFIG_DIR` to `/home/node/.vilaro` and `VILARO_WORKSPACE_DIR` to `/home/node/.vilaro/workspace`, so those paths survive container replacement.
+- **Persistent host data:** Docker Compose bind-mounts `VILARO_CONFIG_DIR` to `/home/node/.velaro` and `VILARO_WORKSPACE_DIR` to `/home/node/.velaro/workspace`, so those paths survive container replacement.
 - **Ephemeral sandbox tmpfs:** when `agents.defaults.sandbox` is enabled, the sandbox containers use `tmpfs` for `/tmp`, `/var/tmp`, and `/run`. Those mounts are separate from the top-level Compose stack and disappear with the sandbox container.
-- **Disk growth hotspots:** watch `media/`, `agents/<agentId>/sessions/sessions.json`, transcript JSONL files, `cron/runs/*.jsonl`, and rolling file logs under `/tmp/vilaro/` (or your configured `logging.file`). If you also run the macOS app outside Docker, its service logs are separate again: `~/.vilaro/logs/gateway.log`, `~/.vilaro/logs/gateway.err.log`, and `/tmp/vilaro/vilaro-gateway.log`.
+- **Disk growth hotspots:** watch `media/`, `agents/<agentId>/sessions/sessions.json`, transcript JSONL files, `cron/runs/*.jsonl`, and rolling file logs under `/tmp/velaro/` (or your configured `logging.file`). If you also run the macOS app outside Docker, its service logs are separate again: `~/.vilaro/logs/gateway.log`, `~/.vilaro/logs/gateway.err.log`, and `/tmp/velaro/vilaro-gateway.log`.
 
 ## Agent Sandbox (host gateway + Docker tools)
 
@@ -576,7 +576,7 @@ precedence, and troubleshooting.
 
 ### Default behavior
 
-- Image: `vilaro-sandbox:bookworm-slim`
+- Image: `velaro-sandbox:bookworm-slim`
 - One container per agent
 - Agent workspace access: `workspaceAccess: "none"` (default) uses `~/.vilaro/sandboxes`
   - `"ro"` keeps the sandbox workspace at `/workspace` and mounts the agent workspace read-only at `/agent` (disables `write`/`edit`/`apply_patch`)
@@ -598,9 +598,9 @@ If you plan to install packages in `setupCommand`, note:
 - Break-glass override: `agents.defaults.sandbox.docker.dangerouslyAllowContainerNamespaceJoin: true`.
 - `readOnlyRoot: true` blocks package installs.
 - `user` must be root for `apt-get` (omit `user` or set `user: "0:0"`).
-  Vilaro auto-recreates containers when `setupCommand` (or docker config) changes
+  Velaro auto-recreates containers when `setupCommand` (or docker config) changes
   unless the container was **recently used** (within ~5 minutes). Hot containers
-  log a warning with the exact `vilaro sandbox recreate ...` command.
+  log a warning with the exact `velaro sandbox recreate ...` command.
 
 ```json5
 {
@@ -612,7 +612,7 @@ If you plan to install packages in `setupCommand`, note:
         workspaceAccess: "none", // none | ro | rw
         workspaceRoot: "~/.vilaro/sandboxes",
         docker: {
-          image: "vilaro-sandbox:bookworm-slim",
+          image: "velaro-sandbox:bookworm-slim",
           workdir: "/workspace",
           readOnlyRoot: true,
           tmpfs: ["/tmp", "/var/tmp", "/run"],
@@ -630,7 +630,7 @@ If you plan to install packages in `setupCommand`, note:
             nproc: 256,
           },
           seccompProfile: "/path/to/seccomp.json",
-          apparmorProfile: "vilaro-sandbox",
+          apparmorProfile: "velaro-sandbox",
           dns: ["1.1.1.1", "8.8.8.8"],
           extraHosts: ["internal.service:10.0.0.5"],
         },
@@ -677,7 +677,7 @@ Multi-agent: override `agents.defaults.sandbox.{docker,browser,prune}.*` per age
 scripts/sandbox-setup.sh
 ```
 
-This builds `vilaro-sandbox:bookworm-slim` using `Dockerfile.sandbox`.
+This builds `velaro-sandbox:bookworm-slim` using `Dockerfile.sandbox`.
 
 ### Sandbox common image (optional)
 
@@ -687,13 +687,13 @@ If you want a sandbox image with common build tooling (Node, Go, Rust, etc.), bu
 scripts/sandbox-common-setup.sh
 ```
 
-This builds `vilaro-sandbox-common:bookworm-slim`. To use it:
+This builds `velaro-sandbox-common:bookworm-slim`. To use it:
 
 ```json5
 {
   agents: {
     defaults: {
-      sandbox: { docker: { image: "vilaro-sandbox-common:bookworm-slim" } },
+      sandbox: { docker: { image: "velaro-sandbox-common:bookworm-slim" } },
     },
   },
 }
@@ -707,7 +707,7 @@ To run the browser tool inside the sandbox, build the browser image:
 scripts/sandbox-browser-setup.sh
 ```
 
-This builds `vilaro-sandbox-browser:bookworm-slim` using
+This builds `velaro-sandbox-browser:bookworm-slim` using
 `Dockerfile.sandbox-browser`. The container runs Chromium with CDP enabled and
 an optional noVNC observer (headful via Xvfb).
 
@@ -717,9 +717,9 @@ Notes:
 - Headful (Xvfb) reduces bot blocking vs headless.
 - Headless can still be used by setting `agents.defaults.sandbox.browser.headless=true`.
 - No full desktop environment (GNOME) is needed; Xvfb provides the display.
-- Browser containers default to a dedicated Docker network (`vilaro-sandbox-browser`) instead of global `bridge`.
+- Browser containers default to a dedicated Docker network (`velaro-sandbox-browser`) instead of global `bridge`.
 - Optional `agents.defaults.sandbox.browser.cdpSourceRange` restricts container-edge CDP ingress by CIDR (for example `172.21.0.1/32`).
-- noVNC observer access is password-protected by default; Vilaro provides a short-lived observer token URL that serves a local bootstrap page and keeps the password in URL fragment (instead of URL query).
+- noVNC observer access is password-protected by default; Velaro provides a short-lived observer token URL that serves a local bootstrap page and keeps the password in URL fragment (instead of URL query).
 - Browser container startup defaults are conservative for shared/container workloads, including:
   - `--remote-debugging-address=127.0.0.1`
   - `--remote-debugging-port=<derived from VILARO_BROWSER_CDP_PORT>`
@@ -773,7 +773,7 @@ Custom browser image:
 {
   agents: {
     defaults: {
-      sandbox: { browser: { image: "my-vilaro-browser" } },
+      sandbox: { browser: { image: "my-velaro-browser" } },
     },
   },
 }
@@ -793,14 +793,14 @@ Prune rules (`agents.defaults.sandbox.prune`) apply to browser containers too.
 Build your own image and point config to it:
 
 ```bash
-docker build -t my-vilaro-sbx -f Dockerfile.sandbox .
+docker build -t my-velaro-sbx -f Dockerfile.sandbox .
 ```
 
 ```json5
 {
   agents: {
     defaults: {
-      sandbox: { docker: { image: "my-vilaro-sbx" } },
+      sandbox: { docker: { image: "my-velaro-sbx" } },
     },
   },
 }
@@ -838,7 +838,7 @@ Example:
 - Container not running: it will auto-create per session on demand.
 - Permission errors in sandbox: set `docker.user` to a UID:GID that matches your
   mounted workspace ownership (or chown the workspace folder).
-- Custom tools not found: Vilaro runs commands with `sh -lc` (login shell), which
+- Custom tools not found: Velaro runs commands with `sh -lc` (login shell), which
   sources `/etc/profile` and may reset PATH. Set `docker.env.PATH` to prepend your
   custom tool paths (e.g., `/custom/bin:/usr/local/share/npm-global/bin`), or add
   a script under `/etc/profile.d/` in your Dockerfile.

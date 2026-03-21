@@ -1,6 +1,6 @@
 ---
 read_when:
-  - 你想在 Vilaro 中使用 Together AI
+  - 你想在 Velaro 中使用 Together AI
   - 你需要 API 密钥环境变量或 CLI 身份验证选项
 summary: Together AI 设置（身份验证 + 模型选择）
 x-i18n:
@@ -25,7 +25,7 @@ x-i18n:
 1. 设置 API 密钥（推荐：为 Gateway 网关存储它）：
 
 ```bash
-vilaro onboard --auth-choice together-api-key
+velaro onboard --auth-choice together-api-key
 ```
 
 2. 设置默认模型：
@@ -43,7 +43,7 @@ vilaro onboard --auth-choice together-api-key
 ## 非交互式示例
 
 ```bash
-vilaro onboard --non-interactive \
+velaro onboard --non-interactive \
   --mode local \
   --auth-choice together-api-key \
   --together-api-key "$TOGETHER_API_KEY"

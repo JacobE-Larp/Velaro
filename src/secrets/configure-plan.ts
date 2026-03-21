@@ -233,7 +233,7 @@ export function buildSecretsConfigurePlan(params: {
     version: 1,
     protocolVersion: 1,
     generatedAt: params.generatedAt ?? new Date().toISOString(),
-    generatedBy: "vilaro secrets configure",
+    generatedBy: "velaro secrets configure",
     targets: [...params.selectedTargets.values()].map((entry) => ({
       type: entry.type,
       path: entry.path,

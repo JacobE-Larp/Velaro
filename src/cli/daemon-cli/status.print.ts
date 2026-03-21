@@ -100,7 +100,7 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
     }
     defaultRuntime.error(
       warnText(
-        `Recommendation: run "${formatCliCommand("vilaro doctor")}" (or "${formatCliCommand("vilaro doctor --repair")}").`,
+        `Recommendation: run "${formatCliCommand("velaro doctor")}" (or "${formatCliCommand("velaro doctor --repair")}").`,
       ),
     );
   }
@@ -134,7 +134,7 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
       );
       defaultRuntime.error(
         errorText(
-          `Fix: rerun \`${formatCliCommand("vilaro gateway install --force")}\` from the same --profile / VILARO_STATE_DIR you expect.`,
+          `Fix: rerun \`${formatCliCommand("velaro gateway install --force")}\` from the same --profile / VILARO_STATE_DIR you expect.`,
         ),
       );
     }
@@ -210,7 +210,7 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
     );
     defaultRuntime.error(
       errorText(
-        `Fix: run ${formatCliCommand("vilaro gateway restart")} and re-check with ${formatCliCommand("vilaro gateway status --deep")}.`,
+        `Fix: run ${formatCliCommand("velaro gateway restart")} and re-check with ${formatCliCommand("velaro gateway status --deep")}.`,
       ),
     );
     spacer();
@@ -253,7 +253,7 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
       ),
     );
     defaultRuntime.error(
-      errorText(`Then reinstall: ${formatCliCommand("vilaro gateway install")}`),
+      errorText(`Then reinstall: ${formatCliCommand("velaro gateway install")}`),
     );
     spacer();
   }
@@ -326,6 +326,6 @@ export function printDaemonStatus(status: DaemonStatus, opts: { json: boolean })
     spacer();
   }
 
-  defaultRuntime.log(`${label("Troubles:")} run ${formatCliCommand("vilaro status")}`);
+  defaultRuntime.log(`${label("Troubles:")} run ${formatCliCommand("velaro status")}`);
   defaultRuntime.log(`${label("Troubleshooting:")} https://docs.vilaro.ai/troubleshooting`);
 }

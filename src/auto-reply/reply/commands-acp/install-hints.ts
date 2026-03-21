@@ -15,9 +15,9 @@ export function resolveAcpInstallCommandHint(cfg: VilaroConfig): string {
   if (backendId === "acpx") {
     const localPath = path.resolve(process.cwd(), "extensions/acpx");
     if (existsSync(localPath)) {
-      return `vilaro plugins install ${localPath}`;
+      return `velaro plugins install ${localPath}`;
     }
-    return "vilaro plugins install acpx";
+    return "velaro plugins install acpx";
   }
   return `Install and enable the plugin that provides ACP backend "${backendId}".`;
 }

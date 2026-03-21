@@ -1,46 +1,46 @@
 ---
-title: Vilaro
-summary: "Typed workflow runtime for Vilaro with resumable approval gates."
-description: Typed workflow runtime for Vilaro — composable pipelines with approval gates.
+title: Velaro
+summary: "Typed workflow runtime for Velaro with resumable approval gates."
+description: Typed workflow runtime for Velaro — composable pipelines with approval gates.
 read_when:
   - You want deterministic multi-step workflows with explicit approvals
   - You need to resume a workflow without re-running earlier steps
 ---
 
-# Vilaro
+# Velaro
 
-Vilaro is a workflow shell that lets Vilaro run multi-step tool sequences as a single, deterministic operation with explicit approval checkpoints.
+Velaro is a workflow shell that lets Velaro run multi-step tool sequences as a single, deterministic operation with explicit approval checkpoints.
 
 ## Hook
 
-Your assistant can build the tools that manage itself. Ask for a workflow, and 30 minutes later you have a CLI plus pipelines that run as one call. Vilaro is the missing piece: deterministic pipelines, explicit approvals, and resumable state.
+Your assistant can build the tools that manage itself. Ask for a workflow, and 30 minutes later you have a CLI plus pipelines that run as one call. Velaro is the missing piece: deterministic pipelines, explicit approvals, and resumable state.
 
 ## Why
 
-Today, complex workflows require many back-and-forth tool calls. Each call costs tokens, and the LLM has to orchestrate every step. Vilaro moves that orchestration into a typed runtime:
+Today, complex workflows require many back-and-forth tool calls. Each call costs tokens, and the LLM has to orchestrate every step. Velaro moves that orchestration into a typed runtime:
 
-- **One call instead of many**: Vilaro runs one Vilaro tool call and gets a structured result.
+- **One call instead of many**: Velaro runs one Velaro tool call and gets a structured result.
 - **Approvals built in**: Side effects (send email, post comment) halt the workflow until explicitly approved.
 - **Resumable**: Halted workflows return a token; approve and resume without re-running everything.
 
 ## Why a DSL instead of plain programs?
 
-Vilaro is intentionally small. The goal is not "a new language," it's a predictable, AI-friendly pipeline spec with first-class approvals and resume tokens.
+Velaro is intentionally small. The goal is not "a new language," it's a predictable, AI-friendly pipeline spec with first-class approvals and resume tokens.
 
 - **Approve/resume is built in**: A normal program can prompt a human, but it can’t _pause and resume_ with a durable token without you inventing that runtime yourself.
 - **Determinism + auditability**: Pipelines are data, so they’re easy to log, diff, replay, and review.
 - **Constrained surface for AI**: A tiny grammar + JSON piping reduces “creative” code paths and makes validation realistic.
 - **Safety policy baked in**: Timeouts, output caps, sandbox checks, and allowlists are enforced by the runtime, not each script.
-- **Still programmable**: Each step can call any CLI or script. If you want JS/TS, generate `.vilaro` files from code.
+- **Still programmable**: Each step can call any CLI or script. If you want JS/TS, generate `.velaro` files from code.
 
 ## How it works
 
-Vilaro launches the local `vilaro` CLI in **tool mode** and parses a JSON envelope from stdout.
+Velaro launches the local `velaro` CLI in **tool mode** and parses a JSON envelope from stdout.
 If the pipeline pauses for approval, the tool returns a `resumeToken` so you can continue later.
 
 ## Pattern: small CLI + JSON pipes + approvals
 
-Build tiny commands that speak JSON, then chain them into a single Vilaro call. (Example command names below — swap in your own.)
+Build tiny commands that speak JSON, then chain them into a single Velaro call. (Example command names below — swap in your own.)
 
 ```bash
 inbox list --json
@@ -66,19 +66,19 @@ If the pipeline requests approval, resume with the token:
 }
 ```
 
-AI triggers the workflow; Vilaro executes the steps. Approval gates keep side effects explicit and auditable.
+AI triggers the workflow; Velaro executes the steps. Approval gates keep side effects explicit and auditable.
 
 Example: map input items into tool calls:
 
 ```bash
 gog.gmail.search --query 'newer_than:1d' \
-  | vilaro.invoke --tool message --action send --each --item-key message --args-json '{"provider":"telegram","to":"..."}'
+  | velaro.invoke --tool message --action send --each --item-key message --args-json '{"provider":"telegram","to":"..."}'
 ```
 
 ## JSON-only LLM steps (llm-task)
 
 For workflows that need a **structured LLM step**, enable the optional
-`llm-task` plugin tool and call it from Vilaro. This keeps the workflow
+`llm-task` plugin tool and call it from Velaro. This keeps the workflow
 deterministic while still letting you classify/summarize/draft with a model.
 
 Enable the tool:
@@ -103,8 +103,8 @@ Enable the tool:
 
 Use it in a pipeline:
 
-```vilaro
-vilaro.invoke --tool llm-task --action json --args-json '{
+```velaro
+velaro.invoke --tool llm-task --action json --args-json '{
   "prompt": "Given the input email, return intent and draft.",
   "thinking": "low",
   "input": { "subject": "Hello", "body": "Can you help?" },
@@ -122,9 +122,9 @@ vilaro.invoke --tool llm-task --action json --args-json '{
 
 See [LLM Task](/tools/llm-task) for details and configuration options.
 
-## Workflow files (.vilaro)
+## Workflow files (.velaro)
 
-Vilaro can run YAML/JSON workflow files with `name`, `args`, `steps`, `env`, `condition`, and `approval` fields. In Vilaro tool calls, set `pipeline` to the file path.
+Velaro can run YAML/JSON workflow files with `name`, `args`, `steps`, `env`, `condition`, and `approval` fields. In Velaro tool calls, set `pipeline` to the file path.
 
 ```yaml
 name: inbox-triage
@@ -152,20 +152,20 @@ Notes:
 - `stdin: $step.stdout` and `stdin: $step.json` pass a prior step’s output.
 - `condition` (or `when`) can gate steps on `$step.approved`.
 
-## Install Vilaro
+## Install Velaro
 
-Install the Vilaro CLI on the **same host** that runs the Vilaro Gateway (see the [Vilaro repo](https://github.com/vilaro/vilaro)), and ensure `vilaro` is on `PATH`.
+Install the Velaro CLI on the **same host** that runs the Velaro Gateway (see the [Velaro repo](https://github.com/vilaro/vilaro)), and ensure `velaro` is on `PATH`.
 
 ## Enable the tool
 
-Vilaro is an **optional** plugin tool (not enabled by default).
+Velaro is an **optional** plugin tool (not enabled by default).
 
 Recommended (additive, safe):
 
 ```json
 {
   "tools": {
-    "alsoAllow": ["vilaro"]
+    "alsoAllow": ["velaro"]
   }
 }
 ```
@@ -179,7 +179,7 @@ Or per-agent:
       {
         "id": "main",
         "tools": {
-          "alsoAllow": ["vilaro"]
+          "alsoAllow": ["velaro"]
         }
       }
     ]
@@ -187,28 +187,28 @@ Or per-agent:
 }
 ```
 
-Avoid using `tools.allow: ["vilaro"]` unless you intend to run in restrictive allowlist mode.
+Avoid using `tools.allow: ["velaro"]` unless you intend to run in restrictive allowlist mode.
 
 Note: allowlists are opt-in for optional plugins. If your allowlist only names
-plugin tools (like `vilaro`), Vilaro keeps core tools enabled. To restrict core
+plugin tools (like `velaro`), Velaro keeps core tools enabled. To restrict core
 tools, include the core tools or groups you want in the allowlist too.
 
 ## Example: Email triage
 
-Without Vilaro:
+Without Velaro:
 
 ```
 User: "Check my email and draft replies"
-→ vilaro calls gmail.list
+→ velaro calls gmail.list
 → LLM summarizes
 → User: "draft replies to #2 and #5"
 → LLM drafts
 → User: "send #2"
-→ vilaro calls gmail.send
+→ velaro calls gmail.send
 (repeat daily, no memory of what was triaged)
 ```
 
-With Vilaro:
+With Velaro:
 
 ```json
 {
@@ -267,7 +267,7 @@ Run a workflow file with args:
 ```json
 {
   "action": "run",
-  "pipeline": "/path/to/inbox-triage.vilaro",
+  "pipeline": "/path/to/inbox-triage.velaro",
   "argsJson": "{\"tag\":\"family\"}"
 }
 ```
@@ -289,11 +289,11 @@ Continue a halted workflow after approval.
 - `cwd`: Relative working directory for the pipeline (must stay within the current process working directory).
 - `timeoutMs`: Kill the subprocess if it exceeds this duration (default: 20000).
 - `maxStdoutBytes`: Kill the subprocess if stdout exceeds this size (default: 512000).
-- `argsJson`: JSON string passed to `vilaro run --args-json` (workflow files only).
+- `argsJson`: JSON string passed to `velaro run --args-json` (workflow files only).
 
 ## Output envelope
 
-Vilaro returns a JSON envelope with one of three statuses:
+Velaro returns a JSON envelope with one of three statuses:
 
 - `ok` → finished successfully
 - `needs_approval` → paused; `requiresApproval.resumeToken` is required to resume
@@ -308,25 +308,25 @@ If `requiresApproval` is present, inspect the prompt and decide:
 - `approve: true` → resume and continue side effects
 - `approve: false` → cancel and finalize the workflow
 
-Use `approve --preview-from-stdin --limit N` to attach a JSON preview to approval requests without custom jq/heredoc glue. Resume tokens are now compact: Vilaro stores workflow resume state under its state dir and hands back a small token key.
+Use `approve --preview-from-stdin --limit N` to attach a JSON preview to approval requests without custom jq/heredoc glue. Resume tokens are now compact: Velaro stores workflow resume state under its state dir and hands back a small token key.
 
 ## OpenProse
 
-OpenProse pairs well with Vilaro: use `/prose` to orchestrate multi-agent prep, then run a Vilaro pipeline for deterministic approvals. If a Prose program needs Vilaro, allow the `vilaro` tool for sub-agents via `tools.subagents.tools`. See [OpenProse](/prose).
+OpenProse pairs well with Velaro: use `/prose` to orchestrate multi-agent prep, then run a Velaro pipeline for deterministic approvals. If a Prose program needs Velaro, allow the `velaro` tool for sub-agents via `tools.subagents.tools`. See [OpenProse](/prose).
 
 ## Safety
 
 - **Local subprocess only** — no network calls from the plugin itself.
-- **No secrets** — Vilaro doesn't manage OAuth; it calls Vilaro tools that do.
+- **No secrets** — Velaro doesn't manage OAuth; it calls Velaro tools that do.
 - **Sandbox-aware** — disabled when the tool context is sandboxed.
-- **Hardened** — fixed executable name (`vilaro`) on `PATH`; timeouts and output caps enforced.
+- **Hardened** — fixed executable name (`velaro`) on `PATH`; timeouts and output caps enforced.
 
 ## Troubleshooting
 
-- **`vilaro subprocess timed out`** → increase `timeoutMs`, or split a long pipeline.
-- **`vilaro output exceeded maxStdoutBytes`** → raise `maxStdoutBytes` or reduce output size.
-- **`vilaro returned invalid JSON`** → ensure the pipeline runs in tool mode and prints only JSON.
-- **`vilaro failed (code …)`** → run the same pipeline in a terminal to inspect stderr.
+- **`velaro subprocess timed out`** → increase `timeoutMs`, or split a long pipeline.
+- **`velaro output exceeded maxStdoutBytes`** → raise `maxStdoutBytes` or reduce output size.
+- **`velaro returned invalid JSON`** → ensure the pipeline runs in tool mode and prints only JSON.
+- **`velaro failed (code …)`** → run the same pipeline in a terminal to inspect stderr.
 
 ## Learn more
 
@@ -335,7 +335,7 @@ OpenProse pairs well with Vilaro: use `/prose` to orchestrate multi-agent prep, 
 
 ## Case study: community workflows
 
-One public example: a “second brain” CLI + Vilaro pipelines that manage three Markdown vaults (personal, partner, shared). The CLI emits JSON for stats, inbox listings, and stale scans; Vilaro chains those commands into workflows like `weekly-review`, `inbox-triage`, `memory-consolidation`, and `shared-task-sync`, each with approval gates. AI handles judgment (categorization) when available and falls back to deterministic rules when not.
+One public example: a “second brain” CLI + Velaro pipelines that manage three Markdown vaults (personal, partner, shared). The CLI emits JSON for stats, inbox listings, and stale scans; Velaro chains those commands into workflows like `weekly-review`, `inbox-triage`, `memory-consolidation`, and `shared-task-sync`, each with approval gates. AI handles judgment (categorization) when available and falls back to deterministic rules when not.
 
 - Thread: [https://x.com/plattenschieber/status/2014508656335770033](https://x.com/plattenschieber/status/2014508656335770033)
 - Repo: [https://github.com/bloomedai/brain-cli](https://github.com/bloomedai/brain-cli)

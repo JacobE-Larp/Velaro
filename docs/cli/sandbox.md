@@ -11,7 +11,7 @@ Manage sandbox runtimes for isolated agent execution.
 
 ## Overview
 
-Vilaro can run agents in isolated sandbox runtimes for security. The `sandbox` commands help you inspect and recreate those runtimes after updates or configuration changes.
+Velaro can run agents in isolated sandbox runtimes for security. The `sandbox` commands help you inspect and recreate those runtimes after updates or configuration changes.
 
 Today that usually means:
 
@@ -22,30 +22,30 @@ Today that usually means:
 For `ssh` and OpenShell `remote`, recreate matters more than with Docker:
 
 - the remote workspace is canonical after the initial seed
-- `vilaro sandbox recreate` deletes that canonical remote workspace for the selected scope
+- `velaro sandbox recreate` deletes that canonical remote workspace for the selected scope
 - next use seeds it again from the current local workspace
 
 ## Commands
 
-### `vilaro sandbox explain`
+### `velaro sandbox explain`
 
 Inspect the **effective** sandbox mode/scope/workspace access, sandbox tool policy, and elevated gates (with fix-it config key paths).
 
 ```bash
-vilaro sandbox explain
-vilaro sandbox explain --session agent:main:main
-vilaro sandbox explain --agent work
-vilaro sandbox explain --json
+velaro sandbox explain
+velaro sandbox explain --session agent:main:main
+velaro sandbox explain --agent work
+velaro sandbox explain --json
 ```
 
-### `vilaro sandbox list`
+### `velaro sandbox list`
 
 List all sandbox runtimes with their status and configuration.
 
 ```bash
-vilaro sandbox list
-vilaro sandbox list --browser  # List only browser containers
-vilaro sandbox list --json     # JSON output
+velaro sandbox list
+velaro sandbox list --browser  # List only browser containers
+velaro sandbox list --json     # JSON output
 ```
 
 **Output includes:**
@@ -57,16 +57,16 @@ vilaro sandbox list --json     # JSON output
 - Idle time (time since last use)
 - Associated session/agent
 
-### `vilaro sandbox recreate`
+### `velaro sandbox recreate`
 
 Remove sandbox runtimes to force recreation with updated config.
 
 ```bash
-vilaro sandbox recreate --all                # Recreate all containers
-vilaro sandbox recreate --session main       # Specific session
-vilaro sandbox recreate --agent mybot        # Specific agent
-vilaro sandbox recreate --browser            # Only browser containers
-vilaro sandbox recreate --all --force        # Skip confirmation
+velaro sandbox recreate --all                # Recreate all containers
+velaro sandbox recreate --session main       # Specific session
+velaro sandbox recreate --agent mybot        # Specific agent
+velaro sandbox recreate --browser            # Only browser containers
+velaro sandbox recreate --all --force        # Skip confirmation
 ```
 
 **Options:**
@@ -85,14 +85,14 @@ vilaro sandbox recreate --all --force        # Skip confirmation
 
 ```bash
 # Pull new image
-docker pull vilaro-sandbox:latest
-docker tag vilaro-sandbox:latest vilaro-sandbox:bookworm-slim
+docker pull velaro-sandbox:latest
+docker tag velaro-sandbox:latest velaro-sandbox:bookworm-slim
 
 # Update config to use new image
 # Edit config: agents.defaults.sandbox.docker.image (or agents.list[].sandbox.docker.image)
 
 # Recreate containers
-vilaro sandbox recreate --all
+velaro sandbox recreate --all
 ```
 
 ### After changing sandbox configuration
@@ -101,7 +101,7 @@ vilaro sandbox recreate --all
 # Edit config: agents.defaults.sandbox.* (or agents.list[].sandbox.*)
 
 # Recreate to apply new config
-vilaro sandbox recreate --all
+velaro sandbox recreate --all
 ```
 
 ### After changing SSH target or SSH auth material
@@ -114,7 +114,7 @@ vilaro sandbox recreate --all
 # - agents.defaults.sandbox.ssh.identityFile / certificateFile / knownHostsFile
 # - agents.defaults.sandbox.ssh.identityData / certificateData / knownHostsData
 
-vilaro sandbox recreate --all
+velaro sandbox recreate --all
 ```
 
 For the core `ssh` backend, recreate deletes the per-scope remote workspace root
@@ -129,7 +129,7 @@ on the SSH target. The next run seeds it again from the local workspace.
 # - plugins.entries.openshell.config.mode
 # - plugins.entries.openshell.config.policy
 
-vilaro sandbox recreate --all
+velaro sandbox recreate --all
 ```
 
 For OpenShell `remote` mode, recreate deletes the canonical remote workspace
@@ -138,16 +138,16 @@ for that scope. The next run seeds it again from the local workspace.
 ### After changing setupCommand
 
 ```bash
-vilaro sandbox recreate --all
+velaro sandbox recreate --all
 # or just one agent:
-vilaro sandbox recreate --agent family
+velaro sandbox recreate --agent family
 ```
 
 ### For a specific agent only
 
 ```bash
 # Update only one agent's containers
-vilaro sandbox recreate --agent alfred
+velaro sandbox recreate --agent alfred
 ```
 
 ## Why is this needed?
@@ -158,9 +158,9 @@ vilaro sandbox recreate --agent alfred
 - Runtimes are only pruned after 24h of inactivity
 - Regularly-used agents keep old runtimes alive indefinitely
 
-**Solution:** Use `vilaro sandbox recreate` to force removal of old runtimes. They'll be recreated automatically with current settings when next needed.
+**Solution:** Use `velaro sandbox recreate` to force removal of old runtimes. They'll be recreated automatically with current settings when next needed.
 
-Tip: prefer `vilaro sandbox recreate` over manual backend-specific cleanup.
+Tip: prefer `velaro sandbox recreate` over manual backend-specific cleanup.
 It uses the Gateway’s runtime registry and avoids mismatches when scope/session keys change.
 
 ## Configuration
@@ -176,8 +176,8 @@ Sandbox settings live in `~/.vilaro/vilaro.json` under `agents.defaults.sandbox`
         "backend": "docker", // docker, ssh, openshell
         "scope": "agent", // session, agent, shared
         "docker": {
-          "image": "vilaro-sandbox:bookworm-slim",
-          "containerPrefix": "vilaro-sbx-",
+          "image": "velaro-sandbox:bookworm-slim",
+          "containerPrefix": "velaro-sbx-",
           // ... more Docker options
         },
         "prune": {

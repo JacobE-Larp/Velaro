@@ -28,7 +28,7 @@ export const CORE_CLI_COMMAND_DESCRIPTORS = [
   },
   {
     name: "backup",
-    description: "Create and verify local backup archives for Vilaro state",
+    description: "Create and verify local backup archives for Velaro state",
     hasSubcommands: true,
   },
   {
@@ -88,7 +88,7 @@ export const CORE_CLI_COMMAND_DESCRIPTORS = [
   },
   {
     name: "browser",
-    description: "Manage Vilaro's dedicated browser (Chrome/Chromium)",
+    description: "Manage Velaro's dedicated browser (Chrome/Chromium)",
     hasSubcommands: true,
   },
 ] as const satisfies ReadonlyArray<CoreCliCommandDescriptor>;

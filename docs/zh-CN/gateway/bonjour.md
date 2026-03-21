@@ -15,7 +15,7 @@ x-i18n:
 
 # Bonjour / mDNS 设备发现
 
-Vilaro 使用 Bonjour（mDNS / DNS‑SD）作为**仅限局域网的便捷方式**来发现
+Velaro 使用 Bonjour（mDNS / DNS‑SD）作为**仅限局域网的便捷方式**来发现
 活跃的 Gateway 网关（WebSocket 端点）。这是尽力而为的，**不能**替代 SSH 或
 基于 Tailnet 的连接。
 
@@ -29,11 +29,11 @@ Vilaro 使用 Bonjour（mDNS / DNS‑SD）作为**仅限局域网的便捷方式
 
 1. 在 Gateway 网关主机上运行 DNS 服务器（可通过 Tailnet 访问）。
 2. 在专用区域下发布 `_vilaro-gw._tcp` 的 DNS‑SD 记录
-   （示例：`vilaro.internal.`）。
+   （示例：`velaro.internal.`）。
 3. 配置 Tailscale **分割 DNS**，使你选择的域名通过该
    DNS 服务器为客户端（包括 iOS）解析。
 
-Vilaro 支持任何发现域名；`vilaro.internal.` 只是一个示例。
+Velaro 支持任何发现域名；`velaro.internal.` 只是一个示例。
 iOS/Android 节点同时浏览 `local.` 和你配置的广域域名。
 
 ### Gateway 网关配置（推荐）
@@ -48,19 +48,19 @@ iOS/Android 节点同时浏览 `local.` 和你配置的广域域名。
 ### 一次性 DNS 服务器设置（Gateway 网关主机）
 
 ```bash
-vilaro dns setup --apply
+velaro dns setup --apply
 ```
 
 这会安装 CoreDNS 并配置它：
 
 - 仅在 Gateway 网关的 Tailscale 接口上监听 53 端口
-- 从 `~/.vilaro/dns/<domain>.db` 提供你选择的域名服务（示例：`vilaro.internal.`）
+- 从 `~/.vilaro/dns/<domain>.db` 提供你选择的域名服务（示例：`velaro.internal.`）
 
 从 Tailnet 连接的机器上验证：
 
 ```bash
-dns-sd -B _vilaro-gw._tcp vilaro.internal.
-dig @<TAILNET_IPV4> -p 53 _vilaro-gw._tcp.vilaro.internal PTR +short
+dns-sd -B _vilaro-gw._tcp velaro.internal.
+dig @<TAILNET_IPV4> -p 53 _vilaro-gw._tcp.velaro.internal PTR +short
 ```
 
 ### Tailscale DNS 设置
@@ -104,7 +104,7 @@ Gateway 网关广播小型非机密提示以方便 UI 流程：
 - `canvasPort=<port>`（仅当画布主机启用时；默认 `18793`）
 - `sshPort=<port>`（未覆盖时默认为 22）
 - `transport=gateway`
-- `cliPath=<path>`（可选；可运行的 `vilaro` 入口点的绝对路径）
+- `cliPath=<path>`（可选；可运行的 `velaro` 入口点的绝对路径）
 - `tailnetDns=<magicdns>`（当 Tailnet 可用时的可选提示）
 
 ## 在 macOS 上调试

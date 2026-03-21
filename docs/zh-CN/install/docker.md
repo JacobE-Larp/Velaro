@@ -2,7 +2,7 @@
 read_when:
   - 你想要容器化的 Gateway 网关而不是本地安装
   - 你正在验证 Docker 流程
-summary: Vilaro 的可选 Docker 设置和新手引导
+summary: Velaro 的可选 Docker 设置和新手引导
 title: Docker
 x-i18n:
   generated_at: "2026-02-03T07:51:20Z"
@@ -19,13 +19,13 @@ Docker 是**可选的**。仅当你想要容器化的 Gateway 网关或验证 Do
 
 ## Docker 适合我吗？
 
-- **是**：你想要一个隔离的、可丢弃的 Gateway 网关环境，或在没有本地安装的主机上运行 Vilaro。
+- **是**：你想要一个隔离的、可丢弃的 Gateway 网关环境，或在没有本地安装的主机上运行 Velaro。
 - **否**：你在自己的机器上运行，只想要最快的开发循环。请改用正常的安装流程。
 - **沙箱注意事项**：智能体沙箱隔离也使用 Docker，但它**不需要**完整的 Gateway 网关在 Docker 中运行。参阅[沙箱隔离](/gateway/sandboxing)。
 
 本指南涵盖：
 
-- 容器化 Gateway 网关（完整的 Vilaro 在 Docker 中）
+- 容器化 Gateway 网关（完整的 Velaro 在 Docker 中）
 - 每会话智能体沙箱（主机 Gateway 网关 + Docker 隔离的智能体工具）
 
 沙箱隔离详情：[沙箱隔离](/gateway/sandboxing)
@@ -63,7 +63,7 @@ Docker 是**可选的**。仅当你想要容器化的 Gateway 网关或验证 Do
 
 - 在浏览器中打开 `http://127.0.0.1:18789/`。
 - 将令牌粘贴到控制 UI（设置 → token）。
-- 需要再次获取带令牌的 URL？运行 `docker compose run --rm vilaro-cli dashboard --no-open`。
+- 需要再次获取带令牌的 URL？运行 `docker compose run --rm velaro-cli dashboard --no-open`。
 
 它在主机上写入配置/工作区：
 
@@ -75,8 +75,8 @@ Docker 是**可选的**。仅当你想要容器化的 Gateway 网关或验证 Do
 ### 手动流程（compose）
 
 ```bash
-docker build -t vilaro:local -f Dockerfile .
-docker compose run --rm vilaro-cli onboard
+docker build -t velaro:local -f Dockerfile .
+docker compose run --rm velaro-cli onboard
 docker compose up -d vilaro-gateway
 ```
 
@@ -91,16 +91,16 @@ docker compose -f docker-compose.yml -f docker-compose.extra.yml <command>
 如果你看到"unauthorized"或"disconnected (1008): pairing required"，获取新的仪表板链接并批准浏览器设备：
 
 ```bash
-docker compose run --rm vilaro-cli dashboard --no-open
-docker compose run --rm vilaro-cli devices list
-docker compose run --rm vilaro-cli devices approve <requestId>
+docker compose run --rm velaro-cli dashboard --no-open
+docker compose run --rm velaro-cli devices list
+docker compose run --rm velaro-cli devices approve <requestId>
 ```
 
 更多详情：[仪表板](/web/dashboard)，[设备](/cli/devices)。
 
 ### 额外挂载（可选）
 
-如果你想将额外的主机目录挂载到容器中，在运行 `docker-setup.sh` 之前设置 `VILARO_EXTRA_MOUNTS`。这接受逗号分隔的 Docker 绑定挂载列表，并通过生成 `docker-compose.extra.yml` 将它们应用到 `vilaro-gateway` 和 `vilaro-cli`。
+如果你想将额外的主机目录挂载到容器中，在运行 `docker-setup.sh` 之前设置 `VILARO_EXTRA_MOUNTS`。这接受逗号分隔的 Docker 绑定挂载列表，并通过生成 `docker-compose.extra.yml` 将它们应用到 `vilaro-gateway` 和 `velaro-cli`。
 
 示例：
 
@@ -182,7 +182,7 @@ export VILARO_DOCKER_APT_PACKAGES="git curl jq"
 3. **不使用 `npx` 安装 Playwright 浏览器**（避免 npm 覆盖冲突）：
 
 ```bash
-docker compose run --rm vilaro-cli \
+docker compose run --rm velaro-cli \
   node /app/node_modules/playwright-core/cli.js install chromium
 ```
 
@@ -195,12 +195,12 @@ docker compose run --rm vilaro-cli \
 
 ### 权限 + EACCES
 
-镜像以 `node`（uid 1000）运行。如果你在 `/home/node/.vilaro` 上看到权限错误，确保你的主机绑定挂载由 uid 1000 拥有。
+镜像以 `node`（uid 1000）运行。如果你在 `/home/node/.velaro` 上看到权限错误，确保你的主机绑定挂载由 uid 1000 拥有。
 
 示例（Linux 主机）：
 
 ```bash
-sudo chown -R 1000:1000 /path/to/vilaro-config /path/to/vilaro-workspace
+sudo chown -R 1000:1000 /path/to/velaro-config /path/to/velaro-workspace
 ```
 
 如果你选择以 root 运行以方便使用，你接受了安全权衡。
@@ -244,19 +244,19 @@ CMD ["node","dist/index.js"]
 WhatsApp（QR）：
 
 ```bash
-docker compose run --rm vilaro-cli channels login
+docker compose run --rm velaro-cli channels login
 ```
 
 Telegram（bot token）：
 
 ```bash
-docker compose run --rm vilaro-cli channels add --channel telegram --token "<token>"
+docker compose run --rm velaro-cli channels add --channel telegram --token "<token>"
 ```
 
 Discord（bot token）：
 
 ```bash
-docker compose run --rm vilaro-cli channels add --channel discord --token "<token>"
+docker compose run --rm velaro-cli channels add --channel discord --token "<token>"
 ```
 
 文档：[WhatsApp](/channels/whatsapp)，[Telegram](/channels/telegram)，[Discord](/channels/discord)
@@ -318,7 +318,7 @@ pnpm test:docker:qr
 
 ### 默认行为
 
-- 镜像：`vilaro-sandbox:bookworm-slim`
+- 镜像：`velaro-sandbox:bookworm-slim`
 - 每个智能体一个容器
 - 智能体工作区访问：`workspaceAccess: "none"`（默认）使用 `~/.vilaro/sandboxes`
   - `"ro"` 保持沙箱工作区在 `/workspace` 并将智能体工作区只读挂载在 `/agent`（禁用 `write`/`edit`/`apply_patch`）
@@ -335,7 +335,7 @@ pnpm test:docker:qr
 - 默认 `docker.network` 是 `"none"`（无出站）。
 - `readOnlyRoot: true` 阻止包安装。
 - `user` 必须是 root 才能运行 `apt-get`（省略 `user` 或设置 `user: "0:0"`）。
-  当 `setupCommand`（或 docker 配置）更改时，Vilaro 会自动重建容器，除非容器是**最近使用的**（在约 5 分钟内）。热容器会记录警告，包含确切的 `vilaro sandbox recreate ...` 命令。
+  当 `setupCommand`（或 docker 配置）更改时，Velaro 会自动重建容器，除非容器是**最近使用的**（在约 5 分钟内）。热容器会记录警告，包含确切的 `velaro sandbox recreate ...` 命令。
 
 ```json5
 {
@@ -347,7 +347,7 @@ pnpm test:docker:qr
         workspaceAccess: "none", // none | ro | rw
         workspaceRoot: "~/.vilaro/sandboxes",
         docker: {
-          image: "vilaro-sandbox:bookworm-slim",
+          image: "velaro-sandbox:bookworm-slim",
           workdir: "/workspace",
           readOnlyRoot: true,
           tmpfs: ["/tmp", "/var/tmp", "/run"],
@@ -365,7 +365,7 @@ pnpm test:docker:qr
             nproc: 256,
           },
           seccompProfile: "/path/to/seccomp.json",
-          apparmorProfile: "vilaro-sandbox",
+          apparmorProfile: "velaro-sandbox",
           dns: ["1.1.1.1", "8.8.8.8"],
           extraHosts: ["internal.service:10.0.0.5"],
         },
@@ -408,7 +408,7 @@ pnpm test:docker:qr
 scripts/sandbox-setup.sh
 ```
 
-这使用 `Dockerfile.sandbox` 构建 `vilaro-sandbox:bookworm-slim`。
+这使用 `Dockerfile.sandbox` 构建 `velaro-sandbox:bookworm-slim`。
 
 ### 沙箱通用镜像（可选）
 
@@ -418,13 +418,13 @@ scripts/sandbox-setup.sh
 scripts/sandbox-common-setup.sh
 ```
 
-这构建 `vilaro-sandbox-common:bookworm-slim`。要使用它：
+这构建 `velaro-sandbox-common:bookworm-slim`。要使用它：
 
 ```json5
 {
   agents: {
     defaults: {
-      sandbox: { docker: { image: "vilaro-sandbox-common:bookworm-slim" } },
+      sandbox: { docker: { image: "velaro-sandbox-common:bookworm-slim" } },
     },
   },
 }
@@ -438,7 +438,7 @@ scripts/sandbox-common-setup.sh
 scripts/sandbox-browser-setup.sh
 ```
 
-这使用 `Dockerfile.sandbox-browser` 构建 `vilaro-sandbox-browser:bookworm-slim`。容器运行启用 CDP 的 Chromium 和可选的 noVNC 观察器（通过 Xvfb 有头）。
+这使用 `Dockerfile.sandbox-browser` 构建 `velaro-sandbox-browser:bookworm-slim`。容器运行启用 CDP 的 Chromium 和可选的 noVNC 观察器（通过 Xvfb 有头）。
 
 注意：
 
@@ -466,7 +466,7 @@ scripts/sandbox-browser-setup.sh
 {
   agents: {
     defaults: {
-      sandbox: { browser: { image: "my-vilaro-browser" } },
+      sandbox: { browser: { image: "my-velaro-browser" } },
     },
   },
 }
@@ -485,14 +485,14 @@ scripts/sandbox-browser-setup.sh
 构建你自己的镜像并将配置指向它：
 
 ```bash
-docker build -t my-vilaro-sbx -f Dockerfile.sandbox .
+docker build -t my-velaro-sbx -f Dockerfile.sandbox .
 ```
 
 ```json5
 {
   agents: {
     defaults: {
-      sandbox: { docker: { image: "my-vilaro-sbx" } },
+      sandbox: { docker: { image: "my-velaro-sbx" } },
     },
   },
 }
@@ -529,4 +529,4 @@ docker build -t my-vilaro-sbx -f Dockerfile.sandbox .
 - 镜像缺失：使用 [`scripts/sandbox-setup.sh`](https://github.com/vilaro/vilaro/blob/main/scripts/sandbox-setup.sh) 构建或设置 `agents.defaults.sandbox.docker.image`。
 - 容器未运行：它会按需为每个会话自动创建。
 - 沙箱中的权限错误：将 `docker.user` 设置为与你挂载的工作区所有权匹配的 UID:GID（或 chown 工作区文件夹）。
-- 找不到自定义工具：Vilaro 使用 `sh -lc`（登录 shell）运行命令，这会 source `/etc/profile` 并可能重置 PATH。设置 `docker.env.PATH` 以在前面添加你的自定义工具路径（例如 `/custom/bin:/usr/local/share/npm-global/bin`），或在你的 Dockerfile 中在 `/etc/profile.d/` 下添加脚本。
+- 找不到自定义工具：Velaro 使用 `sh -lc`（登录 shell）运行命令，这会 source `/etc/profile` 并可能重置 PATH。设置 `docker.env.PATH` 以在前面添加你的自定义工具路径（例如 `/custom/bin:/usr/local/share/npm-global/bin`），或在你的 Dockerfile 中在 `/etc/profile.d/` 下添加脚本。

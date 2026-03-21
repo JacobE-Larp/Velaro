@@ -13,7 +13,7 @@ import { clearPluginDiscoveryCache } from "../../plugins/discovery.js";
 import { enablePluginInConfig } from "../../plugins/enable.js";
 import { installPluginFromNpmSpec } from "../../plugins/install.js";
 import { buildNpmResolutionInstallFields, recordPluginInstall } from "../../plugins/installs.js";
-import { loadVilaroPlugins } from "../../plugins/loader.js";
+import { loadVelaroPlugins } from "../../plugins/loader.js";
 import { createPluginLoaderLogger } from "../../plugins/logger.js";
 import type { PluginRegistry } from "../../plugins/registry.js";
 import { getActivePluginRegistry } from "../../plugins/runtime.js";
@@ -244,7 +244,7 @@ function loadChannelSetupPluginRegistry(params: {
   const workspaceDir =
     params.workspaceDir ?? resolveAgentWorkspaceDir(params.cfg, resolveDefaultAgentId(params.cfg));
   const log = createSubsystemLogger("plugins");
-  return loadVilaroPlugins({
+  return loadVelaroPlugins({
     config: params.cfg,
     workspaceDir,
     cache: false,

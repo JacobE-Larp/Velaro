@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `vilaro setup` (initialize config + workspace)"
+summary: "CLI reference for `velaro setup` (initialize config + workspace)"
 read_when:
   - You’re doing first-run setup without the full setup wizard
   - You want to set the default workspace path
 title: "setup"
 ---
 
-# `vilaro setup`
+# `velaro setup`
 
 Initialize `~/.vilaro/vilaro.json` and the agent workspace.
 
@@ -18,12 +18,12 @@ Related:
 ## Examples
 
 ```bash
-vilaro setup
-vilaro setup --workspace ~/.vilaro/workspace
+velaro setup
+velaro setup --workspace ~/.vilaro/workspace
 ```
 
 To run the wizard via setup:
 
 ```bash
-vilaro setup --wizard
+velaro setup --wizard
 ```

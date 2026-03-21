@@ -312,7 +312,7 @@ export async function runConfigureWizard(
 ) {
   try {
     printWizardHeader(runtime);
-    intro(opts.command === "update" ? "Vilaro update wizard" : "Vilaro configure");
+    intro(opts.command === "update" ? "Velaro update wizard" : "Velaro configure");
     const prompter = createClackPrompter();
 
     const snapshot = await readConfigFileSnapshot();
@@ -333,7 +333,7 @@ export async function runConfigureWizard(
       }
       if (!snapshot.valid) {
         outro(
-          `Config invalid. Run \`${formatCliCommand("vilaro doctor")}\` to repair it, then re-run configure.`,
+          `Config invalid. Run \`${formatCliCommand("velaro doctor")}\` to repair it, then re-run configure.`,
         );
         runtime.exit(1);
         return;

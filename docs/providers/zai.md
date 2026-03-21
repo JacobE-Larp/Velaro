@@ -1,7 +1,7 @@
 ---
-summary: "Use Z.AI (GLM models) with Vilaro"
+summary: "Use Z.AI (GLM models) with Velaro"
 read_when:
-  - You want Z.AI / GLM models in Vilaro
+  - You want Z.AI / GLM models in Velaro
   - You need a simple ZAI_API_KEY setup
 title: "Z.AI"
 ---
@@ -9,23 +9,23 @@ title: "Z.AI"
 # Z.AI
 
 Z.AI is the API platform for **GLM** models. It provides REST APIs for GLM and uses API keys
-for authentication. Create your API key in the Z.AI console. Vilaro uses the `zai` provider
+for authentication. Create your API key in the Z.AI console. Velaro uses the `zai` provider
 with a Z.AI API key.
 
 ## CLI setup
 
 ```bash
 # Coding Plan Global, recommended for Coding Plan users
-vilaro onboard --auth-choice zai-coding-global
+velaro onboard --auth-choice zai-coding-global
 
 # Coding Plan CN (China region), recommended for Coding Plan users
-vilaro onboard --auth-choice zai-coding-cn
+velaro onboard --auth-choice zai-coding-cn
 
 # General API
-vilaro onboard --auth-choice zai-global
+velaro onboard --auth-choice zai-global
 
 # General API CN (China region)
-vilaro onboard --auth-choice zai-cn
+velaro onboard --auth-choice zai-cn
 ```
 
 ## Config snippet

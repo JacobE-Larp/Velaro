@@ -54,10 +54,10 @@ export function buildGatewayRuntimeHints(
     hints.push(
       `LaunchAgent label cached but plist missing. Clear with: launchctl bootout gui/$UID/${label}`,
     );
-    hints.push(`Then reinstall: ${formatCliCommand("vilaro gateway install", env)}`);
+    hints.push(`Then reinstall: ${formatCliCommand("velaro gateway install", env)}`);
   }
   if (runtime.missingUnit) {
-    hints.push(`Service not installed. Run: ${formatCliCommand("vilaro gateway install", env)}`);
+    hints.push(`Service not installed. Run: ${formatCliCommand("velaro gateway install", env)}`);
     if (fileLog) {
       hints.push(`File logs: ${fileLog}`);
     }

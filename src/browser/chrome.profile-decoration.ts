@@ -123,7 +123,7 @@ export function isProfileDecorated(
  * Best-effort profile decoration (name + vilaro-orange). Chrome preference keys
  * vary by version; we keep this conservative and idempotent.
  */
-export function decorateVilaroProfile(
+export function decorateVelaroProfile(
   userDataDir: string,
   opts?: { name?: string; color?: string },
 ) {

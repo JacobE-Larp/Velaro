@@ -158,7 +158,7 @@ export function renderRuntimeHints(
     }
   })();
   if (runtime.missingUnit) {
-    hints.push(`Service not installed. Run: ${formatCliCommand("vilaro gateway install", env)}`);
+    hints.push(`Service not installed. Run: ${formatCliCommand("velaro gateway install", env)}`);
     if (fileLog) {
       hints.push(`File logs: ${fileLog}`);
     }
@@ -182,8 +182,8 @@ export function renderRuntimeHints(
 export function renderGatewayServiceStartHints(env: NodeJS.ProcessEnv = process.env): string[] {
   const profile = env.VILARO_PROFILE;
   return buildPlatformServiceStartHints({
-    installCommand: formatCliCommand("vilaro gateway install", env),
-    startCommand: formatCliCommand("vilaro gateway", env),
+    installCommand: formatCliCommand("velaro gateway install", env),
+    startCommand: formatCliCommand("velaro gateway", env),
     launchAgentPlistPath: `~/Library/LaunchAgents/${resolveGatewayLaunchAgentLabel(profile)}.plist`,
     systemdServiceName: resolveGatewaySystemdServiceName(profile),
     windowsTaskName: resolveGatewayWindowsTaskName(profile),

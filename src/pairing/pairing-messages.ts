@@ -8,13 +8,13 @@ export function buildPairingReply(params: {
 }): string {
   const { channel, idLine, code } = params;
   return [
-    "Vilaro: access not configured.",
+    "Velaro: access not configured.",
     "",
     idLine,
     "",
     `Pairing code: ${code}`,
     "",
     "Ask the bot owner to approve with:",
-    formatCliCommand(`vilaro pairing approve ${channel} ${code}`),
+    formatCliCommand(`velaro pairing approve ${channel} ${code}`),
   ].join("\n");
 }

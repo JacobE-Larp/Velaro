@@ -2,7 +2,7 @@
 read_when:
   - 你想为 Gateway 网关使用一台便宜且始终在线的 Linux 主机
   - 你想在不自行运行 VPS 的情况下远程访问控制 UI
-summary: 在 exe.dev 上运行 Vilaro Gateway 网关（VM + HTTPS 代理）以实现远程访问
+summary: 在 exe.dev 上运行 Velaro Gateway 网关（VM + HTTPS 代理）以实现远程访问
 title: exe.dev
 x-i18n:
   generated_at: "2026-03-16T06:23:23Z"
@@ -15,7 +15,7 @@ x-i18n:
 
 # exe.dev
 
-目标：让 Vilaro Gateway 网关运行在 exe.dev VM 上，并且可通过你的笔记本电脑访问：`https://<vm-name>.exe.xyz`
+目标：让 Velaro Gateway 网关运行在 exe.dev VM 上，并且可通过你的笔记本电脑访问：`https://<vm-name>.exe.xyz`
 
 本页假设你使用的是 exe.dev 默认的 **exeuntu** 镜像。如果你选择了不同的发行版，请相应调整软件包。
 
@@ -34,11 +34,11 @@ x-i18n:
 
 ## 使用 Shelley 自动安装
 
-Shelley 是 [exe.dev](https://exe.dev) 的智能体，可以使用我们的提示词立即安装 Vilaro。
+Shelley 是 [exe.dev](https://exe.dev) 的智能体，可以使用我们的提示词立即安装 Velaro。
 使用的提示词如下：
 
 ```
-Set up Vilaro (https://docs.vilaro.ai/install) on this VM. Use the non-interactive and accept-risk flags for vilaro onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "vilaro devices list" and "vilaro devices approve <request id>". Make sure the dashboard shows that Vilaro's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
+Set up Velaro (https://docs.vilaro.ai/install) on this VM. Use the non-interactive and accept-risk flags for velaro onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "velaro devices list" and "velaro devices approve <request id>". Make sure the dashboard shows that Velaro's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
 ```
 
 ## 手动安装
@@ -57,7 +57,7 @@ ssh exe.dev new
 ssh <vm-name>.exe.xyz
 ```
 
-提示：请让这个 VM 保持**有状态**。Vilaro 会将状态存储在 `~/.vilaro/` 和 `~/.vilaro/workspace/` 下。
+提示：请让这个 VM 保持**有状态**。Velaro 会将状态存储在 `~/.vilaro/` 和 `~/.vilaro/workspace/` 下。
 
 ## 2）安装前置依赖（在 VM 上）
 
@@ -66,15 +66,15 @@ sudo apt-get update
 sudo apt-get install -y git curl jq ca-certificates openssl
 ```
 
-## 3）安装 Vilaro
+## 3）安装 Velaro
 
-运行 Vilaro 安装脚本：
+运行 Velaro 安装脚本：
 
 ```bash
 curl -fsSL https://vilaro.ai/install.sh | bash
 ```
 
-## 4）设置 nginx，将 Vilaro 代理到端口 8000
+## 4）设置 nginx，将 Velaro 代理到端口 8000
 
 编辑 `/etc/nginx/sites-enabled/default`，内容如下：
 
@@ -108,12 +108,12 @@ server {
 }
 ```
 
-## 5）访问 Vilaro 并授予权限
+## 5）访问 Velaro 并授予权限
 
 访问 `https://<vm-name>.exe.xyz/`（请查看新手引导输出中的控制 UI）。如果提示进行身份验证，请粘贴 VM 上的
-`gateway.auth.token` 中的令牌（可通过 `vilaro config get gateway.auth.token` 获取，或使用
-`vilaro doctor --generate-gateway-token` 生成）。使用 `vilaro devices list` 和
-`vilaro devices approve <requestId>` 批准设备。如果拿不准，请在浏览器中使用 Shelley！
+`gateway.auth.token` 中的令牌（可通过 `velaro config get gateway.auth.token` 获取，或使用
+`velaro doctor --generate-gateway-token` 生成）。使用 `velaro devices list` 和
+`velaro devices approve <requestId>` 批准设备。如果拿不准，请在浏览器中使用 Shelley！
 
 ## 远程访问
 
@@ -124,10 +124,10 @@ server {
 ## 更新
 
 ```bash
-npm i -g vilaro@latest
-vilaro doctor
-vilaro gateway restart
-vilaro health
+npm i -g velaro@latest
+velaro doctor
+velaro gateway restart
+velaro health
 ```
 
 指南：[Updating](/install/updating)

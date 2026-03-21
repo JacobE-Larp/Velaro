@@ -107,7 +107,7 @@ export async function updateStatusCommand(opts: UpdateStatusOptions): Promise<vo
     },
   ];
 
-  defaultRuntime.log(theme.heading("Vilaro update status"));
+  defaultRuntime.log(theme.heading("Velaro update status"));
   defaultRuntime.log("");
   defaultRuntime.log(
     renderTable({

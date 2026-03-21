@@ -1,18 +1,18 @@
 ---
-summary: "CLI reference for `vilaro dashboard` (open the Control UI)"
+summary: "CLI reference for `velaro dashboard` (open the Control UI)"
 read_when:
   - You want to open the Control UI with your current token
   - You want to print the URL without launching a browser
 title: "dashboard"
 ---
 
-# `vilaro dashboard`
+# `velaro dashboard`
 
 Open the Control UI using your current auth.
 
 ```bash
-vilaro dashboard
-vilaro dashboard --no-open
+velaro dashboard
+velaro dashboard --no-open
 ```
 
 Notes:

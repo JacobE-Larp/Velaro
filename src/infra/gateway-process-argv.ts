@@ -29,6 +29,8 @@ export function isGatewayArgv(args: string[], opts?: { allowGatewayBinary?: bool
 
   const exe = (normalized[0] ?? "").replace(/\.(bat|cmd|exe)$/i, "");
   return (
+    exe.endsWith("/velaro") ||
+    exe === "velaro" ||
     exe.endsWith("/vilaro") ||
     exe === "vilaro" ||
     (opts?.allowGatewayBinary === true && exe.endsWith("/vilaro-gateway"))

@@ -1,19 +1,19 @@
 ---
-summary: "Vilaro on Oracle Cloud (Always Free ARM)"
+summary: "Velaro on Oracle Cloud (Always Free ARM)"
 read_when:
-  - Setting up Vilaro on Oracle Cloud
-  - Looking for low-cost VPS hosting for Vilaro
-  - Want 24/7 Vilaro on a small server
+  - Setting up Velaro on Oracle Cloud
+  - Looking for low-cost VPS hosting for Velaro
+  - Want 24/7 Velaro on a small server
 title: "Oracle Cloud"
 ---
 
-# Vilaro on Oracle Cloud (OCI)
+# Velaro on Oracle Cloud (OCI)
 
 ## Goal
 
-Run a persistent Vilaro Gateway on Oracle Cloud's **Always Free** ARM tier.
+Run a persistent Velaro Gateway on Oracle Cloud's **Always Free** ARM tier.
 
-Oracle’s free tier can be a great fit for Vilaro (especially if you already have an OCI account), but it comes with tradeoffs:
+Oracle’s free tier can be a great fit for Velaro (especially if you already have an OCI account), but it comes with tradeoffs:
 
 - ARM architecture (most things work, but some binaries may be x86-only)
 - Capacity and signup can be finicky
@@ -41,7 +41,7 @@ Oracle’s free tier can be a great fit for Vilaro (especially if you already ha
 1. Log into [Oracle Cloud Console](https://cloud.oracle.com/)
 2. Navigate to **Compute → Instances → Create Instance**
 3. Configure:
-   - **Name:** `vilaro`
+   - **Name:** `velaro`
    - **Image:** Ubuntu 24.04 (aarch64)
    - **Shape:** `VM.Standard.A1.Flex` (Ampere ARM)
    - **OCPUs:** 2 (or up to 4)
@@ -70,7 +70,7 @@ sudo apt install -y build-essential
 
 ```bash
 # Set hostname
-sudo hostnamectl set-hostname vilaro
+sudo hostnamectl set-hostname velaro
 
 # Set password for ubuntu user
 sudo passwd ubuntu
@@ -83,10 +83,10 @@ sudo loginctl enable-linger ubuntu
 
 ```bash
 curl -fsSL https://tailscale.com/install.sh | sh
-sudo tailscale up --ssh --hostname=vilaro
+sudo tailscale up --ssh --hostname=velaro
 ```
 
-This enables Tailscale SSH, so you can connect via `ssh vilaro` from any device on your tailnet — no public IP needed.
+This enables Tailscale SSH, so you can connect via `ssh velaro` from any device on your tailnet — no public IP needed.
 
 Verify:
 
@@ -94,9 +94,9 @@ Verify:
 tailscale status
 ```
 
-**From now on, connect via Tailscale:** `ssh ubuntu@vilaro` (or use the Tailscale IP).
+**From now on, connect via Tailscale:** `ssh ubuntu@velaro` (or use the Tailscale IP).
 
-## 5) Install Vilaro
+## 5) Install Velaro
 
 ```bash
 curl -fsSL https://vilaro.ai/install.sh | bash
@@ -113,15 +113,15 @@ Use token auth as the default. It’s predictable and avoids needing any “inse
 
 ```bash
 # Keep the Gateway private on the VM
-vilaro config set gateway.bind loopback
+velaro config set gateway.bind loopback
 
 # Require auth for the Gateway + Control UI
-vilaro config set gateway.auth.mode token
-vilaro doctor --generate-gateway-token
+velaro config set gateway.auth.mode token
+velaro doctor --generate-gateway-token
 
 # Expose over Tailscale Serve (HTTPS + tailnet access)
-vilaro config set gateway.tailscale.mode serve
-vilaro config set gateway.trustedProxies '["127.0.0.1"]'
+velaro config set gateway.tailscale.mode serve
+velaro config set gateway.trustedProxies '["127.0.0.1"]'
 
 systemctl --user restart vilaro-gateway
 ```
@@ -130,7 +130,7 @@ systemctl --user restart vilaro-gateway
 
 ```bash
 # Check version
-vilaro --version
+velaro --version
 
 # Check daemon status
 systemctl --user status vilaro-gateway
@@ -178,7 +178,7 @@ No SSH tunnel needed. Tailscale provides:
 
 With the VCN locked down (only UDP 41641 open) and the Gateway bound to loopback, you get strong defense-in-depth: public traffic is blocked at the network edge, and admin access happens over your tailnet.
 
-This setup often removes the _need_ for extra host-based firewall rules purely to stop Internet-wide SSH brute force — but you should still keep the OS updated, run `vilaro security audit`, and verify you aren’t accidentally listening on public interfaces.
+This setup often removes the _need_ for extra host-based firewall rules purely to stop Internet-wide SSH brute force — but you should still keep the OS updated, run `velaro security audit`, and verify you aren’t accidentally listening on public interfaces.
 
 ### What's Already Protected
 
@@ -194,7 +194,7 @@ This setup often removes the _need_ for extra host-based firewall rules purely t
 ### Still Recommended
 
 - **Credential permissions:** `chmod 700 ~/.vilaro`
-- **Security audit:** `vilaro security audit`
+- **Security audit:** `velaro security audit`
 - **System updates:** `sudo apt update && sudo apt upgrade` regularly
 - **Monitor Tailscale:** Review devices in [Tailscale admin console](https://login.tailscale.com/admin)
 
@@ -219,7 +219,7 @@ If Tailscale Serve isn't working, use an SSH tunnel:
 
 ```bash
 # From your local machine (via Tailscale)
-ssh -L 18789:127.0.0.1:18789 ubuntu@vilaro
+ssh -L 18789:127.0.0.1:18789 ubuntu@velaro
 ```
 
 Then open `http://localhost:18789`.
@@ -243,14 +243,14 @@ Free tier ARM instances are popular. Try:
 sudo tailscale status
 
 # Re-authenticate
-sudo tailscale up --ssh --hostname=vilaro --reset
+sudo tailscale up --ssh --hostname=velaro --reset
 ```
 
 ### Gateway won't start
 
 ```bash
-vilaro gateway status
-vilaro doctor --non-interactive
+velaro gateway status
+velaro doctor --non-interactive
 journalctl --user -u vilaro-gateway -n 50
 ```
 
@@ -289,7 +289,7 @@ All state lives in:
 Back up periodically:
 
 ```bash
-tar -czvf vilaro-backup.tar.gz ~/.vilaro ~/.vilaro/workspace
+tar -czvf velaro-backup.tar.gz ~/.vilaro ~/.vilaro/workspace
 ```
 
 ---

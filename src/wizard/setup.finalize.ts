@@ -358,10 +358,10 @@ export async function finalizeSetupWizard(
       [
         "Gateway token: shared auth for the Gateway + Control UI.",
         "Stored in: ~/.vilaro/vilaro.json (gateway.auth.token) or VILARO_GATEWAY_TOKEN.",
-        `View token: ${formatCliCommand("vilaro config get gateway.auth.token")}`,
-        `Generate token: ${formatCliCommand("vilaro doctor --generate-gateway-token")}`,
+        `View token: ${formatCliCommand("velaro config get gateway.auth.token")}`,
+        `Generate token: ${formatCliCommand("velaro doctor --generate-gateway-token")}`,
         "Web UI keeps dashboard URL tokens in memory for the current tab and strips them from the URL after load.",
-        `Open the dashboard anytime: ${formatCliCommand("vilaro dashboard --no-open")}`,
+        `Open the dashboard anytime: ${formatCliCommand("velaro dashboard --no-open")}`,
         "If prompted: paste the token into Control UI settings (or use the tokenized dashboard URL).",
       ].join("\n"),
       "Token",
@@ -410,8 +410,8 @@ export async function finalizeSetupWizard(
         [
           `Dashboard link (with token): ${authedUrl}`,
           controlUiOpened
-            ? "Opened in your browser. Keep that tab to control Vilaro."
-            : "Copy/paste this URL in a browser on this machine to control Vilaro.",
+            ? "Opened in your browser. Keep that tab to control Velaro."
+            : "Copy/paste this URL in a browser on this machine to control Velaro.",
           controlUiOpenHint,
         ]
           .filter(Boolean)
@@ -420,7 +420,7 @@ export async function finalizeSetupWizard(
       );
     } else {
       await prompter.note(
-        `When you're ready: ${formatCliCommand("vilaro dashboard --no-open")}`,
+        `When you're ready: ${formatCliCommand("velaro dashboard --no-open")}`,
         "Later",
       );
     }
@@ -470,8 +470,8 @@ export async function finalizeSetupWizard(
       [
         `Dashboard link (with token): ${authedUrl}`,
         controlUiOpened
-          ? "Opened in your browser. Keep that tab to control Vilaro."
-          : "Copy/paste this URL in a browser on this machine to control Vilaro.",
+          ? "Opened in your browser. Keep that tab to control Velaro."
+          : "Copy/paste this URL in a browser on this machine to control Velaro.",
         controlUiOpenHint,
       ]
         .filter(Boolean)
@@ -514,7 +514,7 @@ export async function finalizeSetupWizard(
         [
           `Provider ${label} is selected but no API key was found.`,
           "web_search will not work until a key is added.",
-          `  ${formatCliCommand("vilaro configure --section web")}`,
+          `  ${formatCliCommand("velaro configure --section web")}`,
           "",
           `Get your key at: ${entry?.signupUrl ?? "https://docs.vilaro.ai/tools/web"}`,
           "Docs: https://docs.vilaro.ai/tools/web",
@@ -525,7 +525,7 @@ export async function finalizeSetupWizard(
       await prompter.note(
         [
           `Web search (${label}) is configured but disabled.`,
-          `Re-enable: ${formatCliCommand("vilaro configure --section web")}`,
+          `Re-enable: ${formatCliCommand("velaro configure --section web")}`,
           "",
           "Docs: https://docs.vilaro.ai/tools/web",
         ].join("\n"),
@@ -552,7 +552,7 @@ export async function finalizeSetupWizard(
       await prompter.note(
         [
           "Web search was skipped. You can enable it later:",
-          `  ${formatCliCommand("vilaro configure --section web")}`,
+          `  ${formatCliCommand("velaro configure --section web")}`,
           "",
           "Docs: https://docs.vilaro.ai/tools/web",
         ].join("\n"),
@@ -568,10 +568,10 @@ export async function finalizeSetupWizard(
 
   await prompter.outro(
     controlUiOpened
-      ? "Onboarding complete. Dashboard opened; keep that tab to control Vilaro."
+      ? "Onboarding complete. Dashboard opened; keep that tab to control Velaro."
       : seededInBackground
         ? "Onboarding complete. Web UI seeded in the background; open it anytime with the dashboard link above."
-        : "Onboarding complete. Use the dashboard link above to control Vilaro.",
+        : "Onboarding complete. Use the dashboard link above to control Velaro.",
   );
 
   return { launchedTui };

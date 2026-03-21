@@ -219,14 +219,14 @@ ${theme.muted("Docs:")} ${formatDocsLink("/cli/agent", "docs.vilaro.ai/cli/agent
         `
 ${theme.heading("Examples:")}
 ${formatHelpExamples([
-  ['vilaro agents set-identity --agent main --name "Vilaro" --emoji ""', "Set name + emoji."],
-  ["vilaro agents set-identity --agent main --avatar avatars/vilaro.png", "Set avatar path."],
+  ['velaro agents set-identity --agent main --name "Velaro" --emoji ""', "Set name + emoji."],
+  ["velaro agents set-identity --agent main --avatar avatars/velaro.png", "Set avatar path."],
   [
-    "vilaro agents set-identity --workspace ~/.vilaro/workspace --from-identity",
+    "velaro agents set-identity --workspace ~/.vilaro/workspace --from-identity",
     "Load from IDENTITY.md.",
   ],
   [
-    "vilaro agents set-identity --identity-file ~/.vilaro/workspace/IDENTITY.md --agent main",
+    "velaro agents set-identity --identity-file ~/.vilaro/workspace/IDENTITY.md --agent main",
     "Use a specific IDENTITY.md.",
   ],
 ])}

@@ -26,10 +26,10 @@ export function registerNodeCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["vilaro node run --host 127.0.0.1 --port 18789", "Run the node host in the foreground."],
-          ["vilaro node status", "Check node host service status."],
-          ["vilaro node install", "Install the node host service."],
-          ["vilaro node restart", "Restart the installed node host service."],
+          ["velaro node run --host 127.0.0.1 --port 18789", "Run the node host in the foreground."],
+          ["velaro node status", "Check node host service status."],
+          ["velaro node install", "Install the node host service."],
+          ["velaro node restart", "Restart the installed node host service."],
         ])}\n\n${theme.muted("Docs:")} ${formatDocsLink("/cli/node", "docs.vilaro.ai/cli/node")}\n`,
     );
 

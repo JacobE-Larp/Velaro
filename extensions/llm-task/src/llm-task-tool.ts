@@ -51,7 +51,7 @@ export function createLlmTaskTool(api: VilaroPluginApi) {
     name: "llm-task",
     label: "LLM Task",
     description:
-      "Run a generic JSON-only LLM task and return schema-validated JSON. Designed for orchestration from Vilaro workflows via vilaro.invoke.",
+      "Run a generic JSON-only LLM task and return schema-validated JSON. Designed for orchestration from Velaro workflows via vilaro.invoke.",
     parameters: Type.Object({
       prompt: Type.String({ description: "Task instruction for the LLM." }),
       input: Type.Optional(Type.Unknown({ description: "Optional input payload for the task." })),

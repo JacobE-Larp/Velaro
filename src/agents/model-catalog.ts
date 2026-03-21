@@ -1,7 +1,7 @@
 import { type VilaroConfig, loadConfig } from "../config/config.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
-import { resolveVilaroAgentDir } from "./agent-paths.js";
-import { ensureVilaroModelsJson } from "./models-config.js";
+import { resolveVelaroAgentDir } from "./agent-paths.js";
+import { ensureVelaroModelsJson } from "./models-config.js";
 
 const log = createSubsystemLogger("model-catalog");
 
@@ -165,13 +165,13 @@ export async function loadModelCatalog(params?: {
       });
     try {
       const cfg = params?.config ?? loadConfig();
-      await ensureVilaroModelsJson(cfg);
+      await ensureVelaroModelsJson(cfg);
       // IMPORTANT: keep the dynamic import *inside* the try/catch.
       // If this fails once (e.g. during a pnpm install that temporarily swaps node_modules),
       // we must not poison the cache with a rejected promise (otherwise all channel handlers
       // will keep failing until restart).
       const piSdk = await importPiSdk();
-      const agentDir = resolveVilaroAgentDir();
+      const agentDir = resolveVelaroAgentDir();
       const [{ shouldSuppressBuiltInModel }, { augmentModelCatalogWithProviderPlugins }] =
         await Promise.all([loadModelSuppression(), loadProviderRuntime()]);
       const { join } = await import("node:path");

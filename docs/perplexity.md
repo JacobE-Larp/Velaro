@@ -8,10 +8,10 @@ title: "Perplexity Search"
 
 # Perplexity Search API
 
-Vilaro supports Perplexity Search API as a `web_search` provider.
+Velaro supports Perplexity Search API as a `web_search` provider.
 It returns structured results with `title`, `url`, and `snippet` fields.
 
-For compatibility, Vilaro also supports legacy Perplexity Sonar/OpenRouter setups.
+For compatibility, Velaro also supports legacy Perplexity Sonar/OpenRouter setups.
 If you use `OPENROUTER_API_KEY`, an `sk-or-...` key in `tools.web.search.perplexity.apiKey`, or set `tools.web.search.perplexity.baseUrl` / `model`, the provider switches to the chat-completions path and returns AI-synthesized answers with citations instead of structured Search API results.
 
 ## Getting a Perplexity API key
@@ -69,13 +69,13 @@ Optional legacy controls:
 
 ## Where to set the key
 
-**Via config:** run `vilaro configure --section web`. It stores the key in
+**Via config:** run `velaro configure --section web`. It stores the key in
 `~/.vilaro/vilaro.json` under `tools.web.search.perplexity.apiKey`.
 That field also accepts SecretRef objects.
 
 **Via environment:** set `PERPLEXITY_API_KEY` or `OPENROUTER_API_KEY`
 in the Gateway process environment. For a gateway install, put it in
-`~/.vilaro/.env` (or your service environment). See [Env vars](/help/faq#how-does-vilaro-load-environment-variables).
+`~/.vilaro/.env` (or your service environment). See [Env vars](/help/faq#how-does-velaro-load-environment-variables).
 
 If `provider: "perplexity"` is configured and the Perplexity key SecretRef is unresolved with no env fallback, startup/reload fails fast.
 

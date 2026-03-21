@@ -98,12 +98,12 @@ export async function enforceMatrixDirectMessageAccess(params: {
       upsertPairingRequest: params.upsertPairingRequest,
       buildReplyText: ({ code }) =>
         [
-          "Vilaro: access not configured.",
+          "Velaro: access not configured.",
           "",
           `Pairing code: ${code}`,
           "",
           "Ask the bot owner to approve with:",
-          "vilaro pairing approve matrix <code>",
+          "velaro pairing approve matrix <code>",
         ].join("\n"),
       sendPairingReply: params.sendPairingReply,
       onCreated: () => {

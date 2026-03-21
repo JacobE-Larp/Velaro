@@ -2,7 +2,7 @@
  * Markdown utilities for Twitch chat
  *
  * Twitch chat doesn't support markdown formatting, so we strip it before sending.
- * Based on Vilaro's markdownToText in src/agents/tools/web-fetch-utils.ts.
+ * Based on Velaro's markdownToText in src/agents/tools/web-fetch-utils.ts.
  */
 
 /**

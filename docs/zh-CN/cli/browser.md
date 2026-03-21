@@ -1,9 +1,9 @@
 ---
 read_when:
-  - 你使用 `vilaro browser` 并想要常见任务的示例
+  - 你使用 `velaro browser` 并想要常见任务的示例
   - 你想通过 node host 控制在另一台机器上运行的浏览器
   - 你想使用 Chrome 扩展中继（通过工具栏按钮附加/分离）
-summary: "`vilaro browser` 的 CLI 参考（配置文件、标签页、操作、扩展中继）"
+summary: "`velaro browser` 的 CLI 参考（配置文件、标签页、操作、扩展中继）"
 title: browser
 x-i18n:
   generated_at: "2026-02-03T07:44:49Z"
@@ -14,9 +14,9 @@ x-i18n:
   workflow: 15
 ---
 
-# `vilaro browser`
+# `velaro browser`
 
-管理 Vilaro 的浏览器控制服务器并运行浏览器操作（标签页、快照、截图、导航、点击、输入）。
+管理 Velaro 的浏览器控制服务器并运行浏览器操作（标签页、快照、截图、导航、点击、输入）。
 
 相关：
 
@@ -34,38 +34,38 @@ x-i18n:
 ## 快速开始（本地）
 
 ```bash
-vilaro browser --browser-profile chrome tabs
-vilaro browser --browser-profile vilaro start
-vilaro browser --browser-profile vilaro open https://example.com
-vilaro browser --browser-profile vilaro snapshot
+velaro browser --browser-profile chrome tabs
+velaro browser --browser-profile velaro start
+velaro browser --browser-profile velaro open https://example.com
+velaro browser --browser-profile velaro snapshot
 ```
 
 ## 配置文件
 
 配置文件是命名的浏览器路由配置。实际上：
 
-- `vilaro`：启动/附加到专用的 Vilaro 管理的 Chrome 实例（隔离的用户数据目录）。
+- `velaro`：启动/附加到专用的 Velaro 管理的 Chrome 实例（隔离的用户数据目录）。
 - `chrome`：通过 Chrome 扩展中继控制你现有的 Chrome 标签页。
 
 ```bash
-vilaro browser profiles
-vilaro browser create-profile --name work --color "#FF5A36"
-vilaro browser delete-profile --name work
+velaro browser profiles
+velaro browser create-profile --name work --color "#FF5A36"
+velaro browser delete-profile --name work
 ```
 
 使用特定配置文件：
 
 ```bash
-vilaro browser --browser-profile work tabs
+velaro browser --browser-profile work tabs
 ```
 
 ## 标签页
 
 ```bash
-vilaro browser tabs
-vilaro browser open https://docs.vilaro.ai
-vilaro browser focus <targetId>
-vilaro browser close <targetId>
+velaro browser tabs
+velaro browser open https://docs.vilaro.ai
+velaro browser focus <targetId>
+velaro browser close <targetId>
 ```
 
 ## 快照 / 截图 / 操作
@@ -73,21 +73,21 @@ vilaro browser close <targetId>
 快照：
 
 ```bash
-vilaro browser snapshot
+velaro browser snapshot
 ```
 
 截图：
 
 ```bash
-vilaro browser screenshot
+velaro browser screenshot
 ```
 
 导航/点击/输入（基于 ref 的 UI 自动化）：
 
 ```bash
-vilaro browser navigate https://example.com
-vilaro browser click <ref>
-vilaro browser type <ref> "hello"
+velaro browser navigate https://example.com
+velaro browser click <ref>
+velaro browser type <ref> "hello"
 ```
 
 ## Chrome 扩展中继（通过工具栏按钮附加）
@@ -97,8 +97,8 @@ vilaro browser type <ref> "hello"
 将未打包的扩展安装到稳定路径：
 
 ```bash
-vilaro browser extension install
-vilaro browser extension path
+velaro browser extension install
+velaro browser extension path
 ```
 
 然后 Chrome → `chrome://extensions` → 启用"开发者模式" → "加载已解压的扩展程序" → 选择打印的文件夹。

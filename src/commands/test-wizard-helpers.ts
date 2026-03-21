@@ -74,7 +74,7 @@ export function createAuthTestLifecycle(envKeys: string[]): AuthTestLifecycle {
   };
 }
 
-export function requireVilaroAgentDir(): string {
+export function requireVelaroAgentDir(): string {
   const agentDir = process.env.VILARO_AGENT_DIR;
   if (!agentDir) {
     throw new Error("VILARO_AGENT_DIR not set");

@@ -13,7 +13,7 @@ export async function requireValidConfigSnapshot(
         ? formatConfigIssueLines(snapshot.issues, "-").join("\n")
         : "Unknown validation issue.";
     runtime.error(`Config invalid:\n${issues}`);
-    runtime.error(`Fix the config or run ${formatCliCommand("vilaro doctor")}.`);
+    runtime.error(`Fix the config or run ${formatCliCommand("velaro doctor")}.`);
     runtime.exit(1);
     return null;
   }

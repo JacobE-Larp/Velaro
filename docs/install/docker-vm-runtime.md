@@ -1,7 +1,7 @@
 ---
-summary: "Shared Docker VM runtime steps for long-lived Vilaro Gateway hosts"
+summary: "Shared Docker VM runtime steps for long-lived Velaro Gateway hosts"
 read_when:
-  - You are deploying Vilaro on a cloud VM with Docker
+  - You are deploying Velaro on a cloud VM with Docker
   - You need the shared binary bake, persistence, and update flow
 title: "Docker VM Runtime"
 ---
@@ -111,17 +111,17 @@ Expected output:
 
 ## What persists where
 
-Vilaro runs in Docker, but Docker is not the source of truth.
+Velaro runs in Docker, but Docker is not the source of truth.
 All long-lived state must survive restarts, rebuilds, and reboots.
 
 | Component           | Location                        | Persistence mechanism  | Notes                           |
 | ------------------- | ------------------------------- | ---------------------- | ------------------------------- |
-| Gateway config      | `/home/node/.vilaro/`           | Host volume mount      | Includes `vilaro.json`, tokens  |
-| Model auth profiles | `/home/node/.vilaro/`           | Host volume mount      | OAuth tokens, API keys          |
-| Skill configs       | `/home/node/.vilaro/skills/`    | Host volume mount      | Skill-level state               |
-| Agent workspace     | `/home/node/.vilaro/workspace/` | Host volume mount      | Code and agent artifacts        |
-| WhatsApp session    | `/home/node/.vilaro/`           | Host volume mount      | Preserves QR login              |
-| Gmail keyring       | `/home/node/.vilaro/`           | Host volume + password | Requires `GOG_KEYRING_PASSWORD` |
+| Gateway config      | `/home/node/.velaro/`           | Host volume mount      | Includes `vilaro.json`, tokens  |
+| Model auth profiles | `/home/node/.velaro/`           | Host volume mount      | OAuth tokens, API keys          |
+| Skill configs       | `/home/node/.velaro/skills/`    | Host volume mount      | Skill-level state               |
+| Agent workspace     | `/home/node/.velaro/workspace/` | Host volume mount      | Code and agent artifacts        |
+| WhatsApp session    | `/home/node/.velaro/`           | Host volume mount      | Preserves QR login              |
+| Gmail keyring       | `/home/node/.velaro/`           | Host volume + password | Requires `GOG_KEYRING_PASSWORD` |
 | External binaries   | `/usr/local/bin/`               | Docker image           | Must be baked at build time     |
 | Node runtime        | Container filesystem            | Docker image           | Rebuilt every image build       |
 | OS packages         | Container filesystem            | Docker image           | Do not install at runtime       |
@@ -129,7 +129,7 @@ All long-lived state must survive restarts, rebuilds, and reboots.
 
 ## Updates
 
-To update Vilaro on the VM:
+To update Velaro on the VM:
 
 ```bash
 git pull

@@ -1,20 +1,20 @@
 ---
 summary: "Community plugins: quality bar, hosting requirements, and PR submission path"
 read_when:
-  - You want to publish a third-party Vilaro plugin
+  - You want to publish a third-party Velaro plugin
   - You want to propose a plugin for docs listing
 title: "Community plugins"
 ---
 
 # Community plugins
 
-This page tracks high-quality **community-maintained plugins** for Vilaro.
+This page tracks high-quality **community-maintained plugins** for Velaro.
 
 We accept PRs that add community plugins here when they meet the quality bar.
 
 ## Required for listing
 
-- Plugin package is published on npmjs (installable via `vilaro plugins install <npm-spec>`).
+- Plugin package is published on npmjs (installable via `velaro plugins install <npm-spec>`).
 - Source code is hosted on GitHub (public repository).
 - Repository includes setup/use docs and an issue tracker.
 - Plugin has a clear maintenance signal (active maintainer, recent updates, or responsive issue handling).
@@ -41,11 +41,11 @@ Use this format when adding entries:
 - **Plugin Name** — short description
   npm: `@scope/package`
   repo: `https://github.com/org/repo`
-  install: `vilaro plugins install @scope/package`
+  install: `velaro plugins install @scope/package`
 
 ## Listed plugins
 
-- **WeChat** — Connect Vilaro to WeChat personal accounts via WeChatPadPro (iPad protocol). Supports text, image, and file exchange with keyword-triggered conversations.
-  npm: `@icesword760/vilaro-wechat`
+- **WeChat** — Connect Velaro to WeChat personal accounts via WeChatPadPro (iPad protocol). Supports text, image, and file exchange with keyword-triggered conversations.
+  npm: `@icesword760/velaro-wechat`
   repo: `https://github.com/icesword0760/vilaro-wechat`
-  install: `vilaro plugins install @icesword760/vilaro-wechat`
+  install: `velaro plugins install @icesword760/velaro-wechat`

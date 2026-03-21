@@ -2,20 +2,20 @@
 read_when:
   - 新手引导新助手实例时
   - 审查安全/权限影响时
-summary: 将 Vilaro 作为个人助手运行的端到端指南，包含安全注意事项
+summary: 将 Velaro 作为个人助手运行的端到端指南，包含安全注意事项
 title: 个人助手设置
 x-i18n:
   generated_at: "2026-02-03T07:54:35Z"
   model: claude-opus-4-5
   provider: pi
   source_hash: 2763668c053abe34ea72c40d1306d3d1143099c58b1e3ef91c2e5a20cb2769e0
-  source_path: start/vilaro.md
+  source_path: start/velaro.md
   workflow: 15
 ---
 
-# 使用 Vilaro 构建个人助手
+# 使用 Velaro 构建个人助手
 
-Vilaro 是 **Pi** 智能体的 WhatsApp + Telegram + Discord + iMessage Gateway 网关。插件可添加 Mattermost。本指南是"个人助手"设置：一个专用的 WhatsApp 号码，表现得像你的常驻智能体。
+Velaro 是 **Pi** 智能体的 WhatsApp + Telegram + Discord + iMessage Gateway 网关。插件可添加 Mattermost。本指南是"个人助手"设置：一个专用的 WhatsApp 号码，表现得像你的常驻智能体。
 
 ## ⚠️ 安全第一
 
@@ -34,19 +34,19 @@ Vilaro 是 **Pi** 智能体的 WhatsApp + Telegram + Discord + iMessage Gateway 
 ## 先决条件
 
 - Node **22+**
-- Vilaro 在 PATH 中可用（推荐：全局安装）
+- Velaro 在 PATH 中可用（推荐：全局安装）
 - 助手的第二个手机号码（SIM/eSIM/预付费）
 
 ```bash
-npm install -g vilaro@latest
-# 或：pnpm add -g vilaro@latest
+npm install -g velaro@latest
+# 或：pnpm add -g velaro@latest
 ```
 
 从源代码（开发）：
 
 ```bash
 git clone https://github.com/vilaro/vilaro.git
-cd vilaro
+cd velaro
 pnpm install
 pnpm ui:build # 首次运行时自动安装 UI 依赖
 pnpm build
@@ -67,25 +67,25 @@ pnpm link --global
                                        ▼
                               ┌─────────────────┐
                               │  你的 Mac       │
-                              │  (vilaro)     │
+                              │  (velaro)     │
                               │    Pi 智能体    │
                               └─────────────────┘
 ```
 
-如果你将个人 WhatsApp 关联到 Vilaro，发给你的每条消息都会变成"智能体输入"。这通常不是你想要的。
+如果你将个人 WhatsApp 关联到 Velaro，发给你的每条消息都会变成"智能体输入"。这通常不是你想要的。
 
 ## 5 分钟快速开始
 
 1. 配对 WhatsApp Web（显示二维码；用助手手机扫描）：
 
 ```bash
-vilaro channels login
+velaro channels login
 ```
 
 2. 启动 Gateway 网关（保持运行）：
 
 ```bash
-vilaro gateway --port 18789
+velaro gateway --port 18789
 ```
 
 3. 在 `~/.vilaro/vilaro.json` 中放置最小配置：
@@ -98,18 +98,18 @@ vilaro gateway --port 18789
 
 现在从你允许列表中的手机向助手号码发消息。
 
-新手引导完成后，我们会自动打开带有 Gateway 网关令牌的仪表板并打印带令牌的链接。稍后重新打开：`vilaro dashboard`。
+新手引导完成后，我们会自动打开带有 Gateway 网关令牌的仪表板并打印带令牌的链接。稍后重新打开：`velaro dashboard`。
 
 ## 给智能体一个工作区（AGENTS）
 
-Vilaro 从其工作区目录读取操作指令和"记忆"。
+Velaro 从其工作区目录读取操作指令和"记忆"。
 
-默认情况下，Vilaro 使用 `~/.vilaro/workspace` 作为智能体工作区，并会在设置/首次智能体运行时自动创建它（加上起始的 `AGENTS.md`、`SOUL.md`、`TOOLS.md`、`IDENTITY.md`、`USER.md`）。`BOOTSTRAP.md` 仅在工作区是全新的时候创建（删除后不应再出现）。
+默认情况下，Velaro 使用 `~/.vilaro/workspace` 作为智能体工作区，并会在设置/首次智能体运行时自动创建它（加上起始的 `AGENTS.md`、`SOUL.md`、`TOOLS.md`、`IDENTITY.md`、`USER.md`）。`BOOTSTRAP.md` 仅在工作区是全新的时候创建（删除后不应再出现）。
 
-提示：将此文件夹视为 Vilaro 的"记忆"，并将其设为 git 仓库（最好是私有的），这样你的 `AGENTS.md` + 记忆文件就有了备份。如果安装了 git，全新的工作区会自动初始化。
+提示：将此文件夹视为 Velaro 的"记忆"，并将其设为 git 仓库（最好是私有的），这样你的 `AGENTS.md` + 记忆文件就有了备份。如果安装了 git，全新的工作区会自动初始化。
 
 ```bash
-vilaro setup
+velaro setup
 ```
 
 完整工作区布局 + 备份指南：[智能体工作区](/concepts/agent-workspace)
@@ -137,7 +137,7 @@ vilaro setup
 
 ## 将其变成"助手"的配置
 
-Vilaro 默认为良好的助手设置，但你通常需要调整：
+Velaro 默认为良好的助手设置，但你通常需要调整：
 
 - `SOUL.md` 中的人设/指令
 - 思考默认值（如果需要）
@@ -166,7 +166,7 @@ Vilaro 默认为良好的助手设置，但你通常需要调整：
   },
   routing: {
     groupChat: {
-      mentionPatterns: ["@vilaro", "vilaro"],
+      mentionPatterns: ["@velaro", "velaro"],
     },
   },
   session: {
@@ -190,13 +190,13 @@ Vilaro 默认为良好的助手设置，但你通常需要调整：
 
 ## 心跳（主动模式）
 
-默认情况下，Vilaro 每 30 分钟运行一次心跳，提示词为：
+默认情况下，Velaro 每 30 分钟运行一次心跳，提示词为：
 `Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK.`
 设置 `agents.defaults.heartbeat.every: "0m"` 来禁用。
 
-- 如果 `HEARTBEAT.md` 存在但实际上是空的（只有空行和 markdown 标题如 `# Heading`），Vilaro 会跳过心跳运行以节省 API 调用。
+- 如果 `HEARTBEAT.md` 存在但实际上是空的（只有空行和 markdown 标题如 `# Heading`），Velaro 会跳过心跳运行以节省 API 调用。
 - 如果文件不存在，心跳仍然运行，模型决定做什么。
-- 如果智能体回复 `HEARTBEAT_OK`（可选带有短填充；参见 `agents.defaults.heartbeat.ackMaxChars`），Vilaro 会为该心跳抑制出站投递。
+- 如果智能体回复 `HEARTBEAT_OK`（可选带有短填充；参见 `agents.defaults.heartbeat.ackMaxChars`），Velaro 会为该心跳抑制出站投递。
 - 心跳运行完整的智能体轮次 — 更短的间隔会消耗更多 token。
 
 ```json5
@@ -222,25 +222,25 @@ Vilaro 默认为良好的助手设置，但你通常需要调整：
 MEDIA:https://example.com/screenshot.png
 ```
 
-Vilaro 会提取这些并将它们作为媒体与文本一起发送。
+Velaro 会提取这些并将它们作为媒体与文本一起发送。
 
 ## 运维检查清单
 
 ```bash
-vilaro status          # 本地状态（凭证、会话、排队事件）
-vilaro status --all    # 完整诊断（只读，可粘贴）
-vilaro status --deep   # 添加 Gateway 网关健康探测（Telegram + Discord）
-vilaro health --json   # Gateway 网关健康快照（WS）
+velaro status          # 本地状态（凭证、会话、排队事件）
+velaro status --all    # 完整诊断（只读，可粘贴）
+velaro status --deep   # 添加 Gateway 网关健康探测（Telegram + Discord）
+velaro health --json   # Gateway 网关健康快照（WS）
 ```
 
-日志位于 `/tmp/vilaro/`（默认：`vilaro-YYYY-MM-DD.log`）。
+日志位于 `/tmp/velaro/`（默认：`velaro-YYYY-MM-DD.log`）。
 
 ## 下一步
 
 - WebChat：[WebChat](/web/webchat)
 - Gateway 网关运维：[Gateway 网关运行手册](/gateway)
 - 定时任务 + 唤醒：[定时任务](/automation/cron-jobs)
-- macOS 菜单栏配套应用：[Vilaro macOS 应用](/platforms/macos)
+- macOS 菜单栏配套应用：[Velaro macOS 应用](/platforms/macos)
 - iOS 节点应用：[iOS 应用](/platforms/ios)
 - Android 节点应用：[Android 应用](/platforms/android)
 - Windows 状态：[Windows (WSL2)](/platforms/windows)

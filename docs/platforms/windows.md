@@ -1,14 +1,14 @@
 ---
 summary: "Windows (WSL2) support + companion app status"
 read_when:
-  - Installing Vilaro on Windows
+  - Installing Velaro on Windows
   - Looking for Windows companion app status
 title: "Windows (WSL2)"
 ---
 
 # Windows (WSL2)
 
-Vilaro on Windows is recommended **via WSL2** (Ubuntu recommended). The
+Velaro on Windows is recommended **via WSL2** (Ubuntu recommended). The
 CLI + Gateway run inside Linux, which keeps the runtime consistent and makes
 tooling far more compatible (Node/Bun/pnpm, Linux binaries, skills). Native
 Windows might be trickier. WSL2 gives you the full Linux experience — one command
@@ -29,33 +29,33 @@ Native Windows CLI flows are improving, but WSL2 is still the recommended path.
 What works well on native Windows today:
 
 - website installer via `install.ps1`
-- local CLI use such as `vilaro --version`, `vilaro doctor`, and `vilaro plugins list --json`
+- local CLI use such as `velaro --version`, `velaro doctor`, and `velaro plugins list --json`
 - embedded local-agent/provider smoke such as:
 
 ```powershell
-vilaro agent --local --agent main --thinking low -m "Reply with exactly WINDOWS-HATCH-OK."
+velaro agent --local --agent main --thinking low -m "Reply with exactly WINDOWS-HATCH-OK."
 ```
 
 Current caveats:
 
-- `vilaro onboard --non-interactive` still expects a reachable local gateway unless you pass `--skip-health`
-- `vilaro onboard --non-interactive --install-daemon` and `vilaro gateway install` try Windows Scheduled Tasks first
-- if Scheduled Task creation is denied, Vilaro falls back to a per-user Startup-folder login item and starts the gateway immediately
-- if `schtasks` itself wedges or stops responding, Vilaro now aborts that path quickly and falls back instead of hanging forever
+- `velaro onboard --non-interactive` still expects a reachable local gateway unless you pass `--skip-health`
+- `velaro onboard --non-interactive --install-daemon` and `velaro gateway install` try Windows Scheduled Tasks first
+- if Scheduled Task creation is denied, Velaro falls back to a per-user Startup-folder login item and starts the gateway immediately
+- if `schtasks` itself wedges or stops responding, Velaro now aborts that path quickly and falls back instead of hanging forever
 - Scheduled Tasks are still preferred when available because they provide better supervisor status
 
 If you want the native CLI only, without gateway service install, use one of these:
 
 ```powershell
-vilaro onboard --non-interactive --skip-health
-vilaro gateway run
+velaro onboard --non-interactive --skip-health
+velaro gateway run
 ```
 
 If you do want managed startup on native Windows:
 
 ```powershell
-vilaro gateway install
-vilaro gateway status --json
+velaro gateway install
+velaro gateway status --json
 ```
 
 If Scheduled Task creation is blocked, the fallback service mode still auto-starts after login through the current user's Startup folder.
@@ -70,19 +70,19 @@ If Scheduled Task creation is blocked, the fallback service mode still auto-star
 Inside WSL2:
 
 ```
-vilaro onboard --install-daemon
+velaro onboard --install-daemon
 ```
 
 Or:
 
 ```
-vilaro gateway install
+velaro gateway install
 ```
 
 Or:
 
 ```
-vilaro configure
+velaro configure
 ```
 
 Select **Gateway service** when prompted.
@@ -90,7 +90,7 @@ Select **Gateway service** when prompted.
 Repair/migrate:
 
 ```
-vilaro doctor
+velaro doctor
 ```
 
 ## Gateway auto-start before Windows login
@@ -106,12 +106,12 @@ Inside WSL:
 sudo loginctl enable-linger "$(whoami)"
 ```
 
-### 2) Install the Vilaro gateway user service
+### 2) Install the Velaro gateway user service
 
 Inside WSL:
 
 ```bash
-vilaro gateway install
+velaro gateway install
 ```
 
 ### 3) Start WSL automatically at Windows boot
@@ -177,7 +177,7 @@ Notes:
 
 - SSH from another machine targets the **Windows host IP** (example: `ssh user@windows-host -p 2222`).
 - Remote nodes must point at a **reachable** Gateway URL (not `127.0.0.1`); use
-  `vilaro status --all` to confirm.
+  `velaro status --all` to confirm.
 - Use `listenaddress=0.0.0.0` for LAN access; `127.0.0.1` keeps it local only.
 - If you want this automatic, register a Scheduled Task to run the refresh
   step at login.
@@ -220,17 +220,17 @@ Re-open Ubuntu, then verify:
 systemctl --user status
 ```
 
-### 3) Install Vilaro (inside WSL)
+### 3) Install Velaro (inside WSL)
 
 Follow the Linux Getting Started flow inside WSL:
 
 ```bash
 git clone https://github.com/vilaro/vilaro.git
-cd vilaro
+cd velaro
 pnpm install
 pnpm ui:build # auto-installs UI deps on first run
 pnpm build
-vilaro onboard
+velaro onboard
 ```
 
 Full guide: [Getting Started](/start/getting-started)

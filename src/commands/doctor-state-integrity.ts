@@ -499,7 +499,7 @@ export async function noteStateIntegrity(
         `- State directory is under macOS cloud-synced storage (${displayStateDir}; ${cloudSyncedStateDir.storage}).`,
         "- This can cause slow I/O and sync/lock races for sessions and credentials.",
         "- Prefer a local non-synced state dir (for example: ~/.vilaro).",
-        `  Set locally: VILARO_STATE_DIR=~/.vilaro ${formatCliCommand("vilaro doctor")}`,
+        `  Set locally: VILARO_STATE_DIR=~/.vilaro ${formatCliCommand("velaro doctor")}`,
       ].join("\n"),
     );
   }
@@ -720,9 +720,9 @@ export async function noteStateIntegrity(
       warnings.push(
         [
           `- ${missing.length}/${recentTranscriptCandidates.length} recent sessions are missing transcripts.`,
-          `  Verify sessions in store: ${formatCliCommand(`vilaro sessions --store "${absoluteStorePath}"`)}`,
-          `  Preview cleanup impact: ${formatCliCommand(`vilaro sessions cleanup --store "${absoluteStorePath}" --dry-run`)}`,
-          `  Prune missing entries: ${formatCliCommand(`vilaro sessions cleanup --store "${absoluteStorePath}" --enforce --fix-missing`)}`,
+          `  Verify sessions in store: ${formatCliCommand(`velaro sessions --store "${absoluteStorePath}"`)}`,
+          `  Preview cleanup impact: ${formatCliCommand(`velaro sessions cleanup --store "${absoluteStorePath}" --dry-run`)}`,
+          `  Prune missing entries: ${formatCliCommand(`velaro sessions cleanup --store "${absoluteStorePath}" --enforce --fix-missing`)}`,
         ].join("\n"),
       );
     }

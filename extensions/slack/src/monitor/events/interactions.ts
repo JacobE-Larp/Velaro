@@ -11,7 +11,7 @@ import {
   type RegisterSlackModalHandler,
 } from "./interactions.modal.js";
 
-// Prefix for Vilaro-generated action IDs to scope our handler
+// Prefix for Velaro-generated action IDs to scope our handler
 const VILARO_ACTION_PREFIX = "vilaro:";
 const SLACK_INTERACTION_EVENT_PREFIX = "Slack interaction: ";
 const REDACTED_INTERACTION_VALUE = "[redacted]";
@@ -191,7 +191,7 @@ export function registerSlackInteractionEvents(params: { ctx: SlackMonitorContex
   }
   const modalMatcher = new RegExp(`^${VILARO_ACTION_PREFIX}`);
 
-  // Handle Vilaro modal submissions with callback_ids scoped by our prefix.
+  // Handle Velaro modal submissions with callback_ids scoped by our prefix.
   registerModalLifecycleHandler({
     register: (matcher, handler) => ctx.app.view(matcher, handler),
     matcher: modalMatcher,

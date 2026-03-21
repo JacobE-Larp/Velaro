@@ -1,19 +1,19 @@
 ---
-summary: "Run Vilaro Gateway 24/7 on a GCP Compute Engine VM (Docker) with durable state"
+summary: "Run Velaro Gateway 24/7 on a GCP Compute Engine VM (Docker) with durable state"
 read_when:
-  - You want Vilaro running 24/7 on GCP
+  - You want Velaro running 24/7 on GCP
   - You want a production-grade, always-on Gateway on your own VM
   - You want full control over persistence, binaries, and restart behavior
 title: "GCP"
 ---
 
-# Vilaro on GCP Compute Engine (Docker, Production VPS Guide)
+# Velaro on GCP Compute Engine (Docker, Production VPS Guide)
 
 ## Goal
 
-Run a persistent Vilaro Gateway on a GCP Compute Engine VM using Docker, with durable state, baked-in binaries, and safe restart behavior.
+Run a persistent Velaro Gateway on a GCP Compute Engine VM using Docker, with durable state, baked-in binaries, and safe restart behavior.
 
-If you want "Vilaro 24/7 for ~$5-12/mo", this is a reliable setup on Google Cloud.
+If you want "Velaro 24/7 for ~$5-12/mo", this is a reliable setup on Google Cloud.
 Pricing varies by machine type and region; pick the smallest VM that fits your workload and scale up if you hit OOMs.
 
 ## What are we doing (simple terms)?
@@ -21,7 +21,7 @@ Pricing varies by machine type and region; pick the smallest VM that fits your w
 - Create a GCP project and enable billing
 - Create a Compute Engine VM
 - Install Docker (isolated app runtime)
-- Start the Vilaro Gateway in Docker
+- Start the Velaro Gateway in Docker
 - Persist `~/.vilaro` + `~/.vilaro/workspace` on the host (survives restarts/rebuilds)
 - Access the Control UI from your laptop via an SSH tunnel
 
@@ -42,7 +42,7 @@ For the generic Docker flow, see [Docker](/install/docker).
 2. Create Compute Engine VM (e2-small, Debian 12, 20GB)
 3. SSH into the VM
 4. Install Docker
-5. Clone Vilaro repository
+5. Clone Velaro repository
 6. Create persistent host directories
 7. Configure `.env` and `docker-compose.yml`
 8. Bake required binaries, build, and launch
@@ -89,8 +89,8 @@ All steps can be done via the web UI at [https://console.cloud.google.com](https
 **CLI:**
 
 ```bash
-gcloud projects create my-vilaro-project --name="Vilaro Gateway"
-gcloud config set project my-vilaro-project
+gcloud projects create my-velaro-project --name="Velaro Gateway"
+gcloud config set project my-velaro-project
 ```
 
 Enable billing at [https://console.cloud.google.com/billing](https://console.cloud.google.com/billing) (required for Compute Engine).
@@ -188,11 +188,11 @@ docker compose version
 
 ---
 
-## 6) Clone the Vilaro repository
+## 6) Clone the Velaro repository
 
 ```bash
 git clone https://github.com/vilaro/vilaro.git
-cd vilaro
+cd velaro
 ```
 
 This guide assumes you will build a custom image to guarantee binary persistence.
@@ -216,16 +216,16 @@ mkdir -p ~/.vilaro/workspace
 Create `.env` in the repository root.
 
 ```bash
-VILARO_IMAGE=vilaro:latest
+VILARO_IMAGE=velaro:latest
 VILARO_GATEWAY_TOKEN=change-me-now
 VILARO_GATEWAY_BIND=lan
 VILARO_GATEWAY_PORT=18789
 
-VILARO_CONFIG_DIR=/home/$USER/.vilaro
-VILARO_WORKSPACE_DIR=/home/$USER/.vilaro/workspace
+VILARO_CONFIG_DIR=/home/$USER/.velaro
+VILARO_WORKSPACE_DIR=/home/$USER/.velaro/workspace
 
 GOG_KEYRING_PASSWORD=change-me-now
-XDG_CONFIG_HOME=/home/node/.vilaro
+XDG_CONFIG_HOME=/home/node/.velaro
 ```
 
 Generate strong secrets:
@@ -261,8 +261,8 @@ services:
       - XDG_CONFIG_HOME=${XDG_CONFIG_HOME}
       - PATH=/home/linuxbrew/.linuxbrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     volumes:
-      - ${VILARO_CONFIG_DIR}:/home/node/.vilaro
-      - ${VILARO_WORKSPACE_DIR}:/home/node/.vilaro/workspace
+      - ${VILARO_CONFIG_DIR}:/home/node/.velaro
+      - ${VILARO_WORKSPACE_DIR}:/home/node/.velaro/workspace
     ports:
       # Recommended: keep the Gateway loopback-only on the VM; access via SSH tunnel.
       # To expose it publicly, remove the `127.0.0.1:` prefix and firewall accordingly.
@@ -299,7 +299,7 @@ On GCP, if build fails with `Killed` or `exit code 137` during `pnpm install --f
 When binding to LAN (`VILARO_GATEWAY_BIND=lan`), configure a trusted browser origin before continuing:
 
 ```bash
-docker compose run --rm vilaro-cli config set gateway.controlUi.allowedOrigins '["http://127.0.0.1:18789"]' --strict-json
+docker compose run --rm velaro-cli config set gateway.controlUi.allowedOrigins '["http://127.0.0.1:18789"]' --strict-json
 ```
 
 If you changed the gateway port, replace `18789` with your configured port.
@@ -319,7 +319,7 @@ Open in your browser:
 Fetch a fresh tokenized dashboard link:
 
 ```bash
-docker compose run --rm vilaro-cli dashboard --no-open
+docker compose run --rm velaro-cli dashboard --no-open
 ```
 
 Paste the token from that URL.
@@ -327,8 +327,8 @@ Paste the token from that URL.
 If Control UI shows `unauthorized` or `disconnected (1008): pairing required`, approve the browser device:
 
 ```bash
-docker compose run --rm vilaro-cli devices list
-docker compose run --rm vilaro-cli devices approve <requestId>
+docker compose run --rm velaro-cli devices list
+docker compose run --rm velaro-cli devices approve <requestId>
 ```
 
 Need the shared persistence and update reference again?
@@ -380,15 +380,15 @@ For automation or CI/CD pipelines, create a dedicated service account with minim
 1. Create a service account:
 
    ```bash
-   gcloud iam service-accounts create vilaro-deploy \
-     --display-name="Vilaro Deployment"
+   gcloud iam service-accounts create velaro-deploy \
+     --display-name="Velaro Deployment"
    ```
 
 2. Grant Compute Instance Admin role (or narrower custom role):
 
    ```bash
-   gcloud projects add-iam-policy-binding my-vilaro-project \
-     --member="serviceAccount:vilaro-deploy@my-vilaro-project.iam.gserviceaccount.com" \
+   gcloud projects add-iam-policy-binding my-velaro-project \
+     --member="serviceAccount:velaro-deploy@my-velaro-project.iam.gserviceaccount.com" \
      --role="roles/compute.instanceAdmin.v1"
    ```
 

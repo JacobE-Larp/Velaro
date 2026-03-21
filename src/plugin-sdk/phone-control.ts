@@ -3,7 +3,7 @@
 
 export type {
   VilaroPluginApi,
-  VilaroPluginCommandDefinition,
-  VilaroPluginService,
+  VelaroPluginCommandDefinition,
+  VelaroPluginService,
   PluginCommandContext,
 } from "../plugins/types.js";

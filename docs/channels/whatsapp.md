@@ -44,13 +44,13 @@ Status: production-ready via WhatsApp Web (Baileys). Gateway owns linked session
   <Step title="Link WhatsApp (QR)">
 
 ```bash
-vilaro channels login --channel whatsapp
+velaro channels login --channel whatsapp
 ```
 
     For a specific account:
 
 ```bash
-vilaro channels login --channel whatsapp --account work
+velaro channels login --channel whatsapp --account work
 ```
 
   </Step>
@@ -58,7 +58,7 @@ vilaro channels login --channel whatsapp --account work
   <Step title="Start the gateway">
 
 ```bash
-vilaro gateway
+velaro gateway
 ```
 
   </Step>
@@ -66,8 +66,8 @@ vilaro gateway
   <Step title="Approve first pairing request (if using pairing mode)">
 
 ```bash
-vilaro pairing list whatsapp
-vilaro pairing approve whatsapp <CODE>
+velaro pairing list whatsapp
+velaro pairing approve whatsapp <CODE>
 ```
 
     Pairing requests expire after 1 hour. Pending requests are capped at 3 per channel.
@@ -76,7 +76,7 @@ vilaro pairing approve whatsapp <CODE>
 </Steps>
 
 <Note>
-Vilaro recommends running WhatsApp on a separate number when possible. (The channel metadata and setup flow are optimized for that setup, but personal-number setups are also supported.)
+Velaro recommends running WhatsApp on a separate number when possible. (The channel metadata and setup flow are optimized for that setup, but personal-number setups are also supported.)
 </Note>
 
 ## Deployment patterns
@@ -85,7 +85,7 @@ Vilaro recommends running WhatsApp on a separate number when possible. (The chan
   <Accordion title="Dedicated number (recommended)">
     This is the cleanest operational mode:
 
-    - separate WhatsApp identity for Vilaro
+    - separate WhatsApp identity for Velaro
     - clearer DM allowlists and routing boundaries
     - lower chance of self-chat confusion
 
@@ -116,7 +116,7 @@ Vilaro recommends running WhatsApp on a separate number when possible. (The chan
   </Accordion>
 
   <Accordion title="WhatsApp Web-only channel scope">
-    The messaging platform channel is WhatsApp Web-based (`Baileys`) in current Vilaro channel architecture.
+    The messaging platform channel is WhatsApp Web-based (`Baileys`) in current Velaro channel architecture.
 
     There is no separate Twilio WhatsApp messaging channel in the built-in chat-channel registry.
 
@@ -205,7 +205,7 @@ When the linked self number is also present in `allowFrom`, WhatsApp self-chat s
 
 - skip read receipts for self-chat turns
 - ignore mention-JID auto-trigger behavior that would otherwise ping yourself
-- if `messages.responsePrefix` is unset, self-chat replies default to `[{identity.name}]` or `[vilaro]`
+- if `messages.responsePrefix` is unset, self-chat replies default to `[{identity.name}]` or `[velaro]`
 
 ## Message normalization and context
 
@@ -356,7 +356,7 @@ Behavior notes:
   </Accordion>
 
   <Accordion title="Logout behavior">
-    `vilaro channels logout --channel whatsapp [--account <id>]` clears WhatsApp auth state for that account.
+    `velaro channels logout --channel whatsapp [--account <id>]` clears WhatsApp auth state for that account.
 
     In legacy auth directories, `oauth.json` is preserved while Baileys auth files are removed.
 
@@ -380,8 +380,8 @@ Behavior notes:
     Fix:
 
     ```bash
-    vilaro channels login --channel whatsapp
-    vilaro channels status
+    velaro channels login --channel whatsapp
+    velaro channels status
     ```
 
   </Accordion>
@@ -392,8 +392,8 @@ Behavior notes:
     Fix:
 
     ```bash
-    vilaro doctor
-    vilaro logs --follow
+    velaro doctor
+    velaro logs --follow
     ```
 
     If needed, re-link with `channels login`.

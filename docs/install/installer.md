@@ -1,7 +1,7 @@
 ---
 summary: "How the installer scripts work (install.sh, install-cli.sh, install.ps1), flags, and automation"
 read_when:
-  - You want to understand `vilaro.ai/install.sh`
+  - You want to understand `velaro.ai/install.sh`
   - You want to automate installs (CI / headless)
   - You want to install from a GitHub checkout
 title: "Installer Internals"
@@ -9,13 +9,13 @@ title: "Installer Internals"
 
 # Installer internals
 
-Vilaro ships three installer scripts, served from `vilaro.ai`.
+Velaro ships three installer scripts, served from `velaro.ai`.
 
 | Script                             | Platform             | What it does                                                                               |
 | ---------------------------------- | -------------------- | ------------------------------------------------------------------------------------------ |
-| [`install.sh`](#installsh)         | macOS / Linux / WSL  | Installs Node if needed, installs Vilaro via npm (default) or git, and can run onboarding. |
-| [`install-cli.sh`](#install-clish) | macOS / Linux / WSL  | Installs Node + Vilaro into a local prefix (`~/.vilaro`). No root required.                |
-| [`install.ps1`](#installps1)       | Windows (PowerShell) | Installs Node if needed, installs Vilaro via npm (default) or git, and can run onboarding. |
+| [`install.sh`](#installsh)         | macOS / Linux / WSL  | Installs Node if needed, installs Velaro via npm (default) or git, and can run onboarding. |
+| [`install-cli.sh`](#install-clish) | macOS / Linux / WSL  | Installs Node + Velaro into a local prefix (`~/.vilaro`). No root required.                |
+| [`install.ps1`](#installps1)       | Windows (PowerShell) | Installs Node if needed, installs Velaro via npm (default) or git, and can run onboarding. |
 
 ## Quick commands
 
@@ -53,7 +53,7 @@ Vilaro ships three installer scripts, served from `vilaro.ai`.
 </Tabs>
 
 <Note>
-If install succeeds but `vilaro` is not found in a new terminal, see [Node.js troubleshooting](/install/node#troubleshooting).
+If install succeeds but `velaro` is not found in a new terminal, see [Node.js troubleshooting](/install/node#troubleshooting).
 </Note>
 
 ---
@@ -71,17 +71,17 @@ Recommended for most interactive installs on macOS/Linux/WSL.
     Supports macOS and Linux (including WSL). If macOS is detected, installs Homebrew if missing.
   </Step>
   <Step title="Ensure Node.js 24 by default">
-    Checks Node version and installs Node 24 if needed (Homebrew on macOS, NodeSource setup scripts on Linux apt/dnf/yum). Vilaro still supports Node 22 LTS, currently `22.16+`, for compatibility.
+    Checks Node version and installs Node 24 if needed (Homebrew on macOS, NodeSource setup scripts on Linux apt/dnf/yum). Velaro still supports Node 22 LTS, currently `22.16+`, for compatibility.
   </Step>
   <Step title="Ensure Git">
     Installs Git if missing.
   </Step>
-  <Step title="Install Vilaro">
+  <Step title="Install Velaro">
     - `npm` method (default): global npm install
-    - `git` method: clone/update repo, install deps with pnpm, build, then install wrapper at `~/.local/bin/vilaro`
+    - `git` method: clone/update repo, install deps with pnpm, build, then install wrapper at `~/.local/bin/velaro`
   </Step>
   <Step title="Post-install tasks">
-    - Runs `vilaro doctor --non-interactive` on upgrades and git installs (best effort)
+    - Runs `velaro doctor --non-interactive` on upgrades and git installs (best effort)
     - Attempts onboarding when appropriate (TTY available, onboarding not disabled, and bootstrap/config checks pass)
     - Defaults `SHARP_IGNORE_GLOBAL_LIBVIPS=1`
   </Step>
@@ -89,7 +89,7 @@ Recommended for most interactive installs on macOS/Linux/WSL.
 
 ### Source checkout detection
 
-If run inside an Vilaro checkout (`package.json` + `pnpm-workspace.yaml`), the script offers:
+If run inside an Velaro checkout (`package.json` + `pnpm-workspace.yaml`), the script offers:
 
 - use checkout (`git`), or
 - use global install (`npm`)
@@ -138,7 +138,7 @@ The script exits with code `2` for invalid method selection or invalid `--instal
 | `--git`                               | Shortcut for git method. Alias: `--github`                 |
 | `--version <version\|dist-tag\|spec>` | npm version, dist-tag, or package spec (default: `latest`) |
 | `--beta`                              | Use beta dist-tag if available, else fallback to `latest`  |
-| `--git-dir <path>`                    | Checkout directory (default: `~/vilaro`). Alias: `--dir`   |
+| `--git-dir <path>`                    | Checkout directory (default: `~/velaro`). Alias: `--dir`   |
 | `--no-git-update`                     | Skip `git pull` for existing checkout                      |
 | `--no-prompt`                         | Disable prompts                                            |
 | `--no-onboard`                        | Skip onboarding                                            |
@@ -185,8 +185,8 @@ Designed for environments where you want everything under a local prefix (defaul
   <Step title="Ensure Git">
     If Git is missing, attempts install via apt/dnf/yum on Linux or Homebrew on macOS.
   </Step>
-  <Step title="Install Vilaro under prefix">
-    Installs with npm using `--prefix <prefix>`, then writes wrapper to `<prefix>/bin/vilaro`.
+  <Step title="Install Velaro under prefix">
+    Installs with npm using `--prefix <prefix>`, then writes wrapper to `<prefix>/bin/velaro`.
   </Step>
 </Steps>
 
@@ -200,12 +200,12 @@ Designed for environments where you want everything under a local prefix (defaul
   </Tab>
   <Tab title="Custom prefix + version">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://vilaro.ai/install-cli.sh | bash -s -- --prefix /opt/vilaro --version latest
+    curl -fsSL --proto '=https' --tlsv1.2 https://vilaro.ai/install-cli.sh | bash -s -- --prefix /opt/velaro --version latest
     ```
   </Tab>
   <Tab title="Automation JSON output">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://vilaro.ai/install-cli.sh | bash -s -- --json --prefix /opt/vilaro
+    curl -fsSL --proto '=https' --tlsv1.2 https://vilaro.ai/install-cli.sh | bash -s -- --json --prefix /opt/velaro
     ```
   </Tab>
   <Tab title="Run onboarding">
@@ -221,10 +221,10 @@ Designed for environments where you want everything under a local prefix (defaul
 | Flag                   | Description                                                                     |
 | ---------------------- | ------------------------------------------------------------------------------- |
 | `--prefix <path>`      | Install prefix (default: `~/.vilaro`)                                           |
-| `--version <ver>`      | Vilaro version or dist-tag (default: `latest`)                                  |
+| `--version <ver>`      | Velaro version or dist-tag (default: `latest`)                                  |
 | `--node-version <ver>` | Node version (default: `22.22.0`)                                               |
 | `--json`               | Emit NDJSON events                                                              |
-| `--onboard`            | Run `vilaro onboard` after install                                              |
+| `--onboard`            | Run `velaro onboard` after install                                              |
 | `--no-onboard`         | Skip onboarding (default)                                                       |
 | `--set-npm-prefix`     | On Linux, force npm prefix to `~/.npm-global` if current prefix is not writable |
 | `--help`               | Show usage (`-h`)                                                               |
@@ -236,7 +236,7 @@ Designed for environments where you want everything under a local prefix (defaul
 | Variable                                  | Description                                                                       |
 | ----------------------------------------- | --------------------------------------------------------------------------------- |
 | `VILARO_PREFIX=<path>`                    | Install prefix                                                                    |
-| `VILARO_VERSION=<ver>`                    | Vilaro version or dist-tag                                                        |
+| `VILARO_VERSION=<ver>`                    | Velaro version or dist-tag                                                        |
 | `VILARO_NODE_VERSION=<ver>`               | Node version                                                                      |
 | `VILARO_NO_ONBOARD=1`                     | Skip onboarding                                                                   |
 | `VILARO_NPM_LOGLEVEL=error\|warn\|notice` | npm log level                                                                     |
@@ -259,12 +259,12 @@ Designed for environments where you want everything under a local prefix (defaul
   <Step title="Ensure Node.js 24 by default">
     If missing, attempts install via winget, then Chocolatey, then Scoop. Node 22 LTS, currently `22.16+`, remains supported for compatibility.
   </Step>
-  <Step title="Install Vilaro">
+  <Step title="Install Velaro">
     - `npm` method (default): global npm install using selected `-Tag`
-    - `git` method: clone/update repo, install/build with pnpm, and install wrapper at `%USERPROFILE%\.local\bin\vilaro.cmd`
+    - `git` method: clone/update repo, install/build with pnpm, and install wrapper at `%USERPROFILE%\.local\bin\velaro.cmd`
   </Step>
   <Step title="Post-install tasks">
-    Adds needed bin directory to user PATH when possible, then runs `vilaro doctor --non-interactive` on upgrades and git installs (best effort).
+    Adds needed bin directory to user PATH when possible, then runs `velaro doctor --non-interactive` on upgrades and git installs (best effort).
   </Step>
 </Steps>
 
@@ -288,7 +288,7 @@ Designed for environments where you want everything under a local prefix (defaul
   </Tab>
   <Tab title="Custom git directory">
     ```powershell
-    & ([scriptblock]::Create((iwr -useb https://vilaro.ai/install.ps1))) -InstallMethod git -GitDir "C:\vilaro"
+    & ([scriptblock]::Create((iwr -useb https://vilaro.ai/install.ps1))) -InstallMethod git -GitDir "C:\velaro"
     ```
   </Tab>
   <Tab title="Dry run">
@@ -313,7 +313,7 @@ Designed for environments where you want everything under a local prefix (defaul
 | --------------------------- | ---------------------------------------------------------- |
 | `-InstallMethod npm\|git`   | Install method (default: `npm`)                            |
 | `-Tag <tag\|version\|spec>` | npm dist-tag, version, or package spec (default: `latest`) |
-| `-GitDir <path>`            | Checkout directory (default: `%USERPROFILE%\vilaro`)       |
+| `-GitDir <path>`            | Checkout directory (default: `%USERPROFILE%\velaro`)       |
 | `-NoOnboard`                | Skip onboarding                                            |
 | `-NoGitUpdate`              | Skip `git pull`                                            |
 | `-DryRun`                   | Print actions only                                         |
@@ -357,7 +357,7 @@ Use non-interactive flags/env vars for predictable runs.
   </Tab>
   <Tab title="install-cli.sh (JSON)">
     ```bash
-    curl -fsSL --proto '=https' --tlsv1.2 https://vilaro.ai/install-cli.sh | bash -s -- --json --prefix /opt/vilaro
+    curl -fsSL --proto '=https' --tlsv1.2 https://vilaro.ai/install-cli.sh | bash -s -- --json --prefix /opt/velaro
     ```
   </Tab>
   <Tab title="install.ps1 (skip onboarding)">
@@ -393,7 +393,7 @@ Use non-interactive flags/env vars for predictable runs.
     Install Git for Windows, reopen PowerShell, rerun installer.
   </Accordion>
 
-  <Accordion title='Windows: "vilaro is not recognized"'>
+  <Accordion title='Windows: "velaro is not recognized"'>
     Run `npm config get prefix` and add that directory to your user PATH (no `\bin` suffix needed on Windows), then reopen PowerShell.
   </Accordion>
 
@@ -409,7 +409,7 @@ Use non-interactive flags/env vars for predictable runs.
 
   </Accordion>
 
-  <Accordion title="vilaro not found after install">
+  <Accordion title="velaro not found after install">
     Usually a PATH issue. See [Node.js troubleshooting](/install/node#troubleshooting).
   </Accordion>
 </AccordionGroup>

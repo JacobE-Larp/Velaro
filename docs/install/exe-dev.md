@@ -1,5 +1,5 @@
 ---
-summary: "Run Vilaro Gateway on exe.dev (VM + HTTPS proxy) for remote access"
+summary: "Run Velaro Gateway on exe.dev (VM + HTTPS proxy) for remote access"
 read_when:
   - You want a cheap always-on Linux host for the Gateway
   - You want remote Control UI access without running your own VPS
@@ -8,7 +8,7 @@ title: "exe.dev"
 
 # exe.dev
 
-Goal: Vilaro Gateway running on an exe.dev VM, reachable from your laptop via: `https://<vm-name>.exe.xyz`
+Goal: Velaro Gateway running on an exe.dev VM, reachable from your laptop via: `https://<vm-name>.exe.xyz`
 
 This page assumes exe.dev's default **exeuntu** image. If you picked a different distro, map packages accordingly.
 
@@ -27,11 +27,11 @@ This page assumes exe.dev's default **exeuntu** image. If you picked a different
 
 ## Automated Install with Shelley
 
-Shelley, [exe.dev](https://exe.dev)'s agent, can install Vilaro instantly with our
+Shelley, [exe.dev](https://exe.dev)'s agent, can install Velaro instantly with our
 prompt. The prompt used is as below:
 
 ```
-Set up Vilaro (https://docs.vilaro.ai/install) on this VM. Use the non-interactive and accept-risk flags for vilaro onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "vilaro devices list" and "vilaro devices approve <request id>". Make sure the dashboard shows that Vilaro's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
+Set up Velaro (https://docs.vilaro.ai/install) on this VM. Use the non-interactive and accept-risk flags for velaro onboarding. Add the supplied auth or token as needed. Configure nginx to forward from the default port 18789 to the root location on the default enabled site config, making sure to enable Websocket support. Pairing is done by "velaro devices list" and "velaro devices approve <request id>". Make sure the dashboard shows that Velaro's health is OK. exe.dev handles forwarding from port 8000 to port 80/443 and HTTPS for us, so the final "reachable" should be <vm-name>.exe.xyz, without port specification.
 ```
 
 ## Manual installation
@@ -50,7 +50,7 @@ Then connect:
 ssh <vm-name>.exe.xyz
 ```
 
-Tip: keep this VM **stateful**. Vilaro stores state under `~/.vilaro/` and `~/.vilaro/workspace/`.
+Tip: keep this VM **stateful**. Velaro stores state under `~/.vilaro/` and `~/.vilaro/workspace/`.
 
 ## 2) Install prerequisites (on the VM)
 
@@ -59,15 +59,15 @@ sudo apt-get update
 sudo apt-get install -y git curl jq ca-certificates openssl
 ```
 
-## 3) Install Vilaro
+## 3) Install Velaro
 
-Run the Vilaro install script:
+Run the Velaro install script:
 
 ```bash
 curl -fsSL https://vilaro.ai/install.sh | bash
 ```
 
-## 4) Setup nginx to proxy Vilaro to port 8000
+## 4) Setup nginx to proxy Velaro to port 8000
 
 Edit `/etc/nginx/sites-enabled/default` with
 
@@ -101,12 +101,12 @@ server {
 }
 ```
 
-## 5) Access Vilaro and grant privileges
+## 5) Access Velaro and grant privileges
 
 Access `https://<vm-name>.exe.xyz/` (see the Control UI output from onboarding). If it prompts for auth, paste the
-token from `gateway.auth.token` on the VM (retrieve with `vilaro config get gateway.auth.token`, or generate one
-with `vilaro doctor --generate-gateway-token`). Approve devices with `vilaro devices list` and
-`vilaro devices approve <requestId>`. When in doubt, use Shelley from your browser!
+token from `gateway.auth.token` on the VM (retrieve with `velaro config get gateway.auth.token`, or generate one
+with `velaro doctor --generate-gateway-token`). Approve devices with `velaro devices list` and
+`velaro devices approve <requestId>`. When in doubt, use Shelley from your browser!
 
 ## Remote Access
 
@@ -117,10 +117,10 @@ with email auth.
 ## Updating
 
 ```bash
-npm i -g vilaro@latest
-vilaro doctor
-vilaro gateway restart
-vilaro health
+npm i -g velaro@latest
+velaro doctor
+velaro gateway restart
+velaro health
 ```
 
 Guide: [Updating](/install/updating)

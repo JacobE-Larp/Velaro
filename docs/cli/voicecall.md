@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `vilaro voicecall` (voice-call plugin command surface)"
+summary: "CLI reference for `velaro voicecall` (voice-call plugin command surface)"
 read_when:
   - You use the voice-call plugin and want the CLI entry points
   - You want quick examples for `voicecall call|continue|status|tail|expose`
 title: "voicecall"
 ---
 
-# `vilaro voicecall`
+# `velaro voicecall`
 
 `voicecall` is a plugin-provided command. It only appears if the voice-call plugin is installed and enabled.
 
@@ -17,18 +17,18 @@ Primary doc:
 ## Common commands
 
 ```bash
-vilaro voicecall status --call-id <id>
-vilaro voicecall call --to "+15555550123" --message "Hello" --mode notify
-vilaro voicecall continue --call-id <id> --message "Any questions?"
-vilaro voicecall end --call-id <id>
+velaro voicecall status --call-id <id>
+velaro voicecall call --to "+15555550123" --message "Hello" --mode notify
+velaro voicecall continue --call-id <id> --message "Any questions?"
+velaro voicecall end --call-id <id>
 ```
 
 ## Exposing webhooks (Tailscale)
 
 ```bash
-vilaro voicecall expose --mode serve
-vilaro voicecall expose --mode funnel
-vilaro voicecall expose --mode off
+velaro voicecall expose --mode serve
+velaro voicecall expose --mode funnel
+velaro voicecall expose --mode off
 ```
 
 Security note: only expose the webhook endpoint to networks you trust. Prefer Tailscale Serve over Funnel when possible.

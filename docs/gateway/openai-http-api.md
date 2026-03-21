@@ -7,14 +7,14 @@ title: "OpenAI Chat Completions"
 
 # OpenAI Chat Completions (HTTP)
 
-Vilaro’s Gateway can serve a small OpenAI-compatible Chat Completions endpoint.
+Velaro’s Gateway can serve a small OpenAI-compatible Chat Completions endpoint.
 
 This endpoint is **disabled by default**. Enable it in config first.
 
 - `POST /v1/chat/completions`
 - Same port as the Gateway (WS + HTTP multiplex): `http://<gateway-host>:<port>/v1/chat/completions`
 
-Under the hood, requests are executed as a normal Gateway agent run (same codepath as `vilaro agent`), so routing/permissions/config match your Gateway.
+Under the hood, requests are executed as a normal Gateway agent run (same codepath as `velaro agent`), so routing/permissions/config match your Gateway.
 
 ## Authentication
 
@@ -35,7 +35,7 @@ Treat this endpoint as a **full operator-access** surface for the gateway instan
 - HTTP bearer auth here is not a narrow per-user scope model.
 - A valid Gateway token/password for this endpoint should be treated like an owner/operator credential.
 - Requests run through the same control-plane agent path as trusted operator actions.
-- There is no separate non-owner/per-user tool boundary on this endpoint; once a caller passes Gateway auth here, Vilaro treats that caller as a trusted operator for this gateway.
+- There is no separate non-owner/per-user tool boundary on this endpoint; once a caller passes Gateway auth here, Velaro treats that caller as a trusted operator for this gateway.
 - If the target agent policy allows sensitive tools, this endpoint can use them.
 - Keep this endpoint on loopback/tailnet/private ingress only; do not expose it directly to the public internet.
 
@@ -45,16 +45,16 @@ See [Security](/gateway/security) and [Remote access](/gateway/remote).
 
 No custom headers required: encode the agent id in the OpenAI `model` field:
 
-- `model: "vilaro:<agentId>"` (example: `"vilaro:main"`, `"vilaro:beta"`)
+- `model: "velaro:<agentId>"` (example: `"velaro:main"`, `"velaro:beta"`)
 - `model: "agent:<agentId>"` (alias)
 
-Or target a specific Vilaro agent by header:
+Or target a specific Velaro agent by header:
 
-- `x-vilaro-agent-id: <agentId>` (default: `main`)
+- `x-velaro-agent-id: <agentId>` (default: `main`)
 
 Advanced:
 
-- `x-vilaro-session-key: <sessionKey>` to fully control session routing.
+- `x-velaro-session-key: <sessionKey>` to fully control session routing.
 
 ## Enabling the endpoint
 
@@ -110,9 +110,9 @@ Non-streaming:
 curl -sS http://127.0.0.1:18789/v1/chat/completions \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-vilaro-agent-id: main' \
+  -H 'x-velaro-agent-id: main' \
   -d '{
-    "model": "vilaro",
+    "model": "velaro",
     "messages": [{"role":"user","content":"hi"}]
   }'
 ```
@@ -123,9 +123,9 @@ Streaming:
 curl -N http://127.0.0.1:18789/v1/chat/completions \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-vilaro-agent-id: main' \
+  -H 'x-velaro-agent-id: main' \
   -d '{
-    "model": "vilaro",
+    "model": "velaro",
     "stream": true,
     "messages": [{"role":"user","content":"hi"}]
   }'

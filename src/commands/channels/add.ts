@@ -179,7 +179,7 @@ export async function channelsAddCommand(
   let catalogEntry = channel ? undefined : resolveCatalogChannelEntry(rawChannel, nextConfig);
   const resolveWorkspaceDir = () =>
     resolveAgentWorkspaceDir(nextConfig, resolveDefaultAgentId(nextConfig));
-  // May trigger loadVilaroPlugins on cache miss (disk scan + jiti import)
+  // May trigger loadVelaroPlugins on cache miss (disk scan + jiti import)
   const loadScopedPlugin = async (
     channelId: ChannelId,
     pluginId?: string,

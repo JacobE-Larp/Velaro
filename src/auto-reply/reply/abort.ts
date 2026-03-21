@@ -61,7 +61,7 @@ const ABORT_TRIGGERS = new Set([
   "stopp",
   "pare",
   "stop vilaro",
-  "vilaro stop",
+  "velaro stop",
   "stop action",
   "stop current action",
   "stop run",

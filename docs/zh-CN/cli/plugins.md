@@ -2,7 +2,7 @@
 read_when:
   - 你想安装或管理进程内 Gateway 网关插件
   - 你想调试插件加载失败问题
-summary: "`vilaro plugins` 的 CLI 参考（列出、安装、启用/禁用、诊断）"
+summary: "`velaro plugins` 的 CLI 参考（列出、安装、启用/禁用、诊断）"
 title: plugins
 x-i18n:
   generated_at: "2026-02-03T07:45:08Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 15
 ---
 
-# `vilaro plugins`
+# `velaro plugins`
 
 管理 Gateway 网关插件/扩展（进程内加载）。
 
@@ -26,23 +26,23 @@ x-i18n:
 ## 命令
 
 ```bash
-vilaro plugins list
-vilaro plugins info <id>
-vilaro plugins enable <id>
-vilaro plugins disable <id>
-vilaro plugins doctor
-vilaro plugins update <id>
-vilaro plugins update --all
+velaro plugins list
+velaro plugins info <id>
+velaro plugins enable <id>
+velaro plugins disable <id>
+velaro plugins doctor
+velaro plugins update <id>
+velaro plugins update --all
 ```
 
-内置插件随 Vilaro 一起发布，但默认禁用。使用 `plugins enable` 来激活它们。
+内置插件随 Velaro 一起发布，但默认禁用。使用 `plugins enable` 来激活它们。
 
 所有插件必须提供 `vilaro.plugin.json` 文件，其中包含内联 JSON Schema（`configSchema`，即使为空）。缺少或无效的清单或模式会阻止插件加载并导致配置验证失败。
 
 ### 安装
 
 ```bash
-vilaro plugins install <path-or-spec>
+velaro plugins install <path-or-spec>
 ```
 
 安全提示：将插件安装视为运行代码。优先使用固定版本。
@@ -52,15 +52,15 @@ vilaro plugins install <path-or-spec>
 使用 `--link` 避免复制本地目录（添加到 `plugins.load.paths`）：
 
 ```bash
-vilaro plugins install -l ./my-plugin
+velaro plugins install -l ./my-plugin
 ```
 
 ### 更新
 
 ```bash
-vilaro plugins update <id>
-vilaro plugins update --all
-vilaro plugins update <id> --dry-run
+velaro plugins update <id>
+velaro plugins update --all
+velaro plugins update <id> --dry-run
 ```
 
 更新仅适用于从 npm 安装的插件（在 `plugins.installs` 中跟踪）。

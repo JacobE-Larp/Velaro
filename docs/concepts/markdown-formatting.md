@@ -9,7 +9,7 @@ title: "Markdown Formatting"
 
 # Markdown formatting
 
-Vilaro formats outbound Markdown by converting it into a shared intermediate
+Velaro formats outbound Markdown by converting it into a shared intermediate
 representation (IR) before rendering channel-specific output. The IR keeps the
 source text intact while carrying style/link spans so chunking and rendering can
 stay consistent across channels.

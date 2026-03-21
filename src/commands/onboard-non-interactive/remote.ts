@@ -47,7 +47,7 @@ export async function runNonInteractiveRemoteSetup(params: {
     runtime.log(`Remote gateway: ${remoteUrl}`);
     runtime.log(`Auth: ${payload.auth}`);
     runtime.log(
-      `Tip: run \`${formatCliCommand("vilaro configure --section web")}\` to store your Brave API key for web_search. Docs: https://docs.vilaro.ai/tools/web`,
+      `Tip: run \`${formatCliCommand("velaro configure --section web")}\` to store your Brave API key for web_search. Docs: https://docs.vilaro.ai/tools/web`,
     );
   }
 }

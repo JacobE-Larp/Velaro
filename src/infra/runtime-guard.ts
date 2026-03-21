@@ -88,7 +88,7 @@ export function assertSupportedRuntime(
 
   runtime.error(
     [
-      "vilaro requires Node >=22.16.0.",
+      "velaro requires Node >=22.16.0.",
       `Detected: ${runtimeLabel} (exec: ${execLabel}).`,
       `PATH searched: ${details.pathEnv}`,
       "Install Node: https://nodejs.org/en/download",

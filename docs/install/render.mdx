@@ -2,7 +2,7 @@
 title: Deploy on Render
 ---
 
-Deploy Vilaro on Render using Infrastructure as Code. The included `render.yaml` Blueprint defines your entire stack declaratively, service, disk, environment variables, so you can deploy with a single click and version your infrastructure alongside your code.
+Deploy Velaro on Render using Infrastructure as Code. The included `render.yaml` Blueprint defines your entire stack declaratively, service, disk, environment variables, so you can deploy with a single click and version your infrastructure alongside your code.
 
 ## Prerequisites
 
@@ -24,12 +24,12 @@ Once deployed, your service URL follows the pattern `https://<service-name>.onre
 ## Understanding the Blueprint
 
 Render Blueprints are YAML files that define your infrastructure. The `render.yaml` in this
-repository configures everything needed to run Vilaro:
+repository configures everything needed to run Velaro:
 
 ```yaml
 services:
   - type: web
-    name: vilaro
+    name: velaro
     runtime: docker
     plan: starter
     healthCheckPath: /health
@@ -39,13 +39,13 @@ services:
       - key: SETUP_PASSWORD
         sync: false # prompts during deploy
       - key: VILARO_STATE_DIR
-        value: /data/.vilaro
+        value: /data/.velaro
       - key: VILARO_WORKSPACE_DIR
         value: /data/workspace
       - key: VILARO_GATEWAY_TOKEN
         generateValue: true # auto-generates a secure token
     disk:
-      name: vilaro-data
+      name: velaro-data
       mountPath: /data
       sizeGB: 1
 ```
@@ -105,7 +105,7 @@ Modify variables in **Dashboard → your service → Environment**. Changes trig
 
 ### Auto-deploy
 
-If you use the original Vilaro repository, Render will not auto-deploy your Vilaro. To update it, run a manual Blueprint sync from the dashboard.
+If you use the original Velaro repository, Render will not auto-deploy your Velaro. To update it, run a manual Blueprint sync from the dashboard.
 
 ## Custom domain
 
@@ -121,7 +121,7 @@ Render supports horizontal and vertical scaling:
 - **Vertical**: Change the plan to get more CPU/RAM
 - **Horizontal**: Increase instance count (Standard plan and above)
 
-For Vilaro, vertical scaling is usually sufficient. Horizontal scaling requires sticky sessions or external state management.
+For Velaro, vertical scaling is usually sufficient. Horizontal scaling requires sticky sessions or external state management.
 
 ## Backups and migration
 
@@ -131,7 +131,7 @@ Export your configuration and workspace at any time:
 https://<your-service>.onrender.com/setup/export
 ```
 
-This downloads a portable backup you can restore on any Vilaro host.
+This downloads a portable backup you can restore on any Velaro host.
 
 ## Troubleshooting
 

@@ -34,7 +34,7 @@ import {
   resolveSystemPromptUsage,
   writeCliImages,
 } from "./cli-runner/helpers.js";
-import { resolveVilaroDocsPath } from "./docs-path.js";
+import { resolveVelaroDocsPath } from "./docs-path.js";
 import { FailoverError, resolveFailoverStatus } from "./failover-error.js";
 import {
   classifyFailoverReason,
@@ -146,7 +146,7 @@ export async function runCliAgent(params: {
     sessionAgentId === defaultAgentId
       ? resolveHeartbeatPrompt(params.config?.agents?.defaults?.heartbeat?.prompt)
       : undefined;
-  const docsPath = await resolveVilaroDocsPath({
+  const docsPath = await resolveVelaroDocsPath({
     workspaceDir,
     argv1: process.argv[1],
     cwd: process.cwd(),

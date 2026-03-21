@@ -1,5 +1,5 @@
 /**
- * Synology Chat Channel Plugin for Vilaro.
+ * Synology Chat Channel Plugin for Velaro.
  *
  * Implements the ChannelPlugin interface following the LINE pattern.
  */
@@ -50,7 +50,7 @@ export function createSynologyChatPlugin() {
       selectionLabel: "Synology Chat (Webhook)",
       detailLabel: "Synology Chat (Webhook)",
       docsPath: "/channels/synology-chat",
-      blurb: "Connect your Synology NAS Chat to Vilaro",
+      blurb: "Connect your Synology NAS Chat to Velaro",
       order: 90,
     },
 
@@ -107,7 +107,7 @@ export function createSynologyChatPlugin() {
         if (!account.incomingUrl) return;
         await sendMessage(
           account.incomingUrl,
-          "Vilaro: your access has been approved.",
+          "Velaro: your access has been approved.",
           id,
           account.allowInsecureSsl,
         );
@@ -135,7 +135,7 @@ export function createSynologyChatPlugin() {
           allowFrom: account.allowedUserIds ?? [],
           policyPath: `${basePath}dmPolicy`,
           allowFromPath: basePath,
-          approveHint: "vilaro pairing approve synology-chat <code>",
+          approveHint: "velaro pairing approve synology-chat <code>",
           normalizeEntry: (raw: string) => raw.toLowerCase().trim(),
         };
       },

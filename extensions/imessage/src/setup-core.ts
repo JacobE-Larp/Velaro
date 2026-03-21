@@ -224,7 +224,7 @@ export function createIMessageSetupWizardProxy(
       title: "iMessage next steps",
       lines: [
         "This is still a work in progress.",
-        "Ensure Vilaro has Full Disk Access to Messages DB.",
+        "Ensure Velaro has Full Disk Access to Messages DB.",
         "Grant Automation permission for Messages when prompted.",
         "List chats with: imsg chats --limit 20",
         `Docs: ${formatDocsLink("/imessage", "imessage")}`,

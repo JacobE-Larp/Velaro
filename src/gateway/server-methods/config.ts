@@ -32,7 +32,7 @@ import {
   writeRestartSentinel,
 } from "../../infra/restart-sentinel.js";
 import { scheduleGatewaySigusr1Restart } from "../../infra/restart.js";
-import { loadVilaroPlugins } from "../../plugins/loader.js";
+import { loadVelaroPlugins } from "../../plugins/loader.js";
 import { diffConfigPaths } from "../config-reload.js";
 import {
   formatControlPlaneActor,
@@ -245,7 +245,7 @@ async function tryWriteRestartSentinelPayload(
 function loadSchemaWithPlugins(): ConfigSchemaResponse {
   const cfg = loadConfig();
   const workspaceDir = resolveAgentWorkspaceDir(cfg, resolveDefaultAgentId(cfg));
-  const pluginRegistry = loadVilaroPlugins({
+  const pluginRegistry = loadVelaroPlugins({
     config: cfg,
     cache: true,
     workspaceDir,
@@ -257,7 +257,7 @@ function loadSchemaWithPlugins(): ConfigSchemaResponse {
     },
   });
   // Note: We can't easily cache this, as there are no callback that can invalidate
-  // our cache. However, both loadConfig() and loadVilaroPlugins() already cache
+  // our cache. However, both loadConfig() and loadVelaroPlugins() already cache
   // their results, and buildConfigSchema() is just a cheap transformation.
   return buildConfigSchema({
     plugins: pluginRegistry.plugins.map((plugin) => ({

@@ -77,7 +77,7 @@ export async function doctorCommand(
 ) {
   const prompter = createDoctorPrompter({ runtime, options });
   printWizardHeader(runtime);
-  intro("Vilaro doctor");
+  intro("Velaro doctor");
 
   const root = await resolveVilaroPackageRoot({
     moduleUrl: import.meta.url,
@@ -113,11 +113,11 @@ export async function doctorCommand(
   if (!cfg.gateway?.mode) {
     const lines = [
       "gateway.mode is unset; gateway start will be blocked.",
-      `Fix: run ${formatCliCommand("vilaro configure")} and set Gateway mode (local/remote).`,
-      `Or set directly: ${formatCliCommand("vilaro config set gateway.mode local")}`,
+      `Fix: run ${formatCliCommand("velaro configure")} and set Gateway mode (local/remote).`,
+      `Or set directly: ${formatCliCommand("velaro config set gateway.mode local")}`,
     ];
     if (!fs.existsSync(configPath)) {
-      lines.push(`Missing config: run ${formatCliCommand("vilaro setup")} first.`);
+      lines.push(`Missing config: run ${formatCliCommand("velaro setup")} first.`);
     }
     note(lines.join("\n"), "Gateway");
   }
@@ -126,8 +126,8 @@ export async function doctorCommand(
       [
         "gateway.auth.token and gateway.auth.password are both configured while gateway.auth.mode is unset.",
         "Set an explicit mode to avoid ambiguous auth selection and startup/runtime failures.",
-        `Set token mode: ${formatCliCommand("vilaro config set gateway.auth.mode token")}`,
-        `Set password mode: ${formatCliCommand("vilaro config set gateway.auth.mode password")}`,
+        `Set token mode: ${formatCliCommand("velaro config set gateway.auth.mode token")}`,
+        `Set password mode: ${formatCliCommand("velaro config set gateway.auth.mode password")}`,
       ].join("\n"),
       "Gateway auth",
     );
@@ -347,7 +347,7 @@ export async function doctorCommand(
       runtime.log(`Backup: ${shortenHomePath(backupPath)}`);
     }
   } else if (!prompter.shouldRepair) {
-    runtime.log(`Run "${formatCliCommand("vilaro doctor --fix")}" to apply changes.`);
+    runtime.log(`Run "${formatCliCommand("velaro doctor --fix")}" to apply changes.`);
   }
 
   if (options.workspaceSuggestions !== false) {

@@ -1,7 +1,7 @@
 export type {
   AnyAgentTool,
   VilaroPluginApi,
-  VilaroPluginConfigSchema,
+  VelaroPluginConfigSchema,
   ProviderDiscoveryContext,
   ProviderCatalogContext,
   ProviderCatalogResult,
@@ -24,7 +24,7 @@ export type {
   ProviderRuntimeModel,
   ProviderThinkingPolicyContext,
   ProviderWrapStreamFnContext,
-  VilaroPluginService,
+  VelaroPluginService,
   ProviderAuthContext,
   ProviderAuthDoctorHintContext,
   ProviderAuthMethodNonInteractiveContext,

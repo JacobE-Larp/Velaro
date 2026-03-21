@@ -49,7 +49,7 @@ export type SecretsApplyPlan = {
   version: 1;
   protocolVersion: 1;
   generatedAt: string;
-  generatedBy: "vilaro secrets configure" | "manual";
+  generatedBy: "velaro secrets configure" | "manual";
   providerUpserts?: Record<string, SecretProviderConfig>;
   providerDeletes?: string[];
   targets: SecretsPlanTarget[];

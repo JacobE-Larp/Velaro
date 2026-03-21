@@ -1,24 +1,24 @@
 ---
-summary: "CLI reference for `vilaro completion` (generate/install shell completion scripts)"
+summary: "CLI reference for `velaro completion` (generate/install shell completion scripts)"
 read_when:
   - You want shell completions for zsh/bash/fish/PowerShell
-  - You need to cache completion scripts under Vilaro state
+  - You need to cache completion scripts under Velaro state
 title: "completion"
 ---
 
-# `vilaro completion`
+# `velaro completion`
 
 Generate shell completion scripts and optionally install them into your shell profile.
 
 ## Usage
 
 ```bash
-vilaro completion
-vilaro completion --shell zsh
-vilaro completion --install
-vilaro completion --shell fish --install
-vilaro completion --write-state
-vilaro completion --shell bash --write-state
+velaro completion
+velaro completion --shell zsh
+velaro completion --install
+velaro completion --shell fish --install
+velaro completion --write-state
+velaro completion --shell bash --write-state
 ```
 
 ## Options
@@ -30,6 +30,6 @@ vilaro completion --shell bash --write-state
 
 ## Notes
 
-- `--install` writes a small "Vilaro Completion" block into your shell profile and points it at the cached script.
+- `--install` writes a small "Velaro Completion" block into your shell profile and points it at the cached script.
 - Without `--install` or `--write-state`, the command prints the script to stdout.
 - Completion generation eagerly loads command trees so nested subcommands are included.

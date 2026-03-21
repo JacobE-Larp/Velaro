@@ -18,29 +18,29 @@ x-i18n:
 
 ## 概述
 
-Vilaro 可以在隔离的 Docker 容器中运行智能体以确保安全。`sandbox` 命令帮助你管理这些容器，特别是在更新或配置更改后。
+Velaro 可以在隔离的 Docker 容器中运行智能体以确保安全。`sandbox` 命令帮助你管理这些容器，特别是在更新或配置更改后。
 
 ## 命令
 
-### `vilaro sandbox explain`
+### `velaro sandbox explain`
 
 检查**生效的**沙箱模式/作用域/工作区访问权限、沙箱工具策略和提权门控（附带修复配置的键路径）。
 
 ```bash
-vilaro sandbox explain
-vilaro sandbox explain --session agent:main:main
-vilaro sandbox explain --agent work
-vilaro sandbox explain --json
+velaro sandbox explain
+velaro sandbox explain --session agent:main:main
+velaro sandbox explain --agent work
+velaro sandbox explain --json
 ```
 
-### `vilaro sandbox list`
+### `velaro sandbox list`
 
 列出所有沙箱容器及其状态和配置。
 
 ```bash
-vilaro sandbox list
-vilaro sandbox list --browser  # List only browser containers
-vilaro sandbox list --json     # JSON output
+velaro sandbox list
+velaro sandbox list --browser  # List only browser containers
+velaro sandbox list --json     # JSON output
 ```
 
 **输出包括：**
@@ -51,16 +51,16 @@ vilaro sandbox list --json     # JSON output
 - 空闲时间（自上次使用以来的时间）
 - 关联的会话/智能体
 
-### `vilaro sandbox recreate`
+### `velaro sandbox recreate`
 
 移除沙箱容器以强制使用更新的镜像/配置重新创建。
 
 ```bash
-vilaro sandbox recreate --all                # Recreate all containers
-vilaro sandbox recreate --session main       # Specific session
-vilaro sandbox recreate --agent mybot        # Specific agent
-vilaro sandbox recreate --browser            # Only browser containers
-vilaro sandbox recreate --all --force        # Skip confirmation
+velaro sandbox recreate --all                # Recreate all containers
+velaro sandbox recreate --session main       # Specific session
+velaro sandbox recreate --agent mybot        # Specific agent
+velaro sandbox recreate --browser            # Only browser containers
+velaro sandbox recreate --all --force        # Skip confirmation
 ```
 
 **选项：**
@@ -79,14 +79,14 @@ vilaro sandbox recreate --all --force        # Skip confirmation
 
 ```bash
 # Pull new image
-docker pull vilaro-sandbox:latest
-docker tag vilaro-sandbox:latest vilaro-sandbox:bookworm-slim
+docker pull velaro-sandbox:latest
+docker tag velaro-sandbox:latest velaro-sandbox:bookworm-slim
 
 # Update config to use new image
 # Edit config: agents.defaults.sandbox.docker.image (or agents.list[].sandbox.docker.image)
 
 # Recreate containers
-vilaro sandbox recreate --all
+velaro sandbox recreate --all
 ```
 
 ### 更改沙箱配置后
@@ -95,22 +95,22 @@ vilaro sandbox recreate --all
 # Edit config: agents.defaults.sandbox.* (or agents.list[].sandbox.*)
 
 # Recreate to apply new config
-vilaro sandbox recreate --all
+velaro sandbox recreate --all
 ```
 
 ### 更改 setupCommand 后
 
 ```bash
-vilaro sandbox recreate --all
+velaro sandbox recreate --all
 # or just one agent:
-vilaro sandbox recreate --agent family
+velaro sandbox recreate --agent family
 ```
 
 ### 仅针对特定智能体
 
 ```bash
 # Update only one agent's containers
-vilaro sandbox recreate --agent alfred
+velaro sandbox recreate --agent alfred
 ```
 
 ## 为什么需要这个？
@@ -121,9 +121,9 @@ vilaro sandbox recreate --agent alfred
 - 容器仅在空闲 24 小时后才被清理
 - 经常使用的智能体会无限期保持旧容器运行
 
-**解决方案：** 使用 `vilaro sandbox recreate` 强制移除旧容器。它们会在下次需要时自动使用当前设置重新创建。
+**解决方案：** 使用 `velaro sandbox recreate` 强制移除旧容器。它们会在下次需要时自动使用当前设置重新创建。
 
-提示：优先使用 `vilaro sandbox recreate` 而不是手动 `docker rm`。它使用 Gateway 网关的容器命名规则，避免在作用域/会话键更改时出现不匹配。
+提示：优先使用 `velaro sandbox recreate` 而不是手动 `docker rm`。它使用 Gateway 网关的容器命名规则，避免在作用域/会话键更改时出现不匹配。
 
 ## 配置
 
@@ -137,8 +137,8 @@ vilaro sandbox recreate --agent alfred
         "mode": "all", // off, non-main, all
         "scope": "agent", // session, agent, shared
         "docker": {
-          "image": "vilaro-sandbox:bookworm-slim",
-          "containerPrefix": "vilaro-sbx-",
+          "image": "velaro-sandbox:bookworm-slim",
+          "containerPrefix": "velaro-sbx-",
           // ... more Docker options
         },
         "prune": {

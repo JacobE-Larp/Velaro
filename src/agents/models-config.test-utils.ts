@@ -1,9 +1,9 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { resolveVilaroAgentDir } from "./agent-paths.js";
+import { resolveVelaroAgentDir } from "./agent-paths.js";
 
 export async function readGeneratedModelsJson<T>(): Promise<T> {
-  const modelPath = path.join(resolveVilaroAgentDir(), "models.json");
+  const modelPath = path.join(resolveVelaroAgentDir(), "models.json");
   const raw = await fs.readFile(modelPath, "utf8");
   return JSON.parse(raw) as T;
 }

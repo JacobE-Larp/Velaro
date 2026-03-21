@@ -3,7 +3,7 @@ import type { VilaroConfig } from "../config/config.js";
 import { resolveUserPath } from "../utils.js";
 import { loadBundleManifest } from "./bundle-manifest.js";
 import { normalizePluginsConfig, type NormalizedPluginsConfig } from "./config-state.js";
-import { discoverVilaroPlugins, type PluginCandidate } from "./discovery.js";
+import { discoverVelaroPlugins, type PluginCandidate } from "./discovery.js";
 import { loadPluginManifest, type PluginManifest } from "./manifest.js";
 import { isPathInside, safeRealpathSync } from "./path-safety.js";
 import { resolvePluginCacheInputs } from "./roots.js";
@@ -293,7 +293,7 @@ export function loadPluginManifestRegistry(params: {
         candidates: params.candidates,
         diagnostics: params.diagnostics ?? [],
       }
-    : discoverVilaroPlugins({
+    : discoverVelaroPlugins({
         workspaceDir: params.workspaceDir,
         extraPaths: normalized.loadPaths,
         env,

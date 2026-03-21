@@ -1,19 +1,19 @@
 ---
-summary: "CLI reference for `vilaro configure` (interactive configuration prompts)"
+summary: "CLI reference for `velaro configure` (interactive configuration prompts)"
 read_when:
   - You want to tweak credentials, devices, or agent defaults interactively
 title: "configure"
 ---
 
-# `vilaro configure`
+# `velaro configure`
 
 Interactive prompt to set up credentials, devices, and agent defaults.
 
 Note: The **Model** section now includes a multi-select for the
 `agents.defaults.models` allowlist (what shows up in `/model` and the model picker).
 
-Tip: `vilaro config` without a subcommand opens the same wizard. Use
-`vilaro config get|set|unset` for non-interactive edits.
+Tip: `velaro config` without a subcommand opens the same wizard. Use
+`velaro config get|set|unset` for non-interactive edits.
 
 Related:
 
@@ -31,6 +31,6 @@ Notes:
 ## Examples
 
 ```bash
-vilaro configure
-vilaro configure --section model --section channels
+velaro configure
+velaro configure --section model --section channels
 ```

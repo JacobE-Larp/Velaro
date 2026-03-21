@@ -1,20 +1,20 @@
 ---
-summary: "Gmail Pub/Sub push wired into Vilaro webhooks via gogcli"
+summary: "Gmail Pub/Sub push wired into Velaro webhooks via gogcli"
 read_when:
-  - Wiring Gmail inbox triggers to Vilaro
+  - Wiring Gmail inbox triggers to Velaro
   - Setting up Pub/Sub push for agent wake
 title: "Gmail PubSub"
 ---
 
-# Gmail Pub/Sub -> Vilaro
+# Gmail Pub/Sub -> Velaro
 
-Goal: Gmail watch -> Pub/Sub push -> `gog gmail watch serve` -> Vilaro webhook.
+Goal: Gmail watch -> Pub/Sub push -> `gog gmail watch serve` -> Velaro webhook.
 
 ## Prereqs
 
 - `gcloud` installed and logged in ([install guide](https://docs.cloud.google.com/sdk/docs/install-sdk)).
 - `gog` (gogcli) installed and authorized for the Gmail account ([gogcli.sh](https://gogcli.sh/)).
-- Vilaro hooks enabled (see [Webhooks](/automation/webhook)).
+- Velaro hooks enabled (see [Webhooks](/automation/webhook)).
 - `tailscale` logged in ([tailscale.com](https://tailscale.com/)). Supported setup uses Tailscale Funnel for the public HTTPS endpoint.
   Other tunnel services can work, but are DIY/unsupported and require manual wiring.
   Right now, Tailscale is what we support.
@@ -92,20 +92,20 @@ under `~/.vilaro/hooks/transforms` (see [Webhooks](/automation/webhook)).
 
 ## Wizard (recommended)
 
-Use the Vilaro helper to wire everything together (installs deps on macOS via brew):
+Use the Velaro helper to wire everything together (installs deps on macOS via brew):
 
 ```bash
-vilaro webhooks gmail setup \
-  --account vilaro@gmail.com
+velaro webhooks gmail setup \
+  --account velaro@gmail.com
 ```
 
 Defaults:
 
 - Uses Tailscale Funnel for the public push endpoint.
-- Writes `hooks.gmail` config for `vilaro webhooks gmail run`.
+- Writes `hooks.gmail` config for `velaro webhooks gmail run`.
 - Enables the Gmail hook preset (`hooks.presets: ["gmail"]`).
 
-Path note: when `tailscale.mode` is enabled, Vilaro automatically sets
+Path note: when `tailscale.mode` is enabled, Velaro automatically sets
 `hooks.gmail.serve.path` to `/` and keeps the public path at
 `hooks.gmail.tailscale.path` (default `/gmail-pubsub`) because Tailscale
 strips the set-path prefix before proxying.
@@ -129,7 +129,7 @@ Gateway auto-start (recommended):
 Manual daemon (starts `gog gmail watch serve` + auto-renew):
 
 ```bash
-vilaro webhooks gmail run
+velaro webhooks gmail run
 ```
 
 ## One-time setup
@@ -167,7 +167,7 @@ gcloud pubsub topics add-iam-policy-binding gog-gmail-watch \
 
 ```bash
 gog gmail watch start \
-  --account vilaro@gmail.com \
+  --account velaro@gmail.com \
   --label INBOX \
   --topic projects/<project-id>/topics/gog-gmail-watch
 ```
@@ -180,7 +180,7 @@ Local example (shared token auth):
 
 ```bash
 gog gmail watch serve \
-  --account vilaro@gmail.com \
+  --account velaro@gmail.com \
   --bind 127.0.0.1 \
   --port 8788 \
   --path /gmail-pubsub \
@@ -194,10 +194,10 @@ gog gmail watch serve \
 Notes:
 
 - `--token` protects the push endpoint (`x-gog-token` or `?token=`).
-- `--hook-url` points to Vilaro `/hooks/gmail` (mapped; isolated run + summary to main).
-- `--include-body` and `--max-bytes` control the body snippet sent to Vilaro.
+- `--hook-url` points to Velaro `/hooks/gmail` (mapped; isolated run + summary to main).
+- `--include-body` and `--max-bytes` control the body snippet sent to Velaro.
 
-Recommended: `vilaro webhooks gmail run` wraps the same flow and auto-renews the watch.
+Recommended: `velaro webhooks gmail run` wraps the same flow and auto-renews the watch.
 
 ## Expose the handler (advanced, unsupported)
 
@@ -228,8 +228,8 @@ Send a message to the watched inbox:
 
 ```bash
 gog gmail send \
-  --account vilaro@gmail.com \
-  --to vilaro@gmail.com \
+  --account velaro@gmail.com \
+  --to velaro@gmail.com \
   --subject "watch test" \
   --body "ping"
 ```
@@ -237,8 +237,8 @@ gog gmail send \
 Check watch state and history:
 
 ```bash
-gog gmail watch status --account vilaro@gmail.com
-gog gmail history --account vilaro@gmail.com --since <historyId>
+gog gmail watch status --account velaro@gmail.com
+gog gmail history --account velaro@gmail.com --since <historyId>
 ```
 
 ## Troubleshooting
@@ -250,7 +250,7 @@ gog gmail history --account vilaro@gmail.com --since <historyId>
 ## Cleanup
 
 ```bash
-gog gmail watch stop --account vilaro@gmail.com
+gog gmail watch stop --account velaro@gmail.com
 gcloud pubsub subscriptions delete gog-gmail-watch-push
 gcloud pubsub topics delete gog-gmail-watch
 ```

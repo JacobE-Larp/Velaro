@@ -8,7 +8,7 @@ title: "OpenResponses API"
 
 # OpenResponses API (HTTP)
 
-Vilaro’s Gateway can serve an OpenResponses-compatible `POST /v1/responses` endpoint.
+Velaro’s Gateway can serve an OpenResponses-compatible `POST /v1/responses` endpoint.
 
 This endpoint is **disabled by default**. Enable it in config first.
 
@@ -16,7 +16,7 @@ This endpoint is **disabled by default**. Enable it in config first.
 - Same port as the Gateway (WS + HTTP multiplex): `http://<gateway-host>:<port>/v1/responses`
 
 Under the hood, requests are executed as a normal Gateway agent run (same codepath as
-`vilaro agent`), so routing/permissions/config match your Gateway.
+`velaro agent`), so routing/permissions/config match your Gateway.
 
 ## Authentication, security, and routing
 
@@ -24,8 +24,8 @@ Operational behavior matches [OpenAI Chat Completions](/gateway/openai-http-api)
 
 - use `Authorization: Bearer <token>` with the normal Gateway auth config
 - treat the endpoint as full operator access for the gateway instance
-- select agents with `model: "vilaro:<agentId>"`, `model: "agent:<agentId>"`, or `x-vilaro-agent-id`
-- use `x-vilaro-session-key` for explicit session routing
+- select agents with `model: "velaro:<agentId>"`, `model: "agent:<agentId>"`, or `x-velaro-agent-id`
+- use `x-velaro-session-key` for explicit session routing
 
 Enable or disable this endpoint with `gateway.http.endpoints.responses.enabled`.
 
@@ -271,9 +271,9 @@ Non-streaming:
 curl -sS http://127.0.0.1:18789/v1/responses \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-vilaro-agent-id: main' \
+  -H 'x-velaro-agent-id: main' \
   -d '{
-    "model": "vilaro",
+    "model": "velaro",
     "input": "hi"
   }'
 ```
@@ -284,9 +284,9 @@ Streaming:
 curl -N http://127.0.0.1:18789/v1/responses \
   -H 'Authorization: Bearer YOUR_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'x-vilaro-agent-id: main' \
+  -H 'x-velaro-agent-id: main' \
   -d '{
-    "model": "vilaro",
+    "model": "velaro",
     "stream": true,
     "input": "hi"
   }'

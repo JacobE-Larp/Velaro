@@ -17,9 +17,9 @@ export type {
 } from "../acp/runtime/types.js";
 export type {
   VilaroPluginApi,
-  VilaroPluginConfigSchema,
-  VilaroPluginService,
-  VilaroPluginServiceContext,
+  VelaroPluginConfigSchema,
+  VelaroPluginService,
+  VelaroPluginServiceContext,
   PluginLogger,
 } from "../plugins/types.js";
 export type {

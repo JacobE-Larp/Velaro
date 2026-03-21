@@ -1,5 +1,5 @@
 ---
-summary: "CLI reference for `vilaro secrets` (reload, audit, configure, apply)"
+summary: "CLI reference for `velaro secrets` (reload, audit, configure, apply)"
 read_when:
   - Re-resolving secret refs at runtime
   - Auditing plaintext residues and unresolved refs
@@ -7,9 +7,9 @@ read_when:
 title: "secrets"
 ---
 
-# `vilaro secrets`
+# `velaro secrets`
 
-Use `vilaro secrets` to manage SecretRefs and keep the active runtime snapshot healthy.
+Use `velaro secrets` to manage SecretRefs and keep the active runtime snapshot healthy.
 
 Command roles:
 
@@ -21,12 +21,12 @@ Command roles:
 Recommended operator loop:
 
 ```bash
-vilaro secrets audit --check
-vilaro secrets configure
-vilaro secrets apply --from /tmp/vilaro-secrets-plan.json --dry-run
-vilaro secrets apply --from /tmp/vilaro-secrets-plan.json
-vilaro secrets audit --check
-vilaro secrets reload
+velaro secrets audit --check
+velaro secrets configure
+velaro secrets apply --from /tmp/velaro-secrets-plan.json --dry-run
+velaro secrets apply --from /tmp/velaro-secrets-plan.json
+velaro secrets audit --check
+velaro secrets reload
 ```
 
 Exit code note for CI/gates:
@@ -45,8 +45,8 @@ Related:
 Re-resolve secret refs and atomically swap runtime snapshot.
 
 ```bash
-vilaro secrets reload
-vilaro secrets reload --json
+velaro secrets reload
+velaro secrets reload --json
 ```
 
 Notes:
@@ -57,7 +57,7 @@ Notes:
 
 ## Audit
 
-Scan Vilaro state for:
+Scan Velaro state for:
 
 - plaintext secret storage
 - unresolved refs
@@ -70,9 +70,9 @@ Header residue note:
 - Sensitive provider header detection is name-heuristic based (common auth/credential header names and fragments such as `authorization`, `x-api-key`, `token`, `secret`, `password`, and `credential`).
 
 ```bash
-vilaro secrets audit
-vilaro secrets audit --check
-vilaro secrets audit --json
+velaro secrets audit
+velaro secrets audit --check
+velaro secrets audit --json
 ```
 
 Exit behavior:
@@ -95,13 +95,13 @@ Report shape highlights:
 Build provider and SecretRef changes interactively, run preflight, and optionally apply:
 
 ```bash
-vilaro secrets configure
-vilaro secrets configure --plan-out /tmp/vilaro-secrets-plan.json
-vilaro secrets configure --apply --yes
-vilaro secrets configure --providers-only
-vilaro secrets configure --skip-provider-setup
-vilaro secrets configure --agent ops
-vilaro secrets configure --json
+velaro secrets configure
+velaro secrets configure --plan-out /tmp/velaro-secrets-plan.json
+velaro secrets configure --apply --yes
+velaro secrets configure --providers-only
+velaro secrets configure --skip-provider-setup
+velaro secrets configure --agent ops
+velaro secrets configure --json
 ```
 
 Flow:
@@ -133,16 +133,16 @@ Exec provider safety note:
 
 - Homebrew installs often expose symlinked binaries under `/opt/homebrew/bin/*`.
 - Set `allowSymlinkCommand: true` only when needed for trusted package-manager paths, and pair it with `trustedDirs` (for example `["/opt/homebrew"]`).
-- On Windows, if ACL verification is unavailable for a provider path, Vilaro fails closed. For trusted paths only, set `allowInsecurePath: true` on that provider to bypass path security checks.
+- On Windows, if ACL verification is unavailable for a provider path, Velaro fails closed. For trusted paths only, set `allowInsecurePath: true` on that provider to bypass path security checks.
 
 ## Apply a saved plan
 
 Apply or preflight a plan generated previously:
 
 ```bash
-vilaro secrets apply --from /tmp/vilaro-secrets-plan.json
-vilaro secrets apply --from /tmp/vilaro-secrets-plan.json --dry-run
-vilaro secrets apply --from /tmp/vilaro-secrets-plan.json --json
+velaro secrets apply --from /tmp/velaro-secrets-plan.json
+velaro secrets apply --from /tmp/velaro-secrets-plan.json --dry-run
+velaro secrets apply --from /tmp/velaro-secrets-plan.json --json
 ```
 
 Plan contract details (allowed target paths, validation rules, and failure semantics):
@@ -165,9 +165,9 @@ Safety comes from strict preflight + atomic-ish apply with best-effort in-memory
 ## Example
 
 ```bash
-vilaro secrets audit --check
-vilaro secrets configure
-vilaro secrets audit --check
+velaro secrets audit --check
+velaro secrets configure
+velaro secrets audit --check
 ```
 
 If `audit --check` still reports plaintext findings, update the remaining reported target paths and rerun audit.

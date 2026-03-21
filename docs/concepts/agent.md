@@ -7,13 +7,13 @@ title: "Agent Runtime"
 
 # Agent Runtime 🤖
 
-Vilaro runs a single embedded agent runtime derived from **pi-mono**.
+Velaro runs a single embedded agent runtime derived from **pi-mono**.
 
 ## Workspace (required)
 
-Vilaro uses a single agent workspace directory (`agents.defaults.workspace`) as the agent’s **only** working directory (`cwd`) for tools and context.
+Velaro uses a single agent workspace directory (`agents.defaults.workspace`) as the agent’s **only** working directory (`cwd`) for tools and context.
 
-Recommended: use `vilaro setup` to create `~/.vilaro/vilaro.json` if missing and initialize the workspace files.
+Recommended: use `velaro setup` to create `~/.vilaro/vilaro.json` if missing and initialize the workspace files.
 
 Full workspace layout + backup guide: [Agent workspace](/concepts/agent-workspace)
 
@@ -23,7 +23,7 @@ per-session workspaces under `agents.defaults.sandbox.workspaceRoot` (see
 
 ## Bootstrap files (injected)
 
-Inside `agents.defaults.workspace`, Vilaro expects these user-editable files:
+Inside `agents.defaults.workspace`, Velaro expects these user-editable files:
 
 - `AGENTS.md` — operating instructions + “memory”
 - `SOUL.md` — persona, boundaries, tone
@@ -32,11 +32,11 @@ Inside `agents.defaults.workspace`, Vilaro expects these user-editable files:
 - `IDENTITY.md` — agent name/vibe/emoji
 - `USER.md` — user profile + preferred address
 
-On the first turn of a new session, Vilaro injects the contents of these files directly into the agent context.
+On the first turn of a new session, Velaro injects the contents of these files directly into the agent context.
 
 Blank files are skipped. Large files are trimmed and truncated with a marker so prompts stay lean (read the file for full content).
 
-If a file is missing, Vilaro injects a single “missing file” marker line (and `vilaro setup` will create a safe default template).
+If a file is missing, Velaro injects a single “missing file” marker line (and `velaro setup` will create a safe default template).
 
 `BOOTSTRAP.md` is only created for a **brand new workspace** (no other bootstrap files present). If you delete it after completing the ritual, it should not be recreated on later restarts.
 
@@ -55,7 +55,7 @@ guidance for how _you_ want them used.
 
 ## Skills
 
-Vilaro loads skills from three locations (workspace wins on name conflict):
+Velaro loads skills from three locations (workspace wins on name conflict):
 
 - Bundled (shipped with the install)
 - Managed/local: `~/.vilaro/skills`
@@ -65,7 +65,7 @@ Skills can be gated by config/env (see `skills` in [Gateway configuration](/gate
 
 ## pi-mono integration
 
-Vilaro reuses pieces of the pi-mono codebase (models/tools), but **session management, discovery, and tool wiring are Vilaro-owned**.
+Velaro reuses pieces of the pi-mono codebase (models/tools), but **session management, discovery, and tool wiring are Velaro-owned**.
 
 - No pi-coding agent runtime.
 - No `~/.pi/agent` or `<workspace>/.pi` settings are consulted.
@@ -76,7 +76,7 @@ Session transcripts are stored as JSONL at:
 
 - `~/.vilaro/agents/<agentId>/sessions/<SessionId>.jsonl`
 
-The session ID is stable and chosen by Vilaro.
+The session ID is stable and chosen by Velaro.
 Legacy Pi/Tau session folders are **not** read.
 
 ## Steering while streaming
@@ -109,7 +109,7 @@ Model refs in config (for example `agents.defaults.model` and `agents.defaults.m
 
 - Use `provider/model` when configuring models.
 - If the model ID itself contains `/` (OpenRouter-style), include the provider prefix (example: `openrouter/moonshotai/kimi-k2`).
-- If you omit the provider, Vilaro treats the input as an alias or a model for the **default provider** (only works when there is no `/` in the model ID).
+- If you omit the provider, Velaro treats the input as an alias or a model for the **default provider** (only works when there is no `/` in the model ID).
 
 ## Configuration (minimal)
 

@@ -1,20 +1,20 @@
 ---
-summary: "CLI reference for `vilaro sessions` (list stored sessions + usage)"
+summary: "CLI reference for `velaro sessions` (list stored sessions + usage)"
 read_when:
   - You want to list stored sessions and see recent activity
 title: "sessions"
 ---
 
-# `vilaro sessions`
+# `velaro sessions`
 
 List stored conversation sessions.
 
 ```bash
-vilaro sessions
-vilaro sessions --agent work
-vilaro sessions --all-agents
-vilaro sessions --active 120
-vilaro sessions --json
+velaro sessions
+velaro sessions --agent work
+velaro sessions --all-agents
+velaro sessions --active 120
+velaro sessions --json
 ```
 
 Scope selection:
@@ -24,7 +24,7 @@ Scope selection:
 - `--all-agents`: aggregate all configured agent stores
 - `--store <path>`: explicit store path (cannot be combined with `--agent` or `--all-agents`)
 
-`vilaro sessions --all-agents` reads configured agent stores. Gateway and ACP
+`velaro sessions --all-agents` reads configured agent stores. Gateway and ACP
 session discovery are broader: they also include disk-only stores found under
 the default `agents/` root or a templated `session.store` root. Those
 discovered stores must resolve to regular `sessions.json` files inside the
@@ -32,14 +32,14 @@ agent root; symlinks and out-of-root paths are skipped.
 
 JSON examples:
 
-`vilaro sessions --all-agents --json`:
+`velaro sessions --all-agents --json`:
 
 ```json
 {
   "path": null,
   "stores": [
-    { "agentId": "main", "path": "/home/user/.vilaro/agents/main/sessions/sessions.json" },
-    { "agentId": "work", "path": "/home/user/.vilaro/agents/work/sessions/sessions.json" }
+    { "agentId": "main", "path": "/home/user/.velaro/agents/main/sessions/sessions.json" },
+    { "agentId": "work", "path": "/home/user/.velaro/agents/work/sessions/sessions.json" }
   ],
   "allAgents": true,
   "count": 2,
@@ -56,17 +56,17 @@ JSON examples:
 Run maintenance now (instead of waiting for the next write cycle):
 
 ```bash
-vilaro sessions cleanup --dry-run
-vilaro sessions cleanup --agent work --dry-run
-vilaro sessions cleanup --all-agents --dry-run
-vilaro sessions cleanup --enforce
-vilaro sessions cleanup --enforce --active-key "agent:main:telegram:direct:123"
-vilaro sessions cleanup --json
+velaro sessions cleanup --dry-run
+velaro sessions cleanup --agent work --dry-run
+velaro sessions cleanup --all-agents --dry-run
+velaro sessions cleanup --enforce
+velaro sessions cleanup --enforce --active-key "agent:main:telegram:direct:123"
+velaro sessions cleanup --json
 ```
 
-`vilaro sessions cleanup` uses `session.maintenance` settings from config:
+`velaro sessions cleanup` uses `session.maintenance` settings from config:
 
-- Scope note: `vilaro sessions cleanup` maintains session stores/transcripts only. It does not prune cron run logs (`cron/runs/<jobId>.jsonl`), which are managed by `cron.runLog.maxBytes` and `cron.runLog.keepLines` in [Cron configuration](/automation/cron-jobs#configuration) and explained in [Cron maintenance](/automation/cron-jobs#maintenance).
+- Scope note: `velaro sessions cleanup` maintains session stores/transcripts only. It does not prune cron run logs (`cron/runs/<jobId>.jsonl`), which are managed by `cron.runLog.maxBytes` and `cron.runLog.keepLines` in [Cron configuration](/automation/cron-jobs#configuration) and explained in [Cron maintenance](/automation/cron-jobs#maintenance).
 
 - `--dry-run`: preview how many entries would be pruned/capped without writing.
   - In text mode, dry-run prints a per-session action table (`Action`, `Key`, `Age`, `Model`, `Flags`) so you can see what would be kept vs removed.
@@ -77,7 +77,7 @@ vilaro sessions cleanup --json
 - `--store <path>`: run against a specific `sessions.json` file.
 - `--json`: print a JSON summary. With `--all-agents`, output includes one summary per store.
 
-`vilaro sessions cleanup --all-agents --dry-run --json`:
+`velaro sessions cleanup --all-agents --dry-run --json`:
 
 ```json
 {
@@ -87,7 +87,7 @@ vilaro sessions cleanup --json
   "stores": [
     {
       "agentId": "main",
-      "storePath": "/home/user/.vilaro/agents/main/sessions/sessions.json",
+      "storePath": "/home/user/.velaro/agents/main/sessions/sessions.json",
       "beforeCount": 120,
       "afterCount": 80,
       "pruned": 40,
@@ -95,7 +95,7 @@ vilaro sessions cleanup --json
     },
     {
       "agentId": "work",
-      "storePath": "/home/user/.vilaro/agents/work/sessions/sessions.json",
+      "storePath": "/home/user/.velaro/agents/work/sessions/sessions.json",
       "beforeCount": 18,
       "afterCount": 18,
       "pruned": 0,

@@ -8,7 +8,7 @@ title: "Bonjour Discovery"
 
 # Bonjour / mDNS discovery
 
-Vilaro uses Bonjour (mDNS / DNS‑SD) as a **LAN‑only convenience** to discover
+Velaro uses Bonjour (mDNS / DNS‑SD) as a **LAN‑only convenience** to discover
 an active Gateway (WebSocket endpoint). It is best‑effort and does **not** replace SSH or
 Tailnet-based connectivity.
 
@@ -22,11 +22,11 @@ High‑level steps:
 
 1. Run a DNS server on the gateway host (reachable over Tailnet).
 2. Publish DNS‑SD records for `_vilaro-gw._tcp` under a dedicated zone
-   (example: `vilaro.internal.`).
+   (example: `velaro.internal.`).
 3. Configure Tailscale **split DNS** so your chosen domain resolves via that
    DNS server for clients (including iOS).
 
-Vilaro supports any discovery domain; `vilaro.internal.` is just an example.
+Velaro supports any discovery domain; `velaro.internal.` is just an example.
 iOS/Android nodes browse both `local.` and your configured wide‑area domain.
 
 ### Gateway config (recommended)
@@ -41,19 +41,19 @@ iOS/Android nodes browse both `local.` and your configured wide‑area domain.
 ### One‑time DNS server setup (gateway host)
 
 ```bash
-vilaro dns setup --apply
+velaro dns setup --apply
 ```
 
 This installs CoreDNS and configures it to:
 
 - listen on port 53 only on the gateway’s Tailscale interfaces
-- serve your chosen domain (example: `vilaro.internal.`) from `~/.vilaro/dns/<domain>.db`
+- serve your chosen domain (example: `velaro.internal.`) from `~/.vilaro/dns/<domain>.db`
 
 Validate from a tailnet‑connected machine:
 
 ```bash
-dns-sd -B _vilaro-gw._tcp vilaro.internal.
-dig @<TAILNET_IPV4> -p 53 _vilaro-gw._tcp.vilaro.internal PTR +short
+dns-sd -B _vilaro-gw._tcp velaro.internal.
+dig @<TAILNET_IPV4> -p 53 _vilaro-gw._tcp.velaro.internal PTR +short
 ```
 
 ### Tailscale DNS settings
@@ -97,7 +97,7 @@ The Gateway advertises small non‑secret hints to make UI flows convenient:
 - `canvasPort=<port>` (only when the canvas host is enabled; currently the same as `gatewayPort`)
 - `sshPort=<port>` (defaults to 22 when not overridden)
 - `transport=gateway`
-- `cliPath=<path>` (optional; absolute path to a runnable `vilaro` entrypoint)
+- `cliPath=<path>` (optional; absolute path to a runnable `velaro` entrypoint)
 - `tailnetDns=<magicdns>` (optional hint when Tailnet is available)
 
 Security notes:

@@ -431,7 +431,7 @@ export async function maybeScanExtraGatewayServices(
         note(failed.map((line) => `- ${line}`).join("\n"), "Legacy gateway cleanup skipped");
       }
       if (removed.length > 0) {
-        runtime.log("Legacy gateway services removed. Installing Vilaro gateway next.");
+        runtime.log("Legacy gateway services removed. Installing Velaro gateway next.");
       }
     }
   }

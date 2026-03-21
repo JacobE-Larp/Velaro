@@ -15,7 +15,7 @@ export async function writeQrDataUrlToTempFile(
   const safeProfile = profile.replace(/[^a-zA-Z0-9_-]+/g, "-") || "default";
   const filePath = path.join(
     resolvePreferredVilaroTmpDir(),
-    `vilaro-zalouser-qr-${safeProfile}.png`,
+    `velaro-zalouser-qr-${safeProfile}.png`,
   );
   await fsp.writeFile(filePath, Buffer.from(base64, "base64"));
   return filePath;

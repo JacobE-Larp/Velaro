@@ -8,7 +8,7 @@ import { pipeline } from "node:stream/promises";
 import { fetchWithSsrFGuard } from "vilaro/plugin-sdk/tlon";
 import { getDefaultSsrFPolicy } from "../urbit/context.js";
 
-// Default to Vilaro workspace media directory
+// Default to Velaro workspace media directory
 const DEFAULT_MEDIA_DIR = path.join(homedir(), ".vilaro", "workspace", "media", "inbound");
 
 export interface ExtractedImage {
@@ -139,7 +139,7 @@ function getExtensionFromUrl(url: string): string | null {
 
 /**
  * Download all images from a message and return attachment metadata.
- * Format matches Vilaro's expected attachment structure.
+ * Format matches Velaro's expected attachment structure.
  */
 export async function downloadMessageImages(
   content: unknown,

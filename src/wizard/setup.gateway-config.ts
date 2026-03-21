@@ -232,7 +232,7 @@ export async function configureGatewayForSetup(
         copy: {
           modeMessage: "How do you want to provide the gateway password?",
           plaintextLabel: "Enter password now",
-          plaintextHint: "Stores the password directly in Vilaro config",
+          plaintextHint: "Stores the password directly in Velaro config",
         },
       });
       if (selectedMode === "ref") {

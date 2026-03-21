@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `vilaro directory` (self, peers, groups)"
+summary: "CLI reference for `velaro directory` (self, peers, groups)"
 read_when:
   - You want to look up contacts/groups/self ids for a channel
   - You are developing a channel directory adapter
 title: "directory"
 ---
 
-# `vilaro directory`
+# `velaro directory`
 
 Directory lookups for channels that support it (contacts/peers, groups, and “me”).
 
@@ -18,15 +18,15 @@ Directory lookups for channels that support it (contacts/peers, groups, and “m
 
 ## Notes
 
-- `directory` is meant to help you find IDs you can paste into other commands (especially `vilaro message send --target ...`).
+- `directory` is meant to help you find IDs you can paste into other commands (especially `velaro message send --target ...`).
 - For many channels, results are config-backed (allowlists / configured groups) rather than a live provider directory.
 - Default output is `id` (and sometimes `name`) separated by a tab; use `--json` for scripting.
 
 ## Using results with `message send`
 
 ```bash
-vilaro directory peers list --channel slack --query "U0"
-vilaro message send --channel slack --target user:U012ABCDEF --message "hello"
+velaro directory peers list --channel slack --query "U0"
+velaro message send --channel slack --target user:U012ABCDEF --message "hello"
 ```
 
 ## ID formats (by channel)
@@ -43,21 +43,21 @@ vilaro message send --channel slack --target user:U012ABCDEF --message "hello"
 ## Self (“me”)
 
 ```bash
-vilaro directory self --channel zalouser
+velaro directory self --channel zalouser
 ```
 
 ## Peers (contacts/users)
 
 ```bash
-vilaro directory peers list --channel zalouser
-vilaro directory peers list --channel zalouser --query "name"
-vilaro directory peers list --channel zalouser --limit 50
+velaro directory peers list --channel zalouser
+velaro directory peers list --channel zalouser --query "name"
+velaro directory peers list --channel zalouser --limit 50
 ```
 
 ## Groups
 
 ```bash
-vilaro directory groups list --channel zalouser
-vilaro directory groups list --channel zalouser --query "work"
-vilaro directory groups members --channel zalouser --group-id <id>
+velaro directory groups list --channel zalouser
+velaro directory groups list --channel zalouser --query "work"
+velaro directory groups members --channel zalouser --group-id <id>
 ```

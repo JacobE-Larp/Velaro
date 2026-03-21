@@ -16,14 +16,14 @@ x-i18n:
 
 # オンボーディングウィザード（CLI）
 
-CLIオンボーディングウィザードは、macOS、Linux、Windows（WSL2経由）でVilaroをセットアップする際の推奨パスです。ローカルGatewayまたはリモートGateway接続に加えて、ワークスペースのデフォルト設定、チャンネル、Skillsを構成します。
+CLIオンボーディングウィザードは、macOS、Linux、Windows（WSL2経由）でVelaroをセットアップする際の推奨パスです。ローカルGatewayまたはリモートGateway接続に加えて、ワークスペースのデフォルト設定、チャンネル、Skillsを構成します。
 
 ```bash
-vilaro onboard
+velaro onboard
 ```
 
 <Info>
-最速で初回チャットを開始する方法：Control UI を開きます（チャンネル設定は不要）。`vilaro dashboard` を実行してブラウザでチャットできます。ドキュメント：[Dashboard](/web/dashboard)。
+最速で初回チャットを開始する方法：Control UI を開きます（チャンネル設定は不要）。`velaro dashboard` を実行してブラウザでチャットできます。ドキュメント：[Dashboard](/web/dashboard)。
 </Info>
 
 ## クイックスタート vs 詳細設定
@@ -58,8 +58,8 @@ vilaro onboard
 ## よく使うフォローアップコマンド
 
 ```bash
-vilaro configure
-vilaro agents add <name>
+velaro configure
+velaro agents add <name>
 ```
 
 <Note>
@@ -67,11 +67,11 @@ vilaro agents add <name>
 </Note>
 
 <Tip>
-推奨：エージェントが `web_search` を使用できるように、Brave Search APIキーを設定してください（`web_fetch` はキーなしで動作します）。最も簡単な方法：`vilaro configure --section web` を実行すると `tools.web.search.apiKey` が保存されます。ドキュメント：[Webツール](/tools/web)。
+推奨：エージェントが `web_search` を使用できるように、Brave Search APIキーを設定してください（`web_fetch` はキーなしで動作します）。最も簡単な方法：`velaro configure --section web` を実行すると `tools.web.search.apiKey` が保存されます。ドキュメント：[Webツール](/tools/web)。
 </Tip>
 
 ## 関連ドキュメント
 
-- CLIコマンドリファレンス：[`vilaro onboard`](/cli/onboard)
+- CLIコマンドリファレンス：[`velaro onboard`](/cli/onboard)
 - macOSアプリのオンボーディング：[オンボーディング](/start/onboarding)
 - エージェント初回起動の手順：[エージェントブートストラップ](/start/bootstrapping)

@@ -1,15 +1,15 @@
 ---
-summary: "Unified bundle format guide for Codex, Claude, and Cursor bundles in Vilaro"
+summary: "Unified bundle format guide for Codex, Claude, and Cursor bundles in Velaro"
 read_when:
   - You want to install or debug a Codex, Claude, or Cursor-compatible bundle
-  - You need to understand how Vilaro maps bundle content into native features
+  - You need to understand how Velaro maps bundle content into native features
   - You are documenting bundle compatibility or current support limits
 title: "Plugin Bundles"
 ---
 
 # Plugin bundles
 
-Vilaro supports one shared class of external plugin package: **bundle
+Velaro supports one shared class of external plugin package: **bundle
 plugins**.
 
 Today that means three closely related ecosystems:
@@ -18,8 +18,8 @@ Today that means three closely related ecosystems:
 - Claude bundles
 - Cursor bundles
 
-Vilaro shows all of them as `Format: bundle` in `vilaro plugins list`.
-Verbose output and `vilaro plugins info <id>` also show the subtype
+Velaro shows all of them as `Format: bundle` in `velaro plugins list`.
+Verbose output and `velaro plugins info <id>` also show the subtype
 (`codex`, `claude`, or `cursor`).
 
 Related:
@@ -30,22 +30,22 @@ Related:
 
 ## What a bundle is
 
-A bundle is a **content/metadata pack**, not a native in-process Vilaro
+A bundle is a **content/metadata pack**, not a native in-process Velaro
 plugin.
 
-Today, Vilaro does **not** execute bundle runtime code in-process. Instead,
+Today, Velaro does **not** execute bundle runtime code in-process. Instead,
 it detects known bundle files, reads the metadata, and maps supported bundle
-content into native Vilaro surfaces such as skills, hook packs, MCP config,
+content into native Velaro surfaces such as skills, hook packs, MCP config,
 and embedded Pi settings.
 
 That is the main trust boundary:
 
-- native Vilaro plugin: runtime module executes in-process
+- native Velaro plugin: runtime module executes in-process
 - bundle: metadata/content pack, with selective feature mapping
 
 ## Shared bundle model
 
-Codex, Claude, and Cursor bundles are similar enough that Vilaro treats them
+Codex, Claude, and Cursor bundles are similar enough that Velaro treats them
 as one normalized model.
 
 Shared idea:
@@ -55,27 +55,27 @@ Shared idea:
 - optional tool/runtime metadata such as MCP, hooks, agents, or LSP
 - install as a directory or archive, then enable in the normal plugin list
 
-Common Vilaro behavior:
+Common Velaro behavior:
 
 - detect the bundle subtype
 - normalize it into one internal bundle record
-- map supported parts into native Vilaro features
+- map supported parts into native Velaro features
 - report unsupported parts as detected-but-not-wired capabilities
 
 In practice, most users do not need to think about the vendor-specific format
-first. The more useful question is: which bundle surfaces does Vilaro map
+first. The more useful question is: which bundle surfaces does Velaro map
 today?
 
 ## Detection order
 
-Vilaro prefers native Vilaro plugin/package layouts before bundle handling.
+Velaro prefers native Velaro plugin/package layouts before bundle handling.
 
 Practical effect:
 
 - `vilaro.plugin.json` wins over bundle detection
-- package installs with valid `package.json` + `vilaro.extensions` use the
+- package installs with valid `package.json` + `velaro.extensions` use the
   native install path
-- if a directory contains both native and bundle metadata, Vilaro treats it
+- if a directory contains both native and bundle metadata, Velaro treats it
   as native first
 
 That avoids partially installing a dual-format package as a bundle and then
@@ -83,23 +83,23 @@ loading it later as a native plugin.
 
 ## What works today
 
-Vilaro normalizes bundle metadata into one internal bundle record, then maps
+Velaro normalizes bundle metadata into one internal bundle record, then maps
 supported surfaces into existing native behavior.
 
 ### Supported now
 
 #### Skill content
 
-- bundle skill roots load as normal Vilaro skill roots
+- bundle skill roots load as normal Velaro skill roots
 - Claude `commands` roots are treated as additional skill roots
 - Cursor `.cursor/commands` roots are treated as additional skill roots
 
-This means Claude markdown command files work through the normal Vilaro skill
+This means Claude markdown command files work through the normal Velaro skill
 loader. Cursor command markdown works through the same path.
 
 #### Hook packs
 
-- bundle hook roots work **only** when they use the normal Vilaro hook-pack
+- bundle hook roots work **only** when they use the normal Velaro hook-pack
   layout. Today this is primarily the Codex-compatible case:
   - `HOOK.md`
   - `handler.ts` or `handler.js`
@@ -108,13 +108,13 @@ loader. Cursor command markdown works through the same path.
 
 - enabled bundles can contribute MCP server config
 - current runtime wiring is used by the `claude-cli` backend
-- Vilaro merges bundle MCP config into the backend `--mcp-config` file
+- Velaro merges bundle MCP config into the backend `--mcp-config` file
 
 #### Embedded Pi settings
 
 - Claude `settings.json` is imported as default embedded Pi settings when the
   bundle is enabled
-- Vilaro sanitizes shell override keys before applying them
+- Velaro sanitizes shell override keys before applying them
 
 Sanitized keys:
 
@@ -124,7 +124,7 @@ Sanitized keys:
 ### Detected but not executed
 
 These surfaces are detected, shown in bundle capabilities, and may appear in
-diagnostics/info output, but Vilaro does not run them yet:
+diagnostics/info output, but Velaro does not run them yet:
 
 - Claude `agents`
 - Claude `hooks.json` automation
@@ -138,14 +138,14 @@ diagnostics/info output, but Vilaro does not run them yet:
 
 ## Capability reporting
 
-`vilaro plugins info <id>` shows bundle capabilities from the normalized
+`velaro plugins info <id>` shows bundle capabilities from the normalized
 bundle record.
 
 Supported capabilities are loaded quietly. Unsupported capabilities produce a
 warning such as:
 
 ```text
-bundle capability detected but not wired into Vilaro yet: agents
+bundle capability detected but not wired into Velaro yet: agents
 ```
 
 Current exceptions:
@@ -153,13 +153,13 @@ Current exceptions:
 - Claude `commands` is considered supported because it maps to skills
 - Claude `settings` is considered supported because it maps to embedded Pi settings
 - Cursor `commands` is considered supported because it maps to skills
-- bundle MCP is considered supported where Vilaro actually imports it
-- Codex `hooks` is considered supported only for Vilaro hook-pack layouts
+- bundle MCP is considered supported where Velaro actually imports it
+- Codex `hooks` is considered supported only for Velaro hook-pack layouts
 
 ## Format differences
 
 The formats are close, but not byte-for-byte identical. These are the practical
-differences that matter in Vilaro.
+differences that matter in Velaro.
 
 ### Codex
 
@@ -171,17 +171,17 @@ Typical markers:
 - optional `.mcp.json`
 - optional `.app.json`
 
-Codex bundles fit Vilaro best when they use skill roots and Vilaro-style
+Codex bundles fit Velaro best when they use skill roots and Velaro-style
 hook-pack directories.
 
 ### Claude
 
-Vilaro supports both:
+Velaro supports both:
 
 - manifest-based Claude bundles: `.claude-plugin/plugin.json`
 - manifestless Claude bundles that use the default Claude layout
 
-Default Claude layout markers Vilaro recognizes:
+Default Claude layout markers Velaro recognizes:
 
 - `skills/`
 - `commands/`
@@ -217,7 +217,7 @@ Cursor-specific notes:
 
 ## Claude custom paths
 
-Claude bundle manifests can declare custom component paths. Vilaro treats
+Claude bundle manifests can declare custom component paths. Velaro treats
 those paths as **additive**, not replacing defaults.
 
 Currently recognized custom path keys:
@@ -233,9 +233,9 @@ Currently recognized custom path keys:
 Examples:
 
 - default `commands/` plus manifest `commands: "extra-commands"` =>
-  Vilaro scans both
+  Velaro scans both
 - default `skills/` plus manifest `skills: ["team-skills"]` =>
-  Vilaro scans both
+  Velaro scans both
 
 ## Security model
 
@@ -246,7 +246,7 @@ Current behavior:
 - bundle discovery reads files inside the plugin root with boundary checks
 - skills and hook-pack paths must stay inside the plugin root
 - bundle settings files are read with the same boundary checks
-- Vilaro does not execute arbitrary bundle runtime code in-process
+- Velaro does not execute arbitrary bundle runtime code in-process
 
 This makes bundle support safer by default than native plugin modules, but you
 should still treat third-party bundles as trusted content for the features they
@@ -255,23 +255,23 @@ do expose.
 ## Install examples
 
 ```bash
-vilaro plugins install ./my-codex-bundle
-vilaro plugins install ./my-claude-bundle
-vilaro plugins install ./my-cursor-bundle
-vilaro plugins install ./my-bundle.tgz
-vilaro plugins info my-bundle
+velaro plugins install ./my-codex-bundle
+velaro plugins install ./my-claude-bundle
+velaro plugins install ./my-cursor-bundle
+velaro plugins install ./my-bundle.tgz
+velaro plugins info my-bundle
 ```
 
-If the directory is a native Vilaro plugin/package, the native install path
+If the directory is a native Velaro plugin/package, the native install path
 still wins.
 
 ## Troubleshooting
 
 ### Bundle is detected but capabilities do not run
 
-Check `vilaro plugins info <id>`.
+Check `velaro plugins info <id>`.
 
-If the capability is listed but Vilaro says it is not wired yet, that is a
+If the capability is listed but Velaro says it is not wired yet, that is a
 real product limit, not a broken install.
 
 ### Claude command files do not appear
@@ -282,11 +282,11 @@ Make sure the bundle is enabled and the markdown files are inside a detected
 ### Claude settings do not apply
 
 Current support is limited to embedded Pi settings from `settings.json`.
-Vilaro does not treat bundle settings as raw Vilaro config patches.
+Velaro does not treat bundle settings as raw Velaro config patches.
 
 ### Claude hooks do not execute
 
 `hooks/hooks.json` is only detected today.
 
-If you need runnable bundle hooks today, use the normal Vilaro hook-pack
-layout through a supported Codex hook root or ship a native Vilaro plugin.
+If you need runnable bundle hooks today, use the normal Velaro hook-pack
+layout through a supported Codex hook root or ship a native Velaro plugin.

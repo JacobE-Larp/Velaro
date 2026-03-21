@@ -13,15 +13,15 @@ Status: experimental. DMs are supported. The [Capabilities](#capabilities) secti
 
 Zalo ships as a plugin and is not bundled with the core install.
 
-- Install via CLI: `vilaro plugins install @vilaro/zalo`
+- Install via CLI: `velaro plugins install @vilaro/zalo`
 - Or select **Zalo** during setup and confirm the install prompt
 - Details: [Plugins](/tools/plugin)
 
 ## Quick setup (beginner)
 
 1. Install the Zalo plugin:
-   - From a source checkout: `vilaro plugins install ./extensions/zalo`
-   - From npm (if published): `vilaro plugins install @vilaro/zalo`
+   - From a source checkout: `velaro plugins install ./extensions/zalo`
+   - From npm (if published): `velaro plugins install @vilaro/zalo`
    - Or pick **Zalo** in setup and confirm the install prompt
 2. Set the token:
    - Env: `ZALO_BOT_TOKEN=...`
@@ -52,7 +52,7 @@ Minimal config:
 Zalo is a Vietnam-focused messaging app; its Bot API lets the Gateway run a bot for 1:1 conversations.
 It is a good fit for support or notifications where you want deterministic routing back to Zalo.
 
-This page reflects current Vilaro behavior for **Zalo Bot Creator / Marketplace bots**.
+This page reflects current Velaro behavior for **Zalo Bot Creator / Marketplace bots**.
 **Zalo Official Account (OA) bots** are a different Zalo product surface and may behave differently.
 
 - A Zalo Bot API channel owned by the Gateway.
@@ -115,8 +115,8 @@ Multi-account support: use `channels.zalo.accounts` with per-account tokens and 
 
 - Default: `channels.zalo.dmPolicy = "pairing"`. Unknown senders receive a pairing code; messages are ignored until approved (codes expire after 1 hour).
 - Approve via:
-  - `vilaro pairing list zalo`
-  - `vilaro pairing approve zalo <CODE>`
+  - `velaro pairing list zalo`
+  - `velaro pairing approve zalo <CODE>`
 - Pairing is the default token exchange. Details: [Pairing](/channels/pairing)
 - `channels.zalo.allowFrom` accepts numeric user IDs (no username lookup available).
 
@@ -167,7 +167,7 @@ For a quick support snapshot, see [Capabilities](#capabilities). The notes below
 
 ## Capabilities
 
-This table summarizes current **Zalo Bot Creator / Marketplace bot** behavior in Vilaro.
+This table summarizes current **Zalo Bot Creator / Marketplace bot** behavior in Velaro.
 
 | Feature                     | Status                                  |
 | --------------------------- | --------------------------------------- |
@@ -189,15 +189,15 @@ This table summarizes current **Zalo Bot Creator / Marketplace bot** behavior in
 ## Delivery targets (CLI/cron)
 
 - Use a chat id as the target.
-- Example: `vilaro message send --channel zalo --target 123456789 --message "hi"`.
+- Example: `velaro message send --channel zalo --target 123456789 --message "hi"`.
 
 ## Troubleshooting
 
 **Bot doesn't respond:**
 
-- Check that the token is valid: `vilaro channels status --probe`
+- Check that the token is valid: `velaro channels status --probe`
 - Verify the sender is approved (pairing or allowFrom)
-- Check gateway logs: `vilaro logs --follow`
+- Check gateway logs: `velaro logs --follow`
 
 **Webhook not receiving events:**
 

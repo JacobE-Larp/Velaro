@@ -32,7 +32,7 @@ export function collectZalouserStatusIssues(
         accountId,
         kind: "auth",
         message: "Not authenticated (no saved Zalo session).",
-        fix: "Run: vilaro channels login --channel zalouser",
+        fix: "Run: velaro channels login --channel zalouser",
       });
       continue;
     }

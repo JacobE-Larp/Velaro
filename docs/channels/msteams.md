@@ -24,17 +24,17 @@ Explainable: keeps core installs lighter and lets MS Teams dependencies update i
 Install via CLI (npm registry):
 
 ```bash
-vilaro plugins install @vilaro/msteams
+velaro plugins install @vilaro/msteams
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-vilaro plugins install ./extensions/msteams
+velaro plugins install ./extensions/msteams
 ```
 
 If you choose Teams during setup and a git checkout is detected,
-Vilaro will offer the local install path automatically.
+Velaro will offer the local install path automatically.
 
 Details: [Plugins](/tools/plugin)
 
@@ -42,7 +42,7 @@ Details: [Plugins](/tools/plugin)
 
 1. Install the Microsoft Teams plugin.
 2. Create an **Azure Bot** (App ID + client secret + tenant ID).
-3. Configure Vilaro with those credentials.
+3. Configure Velaro with those credentials.
 4. Expose `/api/messages` (port 3978 by default) via a public URL or tunnel.
 5. Install the Teams app package and start the gateway.
 
@@ -66,7 +66,7 @@ Note: group chats are blocked by default (`channels.msteams.groupPolicy: "allowl
 
 ## Goals
 
-- Talk to Vilaro via Teams DMs, group chats, or channels.
+- Talk to Velaro via Teams DMs, group chats, or channels.
 - Keep routing deterministic: replies always go back to the channel they arrived on.
 - Default to safe channel behavior (mentions required unless configured otherwise).
 
@@ -117,7 +117,7 @@ Example:
 - Keys should use stable team IDs and channel conversation IDs.
 - When `groupPolicy="allowlist"` and a teams allowlist is present, only listed teams/channels are accepted (mention‑gated).
 - The configure wizard accepts `Team/Channel` entries and stores them for you.
-- On startup, Vilaro resolves team/channel and user allowlist names to IDs (when Graph permissions allow)
+- On startup, Velaro resolves team/channel and user allowlist names to IDs (when Graph permissions allow)
   and logs the mapping; unresolved team/channel names are kept as typed but ignored for routing by default unless `channels.msteams.dangerouslyAllowNameMatching: true` is enabled.
 
 Example:
@@ -150,7 +150,7 @@ Example:
 
 ## Azure Bot Setup (Prerequisites)
 
-Before configuring Vilaro, you need to create an Azure Bot resource.
+Before configuring Velaro, you need to create an Azure Bot resource.
 
 ### Step 1: Create Azure Bot
 
@@ -159,7 +159,7 @@ Before configuring Vilaro, you need to create an Azure Bot resource.
 
    | Field              | Value                                                  |
    | ------------------ | ------------------------------------------------------ |
-   | **Bot handle**     | Your bot name, e.g., `vilaro-msteams` (must be unique) |
+   | **Bot handle**     | Your bot name, e.g., `velaro-msteams` (must be unique) |
    | **Subscription**   | Select your Azure subscription                         |
    | **Resource group** | Create new or use existing                             |
    | **Pricing tier**   | **Free** for dev/testing                               |
@@ -241,8 +241,8 @@ This is often easier than hand-editing JSON manifests.
 ## Setup (minimal text-only)
 
 1. **Install the Microsoft Teams plugin**
-   - From npm: `vilaro plugins install @vilaro/msteams`
-   - From a local checkout: `vilaro plugins install ./extensions/msteams`
+   - From npm: `velaro plugins install @vilaro/msteams`
+   - From a local checkout: `velaro plugins install ./extensions/msteams`
 
 2. **Bot registration**
    - Create an Azure Bot (see above) and note:
@@ -258,7 +258,7 @@ This is often easier than hand-editing JSON manifests.
    - Create icons: `outline.png` (32x32) and `color.png` (192x192).
    - Zip all three files together: `manifest.json`, `outline.png`, `color.png`.
 
-4. **Configure Vilaro**
+4. **Configure Velaro**
 
    ```json
    {
@@ -318,14 +318,14 @@ Minimal, valid example with the required fields. Replace IDs and URLs.
   "manifestVersion": "1.23",
   "version": "1.0.0",
   "id": "00000000-0000-0000-0000-000000000000",
-  "name": { "short": "Vilaro" },
+  "name": { "short": "Velaro" },
   "developer": {
     "name": "Your Org",
     "websiteUrl": "https://example.com",
     "privacyUrl": "https://example.com/privacy",
     "termsOfUseUrl": "https://example.com/terms"
   },
-  "description": { "short": "Vilaro in Teams", "full": "Vilaro in Teams" },
+  "description": { "short": "Velaro in Teams", "full": "Velaro in Teams" },
   "icons": { "outline": "outline.png", "color": "color.png" },
   "accentColor": "#5B6DEF",
   "bots": [
@@ -437,7 +437,7 @@ Teams delivers messages via HTTP webhook. If processing takes too long (e.g., sl
 - Teams retrying the message (causing duplicates)
 - Dropped replies
 
-Vilaro handles this by returning quickly and sending replies proactively, but very slow responses may still cause issues.
+Velaro handles this by returning quickly and sending replies proactively, but very slow responses may still cause issues.
 
 ### Formatting
 
@@ -525,7 +525,7 @@ Teams recently introduced two channel UI styles over the same underlying data mo
 - **Channels/groups:** Attachments live in M365 storage (SharePoint/OneDrive). The webhook payload only includes an HTML stub, not the actual file bytes. **Graph API permissions are required** to download channel attachments.
 
 Without Graph permissions, channel messages with images will be received as text-only (the image content is not accessible to the bot).
-By default, Vilaro only downloads media from Microsoft/Teams hostnames. Override with `channels.msteams.mediaAllowHosts` (use `["*"]` to allow any host).
+By default, Velaro only downloads media from Microsoft/Teams hostnames. Override with `channels.msteams.mediaAllowHosts` (use `["*"]` to allow any host).
 Authorization headers are only attached for hosts in `channels.msteams.mediaAuthAllowHosts` (defaults to Graph + Bot Framework hosts). Keep this list strict (avoid multi-tenant suffixes).
 
 ## Sending files in group chats
@@ -564,7 +564,7 @@ Bots don't have a personal OneDrive drive (the `/me/drive` Graph API endpoint do
    # Response includes: "id": "contoso.sharepoint.com,guid1,guid2"
    ```
 
-4. **Configure Vilaro:**
+4. **Configure Velaro:**
 
    ```json5
    {
@@ -597,13 +597,13 @@ Per-user sharing is more secure as only the chat participants can access the fil
 
 ### Files stored location
 
-Uploaded files are stored in a `/VilaroShared/` folder in the configured SharePoint site's default document library.
+Uploaded files are stored in a `/VelaroShared/` folder in the configured SharePoint site's default document library.
 
 ## Polls (Adaptive Cards)
 
-Vilaro sends Teams polls as Adaptive Cards (there is no native Teams poll API).
+Velaro sends Teams polls as Adaptive Cards (there is no native Teams poll API).
 
-- CLI: `vilaro message poll --channel msteams --target conversation:<id> ...`
+- CLI: `velaro message poll --channel msteams --target conversation:<id> ...`
 - Votes are recorded by the gateway in `~/.vilaro/msteams-polls.json`.
 - The gateway must stay online to record votes.
 - Polls do not auto-post result summaries yet (inspect the store file if needed).
@@ -632,7 +632,7 @@ The `card` parameter accepts an Adaptive Card JSON object. When `card` is provid
 **CLI:**
 
 ```bash
-vilaro message send --channel msteams \
+velaro message send --channel msteams \
   --target "conversation:19:abc...@thread.tacv2" \
   --card '{"type":"AdaptiveCard","version":"1.5","body":[{"type":"TextBlock","text":"Hello!"}]}'
 ```
@@ -654,16 +654,16 @@ MSTeams targets use prefixes to distinguish between users and conversations:
 
 ```bash
 # Send to a user by ID
-vilaro message send --channel msteams --target "user:40a1a0ed-..." --message "Hello"
+velaro message send --channel msteams --target "user:40a1a0ed-..." --message "Hello"
 
 # Send to a user by display name (triggers Graph API lookup)
-vilaro message send --channel msteams --target "user:John Smith" --message "Hello"
+velaro message send --channel msteams --target "user:John Smith" --message "Hello"
 
 # Send to a group chat or channel
-vilaro message send --channel msteams --target "conversation:19:abc...@thread.tacv2" --message "Hello"
+velaro message send --channel msteams --target "conversation:19:abc...@thread.tacv2" --message "Hello"
 
 # Send an Adaptive Card to a conversation
-vilaro message send --channel msteams --target "conversation:19:abc...@thread.tacv2" \
+velaro message send --channel msteams --target "conversation:19:abc...@thread.tacv2" \
   --card '{"type":"AdaptiveCard","version":"1.5","body":[{"type":"TextBlock","text":"Hello"}]}'
 ```
 

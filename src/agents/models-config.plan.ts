@@ -86,7 +86,7 @@ async function resolveProvidersForMode(params: {
   });
 }
 
-export async function planVilaroModelsJson(params: {
+export async function planVelaroModelsJson(params: {
   cfg: VilaroConfig;
   sourceConfigForSecrets?: VilaroConfig;
   agentDir: string;

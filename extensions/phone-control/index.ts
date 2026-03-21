@@ -286,7 +286,7 @@ function formatStatus(state: ArmStateFile | null): string {
 export default function register(api: VilaroPluginApi) {
   let expiryInterval: ReturnType<typeof setInterval> | null = null;
 
-  const timerService: VilaroPluginService = {
+  const timerService: VelaroPluginService = {
     id: "phone-control-expiry",
     start: async (ctx) => {
       const statePath = resolveStatePath(ctx.stateDir);

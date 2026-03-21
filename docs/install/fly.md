@@ -1,15 +1,15 @@
 ---
 title: Fly.io
-description: Deploy Vilaro on Fly.io
-summary: "Step-by-step Fly.io deployment for Vilaro with persistent storage and HTTPS"
+description: Deploy Velaro on Fly.io
+summary: "Step-by-step Fly.io deployment for Velaro with persistent storage and HTTPS"
 read_when:
-  - Deploying Vilaro on Fly.io
+  - Deploying Velaro on Fly.io
   - Setting up Fly volumes, secrets, and first-run config
 ---
 
 # Fly.io Deployment
 
-**Goal:** Vilaro Gateway running on a [Fly.io](https://fly.io) machine with persistent storage, automatic HTTPS, and Discord/channel access.
+**Goal:** Velaro Gateway running on a [Fly.io](https://fly.io) machine with persistent storage, automatic HTTPS, and Discord/channel access.
 
 ## What you need
 
@@ -30,10 +30,10 @@ read_when:
 ```bash
 # Clone the repo
 git clone https://github.com/vilaro/vilaro.git
-cd vilaro
+cd velaro
 
 # Create a new Fly app (pick your own name)
-fly apps create my-vilaro
+fly apps create my-velaro
 
 # Create a persistent volume (1GB is usually enough)
 fly volumes create vilaro_data --size 1 --region iad
@@ -48,7 +48,7 @@ Edit `fly.toml` to match your app name and requirements.
 **Security note:** The default config exposes a public URL. For a hardened deployment with no public IP, see [Private Deployment](#private-deployment-hardened) or use `fly.private.toml`.
 
 ```toml
-app = "my-vilaro"  # Your app name
+app = "my-velaro"  # Your app name
 primary_region = "iad"
 
 [build]
@@ -382,18 +382,18 @@ Or convert an existing deployment:
 
 ```bash
 # List current IPs
-fly ips list -a my-vilaro
+fly ips list -a my-velaro
 
 # Release public IPs
-fly ips release <public-ipv4> -a my-vilaro
-fly ips release <public-ipv6> -a my-vilaro
+fly ips release <public-ipv4> -a my-velaro
+fly ips release <public-ipv6> -a my-velaro
 
 # Switch to private config so future deploys don't re-allocate public IPs
 # (remove [http_service] or deploy with the private template)
 fly deploy -c fly.private.toml
 
 # Allocate private-only IPv6
-fly ips allocate-v6 --private -a my-vilaro
+fly ips allocate-v6 --private -a my-velaro
 ```
 
 After this, `fly ips list` should show only a `private` type IP:
@@ -411,7 +411,7 @@ Since there's no public URL, use one of these methods:
 
 ```bash
 # Forward local port 3000 to the app
-fly proxy 3000:3000 -a my-vilaro
+fly proxy 3000:3000 -a my-velaro
 
 # Then open http://localhost:3000 in browser
 ```
@@ -429,7 +429,7 @@ fly wireguard create
 **Option 3: SSH only**
 
 ```bash
-fly ssh console -a my-vilaro
+fly ssh console -a my-velaro
 ```
 
 ### Webhooks with private deployment

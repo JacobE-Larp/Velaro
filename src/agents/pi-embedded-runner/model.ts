@@ -8,7 +8,7 @@ import {
   runProviderDynamicModel,
   normalizeProviderResolvedModelWithPlugin,
 } from "../../plugins/provider-runtime.js";
-import { resolveVilaroAgentDir } from "../agent-paths.js";
+import { resolveVelaroAgentDir } from "../agent-paths.js";
 import { DEFAULT_CONTEXT_TOKENS } from "../defaults.js";
 import { buildModelAliasLines } from "../model-alias-lines.js";
 import { isSecretRefHeaderValueMarker } from "../model-auth-markers.js";
@@ -319,7 +319,7 @@ export function resolveModel(
   authStorage: AuthStorage;
   modelRegistry: ModelRegistry;
 } {
-  const resolvedAgentDir = agentDir ?? resolveVilaroAgentDir();
+  const resolvedAgentDir = agentDir ?? resolveVelaroAgentDir();
   const authStorage = discoverAuthStorage(resolvedAgentDir);
   const modelRegistry = discoverModels(authStorage, resolvedAgentDir);
   const model = resolveModelWithRegistry({
@@ -351,7 +351,7 @@ export async function resolveModelAsync(
   authStorage: AuthStorage;
   modelRegistry: ModelRegistry;
 }> {
-  const resolvedAgentDir = agentDir ?? resolveVilaroAgentDir();
+  const resolvedAgentDir = agentDir ?? resolveVelaroAgentDir();
   const authStorage = discoverAuthStorage(resolvedAgentDir);
   const modelRegistry = discoverModels(authStorage, resolvedAgentDir);
   const explicitModel = resolveExplicitModelWithRegistry({
@@ -423,11 +423,11 @@ export async function resolveModelAsync(
 const LOCAL_PROVIDER_HINTS: Record<string, string> = {
   ollama:
     "Ollama requires authentication to be registered as a provider. " +
-    'Set OLLAMA_API_KEY="ollama-local" (any value works) or run "vilaro configure". ' +
+    'Set OLLAMA_API_KEY="ollama-local" (any value works) or run "velaro configure". ' +
     "See: https://docs.vilaro.ai/providers/ollama",
   vllm:
     "vLLM requires authentication to be registered as a provider. " +
-    'Set VLLM_API_KEY (any value works) or run "vilaro configure". ' +
+    'Set VLLM_API_KEY (any value works) or run "velaro configure". ' +
     "See: https://docs.vilaro.ai/providers/vllm",
 };
 

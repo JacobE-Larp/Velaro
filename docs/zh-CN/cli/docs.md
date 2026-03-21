@@ -1,7 +1,7 @@
 ---
 read_when:
-  - 你想从终端搜索实时 Vilaro 文档
-summary: "`vilaro docs` 的 CLI 参考（搜索实时文档索引）"
+  - 你想从终端搜索实时 Velaro 文档
+summary: "`velaro docs` 的 CLI 参考（搜索实时文档索引）"
 title: docs
 x-i18n:
   generated_at: "2026-02-03T07:44:50Z"
@@ -12,11 +12,11 @@ x-i18n:
   workflow: 15
 ---
 
-# `vilaro docs`
+# `velaro docs`
 
 搜索实时文档索引。
 
 ```bash
-vilaro docs browser extension
-vilaro docs sandbox allowHostControl
+velaro docs browser extension
+velaro docs sandbox allowHostControl
 ```

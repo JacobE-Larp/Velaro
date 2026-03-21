@@ -55,8 +55,8 @@ x-i18n:
 - 每次加载配置时都会运行 Doctor（默认 dry-run）。
 - 如果配置无效：
   - 打印摘要 + 可操作的错误。
-  - 指示：`vilaro doctor --fix`。
-- `vilaro doctor --fix`：
+  - 指示：`velaro doctor --fix`。
+- `velaro doctor --fix`：
   - 应用迁移。
   - 移除未知键。
   - 写入更新后的配置。
@@ -65,14 +65,14 @@ x-i18n:
 
 允许的命令（仅诊断）：
 
-- `vilaro doctor`
-- `vilaro logs`
-- `vilaro health`
-- `vilaro help`
-- `vilaro status`
-- `vilaro gateway status`
+- `velaro doctor`
+- `velaro logs`
+- `velaro health`
+- `velaro help`
+- `velaro status`
+- `velaro gateway status`
 
-其他所有命令必须硬失败并显示："Config invalid. Run `vilaro doctor --fix`."
+其他所有命令必须硬失败并显示："Config invalid. Run `velaro doctor --fix`."
 
 ## 错误用户体验格式
 

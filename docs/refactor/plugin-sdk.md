@@ -34,13 +34,13 @@ Contents (examples):
 
 Delivery:
 
-- Publish as `vilaro/plugin-sdk` (or export from core under `vilaro/plugin-sdk`).
+- Publish as `velaro/plugin-sdk` (or export from core under `velaro/plugin-sdk`).
 - Semver with explicit stability guarantees.
 
 ### 2) Plugin Runtime (execution surface, injected)
 
 Scope: everything that touches core runtime behavior.
-Accessed via `VilaroPluginApi.runtime` so plugins never import `src/**`.
+Accessed via `VelaroPluginApi.runtime` so plugins never import `src/**`.
 
 Proposed surface (minimal but complete):
 
@@ -49,8 +49,8 @@ export type PluginRuntime = {
   channel: {
     text: {
       chunkMarkdownText(text: string, limit: number): string[];
-      resolveTextChunkLimit(cfg: VilaroConfig, channel: string, accountId?: string): number;
-      hasControlCommand(text: string, cfg: VilaroConfig): boolean;
+      resolveTextChunkLimit(cfg: VelaroConfig, channel: string, accountId?: string): number;
+      hasControlCommand(text: string, cfg: VelaroConfig): boolean;
     };
     reply: {
       dispatchReplyWithBufferedBlockDispatcher(params: {
@@ -94,12 +94,12 @@ export type PluginRuntime = {
       ): Promise<{ path: string; contentType?: string }>;
     };
     mentions: {
-      buildMentionRegexes(cfg: VilaroConfig, agentId?: string): RegExp[];
+      buildMentionRegexes(cfg: VelaroConfig, agentId?: string): RegExp[];
       matchesMentionPatterns(text: string, regexes: RegExp[]): boolean;
     };
     groups: {
       resolveGroupPolicy(
-        cfg: VilaroConfig,
+        cfg: VelaroConfig,
         channel: string,
         accountId: string,
         groupId: string,
@@ -110,7 +110,7 @@ export type PluginRuntime = {
         defaultConfig?: unknown;
       };
       resolveRequireMention(
-        cfg: VilaroConfig,
+        cfg: VelaroConfig,
         channel: string,
         accountId: string,
         groupId: string,
@@ -125,7 +125,7 @@ export type PluginRuntime = {
         onFlush: (entries: T[]) => Promise<void>;
         onError?: (err: unknown) => void;
       }): { push: (v: T) => void; flush: () => Promise<void> };
-      resolveInboundDebounceMs(cfg: VilaroConfig, channel: string): number;
+      resolveInboundDebounceMs(cfg: VelaroConfig, channel: string): number;
     };
     commands: {
       resolveCommandAuthorizedFromAuthorizers(params: {
@@ -139,7 +139,7 @@ export type PluginRuntime = {
     getChildLogger(name: string): PluginLogger;
   };
   state: {
-    resolveStateDir(cfg: VilaroConfig): string;
+    resolveStateDir(cfg: VelaroConfig): string;
   };
 };
 ```
@@ -154,8 +154,8 @@ Notes:
 
 ### Phase 0: scaffolding
 
-- Introduce `vilaro/plugin-sdk`.
-- Add `api.runtime` to `VilaroPluginApi` with the surface above.
+- Introduce `velaro/plugin-sdk`.
+- Add `api.runtime` to `VelaroPluginApi` with the surface above.
 - Maintain existing imports during a transition window (deprecation warnings).
 
 ### Phase 1: bridge cleanup (low risk)
@@ -189,7 +189,7 @@ Notes:
 
 - SDK: semver, published, documented changes.
 - Runtime: versioned per core release. Add `api.runtime.version`.
-- Plugins declare a required runtime range (e.g., `vilaroRuntime: ">=2026.2.0"`).
+- Plugins declare a required runtime range (e.g., `velaroRuntime: ">=2026.2.0"`).
 
 ## Testing strategy
 

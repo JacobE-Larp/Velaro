@@ -8,7 +8,7 @@ export function markVilaroExecEnv<T extends Record<string, string | undefined>>(
   };
 }
 
-export function ensureVilaroExecMarkerOnProcess(
+export function ensureVelaroExecMarkerOnProcess(
   env: NodeJS.ProcessEnv = process.env,
 ): NodeJS.ProcessEnv {
   env[VILARO_CLI_ENV_VAR] = VILARO_CLI_ENV_VALUE;

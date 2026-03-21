@@ -69,21 +69,21 @@ export function renderGatewayServiceStopHints(env: NodeJS.ProcessEnv = process.e
   switch (process.platform) {
     case "darwin":
       return [
-        `Tip: ${formatCliCommand("vilaro gateway stop")}`,
+        `Tip: ${formatCliCommand("velaro gateway stop")}`,
         `Or: launchctl bootout gui/$UID/${resolveGatewayLaunchAgentLabel(profile)}`,
       ];
     case "linux":
       return [
-        `Tip: ${formatCliCommand("vilaro gateway stop")}`,
+        `Tip: ${formatCliCommand("velaro gateway stop")}`,
         `Or: systemctl --user stop ${resolveGatewaySystemdServiceName(profile)}.service`,
       ];
     case "win32":
       return [
-        `Tip: ${formatCliCommand("vilaro gateway stop")}`,
+        `Tip: ${formatCliCommand("velaro gateway stop")}`,
         `Or: schtasks /End /TN "${resolveGatewayWindowsTaskName(profile)}"`,
       ];
     default:
-      return [`Tip: ${formatCliCommand("vilaro gateway stop")}`];
+      return [`Tip: ${formatCliCommand("velaro gateway stop")}`];
   }
 }
 

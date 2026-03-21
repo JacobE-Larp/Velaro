@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `vilaro webhooks` (webhook helpers + Gmail Pub/Sub)"
+summary: "CLI reference for `velaro webhooks` (webhook helpers + Gmail Pub/Sub)"
 read_when:
-  - You want to wire Gmail Pub/Sub events into Vilaro
+  - You want to wire Gmail Pub/Sub events into Velaro
   - You want webhook helper commands
 title: "webhooks"
 ---
 
-# `vilaro webhooks`
+# `velaro webhooks`
 
 Webhook helpers and integrations (Gmail Pub/Sub, webhook helpers).
 
@@ -18,8 +18,8 @@ Related:
 ## Gmail
 
 ```bash
-vilaro webhooks gmail setup --account you@example.com
-vilaro webhooks gmail run
+velaro webhooks gmail setup --account you@example.com
+velaro webhooks gmail run
 ```
 
 See [Gmail Pub/Sub documentation](/automation/gmail-pubsub) for details.

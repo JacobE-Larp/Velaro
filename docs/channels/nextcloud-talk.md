@@ -16,17 +16,17 @@ Nextcloud Talk ships as a plugin and is not bundled with the core install.
 Install via CLI (npm registry):
 
 ```bash
-vilaro plugins install @vilaro/nextcloud-talk
+velaro plugins install @vilaro/nextcloud-talk
 ```
 
 Local checkout (when running from a git repo):
 
 ```bash
-vilaro plugins install ./extensions/nextcloud-talk
+velaro plugins install ./extensions/nextcloud-talk
 ```
 
 If you choose Nextcloud Talk during setup and a git checkout is detected,
-Vilaro will offer the local install path automatically.
+Velaro will offer the local install path automatically.
 
 Details: [Plugins](/tools/plugin)
 
@@ -36,11 +36,11 @@ Details: [Plugins](/tools/plugin)
 2. On your Nextcloud server, create a bot:
 
    ```bash
-   ./occ talk:bot:install "Vilaro" "<shared-secret>" "<webhook-url>" --feature reaction
+   ./occ talk:bot:install "Velaro" "<shared-secret>" "<webhook-url>" --feature reaction
    ```
 
 3. Enable the bot in the target room settings.
-4. Configure Vilaro:
+4. Configure Velaro:
    - Config: `channels.nextcloud-talk.baseUrl` + `channels.nextcloud-talk.botSecret`
    - Or env: `NEXTCLOUD_TALK_BOT_SECRET` (default account only)
 5. Restart the gateway (or finish setup).
@@ -71,8 +71,8 @@ Minimal config:
 
 - Default: `channels.nextcloud-talk.dmPolicy = "pairing"`. Unknown senders get a pairing code.
 - Approve via:
-  - `vilaro pairing list nextcloud-talk`
-  - `vilaro pairing approve nextcloud-talk <CODE>`
+  - `velaro pairing list nextcloud-talk`
+  - `velaro pairing approve nextcloud-talk <CODE>`
 - Public DMs: `channels.nextcloud-talk.dmPolicy="open"` plus `channels.nextcloud-talk.allowFrom=["*"]`.
 - `allowFrom` matches Nextcloud user IDs only; display names are ignored.
 

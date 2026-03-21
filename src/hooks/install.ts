@@ -112,7 +112,7 @@ export function resolveHookInstallDir(hookId: string, hooksDir?: string): string
   return targetDirResult.path;
 }
 
-async function ensureVilaroHooks(manifest: HookPackageManifest) {
+async function ensureVelaroHooks(manifest: HookPackageManifest) {
   const hooks = manifest[MANIFEST_KEY]?.hooks;
   if (!Array.isArray(hooks)) {
     throw new Error("package.json missing vilaro.hooks");
@@ -230,7 +230,7 @@ async function installHookPackageFromDir(
 
   let hookEntries: string[];
   try {
-    hookEntries = await ensureVilaroHooks(manifest);
+    hookEntries = await ensureVelaroHooks(manifest);
   } catch (err) {
     return { ok: false, error: String(err) };
   }

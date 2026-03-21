@@ -1,5 +1,5 @@
 ---
-summary: "Overview of Vilaro onboarding options and flows"
+summary: "Overview of Velaro onboarding options and flows"
 read_when:
   - Choosing an onboarding path
   - Setting up a new environment
@@ -9,7 +9,7 @@ sidebarTitle: "Onboarding Overview"
 
 # Onboarding Overview
 
-Vilaro supports multiple onboarding paths depending on where the Gateway runs
+Velaro supports multiple onboarding paths depending on where the Gateway runs
 and how you prefer to configure providers.
 
 ## Choose your onboarding path
@@ -22,18 +22,18 @@ and how you prefer to configure providers.
 Run the wizard in a terminal:
 
 ```bash
-vilaro onboard
+velaro onboard
 ```
 
 Use the CLI wizard when you want full control of the Gateway, workspace,
 channels, and skills. Docs:
 
 - [Setup Wizard (CLI)](/start/wizard)
-- [`vilaro onboard` command](/cli/onboard)
+- [`velaro onboard` command](/cli/onboard)
 
 ## macOS app onboarding
 
-Use the Vilaro app when you want a fully guided setup on macOS. Docs:
+Use the Velaro app when you want a fully guided setup on macOS. Docs:
 
 - [Onboarding (macOS App)](/start/onboarding)
 

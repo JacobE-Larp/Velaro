@@ -15,7 +15,7 @@ Quick provider overview + examples: [/concepts/model-providers](/concepts/model-
 
 ## How model selection works
 
-Vilaro selects models in this order:
+Velaro selects models in this order:
 
 1. **Primary** model (`agents.defaults.model.primary` or `agents.defaults.model`).
 2. **Fallbacks** in `agents.defaults.model.fallbacks` (in order).
@@ -24,7 +24,7 @@ Vilaro selects models in this order:
 
 Related:
 
-- `agents.defaults.models` is the allowlist/catalog of models Vilaro can use (plus aliases).
+- `agents.defaults.models` is the allowlist/catalog of models Velaro can use (plus aliases).
 - `agents.defaults.imageModel` is used **only when** the primary model can’t accept images.
 - Per-agent defaults can override `agents.defaults.model` via `agents.list[].model` plus bindings (see [/concepts/multi-agent](/concepts/multi-agent)).
 
@@ -39,7 +39,7 @@ Related:
 If you don’t want to hand-edit config, run the setup wizard:
 
 ```bash
-vilaro onboard
+velaro onboard
 ```
 
 It can set up model + auth for common providers, including **OpenAI Code (Codex)
@@ -62,7 +62,7 @@ Provider configuration examples (including OpenCode) live in
 
 If `agents.defaults.models` is set, it becomes the **allowlist** for `/model` and for
 session overrides. When a user selects a model that isn’t in that allowlist,
-Vilaro returns:
+Velaro returns:
 
 ```
 Model "provider/model" is not allowed. Use /model to list available models.
@@ -109,34 +109,34 @@ Notes:
 - `/model status` is the detailed view (auth candidates and, when configured, provider endpoint `baseUrl` + `api` mode).
 - Model refs are parsed by splitting on the **first** `/`. Use `provider/model` when typing `/model <ref>`.
 - If the model ID itself contains `/` (OpenRouter-style), you must include the provider prefix (example: `/model openrouter/moonshotai/kimi-k2`).
-- If you omit the provider, Vilaro treats the input as an alias or a model for the **default provider** (only works when there is no `/` in the model ID).
+- If you omit the provider, Velaro treats the input as an alias or a model for the **default provider** (only works when there is no `/` in the model ID).
 
 Full command behavior/config: [Slash commands](/tools/slash-commands).
 
 ## CLI commands
 
 ```bash
-vilaro models list
-vilaro models status
-vilaro models set <provider/model>
-vilaro models set-image <provider/model>
+velaro models list
+velaro models status
+velaro models set <provider/model>
+velaro models set-image <provider/model>
 
-vilaro models aliases list
-vilaro models aliases add <alias> <provider/model>
-vilaro models aliases remove <alias>
+velaro models aliases list
+velaro models aliases add <alias> <provider/model>
+velaro models aliases remove <alias>
 
-vilaro models fallbacks list
-vilaro models fallbacks add <provider/model>
-vilaro models fallbacks remove <provider/model>
-vilaro models fallbacks clear
+velaro models fallbacks list
+velaro models fallbacks add <provider/model>
+velaro models fallbacks remove <provider/model>
+velaro models fallbacks clear
 
-vilaro models image-fallbacks list
-vilaro models image-fallbacks add <provider/model>
-vilaro models image-fallbacks remove <provider/model>
-vilaro models image-fallbacks clear
+velaro models image-fallbacks list
+velaro models image-fallbacks add <provider/model>
+velaro models image-fallbacks remove <provider/model>
+velaro models image-fallbacks clear
 ```
 
-`vilaro models` (no subcommand) is a shortcut for `models status`.
+`velaro models` (no subcommand) is a shortcut for `models status`.
 
 ### `models list`
 
@@ -166,12 +166,12 @@ Example (Anthropic setup-token):
 
 ```bash
 claude setup-token
-vilaro models status
+velaro models status
 ```
 
 ## Scanning (OpenRouter free models)
 
-`vilaro models scan` inspects OpenRouter’s **free model catalog** and can
+`velaro models scan` inspects OpenRouter’s **free model catalog** and can
 optionally probe models for tool and image support.
 
 Key flags:
@@ -219,5 +219,5 @@ Merge mode precedence for matching provider IDs:
 - Empty or missing agent `apiKey`/`baseUrl` fall back to config `models.providers`.
 - Other provider fields are refreshed from config and normalized catalog data.
 
-Marker persistence is source-authoritative: Vilaro writes markers from the active source config snapshot (pre-resolution), not from resolved runtime secret values.
-This applies whenever Vilaro regenerates `models.json`, including command-driven paths like `vilaro agent`.
+Marker persistence is source-authoritative: Velaro writes markers from the active source config snapshot (pre-resolution), not from resolved runtime secret values.
+This applies whenever Velaro regenerates `models.json`, including command-driven paths like `velaro agent`.

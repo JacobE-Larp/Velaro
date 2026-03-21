@@ -169,7 +169,7 @@ vi.mock("../model-auth.js", () => ({
 }));
 
 vi.mock("../models-config.js", () => ({
-  ensureVilaroModelsJson: vi.fn(async () => {}),
+  ensureVelaroModelsJson: vi.fn(async () => {}),
 }));
 
 vi.mock("../context-window-guard.js", () => ({
@@ -200,7 +200,7 @@ vi.mock(import("../../utils/message-channel.js"), async (importOriginal) => {
 });
 
 vi.mock("../agent-paths.js", () => ({
-  resolveVilaroAgentDir: vi.fn(() => "/tmp/agent-dir"),
+  resolveVelaroAgentDir: vi.fn(() => "/tmp/agent-dir"),
 }));
 
 vi.mock("../defaults.js", () => ({

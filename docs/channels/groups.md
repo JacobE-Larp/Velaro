@@ -7,19 +7,19 @@ title: "Groups"
 
 # Groups
 
-Vilaro treats group chats consistently across surfaces: WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Microsoft Teams, Zalo.
+Velaro treats group chats consistently across surfaces: WhatsApp, Telegram, Discord, Slack, Signal, iMessage, Microsoft Teams, Zalo.
 
 ## Beginner intro (2 minutes)
 
-Vilaro “lives” on your own messaging accounts. There is no separate WhatsApp bot user.
-If **you** are in a group, Vilaro can see that group and respond there.
+Velaro “lives” on your own messaging accounts. There is no separate WhatsApp bot user.
+If **you** are in a group, Velaro can see that group and respond there.
 
 Default behavior:
 
 - Groups are restricted (`groupPolicy: "allowlist"`).
 - Replies require a mention unless you explicitly disable mention gating.
 
-Translation: allowlisted senders can trigger Vilaro by mentioning it.
+Translation: allowlisted senders can trigger Velaro by mentioning it.
 
 > TL;DR
 >
@@ -232,7 +232,7 @@ Replying to a bot message counts as an implicit mention (when the channel suppor
       {
         id: "main",
         groupChat: {
-          mentionPatterns: ["@vilaro", "vilaro", "\\+15555550123"],
+          mentionPatterns: ["@velaro", "velaro", "\\+15555550123"],
           historyLimit: 50,
         },
       },

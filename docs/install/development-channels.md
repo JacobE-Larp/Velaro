@@ -10,7 +10,7 @@ title: "Development Channels"
 
 Last updated: 2026-01-21
 
-Vilaro ships three update channels:
+Velaro ships three update channels:
 
 - **stable**: npm dist-tag `latest`.
 - **beta**: npm dist-tag `beta` (builds under test).
@@ -24,9 +24,9 @@ without changing the version number — dist-tags are the source of truth for np
 Git checkout:
 
 ```bash
-vilaro update --channel stable
-vilaro update --channel beta
-vilaro update --channel dev
+velaro update --channel stable
+velaro update --channel beta
+velaro update --channel dev
 ```
 
 - `stable`/`beta` check out the latest matching tag (often the same tag).
@@ -35,17 +35,17 @@ vilaro update --channel dev
 npm/pnpm global install:
 
 ```bash
-vilaro update --channel stable
-vilaro update --channel beta
-vilaro update --channel dev
+velaro update --channel stable
+velaro update --channel beta
+velaro update --channel dev
 ```
 
 This updates via the corresponding npm dist-tag (`latest`, `beta`, `dev`).
 
-When you **explicitly** switch channels with `--channel`, Vilaro also aligns
+When you **explicitly** switch channels with `--channel`, Velaro also aligns
 the install method:
 
-- `dev` ensures a git checkout (default `~/vilaro`, override with `VILARO_GIT_DIR`),
+- `dev` ensures a git checkout (default `~/velaro`, override with `VILARO_GIT_DIR`),
   updates it, and installs the global CLI from that checkout.
 - `stable`/`beta` installs from npm using the matching dist-tag.
 
@@ -53,7 +53,7 @@ Tip: if you want stable + dev in parallel, keep two clones and point your gatewa
 
 ## Plugins and channels
 
-When you switch channels with `vilaro update`, Vilaro also syncs plugin sources:
+When you switch channels with `velaro update`, Velaro also syncs plugin sources:
 
 - `dev` prefers bundled plugins from the git checkout.
 - `stable` and `beta` restore npm-installed plugin packages.

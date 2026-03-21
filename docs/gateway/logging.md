@@ -10,14 +10,14 @@ title: "Logging"
 
 For a user-facing overview (CLI + Control UI + config), see [/logging](/logging).
 
-Vilaro has two log “surfaces”:
+Velaro has two log “surfaces”:
 
 - **Console output** (what you see in the terminal / Debug UI).
 - **File logs** (JSON lines) written by the gateway logger.
 
 ## File-based logger
 
-- Default rolling log file is under `/tmp/vilaro/` (one file per day): `vilaro-YYYY-MM-DD.log`
+- Default rolling log file is under `/tmp/velaro/` (one file per day): `velaro-YYYY-MM-DD.log`
   - Date uses the gateway host's local timezone.
 - The log file path and level can be configured via `~/.vilaro/vilaro.json`:
   - `logging.file`
@@ -29,7 +29,7 @@ The Control UI Logs tab tails this file via the gateway (`logs.tail`).
 CLI can do the same:
 
 ```bash
-vilaro logs --follow
+velaro logs --follow
 ```
 
 **Verbose vs. log levels**
@@ -73,7 +73,7 @@ The gateway prints WebSocket protocol logs in two modes:
 
 ### WS log style
 
-`vilaro gateway` supports a per-gateway style switch:
+`velaro gateway` supports a per-gateway style switch:
 
 - `--ws-log auto` (default): normal mode is optimized; verbose mode uses compact output
 - `--ws-log compact`: compact output (paired request/response) when verbose
@@ -84,13 +84,13 @@ Examples:
 
 ```bash
 # optimized (only errors/slow)
-vilaro gateway
+velaro gateway
 
 # show all WS traffic (paired)
-vilaro gateway --verbose --ws-log compact
+velaro gateway --verbose --ws-log compact
 
 # show all WS traffic (full meta)
-vilaro gateway --verbose --ws-log full
+velaro gateway --verbose --ws-log full
 ```
 
 ## Console formatting (subsystem logging)

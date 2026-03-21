@@ -1,7 +1,7 @@
 ---
 read_when:
   - 你需要多个隔离的智能体（工作区 + 路由 + 认证）
-summary: "`vilaro agents` 的 CLI 参考（列出/添加/删除/设置身份）"
+summary: "`velaro agents` 的 CLI 参考（列出/添加/删除/设置身份）"
 title: agents
 x-i18n:
   generated_at: "2026-02-01T19:58:38Z"
@@ -12,7 +12,7 @@ x-i18n:
   workflow: 14
 ---
 
-# `vilaro agents`
+# `velaro agents`
 
 管理隔离的智能体（工作区 + 认证 + 路由）。
 
@@ -24,11 +24,11 @@ x-i18n:
 ## 示例
 
 ```bash
-vilaro agents list
-vilaro agents add work --workspace ~/.vilaro/workspace-work
-vilaro agents set-identity --workspace ~/.vilaro/workspace --from-identity
-vilaro agents set-identity --agent main --avatar avatars/vilaro.png
-vilaro agents delete work
+velaro agents list
+velaro agents add work --workspace ~/.vilaro/workspace-work
+velaro agents set-identity --workspace ~/.vilaro/workspace --from-identity
+velaro agents set-identity --agent main --avatar avatars/velaro.png
+velaro agents delete work
 ```
 
 ## 身份文件
@@ -52,13 +52,13 @@ vilaro agents delete work
 从 `IDENTITY.md` 加载：
 
 ```bash
-vilaro agents set-identity --workspace ~/.vilaro/workspace --from-identity
+velaro agents set-identity --workspace ~/.vilaro/workspace --from-identity
 ```
 
 显式覆盖字段：
 
 ```bash
-vilaro agents set-identity --agent main --name "Vilaro" --emoji "" --avatar avatars/vilaro.png
+velaro agents set-identity --agent main --name "Velaro" --emoji "" --avatar avatars/velaro.png
 ```
 
 配置示例：
@@ -70,10 +70,10 @@ vilaro agents set-identity --agent main --name "Vilaro" --emoji "" --avatar avat
       {
         id: "main",
         identity: {
-          name: "Vilaro",
-          theme: "space vilaro",
+          name: "Velaro",
+          theme: "space velaro",
           emoji: "",
-          avatar: "avatars/vilaro.png",
+          avatar: "avatars/velaro.png",
         },
       },
     ],

@@ -11,9 +11,9 @@ title: "ACP Agents"
 
 # ACP agents
 
-[Agent Client Protocol (ACP)](https://agentclientprotocol.com/) sessions let Vilaro run external coding harnesses (for example Pi, Claude Code, Codex, OpenCode, and Gemini CLI) through an ACP backend plugin.
+[Agent Client Protocol (ACP)](https://agentclientprotocol.com/) sessions let Velaro run external coding harnesses (for example Pi, Claude Code, Codex, OpenCode, and Gemini CLI) through an ACP backend plugin.
 
-If you ask Vilaro in plain language to "run this in Codex" or "start Claude Code in a thread", Vilaro should route that request to the ACP runtime (not the native sub-agent runtime).
+If you ask Velaro in plain language to "run this in Codex" or "start Claude Code in a thread", Velaro should route that request to the ACP runtime (not the native sub-agent runtime).
 
 ## Fast operator flow
 
@@ -42,7 +42,7 @@ Examples of natural requests:
 - "Run this as a one-shot Claude Code ACP session and summarize the result."
 - "Use Gemini CLI for this task in a thread, then keep follow-ups in that same thread."
 
-What Vilaro should do:
+What Velaro should do:
 
 1. Pick `runtime: "acp"`.
 2. Resolve the requested harness target (`agentId`, for example `codex`).
@@ -51,11 +51,11 @@ What Vilaro should do:
 
 ## ACP versus sub-agents
 
-Use ACP when you want an external harness runtime. Use sub-agents when you want Vilaro-native delegated runs.
+Use ACP when you want an external harness runtime. Use sub-agents when you want Velaro-native delegated runs.
 
 | Area          | ACP session                           | Sub-agent run                      |
 | ------------- | ------------------------------------- | ---------------------------------- |
-| Runtime       | ACP backend plugin (for example acpx) | Vilaro native sub-agent runtime    |
+| Runtime       | ACP backend plugin (for example acpx) | Velaro native sub-agent runtime    |
 | Session key   | `agent:<agentId>:acp:<uuid>`          | `agent:<agentId>:subagent:<uuid>`  |
 | Main commands | `/acp ...`                            | `/subagents ...`                   |
 | Spawn tool    | `sessions_spawn` with `runtime:"acp"` | `sessions_spawn` (default runtime) |
@@ -66,12 +66,12 @@ See also [Sub-agents](/tools/subagents).
 
 When thread bindings are enabled for a channel adapter, ACP sessions can be bound to threads:
 
-- Vilaro binds a thread to a target ACP session.
+- Velaro binds a thread to a target ACP session.
 - Follow-up messages in that thread route to the bound ACP session.
 - ACP output is delivered back to the same thread.
 - Unfocus/close/archive/idle-timeout or max-age expiry removes the binding.
 
-Thread binding support is adapter-specific. If the active channel adapter does not support thread bindings, Vilaro returns a clear unsupported/unavailable message.
+Thread binding support is adapter-specific. If the active channel adapter does not support thread bindings, Velaro returns a clear unsupported/unavailable message.
 
 Required feature flags for thread-bound ACP:
 
@@ -99,7 +99,7 @@ For non-ephemeral workflows, configure persistent ACP bindings in top-level `bin
 - `bindings[].match` identifies the target conversation:
   - Discord channel or thread: `match.channel="discord"` + `match.peer.id="<channelOrThreadId>"`
   - Telegram forum topic: `match.channel="telegram"` + `match.peer.id="<chatId>:topic:<topicId>"`
-- `bindings[].agentId` is the owning Vilaro agent id.
+- `bindings[].agentId` is the owning Velaro agent id.
 - Optional ACP overrides live under `bindings[].acp`:
   - `mode` (`persistent` or `oneshot`)
   - `label`
@@ -136,7 +136,7 @@ Example:
             agent: "codex",
             backend: "acpx",
             mode: "persistent",
-            cwd: "/workspace/vilaro",
+            cwd: "/workspace/velaro",
           },
         },
       },
@@ -204,7 +204,7 @@ Example:
 
 Behavior:
 
-- Vilaro ensures the configured ACP session exists before use.
+- Velaro ensures the configured ACP session exists before use.
 - Messages in that channel or topic route to the configured ACP session.
 - In bound conversations, `/new` and `/reset` reset the same ACP session key in place.
 - Temporary runtime bindings (for example created by thread-focus flows) still apply where present.
@@ -228,7 +228,7 @@ Use `runtime: "acp"` to start an ACP session from an agent turn or tool call.
 Notes:
 
 - `runtime` defaults to `subagent`, so set `runtime: "acp"` explicitly for ACP sessions.
-- If `agentId` is omitted, Vilaro uses `acp.defaultAgent` when configured.
+- If `agentId` is omitted, Velaro uses `acp.defaultAgent` when configured.
 - `mode: "session"` requires `thread: true` to keep a persistent bound conversation.
 
 Interface details:
@@ -239,7 +239,7 @@ Interface details:
 - `thread` (optional, default `false`): request thread binding flow where supported.
 - `mode` (optional): `run` (one-shot) or `session` (persistent).
   - default is `run`
-  - if `thread: true` and mode omitted, Vilaro may default to persistent behavior per runtime path
+  - if `thread: true` and mode omitted, Velaro may default to persistent behavior per runtime path
   - `mode: "session"` requires `thread: true`
 - `cwd` (optional): requested runtime working directory (validated by backend/runtime policy).
 - `label` (optional): operator-facing label used in session/banner text.
@@ -269,7 +269,7 @@ Common use cases:
 Notes:
 
 - `resumeSessionId` requires `runtime: "acp"` — returns an error if used with the sub-agent runtime.
-- `resumeSessionId` restores the upstream ACP conversation history; `thread` and `mode` still apply normally to the new Vilaro session you are creating, so `mode: "session"` still requires `thread: true`.
+- `resumeSessionId` restores the upstream ACP conversation history; `thread` and `mode` still apply normally to the new Velaro session you are creating, so `mode: "session"` still requires `thread: true`.
 - The target agent must support `session/load` (Codex and Claude Code do).
 - If the session ID isn't found, the spawn fails with a clear error — no silent fallback to a new session.
 
@@ -315,7 +315,7 @@ Notes:
 
 ## Sandbox compatibility
 
-ACP sessions currently run on the host runtime, not inside the Vilaro sandbox.
+ACP sessions currently run on the host runtime, not inside the Velaro sandbox.
 
 Current limitations:
 
@@ -358,7 +358,7 @@ Resolution order:
 2. Current thread binding (if this conversation/thread is bound to an ACP session)
 3. Current requester session fallback
 
-If no target resolves, Vilaro returns a clear error (`Unable to resolve session target: ...`).
+If no target resolves, Velaro returns a clear error (`Unable to resolve session target: ...`).
 
 ## Spawn thread modes
 
@@ -399,7 +399,7 @@ Available command family:
 
 `/acp status` shows the effective runtime options and, when available, both runtime-level and backend-level session identifiers.
 
-Some controls depend on backend capabilities. If a backend does not support a control, Vilaro returns a clear unsupported-control error.
+Some controls depend on backend capabilities. If a backend does not support a control, Velaro returns a clear unsupported-control error.
 
 ## ACP command cookbook
 
@@ -448,9 +448,9 @@ Current acpx built-in harness aliases:
 - `gemini`
 - `kimi`
 
-When Vilaro uses the acpx backend, prefer these values for `agentId` unless your acpx config defines custom agent aliases.
+When Velaro uses the acpx backend, prefer these values for `agentId` unless your acpx config defines custom agent aliases.
 
-Direct acpx CLI usage can also target arbitrary adapters via `--agent <command>`, but that raw escape hatch is an acpx CLI feature (not the normal Vilaro `agentId` path).
+Direct acpx CLI usage can also target arbitrary adapters via `--agent <command>`, but that raw escape hatch is an acpx CLI feature (not the normal Velaro `agentId` path).
 
 ## Required config
 
@@ -510,14 +510,14 @@ See [Configuration Reference](/gateway/configuration-reference).
 Install and enable plugin:
 
 ```bash
-vilaro plugins install acpx
-vilaro config set plugins.entries.acpx.enabled true
+velaro plugins install acpx
+velaro config set plugins.entries.acpx.enabled true
 ```
 
 Local workspace install during development:
 
 ```bash
-vilaro plugins install ./extensions/acpx
+velaro plugins install ./extensions/acpx
 ```
 
 Then verify backend health:
@@ -558,10 +558,10 @@ You can override command/version in plugin config:
 Notes:
 
 - `command` accepts an absolute path, relative path, or command name (`acpx`).
-- Relative paths resolve from Vilaro workspace directory.
+- Relative paths resolve from Velaro workspace directory.
 - `expectedVersion: "any"` disables strict version matching.
 - When `command` points to a custom binary/path, plugin-local auto-install is disabled.
-- Vilaro startup remains non-blocking while the backend health check runs.
+- Velaro startup remains non-blocking while the backend health check runs.
 
 See [Plugins](/tools/plugin).
 
@@ -593,13 +593,13 @@ Controls what happens when a permission prompt would be shown but no interactive
 Set via plugin config:
 
 ```bash
-vilaro config set plugins.entries.acpx.config.permissionMode approve-all
-vilaro config set plugins.entries.acpx.config.nonInteractivePermissions fail
+velaro config set plugins.entries.acpx.config.permissionMode approve-all
+velaro config set plugins.entries.acpx.config.nonInteractivePermissions fail
 ```
 
 Restart the gateway after changing these values.
 
-> **Important:** Vilaro currently defaults to `permissionMode=approve-reads` and `nonInteractivePermissions=fail`. In non-interactive ACP sessions, any write or exec that triggers a permission prompt can fail with `AcpRuntimeError: Permission prompt unavailable in non-interactive mode`.
+> **Important:** Velaro currently defaults to `permissionMode=approve-reads` and `nonInteractivePermissions=fail`. In non-interactive ACP sessions, any write or exec that triggers a permission prompt can fail with `AcpRuntimeError: Permission prompt unavailable in non-interactive mode`.
 >
 > If you need to restrict permissions, set `nonInteractivePermissions` to `deny` so sessions degrade gracefully instead of crashing.
 

@@ -166,7 +166,7 @@ export function loadShellEnvFallback(opts: ShellEnvFallbackOptions): ShellEnvFal
     exec: opts.exec,
   });
   if (!probe.ok) {
-    logger.warn(`[vilaro] shell env fallback failed: ${probe.error}`);
+    logger.warn(`[velaro] shell env fallback failed: ${probe.error}`);
     lastAppliedKeys = [];
     return { ok: false, error: probe.error, applied: [] };
   }

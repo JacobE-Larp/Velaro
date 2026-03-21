@@ -97,7 +97,7 @@ export function displaySummary(
   if (mismatchCount > 0) {
     runtime.log(`\n⚠️  ${mismatchCount} runtime(s) with config mismatch detected.`);
     runtime.log(
-      `   Run '${formatCliCommand("vilaro sandbox recreate --all")}' to update all runtimes.`,
+      `   Run '${formatCliCommand("velaro sandbox recreate --all")}' to update all runtimes.`,
     );
   }
 }

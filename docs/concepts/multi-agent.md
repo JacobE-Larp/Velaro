@@ -47,7 +47,7 @@ reach other host locations unless sandboxing is enabled. See
 
 ### Single-agent mode (default)
 
-If you do nothing, Vilaro runs a single agent:
+If you do nothing, Velaro runs a single agent:
 
 - `agentId` defaults to **`main`**.
 - Sessions are keyed as `agent:main:<mainKey>`.
@@ -59,7 +59,7 @@ If you do nothing, Vilaro runs a single agent:
 Use the agent wizard to add a new isolated agent:
 
 ```bash
-vilaro agents add work
+velaro agents add work
 ```
 
 Then add `bindings` (or let the wizard do it) to route inbound messages.
@@ -67,7 +67,7 @@ Then add `bindings` (or let the wizard do it) to route inbound messages.
 Verify with:
 
 ```bash
-vilaro agents list --bindings
+velaro agents list --bindings
 ```
 
 ## Quick start
@@ -78,8 +78,8 @@ vilaro agents list --bindings
 Use the wizard or create workspaces manually:
 
 ```bash
-vilaro agents add coding
-vilaro agents add social
+velaro agents add coding
+velaro agents add social
 ```
 
 Each agent gets its own workspace with `SOUL.md`, `AGENTS.md`, and optional `USER.md`, plus a dedicated `agentDir` and session store under `~/.vilaro/agents/<agentId>`.
@@ -95,7 +95,7 @@ Create one account per agent on your preferred channels:
 - WhatsApp: link each phone number per account.
 
 ```bash
-vilaro channels login --channel whatsapp --account work
+velaro channels login --channel whatsapp --account work
 ```
 
 See channel guides: [Discord](/channels/discord), [Telegram](/channels/telegram), [WhatsApp](/channels/whatsapp).
@@ -111,9 +111,9 @@ Add agents under `agents.list`, channel accounts under `channels.<channel>.accou
   <Step title="Restart and verify">
 
 ```bash
-vilaro gateway restart
-vilaro agents list --bindings
-vilaro channels status --probe
+velaro gateway restart
+velaro agents list --bindings
+velaro channels status --probe
 ```
 
   </Step>
@@ -189,7 +189,7 @@ Important account-scope detail:
 
 - A binding that omits `accountId` matches the default account only.
 - Use `accountId: "*"` for a channel-wide fallback across all accounts.
-- If you later add the same binding for the same agent with an explicit account id, Vilaro upgrades the existing channel-only binding to account-scoped instead of duplicating it.
+- If you later add the same binding for the same agent with an explicit account id, Velaro upgrades the existing channel-only binding to account-scoped instead of duplicating it.
 
 ## Multiple accounts / phone numbers
 
@@ -198,7 +198,7 @@ each login. Each `accountId` can be routed to a different agent, so one server c
 multiple phone numbers without mixing sessions.
 
 If you want a channel-wide default account when `accountId` is omitted, set
-`channels.<channel>.defaultAccount` (optional). When unset, Vilaro falls back
+`channels.<channel>.defaultAccount` (optional). When unset, Velaro falls back
 to `default` if present, otherwise the first configured account id (sorted).
 
 Common channels supporting this pattern include:
@@ -309,8 +309,8 @@ Notes:
 Link each account before starting the gateway:
 
 ```bash
-vilaro channels login --channel whatsapp --account personal
-vilaro channels login --channel whatsapp --account biz
+velaro channels login --channel whatsapp --account personal
+velaro channels login --channel whatsapp --account biz
 ```
 
 `~/.vilaro/vilaro.json` (JSON5):

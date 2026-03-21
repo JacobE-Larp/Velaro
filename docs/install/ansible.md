@@ -1,5 +1,5 @@
 ---
-summary: "Automated, hardened Vilaro installation with Ansible, Tailscale VPN, and firewall isolation"
+summary: "Automated, hardened Velaro installation with Ansible, Tailscale VPN, and firewall isolation"
 read_when:
   - You want automated server deployment with security hardening
   - You need firewall-isolated setup with VPN access
@@ -9,7 +9,7 @@ title: "Ansible"
 
 # Ansible Installation
 
-The recommended way to deploy Vilaro to production servers is via **[vilaro-ansible](https://github.com/vilaro/vilaro-ansible)** — an automated installer with security-first architecture.
+The recommended way to deploy Velaro to production servers is via **[velaro-ansible](https://github.com/vilaro/vilaro-ansible)** — an automated installer with security-first architecture.
 
 ## Quick Start
 
@@ -19,9 +19,9 @@ One-command install:
 curl -fsSL https://raw.githubusercontent.com/vilaro/vilaro-ansible/main/install.sh | bash
 ```
 
-> **📦 Full guide: [github.com/vilaro/vilaro-ansible](https://github.com/vilaro/vilaro-ansible)**
+> **📦 Full guide: [github.com/velaro/velaro-ansible](https://github.com/vilaro/vilaro-ansible)**
 >
-> The vilaro-ansible repo is the source of truth for Ansible deployment. This page is a quick overview.
+> The velaro-ansible repo is the source of truth for Ansible deployment. This page is a quick overview.
 
 ## What You Get
 
@@ -47,22 +47,22 @@ The Ansible playbook installs and configures:
 2. **UFW firewall** (SSH + Tailscale ports only)
 3. **Docker CE + Compose V2** (for agent sandboxes)
 4. **Node.js 24 + pnpm** (runtime dependencies; Node 22 LTS, currently `22.16+`, remains supported for compatibility)
-5. **Vilaro** (host-based, not containerized)
+5. **Velaro** (host-based, not containerized)
 6. **Systemd service** (auto-start with security hardening)
 
 Note: The gateway runs **directly on the host** (not in Docker), but agent sandboxes use Docker for isolation. See [Sandboxing](/gateway/sandboxing) for details.
 
 ## Post-Install Setup
 
-After installation completes, switch to the vilaro user:
+After installation completes, switch to the velaro user:
 
 ```bash
-sudo -i -u vilaro
+sudo -i -u velaro
 ```
 
 The post-install script will guide you through:
 
-1. **Onboarding wizard**: Configure Vilaro settings
+1. **Onboarding wizard**: Configure Velaro settings
 2. **Provider login**: Connect WhatsApp/Telegram/Discord/Signal
 3. **Gateway testing**: Verify the installation
 4. **Tailscale setup**: Connect to your VPN mesh
@@ -71,17 +71,17 @@ The post-install script will guide you through:
 
 ```bash
 # Check service status
-sudo systemctl status vilaro
+sudo systemctl status velaro
 
 # View live logs
-sudo journalctl -u vilaro -f
+sudo journalctl -u velaro -f
 
 # Restart gateway
-sudo systemctl restart vilaro
+sudo systemctl restart velaro
 
-# Provider login (run as vilaro user)
-sudo -i -u vilaro
-vilaro channels login
+# Provider login (run as velaro user)
+sudo -i -u velaro
+velaro channels login
 ```
 
 ## Security Architecture
@@ -119,7 +119,7 @@ sudo apt update && sudo apt install -y ansible git
 
 # 2. Clone repository
 git clone https://github.com/vilaro/vilaro-ansible.git
-cd vilaro-ansible
+cd velaro-ansible
 
 # 3. Install Ansible collections
 ansible-galaxy collection install -r requirements.yml
@@ -127,18 +127,18 @@ ansible-galaxy collection install -r requirements.yml
 # 4. Run playbook
 ./run-playbook.sh
 
-# Or run directly (then manually execute /tmp/vilaro-setup.sh after)
+# Or run directly (then manually execute /tmp/velaro-setup.sh after)
 # ansible-playbook playbook.yml --ask-become-pass
 ```
 
-## Updating Vilaro
+## Updating Velaro
 
-The Ansible installer sets up Vilaro for manual updates. See [Updating](/install/updating) for the standard update flow.
+The Ansible installer sets up Velaro for manual updates. See [Updating](/install/updating) for the standard update flow.
 
 To re-run the Ansible playbook (e.g., for configuration changes):
 
 ```bash
-cd vilaro-ansible
+cd velaro-ansible
 ./run-playbook.sh
 ```
 
@@ -158,14 +158,14 @@ If you're locked out:
 
 ```bash
 # Check logs
-sudo journalctl -u vilaro -n 100
+sudo journalctl -u velaro -n 100
 
 # Verify permissions
-sudo ls -la /opt/vilaro
+sudo ls -la /opt/velaro
 
 # Test manual start
-sudo -i -u vilaro
-cd ~/vilaro
+sudo -i -u velaro
+cd ~/velaro
 pnpm start
 ```
 
@@ -176,20 +176,20 @@ pnpm start
 sudo systemctl status docker
 
 # Check sandbox image
-sudo docker images | grep vilaro-sandbox
+sudo docker images | grep velaro-sandbox
 
 # Build sandbox image if missing
-cd /opt/vilaro/vilaro
-sudo -u vilaro ./scripts/sandbox-setup.sh
+cd /opt/velaro/velaro
+sudo -u velaro ./scripts/sandbox-setup.sh
 ```
 
 ### Provider login fails
 
-Make sure you're running as the `vilaro` user:
+Make sure you're running as the `velaro` user:
 
 ```bash
-sudo -i -u vilaro
-vilaro channels login
+sudo -i -u velaro
+velaro channels login
 ```
 
 ## Advanced Configuration
@@ -202,7 +202,7 @@ For detailed security architecture and troubleshooting:
 
 ## Related
 
-- [vilaro-ansible](https://github.com/vilaro/vilaro-ansible) — full deployment guide
+- [velaro-ansible](https://github.com/vilaro/vilaro-ansible) — full deployment guide
 - [Docker](/install/docker) — containerized gateway setup
 - [Sandboxing](/gateway/sandboxing) — agent sandbox configuration
 - [Multi-Agent Sandbox & Tools](/tools/multi-agent-sandbox-tools) — per-agent isolation

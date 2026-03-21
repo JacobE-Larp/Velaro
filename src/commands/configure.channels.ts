@@ -25,7 +25,7 @@ export async function removeChannelConfigWizard(
       note(
         [
           "No channel config found in vilaro.json.",
-          `Tip: \`${formatCliCommand("vilaro channels status")}\` shows what is configured and enabled.`,
+          `Tip: \`${formatCliCommand("velaro channels status")}\` shows what is configured and enabled.`,
         ].join("\n"),
         "Remove channel",
       );

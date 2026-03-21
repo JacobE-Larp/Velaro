@@ -1,14 +1,14 @@
 ---
 summary: "Zalo personal account support via native zca-js (QR login), capabilities, and configuration"
 read_when:
-  - Setting up Zalo Personal for Vilaro
+  - Setting up Zalo Personal for Velaro
   - Debugging Zalo Personal login or message flow
 title: "Zalo Personal"
 ---
 
 # Zalo Personal (unofficial)
 
-Status: experimental. This integration automates a **personal Zalo account** via native `zca-js` inside Vilaro.
+Status: experimental. This integration automates a **personal Zalo account** via native `zca-js` inside Velaro.
 
 > **Warning:** This is an unofficial integration and may result in account suspension/ban. Use at your own risk.
 
@@ -16,8 +16,8 @@ Status: experimental. This integration automates a **personal Zalo account** via
 
 Zalo Personal ships as a plugin and is not bundled with the core install.
 
-- Install via CLI: `vilaro plugins install @vilaro/zalouser`
-- Or from a source checkout: `vilaro plugins install ./extensions/zalouser`
+- Install via CLI: `velaro plugins install @vilaro/zalouser`
+- Or from a source checkout: `velaro plugins install ./extensions/zalouser`
 - Details: [Plugins](/tools/plugin)
 
 No external `zca`/`openzca` CLI binary is required.
@@ -26,7 +26,7 @@ No external `zca`/`openzca` CLI binary is required.
 
 1. Install the plugin (see above).
 2. Login (QR, on the Gateway machine):
-   - `vilaro channels login --channel zalouser`
+   - `velaro channels login --channel zalouser`
    - Scan the QR code with the Zalo mobile app.
 3. Enable the channel:
 
@@ -60,9 +60,9 @@ Channel id is `zalouser` to make it explicit this automates a **personal Zalo us
 Use the directory CLI to discover peers/groups and their IDs:
 
 ```bash
-vilaro directory self --channel zalouser
-vilaro directory peers list --channel zalouser --query "name"
-vilaro directory groups list --channel zalouser --query "work"
+velaro directory self --channel zalouser
+velaro directory peers list --channel zalouser --query "name"
+velaro directory groups list --channel zalouser --query "work"
 ```
 
 ## Limits
@@ -78,8 +78,8 @@ vilaro directory groups list --channel zalouser --query "work"
 
 Approve via:
 
-- `vilaro pairing list zalouser`
-- `vilaro pairing approve zalouser <code>`
+- `velaro pairing list zalouser`
+- `velaro pairing approve zalouser <code>`
 
 ## Group access (optional)
 
@@ -90,7 +90,7 @@ Approve via:
   - `channels.zalouser.groupAllowFrom` (controls which senders in allowed groups can trigger the bot)
 - Block all groups: `channels.zalouser.groupPolicy = "disabled"`.
 - The configure wizard can prompt for group allowlists.
-- On startup, Vilaro resolves group/user names in allowlists to IDs and logs the mapping.
+- On startup, Velaro resolves group/user names in allowlists to IDs and logs the mapping.
 - Group allowlist matching is ID-only by default. Unresolved names are ignored for auth unless `channels.zalouser.dangerouslyAllowNameMatching: true` is enabled.
 - `channels.zalouser.dangerouslyAllowNameMatching: true` is a break-glass compatibility mode that re-enables mutable group-name matching.
 - If `groupAllowFrom` is unset, runtime falls back to `allowFrom` for group sender checks.
@@ -119,7 +119,7 @@ Example:
 - Resolution order: exact group id/name -> normalized group slug -> `*` -> default (`true`).
 - This applies both to allowlisted groups and open group mode.
 - Authorized control commands (for example `/new`) can bypass mention gating.
-- When a group message is skipped because mention is required, Vilaro stores it as pending group history and includes it on the next processed group message.
+- When a group message is skipped because mention is required, Velaro stores it as pending group history and includes it on the next processed group message.
 - Group history limit defaults to `messages.groupChat.historyLimit` (fallback `50`). You can override per account with `channels.zalouser.historyLimit`.
 
 Example:
@@ -140,7 +140,7 @@ Example:
 
 ## Multi-account
 
-Accounts map to `zalouser` profiles in Vilaro state. Example:
+Accounts map to `zalouser` profiles in Velaro state. Example:
 
 ```json5
 {
@@ -158,18 +158,18 @@ Accounts map to `zalouser` profiles in Vilaro state. Example:
 
 ## Typing, reactions, and delivery acknowledgements
 
-- Vilaro sends a typing event before dispatching a reply (best-effort).
+- Velaro sends a typing event before dispatching a reply (best-effort).
 - Message reaction action `react` is supported for `zalouser` in channel actions.
   - Use `remove: true` to remove a specific reaction emoji from a message.
   - Reaction semantics: [Reactions](/tools/reactions)
-- For inbound messages that include event metadata, Vilaro sends delivered + seen acknowledgements (best-effort).
+- For inbound messages that include event metadata, Velaro sends delivered + seen acknowledgements (best-effort).
 
 ## Troubleshooting
 
 **Login doesn't stick:**
 
-- `vilaro channels status --probe`
-- Re-login: `vilaro channels logout --channel zalouser && vilaro channels login --channel zalouser`
+- `velaro channels status --probe`
+- Re-login: `velaro channels logout --channel zalouser && velaro channels login --channel zalouser`
 
 **Allowlist/group name didn't resolve:**
 
@@ -178,4 +178,4 @@ Accounts map to `zalouser` profiles in Vilaro state. Example:
 **Upgraded from old CLI-based setup:**
 
 - Remove any old external `zca` process assumptions.
-- The channel now runs fully in Vilaro without external CLI binaries.
+- The channel now runs fully in Velaro without external CLI binaries.

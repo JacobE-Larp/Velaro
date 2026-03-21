@@ -40,12 +40,12 @@ function isDisabledByEnv() {
 
 function safeServiceName(name: string) {
   const trimmed = name.trim();
-  return trimmed.length > 0 ? trimmed : "Vilaro";
+  return trimmed.length > 0 ? trimmed : "Velaro";
 }
 
 function prettifyInstanceName(name: string) {
   const normalized = name.trim().replace(/\s+/g, " ");
-  return normalized.replace(/\s+\(Vilaro\)\s*$/i, "").trim() || normalized;
+  return normalized.replace(/\s+\(Velaro\)\s*$/i, "").trim() || normalized;
 }
 
 type BonjourService = import("@homebridge/ciao").CiaoService;
@@ -109,16 +109,16 @@ export async function startGatewayBonjourAdvertiser(
   const hostnameRaw =
     process.env.VILARO_MDNS_HOSTNAME?.trim() ||
     process.env.VILARO_MDNS_HOSTNAME?.trim() ||
-    "vilaro";
+    "velaro";
   const hostname =
     hostnameRaw
       .replace(/\.local$/i, "")
       .split(".")[0]
-      .trim() || "vilaro";
+      .trim() || "velaro";
   const instanceName =
     typeof opts.instanceName === "string" && opts.instanceName.trim()
       ? opts.instanceName.trim()
-      : `${hostname} (Vilaro)`;
+      : `${hostname} (Velaro)`;
   const displayName = prettifyInstanceName(instanceName);
 
   const txtBase: Record<string, string> = {

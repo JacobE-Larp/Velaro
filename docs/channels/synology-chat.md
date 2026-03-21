@@ -1,7 +1,7 @@
 ---
-summary: "Synology Chat webhook setup and Vilaro config"
+summary: "Synology Chat webhook setup and Velaro config"
 read_when:
-  - Setting up Synology Chat with Vilaro
+  - Setting up Synology Chat with Velaro
   - Debugging Synology Chat webhook routing
 title: "Synology Chat"
 ---
@@ -19,7 +19,7 @@ Synology Chat is plugin-based and not part of the default core channel install.
 Install from a local checkout:
 
 ```bash
-vilaro plugins install ./extensions/synology-chat
+velaro plugins install ./extensions/synology-chat
 ```
 
 Details: [Plugins](/tools/plugin)
@@ -27,17 +27,17 @@ Details: [Plugins](/tools/plugin)
 ## Quick setup
 
 1. Install and enable the Synology Chat plugin.
-   - `vilaro onboard` now shows Synology Chat in the same channel setup list as `vilaro channels add`.
-   - Non-interactive setup: `vilaro channels add --channel synology-chat --token <token> --url <incoming-webhook-url>`
+   - `velaro onboard` now shows Synology Chat in the same channel setup list as `velaro channels add`.
+   - Non-interactive setup: `velaro channels add --channel synology-chat --token <token> --url <incoming-webhook-url>`
 2. In Synology Chat integrations:
    - Create an incoming webhook and copy its URL.
    - Create an outgoing webhook with your secret token.
-3. Point the outgoing webhook URL to your Vilaro gateway:
+3. Point the outgoing webhook URL to your Velaro gateway:
    - `https://gateway-host/webhook/synology` by default.
    - Or your custom `channels.synology-chat.webhookPath`.
-4. Finish setup in Vilaro.
-   - Guided: `vilaro onboard`
-   - Direct: `vilaro channels add --channel synology-chat --token <token> --url <incoming-webhook-url>`
+4. Finish setup in Velaro.
+   - Guided: `velaro onboard`
+   - Direct: `velaro channels add --channel synology-chat --token <token> --url <incoming-webhook-url>`
 5. Restart gateway and send a DM to the Synology Chat bot.
 
 Minimal config:
@@ -80,8 +80,8 @@ Config values override env vars.
 - `dmPolicy: "open"` allows any sender.
 - `dmPolicy: "disabled"` blocks DMs.
 - Pairing approvals work with:
-  - `vilaro pairing list synology-chat`
-  - `vilaro pairing approve synology-chat <CODE>`
+  - `velaro pairing list synology-chat`
+  - `velaro pairing approve synology-chat <CODE>`
 
 ## Outbound delivery
 
@@ -90,8 +90,8 @@ Use numeric Synology Chat user IDs as targets.
 Examples:
 
 ```bash
-vilaro message send --channel synology-chat --target 123456 --text "Hello from Vilaro"
-vilaro message send --channel synology-chat --target synology-chat:123456 --text "Hello again"
+velaro message send --channel synology-chat --target 123456 --text "Hello from Velaro"
+velaro message send --channel synology-chat --target synology-chat:123456 --text "Hello again"
 ```
 
 Media sends are supported by URL-based file delivery.

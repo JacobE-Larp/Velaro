@@ -2,7 +2,7 @@ import { resolveAgentWorkspaceDir, resolveDefaultAgentId } from "../agents/agent
 import { listPotentialConfiguredChannelIds } from "../channels/config-presence.js";
 import { loadConfig } from "../config/config.js";
 import { createSubsystemLogger } from "../logging.js";
-import { loadVilaroPlugins } from "../plugins/loader.js";
+import { loadVelaroPlugins } from "../plugins/loader.js";
 import { loadPluginManifestRegistry } from "../plugins/manifest-registry.js";
 import { getActivePluginRegistry } from "../plugins/runtime.js";
 import type { PluginLogger } from "../plugins/types.js";
@@ -77,7 +77,7 @@ export function ensurePluginRegistryLoaded(options?: { scope?: PluginRegistrySco
     error: (msg) => log.error(msg),
     debug: (msg) => log.debug(msg),
   };
-  loadVilaroPlugins({
+  loadVelaroPlugins({
     config,
     workspaceDir,
     logger,

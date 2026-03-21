@@ -14,30 +14,30 @@ type CommandOptions = Record<string, unknown>;
 
 const SANDBOX_EXAMPLES = {
   main: [
-    ["vilaro sandbox list", "List all sandbox containers."],
-    ["vilaro sandbox list --browser", "List only browser containers."],
-    ["vilaro sandbox recreate --all", "Recreate all containers."],
-    ["vilaro sandbox recreate --session main", "Recreate a specific session."],
-    ["vilaro sandbox recreate --agent mybot", "Recreate agent containers."],
-    ["vilaro sandbox explain", "Explain effective sandbox config."],
+    ["velaro sandbox list", "List all sandbox containers."],
+    ["velaro sandbox list --browser", "List only browser containers."],
+    ["velaro sandbox recreate --all", "Recreate all containers."],
+    ["velaro sandbox recreate --session main", "Recreate a specific session."],
+    ["velaro sandbox recreate --agent mybot", "Recreate agent containers."],
+    ["velaro sandbox explain", "Explain effective sandbox config."],
   ],
   list: [
-    ["vilaro sandbox list", "List all sandbox containers."],
-    ["vilaro sandbox list --browser", "List only browser containers."],
-    ["vilaro sandbox list --json", "JSON output."],
+    ["velaro sandbox list", "List all sandbox containers."],
+    ["velaro sandbox list --browser", "List only browser containers."],
+    ["velaro sandbox list --json", "JSON output."],
   ],
   recreate: [
-    ["vilaro sandbox recreate --all", "Recreate all containers."],
-    ["vilaro sandbox recreate --session main", "Recreate a specific session."],
-    ["vilaro sandbox recreate --agent mybot", "Recreate a specific agent (includes sub-agents)."],
-    ["vilaro sandbox recreate --browser --all", "Recreate only browser containers."],
-    ["vilaro sandbox recreate --all --force", "Skip confirmation."],
+    ["velaro sandbox recreate --all", "Recreate all containers."],
+    ["velaro sandbox recreate --session main", "Recreate a specific session."],
+    ["velaro sandbox recreate --agent mybot", "Recreate a specific agent (includes sub-agents)."],
+    ["velaro sandbox recreate --browser --all", "Recreate only browser containers."],
+    ["velaro sandbox recreate --all --force", "Skip confirmation."],
   ],
   explain: [
-    ["vilaro sandbox explain", "Show effective sandbox config."],
-    ["vilaro sandbox explain --session agent:main:main", "Explain a specific session."],
-    ["vilaro sandbox explain --agent work", "Explain an agent sandbox."],
-    ["vilaro sandbox explain --json", "JSON output."],
+    ["velaro sandbox explain", "Show effective sandbox config."],
+    ["velaro sandbox explain --session agent:main:main", "Explain a specific session."],
+    ["velaro sandbox explain --agent work", "Explain an agent sandbox."],
+    ["velaro sandbox explain --json", "JSON output."],
   ],
 } as const;
 

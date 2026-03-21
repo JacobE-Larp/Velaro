@@ -22,7 +22,7 @@ import { appendAllowedValuesHint, summarizeAllowedValues } from "./allowed-value
 import { applyAgentDefaults, applyModelDefaults, applySessionDefaults } from "./defaults.js";
 import { findLegacyConfigIssues } from "./legacy.js";
 import type { VilaroConfig, ConfigValidationIssue } from "./types.js";
-import { VilaroSchema } from "./zod-schema.js";
+import { VelaroSchema } from "./zod-schema.js";
 
 const LEGACY_REMOVED_PLUGIN_IDS = new Set(["google-antigravity-auth", "google-gemini-cli-auth"]);
 
@@ -239,7 +239,7 @@ export function validateConfigObjectRaw(
       })),
     };
   }
-  const validated = VilaroSchema.safeParse(raw);
+  const validated = VelaroSchema.safeParse(raw);
   if (!validated.success) {
     return {
       ok: false,
@@ -597,7 +597,7 @@ function validateConfigObjectWithPluginsBase(
           }
         }
       } else if (record.format === "bundle") {
-        // Compatible bundles currently expose no native Vilaro config schema.
+        // Compatible bundles currently expose no native Velaro config schema.
         // Treat them as schema-less capability packs rather than failing validation.
       } else {
         issues.push({

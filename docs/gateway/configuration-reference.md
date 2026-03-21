@@ -1,7 +1,7 @@
 ---
 title: "Configuration Reference"
 description: "Complete field-by-field reference for ~/.vilaro/vilaro.json"
-summary: "Complete reference for every Vilaro config key, defaults, and channel settings"
+summary: "Complete reference for every Velaro config key, defaults, and channel settings"
 read_when:
   - You need exact field-level config semantics or defaults
   - You are validating channel, model, gateway, or tool config blocks
@@ -11,7 +11,7 @@ read_when:
 
 Every field available in `~/.vilaro/vilaro.json`. For a task-oriented overview, see [Configuration](/gateway/configuration).
 
-Config format is **JSON5** (comments + trailing commas allowed). All fields are optional — Vilaro uses safe defaults when omitted.
+Config format is **JSON5** (comments + trailing commas allowed). All fields are optional — Velaro uses safe defaults when omitted.
 
 ---
 
@@ -144,7 +144,7 @@ WhatsApp runs through the gateway's web channel (Baileys Web). It starts automat
 
 - Outbound commands default to account `default` if present; otherwise the first configured account id (sorted).
 - Optional `channels.whatsapp.defaultAccount` overrides that fallback default account selection when it matches a configured account id.
-- Legacy single-account Baileys auth dir is migrated by `vilaro doctor` into `whatsapp/default`.
+- Legacy single-account Baileys auth dir is migrated by `velaro doctor` into `whatsapp/default`.
 - Per-account overrides: `channels.whatsapp.accounts.<id>.sendReadReceipts`, `channels.whatsapp.accounts.<id>.dmPolicy`, `channels.whatsapp.accounts.<id>.allowFrom`.
 
 </Accordion>
@@ -205,7 +205,7 @@ WhatsApp runs through the gateway's web channel (Baileys Web). It starts automat
 
 - Bot token: `channels.telegram.botToken` or `channels.telegram.tokenFile` (regular file only; symlinks rejected), with `TELEGRAM_BOT_TOKEN` as fallback for the default account.
 - Optional `channels.telegram.defaultAccount` overrides default account selection when it matches a configured account id.
-- In multi-account setups (2+ account ids), set an explicit default (`channels.telegram.defaultAccount` or `channels.telegram.accounts.default`) to avoid fallback routing; `vilaro doctor` warns when this is missing or invalid.
+- In multi-account setups (2+ account ids), set an explicit default (`channels.telegram.defaultAccount` or `channels.telegram.accounts.default`) to avoid fallback routing; `velaro doctor` warns when this is missing or invalid.
 - `configWrites: false` blocks Telegram-initiated config writes (supergroup ID migrations, `/config set|unset`).
 - Top-level `bindings[]` entries with `type: "acp"` configure persistent ACP bindings for forum topics (use canonical `chatId:topic:topicId` in `match.peer.id`). Field semantics are shared in [ACP Agents](/tools/acp-agents#channel-specific-settings).
 - Telegram stream previews use `sendMessage` + `editMessageText` (works in direct and group chats).
@@ -241,10 +241,10 @@ WhatsApp runs through the gateway's web channel (Baileys Web). It starts automat
       replyToMode: "off", // off | first | all
       dmPolicy: "pairing",
       allowFrom: ["1234567890", "123456789012345678"],
-      dm: { enabled: true, groupEnabled: false, groupChannels: ["vilaro-dm"] },
+      dm: { enabled: true, groupEnabled: false, groupChannels: ["velaro-dm"] },
       guilds: {
         "123456789012345678": {
-          slug: "friends-of-vilaro",
+          slug: "friends-of-velaro",
           requireMention: false,
           ignoreOtherMentions: true,
           reactionNotifications: "own",
@@ -320,7 +320,7 @@ WhatsApp runs through the gateway's web channel (Baileys Web). It starts automat
 - `channels.discord.ui.components.accentColor` sets the accent color for Discord components v2 containers.
 - `channels.discord.voice` enables Discord voice channel conversations and optional auto-join + TTS overrides.
 - `channels.discord.voice.daveEncryption` and `channels.discord.voice.decryptionFailureTolerance` pass through to `@discordjs/voice` DAVE options (`true` and `24` by default).
-- Vilaro additionally attempts voice receive recovery by leaving/rejoining a voice session after repeated decrypt failures.
+- Velaro additionally attempts voice receive recovery by leaving/rejoining a voice session after repeated decrypt failures.
 - `channels.discord.streaming` is the canonical stream mode key. Legacy `streamMode` and boolean `streaming` values are auto-migrated.
 - `channels.discord.autoPresence` maps runtime availability to bot presence (healthy => online, degraded => idle, exhausted => dnd) and allows optional status text overrides.
 - `channels.discord.dangerouslyAllowNameMatching` re-enables mutable name/tag matching (break-glass compatibility mode).
@@ -403,7 +403,7 @@ WhatsApp runs through the gateway's web channel (Baileys Web). It starts automat
       },
       slashCommand: {
         enabled: true,
-        name: "vilaro",
+        name: "velaro",
         sessionPrefix: "slack:slash",
         ephemeral: true,
       },
@@ -441,7 +441,7 @@ WhatsApp runs through the gateway's web channel (Baileys Web). It starts automat
 
 ### Mattermost
 
-Mattermost ships as a plugin: `vilaro plugins install @vilaro/mattermost`.
+Mattermost ships as a plugin: `velaro plugins install @vilaro/mattermost`.
 
 ```json5
 {
@@ -472,7 +472,7 @@ Chat modes: `oncall` (respond on @-mention, default), `onmessage` (every message
 When Mattermost native commands are enabled:
 
 - `commands.callbackPath` must be a path (for example `/api/channels/mattermost/command`), not a full URL.
-- `commands.callbackUrl` must resolve to the Vilaro gateway endpoint and be reachable from the Mattermost server.
+- `commands.callbackUrl` must resolve to the Velaro gateway endpoint and be reachable from the Mattermost server.
 - For private/tailnet/internal callback hosts, Mattermost may require
   `ServiceSettings.AllowedUntrustedInternalConnections` to include the callback host/domain.
   Use host/domain values, not full URLs.
@@ -528,7 +528,7 @@ BlueBubbles is the recommended iMessage path (plugin-backed, configured under `c
 
 ### iMessage
 
-Vilaro spawns `imsg rpc` (JSON-RPC over stdio). No daemon or port required.
+Velaro spawns `imsg rpc` (JSON-RPC over stdio). No daemon or port required.
 
 ```json5
 {
@@ -644,9 +644,9 @@ Run multiple accounts per channel (each with its own `accountId`):
 - Env tokens only apply to the **default** account.
 - Base channel settings apply to all accounts unless overridden per account.
 - Use `bindings[].match.accountId` to route each account to a different agent.
-- If you add a non-default account via `vilaro channels add` (or channel onboarding) while still on a single-account top-level channel config, Vilaro moves account-scoped top-level single-account values into `channels.<channel>.accounts.default` first so the original account keeps working.
+- If you add a non-default account via `velaro channels add` (or channel onboarding) while still on a single-account top-level channel config, Velaro moves account-scoped top-level single-account values into `channels.<channel>.accounts.default` first so the original account keeps working.
 - Existing channel-only bindings (no `accountId`) keep matching the default account; account-scoped bindings remain optional.
-- `vilaro doctor --fix` also repairs mixed shapes by moving account-scoped top-level single-account values into `accounts.default` when named accounts exist but `default` is missing.
+- `velaro doctor --fix` also repairs mixed shapes by moving account-scoped top-level single-account values into `accounts.default` when named accounts exist but `default` is missing.
 
 ### Other extension channels
 
@@ -669,7 +669,7 @@ Group messages default to **require mention** (metadata mention or safe regex pa
     groupChat: { historyLimit: 50 },
   },
   agents: {
-    list: [{ id: "main", groupChat: { mentionPatterns: ["@vilaro", "vilaro"] } }],
+    list: [{ id: "main", groupChat: { mentionPatterns: ["@velaro", "velaro"] } }],
   },
 }
 ```
@@ -711,7 +711,7 @@ Include your own number in `allowFrom` to enable self-chat mode (ignores native 
     list: [
       {
         id: "main",
-        groupChat: { mentionPatterns: ["reisponde", "@vilaro"] },
+        groupChat: { mentionPatterns: ["reisponde", "@velaro"] },
       },
     ],
   },
@@ -770,11 +770,11 @@ Default: `~/.vilaro/workspace`.
 
 ### `agents.defaults.repoRoot`
 
-Optional repository root shown in the system prompt's Runtime line. If unset, Vilaro auto-detects by walking upward from the workspace.
+Optional repository root shown in the system prompt's Runtime line. If unset, Velaro auto-detects by walking upward from the workspace.
 
 ```json5
 {
-  agents: { defaults: { repoRoot: "~/Projects/vilaro" } },
+  agents: { defaults: { repoRoot: "~/Projects/velaro" } },
 }
 ```
 
@@ -904,7 +904,7 @@ Time format in system prompt. Default: `auto` (OS preference).
   - If omitted, the PDF tool falls back to `imageModel`, then to best-effort provider defaults.
 - `pdfMaxBytesMb`: default PDF size limit for the `pdf` tool when `maxBytesMb` is not passed at call time.
 - `pdfMaxPages`: default maximum pages considered by extraction fallback mode in the `pdf` tool.
-- `model.primary`: format `provider/model` (e.g. `anthropic/claude-opus-4-6`). If you omit the provider, Vilaro assumes `anthropic` (deprecated).
+- `model.primary`: format `provider/model` (e.g. `anthropic/claude-opus-4-6`). If you omit the provider, Velaro assumes `anthropic` (deprecated).
 - `models`: the configured model catalog and allowlist for `/model`. Each entry can include `alias` (shortcut) and `params` (provider-specific, for example `temperature`, `maxTokens`, `cacheRetention`, `context1m`).
 - `params` merge precedence (config): `agents.defaults.models["provider/model"].params` is the base, then `agents.list[].params` (matching agent id) overrides by key.
 - Config writers that mutate these fields (for example `/models set`, `/models set-image`, and fallback add/remove commands) save canonical object form and preserve existing fallback lists when possible.
@@ -1024,7 +1024,7 @@ Periodic heartbeat runs.
 ```
 
 - `mode`: `default` or `safeguard` (chunked summarization for long histories). See [Compaction](/concepts/compaction).
-- `timeoutSeconds`: maximum seconds allowed for a single compaction operation before Vilaro aborts it. Default: `900`.
+- `timeoutSeconds`: maximum seconds allowed for a single compaction operation before Velaro aborts it. Default: `900`.
 - `identifierPolicy`: `strict` (default), `off`, or `custom`. `strict` prepends built-in opaque identifier retention guidance during compaction summarization.
 - `identifierInstructions`: optional custom identifier-preservation text used when `identifierPolicy=custom`.
 - `postCompactionSections`: optional AGENTS.md H2/H3 section names to re-inject after compaction. Defaults to `["Session Startup", "Red Lines"]`; set `[]` to disable reinjection. When unset or explicitly set to that default pair, older `Every Session`/`Safety` headings are also accepted as a legacy fallback.
@@ -1130,8 +1130,8 @@ Optional sandboxing for the embedded agent. See [Sandboxing](/gateway/sandboxing
         workspaceAccess: "none", // none | ro | rw
         workspaceRoot: "~/.vilaro/sandboxes",
         docker: {
-          image: "vilaro-sandbox:bookworm-slim",
-          containerPrefix: "vilaro-sbx-",
+          image: "velaro-sandbox:bookworm-slim",
+          containerPrefix: "velaro-sbx-",
           workdir: "/workspace",
           readOnlyRoot: true,
           tmpfs: ["/tmp", "/var/tmp", "/run"],
@@ -1149,7 +1149,7 @@ Optional sandboxing for the embedded agent. See [Sandboxing](/gateway/sandboxing
             nproc: 256,
           },
           seccompProfile: "/path/to/seccomp.json",
-          apparmorProfile: "vilaro-sandbox",
+          apparmorProfile: "velaro-sandbox",
           dns: ["1.1.1.1", "8.8.8.8"],
           extraHosts: ["internal.service:10.0.0.5"],
           binds: ["/home/user/source:/source:rw"],
@@ -1157,7 +1157,7 @@ Optional sandboxing for the embedded agent. See [Sandboxing](/gateway/sandboxing
         ssh: {
           target: "user@gateway-host:22",
           command: "ssh",
-          workspaceRoot: "/tmp/vilaro-sandboxes",
+          workspaceRoot: "/tmp/velaro-sandboxes",
           strictHostKeyChecking: true,
           updateHostKeys: true,
           identityFile: "~/.ssh/id_ed25519",
@@ -1170,8 +1170,8 @@ Optional sandboxing for the embedded agent. See [Sandboxing](/gateway/sandboxing
         },
         browser: {
           enabled: false,
-          image: "vilaro-sandbox-browser:bookworm-slim",
-          network: "vilaro-sandbox-browser",
+          image: "velaro-sandbox-browser:bookworm-slim",
+          network: "velaro-sandbox-browser",
           cdpPort: 9222,
           cdpSourceRange: "172.21.0.1/32",
           vncPort: 5900,
@@ -1229,7 +1229,7 @@ When `backend: "openshell"` is selected, runtime-specific settings move to
 - `command`: SSH client command (default: `ssh`)
 - `workspaceRoot`: absolute remote root used for per-scope workspaces
 - `identityFile` / `certificateFile` / `knownHostsFile`: existing local files passed to OpenSSH
-- `identityData` / `certificateData` / `knownHostsData`: inline contents or SecretRefs that Vilaro materializes into temp files at runtime
+- `identityData` / `certificateData` / `knownHostsData`: inline contents or SecretRefs that Velaro materializes into temp files at runtime
 - `strictHostKeyChecking` / `updateHostKeys`: OpenSSH host-key policy knobs
 
 **SSH auth precedence:**
@@ -1269,7 +1269,7 @@ When `backend: "openshell"` is selected, runtime-specific settings move to
         enabled: true,
         config: {
           mode: "mirror", // mirror | remote
-          from: "vilaro",
+          from: "velaro",
           remoteWorkspaceDir: "/sandbox",
           remoteAgentWorkspaceDir: "/agent",
           gateway: "lab", // optional
@@ -1290,7 +1290,7 @@ When `backend: "openshell"` is selected, runtime-specific settings move to
 - `mirror`: seed remote from local before exec, sync back after exec; local workspace stays canonical
 - `remote`: seed remote once when the sandbox is created, then keep the remote workspace canonical
 
-In `remote` mode, host-local edits made outside Vilaro are not synced into the sandbox automatically after the seed step.
+In `remote` mode, host-local edits made outside Velaro are not synced into the sandbox automatically after the seed step.
 Transport is SSH into the OpenShell sandbox, but the plugin owns sandbox lifecycle and optional mirror sync.
 
 **`setupCommand`** runs once after container creation (via `sh -lc`). Needs network egress, writable root, root user.
@@ -1304,10 +1304,10 @@ Transport is SSH into the OpenShell sandbox, but the plugin owns sandbox lifecyc
 **`docker.binds`** mounts additional host directories; global and per-agent binds are merged.
 
 **Sandboxed browser** (`sandbox.browser.enabled`): Chromium + CDP in a container. noVNC URL injected into system prompt. Does not require `browser.enabled` in `vilaro.json`.
-noVNC observer access uses VNC auth by default and Vilaro emits a short-lived token URL (instead of exposing the password in the shared URL).
+noVNC observer access uses VNC auth by default and Velaro emits a short-lived token URL (instead of exposing the password in the shared URL).
 
 - `allowHostControl: false` (default) blocks sandboxed sessions from targeting the host browser.
-- `network` defaults to `vilaro-sandbox-browser` (dedicated bridge network). Set to `bridge` only when you explicitly want global bridge connectivity.
+- `network` defaults to `velaro-sandbox-browser` (dedicated bridge network). Set to `bridge` only when you explicitly want global bridge connectivity.
 - `cdpSourceRange` optionally restricts CDP ingress at the container edge to a CIDR range (for example `172.21.0.1/32`).
 - `sandbox.browser.binds` mounts additional host directories into the sandbox browser container only. When set (including `[]`), it replaces `docker.binds` for the browser container.
 - Launch defaults are defined in `scripts/sandbox-browser-entrypoint.sh` and tuned for container hosts:
@@ -1371,7 +1371,7 @@ scripts/sandbox-browser-setup.sh   # optional browser image
           emoji: "🦥",
           avatar: "avatars/samantha.png",
         },
-        groupChat: { mentionPatterns: ["@vilaro"] },
+        groupChat: { mentionPatterns: ["@velaro"] },
         sandbox: { mode: "off" },
         runtime: {
           type: "acp",
@@ -1379,7 +1379,7 @@ scripts/sandbox-browser-setup.sh   # optional browser image
             agent: "codex",
             backend: "acpx",
             mode: "persistent",
-            cwd: "/workspace/vilaro",
+            cwd: "/workspace/velaro",
           },
         },
         subagents: { allowAgents: ["*"] },
@@ -1446,7 +1446,7 @@ Run multiple isolated agents inside one Gateway. See [Multi-Agent](/concepts/mul
 
 Within each tier, the first matching `bindings` entry wins.
 
-For `type: "acp"` entries, Vilaro resolves by exact conversation identity (`match.channel` + account + `match.peer.id`) and does not use the route binding tier order above.
+For `type: "acp"` entries, Velaro resolves by exact conversation identity (`match.channel` + account + `match.peer.id`) and does not use the route binding tier order above.
 
 ### Per-agent access profiles
 
@@ -1605,7 +1605,7 @@ See [Multi-Agent Sandbox & Tools](/tools/multi-agent-sandbox-tools) for preceden
 - **`reset`**: primary reset policy. `daily` resets at `atHour` local time; `idle` resets after `idleMinutes`. When both configured, whichever expires first wins.
 - **`resetByType`**: per-type overrides (`direct`, `group`, `thread`). Legacy `dm` accepted as alias for `direct`.
 - **`parentForkMaxTokens`**: max parent-session `totalTokens` allowed when creating a forked thread session (default `100000`).
-  - If parent `totalTokens` is above this value, Vilaro starts a fresh thread session instead of inheriting parent transcript history.
+  - If parent `totalTokens` is above this value, Velaro starts a fresh thread session instead of inheriting parent transcript history.
   - Set `0` to disable this guard and always allow parent forking.
 - **`mainKey`**: legacy field. Runtime now always uses `"main"` for the main direct-chat bucket.
 - **`sendPolicy`**: match by `channel`, `chatType` (`direct|group|channel`, with legacy `dm` alias), `keyPrefix`, or `rawKeyPrefix`. First deny wins.
@@ -1732,7 +1732,7 @@ Batches rapid text-only messages from the same sender into a single agent turn. 
 - `modelOverrides` is enabled by default; `modelOverrides.allowProvider` defaults to `false` (opt-in).
 - API keys fall back to `ELEVENLABS_API_KEY`/`XI_API_KEY` and `OPENAI_API_KEY`.
 - `openai.baseUrl` overrides the OpenAI TTS endpoint. Resolution order is config, then `OPENAI_TTS_BASE_URL`, then `https://api.openai.com/v1`.
-- When `openai.baseUrl` points to a non-OpenAI endpoint, Vilaro treats it as an OpenAI-compatible TTS server and relaxes model/voice validation.
+- When `openai.baseUrl` points to a non-OpenAI endpoint, Velaro treats it as an OpenAI-compatible TTS server and relaxes model/voice validation.
 
 ---
 
@@ -1745,7 +1745,7 @@ Defaults for Talk mode (macOS/iOS/Android).
   talk: {
     voiceId: "elevenlabs_voice_id",
     voiceAliases: {
-      Vilaro: "EXAVITQu4vr4xnSDxMaL",
+      Velaro: "EXAVITQu4vr4xnSDxMaL",
       Roger: "CwhRBWXzGAHq8TQ4Fs17",
     },
     modelId: "eleven_v3",
@@ -1793,7 +1793,7 @@ Local onboarding defaults new local configs to `tools.profile: "coding"` when un
 | `group:automation` | `cron`, `gateway`                                                                        |
 | `group:messaging`  | `message`                                                                                |
 | `group:nodes`      | `nodes`                                                                                  |
-| `group:vilaro`     | All built-in tools (excludes provider plugins)                                           |
+| `group:velaro`     | All built-in tools (excludes provider plugins)                                           |
 
 ### `tools.allow` / `tools.deny`
 
@@ -2037,7 +2037,7 @@ Controls inline attachment support for `sessions_spawn`.
 Notes:
 
 - Attachments are only supported for `runtime: "subagent"`. ACP runtime rejects them.
-- Files are materialized into the child workspace at `.vilaro/attachments/<uuid>/` with a `.manifest.json`.
+- Files are materialized into the child workspace at `.velaro/attachments/<uuid>/` with a `.manifest.json`.
 - Attachment content is automatically redacted from transcript persistence.
 - Base64 inputs are validated with strict alphabet/padding checks and a pre-decode size guard.
 - File permissions are `0700` for directories and `0600` for files.
@@ -2068,7 +2068,7 @@ Notes:
 
 ## Custom providers and base URLs
 
-Vilaro uses the pi-coding-agent model catalog. Add custom providers via `models.providers` in config or `~/.vilaro/agents/<agentId>/agent/models.json`.
+Velaro uses the pi-coding-agent model catalog. Add custom providers via `models.providers` in config or `~/.vilaro/agents/<agentId>/agent/models.json`.
 
 ```json5
 {
@@ -2120,7 +2120,7 @@ Vilaro uses the pi-coding-agent model catalog. Add custom providers via `models.
 - `models.providers.*.baseUrl`: upstream API base URL.
 - `models.providers.*.headers`: extra static headers for proxy/tenant routing.
 - `models.providers.*.models`: explicit provider model catalog entries.
-- `models.providers.*.models.*.compat.supportsDeveloperRole`: optional compatibility hint. For `api: "openai-completions"` with a non-empty non-native `baseUrl` (host not `api.openai.com`), Vilaro forces this to `false` at runtime. Empty/omitted `baseUrl` keeps default OpenAI behavior.
+- `models.providers.*.models.*.compat.supportsDeveloperRole`: optional compatibility hint. For `api: "openai-completions"` with a non-empty non-native `baseUrl` (host not `api.openai.com`), Velaro forces this to `false` at runtime. Empty/omitted `baseUrl` keeps default OpenAI behavior.
 - `models.bedrockDiscovery`: Bedrock auto-discovery settings root.
 - `models.bedrockDiscovery.enabled`: turn discovery polling on/off.
 - `models.bedrockDiscovery.region`: AWS region for discovery.
@@ -2182,7 +2182,7 @@ Use `cerebras/zai-glm-4.7` for Cerebras; `zai/glm-4.7` for Z.AI direct.
 }
 ```
 
-Set `OPENCODE_API_KEY` (or `OPENCODE_ZEN_API_KEY`). Use `opencode/...` refs for the Zen catalog or `opencode-go/...` refs for the Go catalog. Shortcut: `vilaro onboard --auth-choice opencode-zen` or `vilaro onboard --auth-choice opencode-go`.
+Set `OPENCODE_API_KEY` (or `OPENCODE_ZEN_API_KEY`). Use `opencode/...` refs for the Zen catalog or `opencode-go/...` refs for the Go catalog. Shortcut: `velaro onboard --auth-choice opencode-zen` or `velaro onboard --auth-choice opencode-go`.
 
 </Accordion>
 
@@ -2199,7 +2199,7 @@ Set `OPENCODE_API_KEY` (or `OPENCODE_ZEN_API_KEY`). Use `opencode/...` refs for 
 }
 ```
 
-Set `ZAI_API_KEY`. `z.ai/*` and `z-ai/*` are accepted aliases. Shortcut: `vilaro onboard --auth-choice zai-api-key`.
+Set `ZAI_API_KEY`. `z.ai/*` and `z-ai/*` are accepted aliases. Shortcut: `velaro onboard --auth-choice zai-api-key`.
 
 - General endpoint: `https://api.z.ai/api/paas/v4`
 - Coding endpoint (default): `https://api.z.ai/api/coding/paas/v4`
@@ -2242,7 +2242,7 @@ Set `ZAI_API_KEY`. `z.ai/*` and `z-ai/*` are accepted aliases. Shortcut: `vilaro
 }
 ```
 
-For the China endpoint: `baseUrl: "https://api.moonshot.cn/v1"` or `vilaro onboard --auth-choice moonshot-api-key-cn`.
+For the China endpoint: `baseUrl: "https://api.moonshot.cn/v1"` or `velaro onboard --auth-choice moonshot-api-key-cn`.
 
 </Accordion>
 
@@ -2260,7 +2260,7 @@ For the China endpoint: `baseUrl: "https://api.moonshot.cn/v1"` or `vilaro onboa
 }
 ```
 
-Anthropic-compatible, built-in provider. Shortcut: `vilaro onboard --auth-choice kimi-code-api-key`.
+Anthropic-compatible, built-in provider. Shortcut: `velaro onboard --auth-choice kimi-code-api-key`.
 
 </Accordion>
 
@@ -2299,7 +2299,7 @@ Anthropic-compatible, built-in provider. Shortcut: `vilaro onboard --auth-choice
 }
 ```
 
-Base URL should omit `/v1` (Anthropic client appends it). Shortcut: `vilaro onboard --auth-choice synthetic-api-key`.
+Base URL should omit `/v1` (Anthropic client appends it). Shortcut: `velaro onboard --auth-choice synthetic-api-key`.
 
 </Accordion>
 
@@ -2339,7 +2339,7 @@ Base URL should omit `/v1` (Anthropic client appends it). Shortcut: `vilaro onbo
 }
 ```
 
-Set `MINIMAX_API_KEY`. Shortcut: `vilaro onboard --auth-choice minimax-api`.
+Set `MINIMAX_API_KEY`. Shortcut: `velaro onboard --auth-choice minimax-api`.
 
 </Accordion>
 
@@ -2406,18 +2406,18 @@ See [Local Models](/gateway/local-models). TL;DR: run MiniMax M2.5 via LM Studio
 }
 ```
 
-- Loaded from `~/.vilaro/extensions`, `<workspace>/.vilaro/extensions`, plus `plugins.load.paths`.
-- Discovery accepts native Vilaro plugins plus compatible Codex bundles and Claude bundles, including manifestless Claude default-layout bundles.
+- Loaded from `~/.vilaro/extensions`, `<workspace>/.velaro/extensions`, plus `plugins.load.paths`.
+- Discovery accepts native Velaro plugins plus compatible Codex bundles and Claude bundles, including manifestless Claude default-layout bundles.
 - **Config changes require a gateway restart.**
 - `allow`: optional allowlist (only listed plugins load). `deny` wins.
 - `plugins.entries.<id>.apiKey`: plugin-level API key convenience field (when supported by the plugin).
 - `plugins.entries.<id>.env`: plugin-scoped env var map.
 - `plugins.entries.<id>.hooks.allowPromptInjection`: when `false`, core blocks `before_prompt_build` and ignores prompt-mutating fields from legacy `before_agent_start`, while preserving legacy `modelOverride` and `providerOverride`. Applies to native plugin hooks and supported bundle-provided hook directories.
-- `plugins.entries.<id>.config`: plugin-defined config object (validated by native Vilaro plugin schema when available).
-- Enabled Claude bundle plugins can also contribute embedded Pi defaults from `settings.json`; Vilaro applies those as sanitized agent settings, not as raw Vilaro config patches.
+- `plugins.entries.<id>.config`: plugin-defined config object (validated by native Velaro plugin schema when available).
+- Enabled Claude bundle plugins can also contribute embedded Pi defaults from `settings.json`; Velaro applies those as sanitized agent settings, not as raw Velaro config patches.
 - `plugins.slots.memory`: pick the active memory plugin id, or `"none"` to disable memory plugins.
 - `plugins.slots.contextEngine`: pick the active context engine plugin id; defaults to `"legacy"` unless you install and select another engine.
-- `plugins.installs`: CLI-managed install metadata used by `vilaro plugins update`.
+- `plugins.installs`: CLI-managed install metadata used by `velaro plugins update`.
   - Includes `source`, `spec`, `sourcePath`, `installPath`, `version`, `resolvedName`, `resolvedVersion`, `resolvedSpec`, `integrity`, `shasum`, `resolvedAt`, `installedAt`.
   - Treat `plugins.installs.*` as managed state; prefer CLI commands over manual edits.
 
@@ -2440,7 +2440,7 @@ See [Plugins](/tools/plugin).
       // allowedHostnames: ["localhost"],
     },
     profiles: {
-      vilaro: { cdpPort: 18800, color: "#FF4500" },
+      velaro: { cdpPort: 18800, color: "#FF4500" },
       work: { cdpPort: 18801, color: "#0066CC" },
       user: { driver: "existing-session", attachOnly: true, color: "#00AA00" },
       remote: { cdpUrl: "http://10.0.0.42:9222", color: "#00AA00" },
@@ -2477,7 +2477,7 @@ See [Plugins](/tools/plugin).
   ui: {
     seamColor: "#FF4500",
     assistant: {
-      name: "Vilaro",
+      name: "Velaro",
       avatar: "CB", // emoji, short text, image URL, or data URI
     },
   },
@@ -2516,7 +2516,7 @@ See [Plugins](/tools/plugin).
     },
     controlUi: {
       enabled: true,
-      basePath: "/vilaro",
+      basePath: "/velaro",
       // root: "dist/control-ui",
       // allowedOrigins: ["https://control.example.com"], // required for non-loopback Control UI
       // dangerouslyAllowHostHeaderOriginFallback: false, // dangerous Host-header origin fallback mode
@@ -2608,7 +2608,7 @@ Run multiple gateways on one host with unique ports and state dirs:
 ```bash
 VILARO_CONFIG_PATH=~/.vilaro/a.json \
 VILARO_STATE_DIR=~/.vilaro-a \
-vilaro gateway --port 19001
+velaro gateway --port 19001
 ```
 
 Convenience flags: `--dev` (uses `~/.vilaro-dev` + port `19001`), `--profile <name>` (uses `~/.vilaro-<name>`).
@@ -2650,7 +2650,7 @@ See [Multiple Gateways](/gateway/multiple-gateways).
 }
 ```
 
-Auth: `Authorization: Bearer <token>` or `x-vilaro-token: <token>`.
+Auth: `Authorization: Bearer <token>` or `x-velaro-token: <token>`.
 
 **Endpoints:**
 
@@ -2682,7 +2682,7 @@ Auth: `Authorization: Bearer <token>` or `x-vilaro-token: <token>`.
 {
   hooks: {
     gmail: {
-      account: "vilaro@gmail.com",
+      account: "velaro@gmail.com",
       topic: "projects/<project-id>/topics/gog-gmail-watch",
       subscription: "gog-gmail-watch-push",
       pushToken: "shared-push-token",
@@ -2747,7 +2747,7 @@ Auth: `Authorization: Bearer <token>` or `x-vilaro-token: <token>`.
 
 - `minimal` (default): omit `cliPath` + `sshPort` from TXT records.
 - `full`: include `cliPath` + `sshPort`.
-- Hostname defaults to `vilaro`. Override with `VILARO_MDNS_HOSTNAME`.
+- Hostname defaults to `velaro`. Override with `VILARO_MDNS_HOSTNAME`.
 
 ### Wide-area (DNS-SD)
 
@@ -2761,7 +2761,7 @@ Auth: `Authorization: Bearer <token>` or `x-vilaro-token: <token>`.
 
 Writes a unicast DNS-SD zone under `~/.vilaro/dns/`. For cross-network discovery, pair with a DNS server (CoreDNS recommended) + Tailscale split DNS.
 
-Setup: `vilaro dns setup --apply`.
+Setup: `velaro dns setup --apply`.
 
 ---
 
@@ -2849,7 +2849,7 @@ Validation:
       },
       vault: {
         source: "exec",
-        command: "/usr/local/bin/vilaro-vault-resolver",
+        command: "/usr/local/bin/velaro-vault-resolver",
         passEnv: ["PATH", "VAULT_ADDR"],
       },
     },
@@ -2905,7 +2905,7 @@ Notes:
 {
   logging: {
     level: "info",
-    file: "/tmp/vilaro/vilaro.log",
+    file: "/tmp/velaro/velaro.log",
     consoleLevel: "info",
     consoleStyle: "pretty", // pretty | compact | json
     redactSensitive: "tools", // off | tools
@@ -2914,7 +2914,7 @@ Notes:
 }
 ```
 
-- Default log file: `/tmp/vilaro/vilaro-YYYY-MM-DD.log`.
+- Default log file: `/tmp/velaro/velaro-YYYY-MM-DD.log`.
 - Set `logging.file` for a stable path.
 - `consoleLevel` bumps to `debug` when `--verbose`.
 
@@ -2934,7 +2934,7 @@ Notes:
 
 - `cli.banner.taglineMode` controls banner tagline style:
   - `"random"` (default): rotating funny/seasonal taglines.
-  - `"default"`: fixed neutral tagline (`All your chats, one Vilaro.`).
+  - `"default"`: fixed neutral tagline (`All your chats, one Velaro.`).
   - `"off"`: no tagline text (banner title/version still shown).
 - To hide the entire banner (not just taglines), set env `VILARO_HIDE_BANNER=1`.
 
@@ -2988,7 +2988,7 @@ Written by the macOS onboarding assistant. Derives defaults:
 
 ## Bridge (legacy, removed)
 
-Current builds no longer include the TCP bridge. Nodes connect over the Gateway WebSocket. `bridge.*` keys are no longer part of the config schema (validation fails until removed; `vilaro doctor --fix` can strip unknown keys).
+Current builds no longer include the TCP bridge. Nodes connect over the Gateway WebSocket. `bridge.*` keys are no longer part of the config schema (validation fails until removed; `velaro doctor --fix` can strip unknown keys).
 
 <Accordion title="Legacy bridge config (historical reference)">
 

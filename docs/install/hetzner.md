@@ -1,20 +1,20 @@
 ---
-summary: "Run Vilaro Gateway 24/7 on a cheap Hetzner VPS (Docker) with durable state and baked-in binaries"
+summary: "Run Velaro Gateway 24/7 on a cheap Hetzner VPS (Docker) with durable state and baked-in binaries"
 read_when:
-  - You want Vilaro running 24/7 on a cloud VPS (not your laptop)
+  - You want Velaro running 24/7 on a cloud VPS (not your laptop)
   - You want a production-grade, always-on Gateway on your own VPS
   - You want full control over persistence, binaries, and restart behavior
-  - You are running Vilaro in Docker on Hetzner or a similar provider
+  - You are running Velaro in Docker on Hetzner or a similar provider
 title: "Hetzner"
 ---
 
-# Vilaro on Hetzner (Docker, Production VPS Guide)
+# Velaro on Hetzner (Docker, Production VPS Guide)
 
 ## Goal
 
-Run a persistent Vilaro Gateway on a Hetzner VPS using Docker, with durable state, baked-in binaries, and safe restart behavior.
+Run a persistent Velaro Gateway on a Hetzner VPS using Docker, with durable state, baked-in binaries, and safe restart behavior.
 
-If you want “Vilaro 24/7 for ~$5”, this is the simplest reliable setup.
+If you want “Velaro 24/7 for ~$5”, this is the simplest reliable setup.
 Hetzner pricing changes; pick the smallest Debian/Ubuntu VPS and scale up if you hit OOMs.
 
 Security model reminder:
@@ -29,7 +29,7 @@ See [Security](/gateway/security) and [VPS hosting](/vps).
 
 - Rent a small Linux server (Hetzner VPS)
 - Install Docker (isolated app runtime)
-- Start the Vilaro Gateway in Docker
+- Start the Velaro Gateway in Docker
 - Persist `~/.vilaro` + `~/.vilaro/workspace` on the host (survives restarts/rebuilds)
 - Access the Control UI from your laptop via an SSH tunnel
 
@@ -48,7 +48,7 @@ For the generic Docker flow, see [Docker](/install/docker).
 
 1. Provision Hetzner VPS
 2. Install Docker
-3. Clone Vilaro repository
+3. Clone Velaro repository
 4. Create persistent host directories
 5. Configure `.env` and `docker-compose.yml`
 6. Bake required binaries into the image
@@ -104,11 +104,11 @@ docker compose version
 
 ---
 
-## 3) Clone the Vilaro repository
+## 3) Clone the Velaro repository
 
 ```bash
 git clone https://github.com/vilaro/vilaro.git
-cd vilaro
+cd velaro
 ```
 
 This guide assumes you will build a custom image to guarantee binary persistence.
@@ -121,10 +121,10 @@ Docker containers are ephemeral.
 All long-lived state must live on the host.
 
 ```bash
-mkdir -p /root/.vilaro/workspace
+mkdir -p /root/.velaro/workspace
 
 # Set ownership to the container user (uid 1000):
-chown -R 1000:1000 /root/.vilaro
+chown -R 1000:1000 /root/.velaro
 ```
 
 ---
@@ -134,16 +134,16 @@ chown -R 1000:1000 /root/.vilaro
 Create `.env` in the repository root.
 
 ```bash
-VILARO_IMAGE=vilaro:latest
+VILARO_IMAGE=velaro:latest
 VILARO_GATEWAY_TOKEN=change-me-now
 VILARO_GATEWAY_BIND=lan
 VILARO_GATEWAY_PORT=18789
 
-VILARO_CONFIG_DIR=/root/.vilaro
-VILARO_WORKSPACE_DIR=/root/.vilaro/workspace
+VILARO_CONFIG_DIR=/root/.velaro
+VILARO_WORKSPACE_DIR=/root/.velaro/workspace
 
 GOG_KEYRING_PASSWORD=change-me-now
-XDG_CONFIG_HOME=/home/node/.vilaro
+XDG_CONFIG_HOME=/home/node/.velaro
 ```
 
 Generate strong secrets:
@@ -179,8 +179,8 @@ services:
       - XDG_CONFIG_HOME=${XDG_CONFIG_HOME}
       - PATH=/home/linuxbrew/.linuxbrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     volumes:
-      - ${VILARO_CONFIG_DIR}:/home/node/.vilaro
-      - ${VILARO_WORKSPACE_DIR}:/home/node/.vilaro/workspace
+      - ${VILARO_CONFIG_DIR}:/home/node/.velaro
+      - ${VILARO_WORKSPACE_DIR}:/home/node/.velaro/workspace
     ports:
       # Recommended: keep the Gateway loopback-only on the VPS; access via SSH tunnel.
       # To expose it publicly, remove the `127.0.0.1:` prefix and firewall accordingly.
@@ -243,8 +243,8 @@ For teams preferring infrastructure-as-code workflows, a community-maintained Te
 
 **Repositories:**
 
-- Infrastructure: [vilaro-terraform-hetzner](https://github.com/andreesg/vilaro-terraform-hetzner)
-- Docker config: [vilaro-docker-config](https://github.com/andreesg/vilaro-docker-config)
+- Infrastructure: [velaro-terraform-hetzner](https://github.com/andreesg/vilaro-terraform-hetzner)
+- Docker config: [velaro-docker-config](https://github.com/andreesg/vilaro-docker-config)
 
 This approach complements the Docker setup above with reproducible deployments, version-controlled infrastructure, and automated disaster recovery.
 

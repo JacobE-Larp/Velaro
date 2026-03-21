@@ -1,9 +1,9 @@
 ---
 read_when:
-  - 学习如何配置 Vilaro
+  - 学习如何配置 Velaro
   - 寻找配置示例
-  - 首次设置 Vilaro
-summary: 符合模式的常见 Vilaro 设置配置示例
+  - 首次设置 Velaro
+summary: 符合模式的常见 Velaro 设置配置示例
 title: 配置示例
 x-i18n:
   generated_at: "2026-02-03T07:48:39Z"
@@ -36,7 +36,7 @@ x-i18n:
 ```json5
 {
   identity: {
-    name: "Vilaro",
+    name: "Velaro",
     theme: "helpful assistant",
     emoji: "",
   },
@@ -96,7 +96,7 @@ x-i18n:
   // 日志
   logging: {
     level: "info",
-    file: "/tmp/vilaro/vilaro.log",
+    file: "/tmp/velaro/velaro.log",
     consoleLevel: "info",
     consoleStyle: "pretty",
     redactSensitive: "tools",
@@ -104,7 +104,7 @@ x-i18n:
 
   // 消息格式
   messages: {
-    messagePrefix: "[vilaro]",
+    messagePrefix: "[velaro]",
     responsePrefix: ">",
     ackReaction: "👀",
     ackReactionScope: "group-mentions",
@@ -113,7 +113,7 @@ x-i18n:
   // 路由 + 队列
   routing: {
     groupChat: {
-      mentionPatterns: ["@vilaro", "vilaro"],
+      mentionPatterns: ["@velaro", "velaro"],
       historyLimit: 50,
     },
     queue: {
@@ -199,7 +199,7 @@ x-i18n:
       dm: { enabled: true, allowFrom: ["steipete"] },
       guilds: {
         "123456789012345678": {
-          slug: "friends-of-vilaro",
+          slug: "friends-of-velaro",
           requireMention: false,
           channels: {
             general: { allow: true },
@@ -219,7 +219,7 @@ x-i18n:
       dm: { enabled: true, allowFrom: ["U123"] },
       slashCommand: {
         enabled: true,
-        name: "vilaro",
+        name: "velaro",
         sessionPrefix: "slack:slash",
         ephemeral: true,
       },
@@ -284,7 +284,7 @@ x-i18n:
         perSession: true,
         workspaceRoot: "~/.vilaro/sandboxes",
         docker: {
-          image: "vilaro-sandbox:bookworm-slim",
+          image: "velaro-sandbox:bookworm-slim",
           workdir: "/workspace",
           readOnlyRoot: true,
           tmpfs: ["/tmp", "/var/tmp", "/run"],
@@ -379,7 +379,7 @@ x-i18n:
       },
     ],
     gmail: {
-      account: "vilaro@gmail.com",
+      account: "velaro@gmail.com",
       label: "INBOX",
       topic: "projects/<project-id>/topics/gog-gmail-watch",
       subscription: "gog-gmail-watch-push",
@@ -398,7 +398,7 @@ x-i18n:
     mode: "local",
     port: 18789,
     bind: "loopback",
-    controlUi: { enabled: true, basePath: "/vilaro" },
+    controlUi: { enabled: true, basePath: "/velaro" },
     auth: {
       mode: "token",
       token: "gateway-token",
@@ -531,7 +531,7 @@ x-i18n:
     theme: "professional assistant",
   },
   agent: {
-    workspace: "~/work-vilaro",
+    workspace: "~/work-velaro",
     elevated: { enabled: false },
   },
   channels: {

@@ -7,7 +7,7 @@ set -euo pipefail
 #   scripts/create-dmg.sh <app_path> [output_dmg]
 #
 # Env:
-#   DMG_VOLUME_NAME        default: CFBundleName (or "Vilaro")
+#   DMG_VOLUME_NAME        default: CFBundleName (or "Velaro")
 #   DMG_BACKGROUND_PATH    default: assets/dmg-background.png
 #   DMG_BACKGROUND_SMALL   default: assets/dmg-background-small.png (recommended)
 #   DMG_WINDOW_BOUNDS      default: "400 100 900 420" (500x320)
@@ -33,7 +33,7 @@ ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 BUILD_DIR="$ROOT_DIR/dist"
 mkdir -p "$BUILD_DIR"
 
-APP_NAME=$(/usr/libexec/PlistBuddy -c "Print CFBundleName" "$APP_PATH/Contents/Info.plist" 2>/dev/null || echo "Vilaro")
+APP_NAME=$(/usr/libexec/PlistBuddy -c "Print CFBundleName" "$APP_PATH/Contents/Info.plist" 2>/dev/null || echo "Velaro")
 VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$APP_PATH/Contents/Info.plist" 2>/dev/null || echo "0.0.0")
 
 DMG_NAME="${APP_NAME}-${VERSION}.dmg"

@@ -1,14 +1,14 @@
 ---
 summary: "Voice Call plugin: outbound + inbound calls via Twilio/Telnyx/Plivo (plugin install + config + CLI)"
 read_when:
-  - You want to place an outbound voice call from Vilaro
+  - You want to place an outbound voice call from Velaro
   - You are configuring or developing the voice-call plugin
 title: "Voice Call Plugin"
 ---
 
 # Voice Call (plugin)
 
-Voice calls for Vilaro via a plugin. Supports outbound notifications and
+Voice calls for Velaro via a plugin. Supports outbound notifications and
 multi-turn conversations with inbound policies.
 
 Current providers:
@@ -23,7 +23,7 @@ Quick mental model:
 - Install plugin
 - Restart Gateway
 - Configure under `plugins.entries.voice-call.config`
-- Use `vilaro voicecall ...` or the `voice_call` tool
+- Use `velaro voicecall ...` or the `voice_call` tool
 
 ## Where it runs (local vs remote)
 
@@ -36,7 +36,7 @@ If you use a remote Gateway, install/configure the plugin on the **machine runni
 ### Option A: install from npm (recommended)
 
 ```bash
-vilaro plugins install @vilaro/voice-call
+velaro plugins install @vilaro/voice-call
 ```
 
 Restart the Gateway afterwards.
@@ -44,7 +44,7 @@ Restart the Gateway afterwards.
 ### Option B: install from a local folder (dev, no copying)
 
 ```bash
-vilaro plugins install ./extensions/voice-call
+velaro plugins install ./extensions/voice-call
 cd ./extensions/voice-call && pnpm install
 ```
 
@@ -311,13 +311,13 @@ Auto-responses use the agent system. Tune with:
 ## CLI
 
 ```bash
-vilaro voicecall call --to "+15555550123" --message "Hello from Vilaro"
-vilaro voicecall continue --call-id <id> --message "Any questions?"
-vilaro voicecall speak --call-id <id> --message "One moment"
-vilaro voicecall end --call-id <id>
-vilaro voicecall status --call-id <id>
-vilaro voicecall tail
-vilaro voicecall expose --mode funnel
+velaro voicecall call --to "+15555550123" --message "Hello from Velaro"
+velaro voicecall continue --call-id <id> --message "Any questions?"
+velaro voicecall speak --call-id <id> --message "One moment"
+velaro voicecall end --call-id <id>
+velaro voicecall status --call-id <id>
+velaro voicecall tail
+velaro voicecall expose --mode funnel
 ```
 
 ## Agent tool

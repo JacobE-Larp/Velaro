@@ -70,14 +70,14 @@ export function registerDirectoryCli(program: Command) {
       "after",
       () =>
         `\n${theme.heading("Examples:")}\n${formatHelpExamples([
-          ["vilaro directory self --channel slack", "Show the connected account identity."],
+          ["velaro directory self --channel slack", "Show the connected account identity."],
           [
             'vilaro directory peers list --channel slack --query "alice"',
             "Search contact/user IDs by name.",
           ],
-          ["vilaro directory groups list --channel discord", "List available groups/channels."],
+          ["velaro directory groups list --channel discord", "List available groups/channels."],
           [
-            "vilaro directory groups members --channel discord --group-id <id>",
+            "velaro directory groups members --channel discord --group-id <id>",
             "List members for a specific group.",
           ],
         ])}\n\n${theme.muted("Docs:")} ${formatDocsLink(

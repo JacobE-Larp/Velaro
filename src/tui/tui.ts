@@ -241,7 +241,7 @@ export function resolveGatewayDisconnectState(reason?: string): {
       connectionStatus: `gateway disconnected: ${reasonLabel}`,
       activityStatus: "pairing required: run vilaro devices list",
       pairingHint:
-        "Pairing required. Run `vilaro devices list`, approve your request ID, then reconnect.",
+        "Pairing required. Run `velaro devices list`, approve your request ID, then reconnect.",
     };
   }
   return {
@@ -594,7 +594,7 @@ export async function runTui(opts: TuiOptions) {
     const agentLabel = formatAgentLabel(currentAgentId);
     header.setText(
       theme.header(
-        `vilaro tui - ${client.connection.url} - agent ${agentLabel} - session ${sessionLabel}`,
+        `velaro tui - ${client.connection.url} - agent ${agentLabel} - session ${sessionLabel}`,
       ),
     );
   };

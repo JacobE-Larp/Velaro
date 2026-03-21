@@ -17,7 +17,7 @@ x-i18n:
 
 # 设置向导参考
 
-这是 `vilaro onboard` CLI 向导的完整参考。
+这是 `velaro onboard` CLI 向导的完整参考。
 有关高层概览，请参阅 [设置向导](/start/wizard)。
 
 ## 流程详情（本地模式）
@@ -30,7 +30,7 @@ x-i18n:
     - CLI `--reset` 默认值为 `config+creds+sessions`；使用 `--reset-scope full`
       可额外移除工作区。
     - 如果配置无效或包含旧版键，向导会停止，并要求
-      你先运行 `vilaro doctor` 再继续。
+      你先运行 `velaro doctor` 再继续。
     - 重置会使用 `trash`（绝不使用 `rm`），并提供以下范围：
       - 仅配置
       - 配置 + 凭证 + 会话
@@ -101,13 +101,13 @@ x-i18n:
     - [Signal](/channels/signal)：可选安装 `signal-cli` + 账号配置。
     - [BlueBubbles](/channels/bluebubbles)：**iMessage 推荐方案**；server URL + password + webhook。
     - [iMessage](/channels/imessage)：旧版 `imsg` CLI 路径 + 数据库访问。
-    - 私信安全：默认为 pairing。首次私信会发送一个代码；通过 `vilaro pairing approve <channel> <code>` 批准，或使用允许列表。
+    - 私信安全：默认为 pairing。首次私信会发送一个代码；通过 `velaro pairing approve <channel> <code>` 批准，或使用允许列表。
   </Step>
   <Step title="Web 搜索">
     - 选择一个提供商：Perplexity、Brave、Gemini、Grok 或 Kimi（也可跳过）。
     - 粘贴你的 API key（QuickStart 会自动从环境变量或现有配置中检测 key）。
     - 使用 `--skip-search` 跳过。
-    - 之后再配置：`vilaro configure --section web`。
+    - 之后再配置：`velaro configure --section web`。
   </Step>
   <Step title="守护进程安装">
     - macOS：LaunchAgent
@@ -121,8 +121,8 @@ x-i18n:
     - 如果同时配置了 `gateway.auth.token` 和 `gateway.auth.password`，且 `gateway.auth.mode` 未设置，则会阻止守护进程安装，直到显式设置 mode。
   </Step>
   <Step title="健康检查">
-    - 启动 Gateway 网关（如果需要）并运行 `vilaro health`。
-    - 提示：`vilaro status --deep` 会在状态输出中添加 Gateway 网关健康探测（需要能访问到 Gateway 网关）。
+    - 启动 Gateway 网关（如果需要）并运行 `velaro health`。
+    - 提示：`velaro status --deep` 会在状态输出中添加 Gateway 网关健康探测（需要能访问到 Gateway 网关）。
   </Step>
   <Step title="Skills（推荐）">
     - 读取可用的 Skills 并检查要求。
@@ -144,7 +144,7 @@ x-i18n:
 使用 `--non-interactive` 自动化或脚本化新手引导：
 
 ```bash
-vilaro onboard --non-interactive \
+velaro onboard --non-interactive \
   --mode local \
   --auth-choice apiKey \
   --anthropic-api-key "$ANTHROPIC_API_KEY" \
@@ -161,7 +161,7 @@ vilaro onboard --non-interactive \
 
 ```bash
 export VILARO_GATEWAY_TOKEN="your-token"
-vilaro onboard --non-interactive \
+velaro onboard --non-interactive \
   --mode local \
   --auth-choice skip \
   --gateway-auth token \
@@ -180,7 +180,7 @@ vilaro onboard --non-interactive \
 ### 添加智能体（非交互）
 
 ```bash
-vilaro agents add work \
+velaro agents add work \
   --workspace ~/.vilaro/workspace-work \
   --model openai/gpt-5.2 \
   --bind whatsapp:biz \
@@ -225,7 +225,7 @@ Gateway 网关通过 RPC 暴露向导流程（`wizard.start`、`wizard.next`、`
 - `wizard.lastRunCommand`
 - `wizard.lastRunMode`
 
-`vilaro agents add` 会写入 `agents.list[]` 和可选的 `bindings`。
+`velaro agents add` 会写入 `agents.list[]` 和可选的 `bindings`。
 
 WhatsApp 凭证位于 `~/.vilaro/credentials/whatsapp/<accountId>/` 下。
 会话存储在 `~/.vilaro/agents/<agentId>/sessions/` 下。

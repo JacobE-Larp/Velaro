@@ -315,14 +315,14 @@ export async function statusCommand(
     if (daemon.installed === false) {
       return `${daemon.label} not installed`;
     }
-    const installedPrefix = daemon.managedByVilaro ? "installed · " : "";
+    const installedPrefix = daemon.managedByVelaro ? "installed · " : "";
     return `${daemon.label} ${installedPrefix}${daemon.loadedText}${daemon.runtimeShort ? ` · ${daemon.runtimeShort}` : ""}`;
   })();
   const nodeDaemonValue = (() => {
     if (nodeDaemon.installed === false) {
       return `${nodeDaemon.label} not installed`;
     }
-    const installedPrefix = nodeDaemon.managedByVilaro ? "installed · " : "";
+    const installedPrefix = nodeDaemon.managedByVelaro ? "installed · " : "";
     return `${nodeDaemon.label} ${installedPrefix}${nodeDaemon.loadedText}${nodeDaemon.runtimeShort ? ` · ${nodeDaemon.runtimeShort}` : ""}`;
   })();
 
@@ -453,7 +453,7 @@ export async function statusCommand(
     },
   ];
 
-  runtime.log(theme.heading("Vilaro status"));
+  runtime.log(theme.heading("Velaro status"));
   runtime.log("");
   runtime.log(theme.heading("Overview"));
   runtime.log(
@@ -473,12 +473,12 @@ export async function statusCommand(
     if (pairingRecovery.requestId) {
       runtime.log(
         theme.muted(
-          `Recovery: ${formatCliCommand(`vilaro devices approve ${pairingRecovery.requestId}`)}`,
+          `Recovery: ${formatCliCommand(`velaro devices approve ${pairingRecovery.requestId}`)}`,
         ),
       );
     }
-    runtime.log(theme.muted(`Fallback: ${formatCliCommand("vilaro devices approve --latest")}`));
-    runtime.log(theme.muted(`Inspect: ${formatCliCommand("vilaro devices list")}`));
+    runtime.log(theme.muted(`Fallback: ${formatCliCommand("velaro devices approve --latest")}`));
+    runtime.log(theme.muted(`Inspect: ${formatCliCommand("velaro devices list")}`));
   }
 
   runtime.log("");
@@ -524,8 +524,8 @@ export async function statusCommand(
       runtime.log(theme.muted(`… +${sorted.length - shown.length} more`));
     }
   }
-  runtime.log(theme.muted(`Full report: ${formatCliCommand("vilaro security audit")}`));
-  runtime.log(theme.muted(`Deep probe: ${formatCliCommand("vilaro security audit --deep")}`));
+  runtime.log(theme.muted(`Full report: ${formatCliCommand("velaro security audit")}`));
+  runtime.log(theme.muted(`Deep probe: ${formatCliCommand("velaro security audit --deep")}`));
 
   runtime.log("");
   runtime.log(theme.heading("Channels"));
@@ -687,11 +687,11 @@ export async function statusCommand(
     runtime.log("");
   }
   runtime.log("Next steps:");
-  runtime.log(`  Need to share?      ${formatCliCommand("vilaro status --all")}`);
-  runtime.log(`  Need to debug live? ${formatCliCommand("vilaro logs --follow")}`);
+  runtime.log(`  Need to share?      ${formatCliCommand("velaro status --all")}`);
+  runtime.log(`  Need to debug live? ${formatCliCommand("velaro logs --follow")}`);
   if (gatewayReachable) {
-    runtime.log(`  Need to test channels? ${formatCliCommand("vilaro status --deep")}`);
+    runtime.log(`  Need to test channels? ${formatCliCommand("velaro status --deep")}`);
   } else {
-    runtime.log(`  Fix reachability first: ${formatCliCommand("vilaro gateway probe")}`);
+    runtime.log(`  Fix reachability first: ${formatCliCommand("velaro gateway probe")}`);
   }
 }

@@ -168,7 +168,7 @@ export async function promptSecretRefForSetup(params: {
       });
       await params.prompter.note(
         params.copy?.envValidatedMessage?.(envVar) ??
-          `Validated environment variable ${envVar}. Vilaro will store a reference, not the key value.`,
+          `Validated environment variable ${envVar}. Velaro will store a reference, not the key value.`,
         "Reference validated",
       );
       return { ref, resolvedValue };
@@ -259,7 +259,7 @@ export async function promptSecretRefForSetup(params: {
       });
       await params.prompter.note(
         params.copy?.providerValidatedMessage?.(selectedProvider, id, providerEntry.source) ??
-          `Validated ${providerEntry.source} reference ${selectedProvider}:${id}. Vilaro will store a reference, not the key value.`,
+          `Validated ${providerEntry.source} reference ${selectedProvider}:${id}. Velaro will store a reference, not the key value.`,
         "Reference validated",
       );
       return { ref, resolvedValue };
@@ -400,7 +400,7 @@ export async function resolveSecretInputModeForEnvSelection(params: {
       {
         value: "plaintext",
         label: params.copy?.plaintextLabel ?? "Paste API key now",
-        hint: params.copy?.plaintextHint ?? "Stores the key directly in Vilaro config",
+        hint: params.copy?.plaintextHint ?? "Stores the key directly in Velaro config",
       },
       {
         value: "ref",

@@ -192,7 +192,7 @@ export async function setupSkills(
         runtime.log(result.stdout.trim());
       }
       runtime.log(
-        `Tip: run \`${formatCliCommand("vilaro doctor")}\` to review skills + requirements.`,
+        `Tip: run \`${formatCliCommand("velaro doctor")}\` to review skills + requirements.`,
       );
       runtime.log("Docs: https://docs.vilaro.ai/skills");
     }

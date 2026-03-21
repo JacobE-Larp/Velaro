@@ -2,7 +2,7 @@
 read_when:
   - 你想查找某个渠道的联系人/群组/自身 ID
   - 你正在开发渠道目录适配器
-summary: "`vilaro directory` 的 CLI 参考（self、peers、groups）"
+summary: "`velaro directory` 的 CLI 参考（self、peers、groups）"
 title: directory
 x-i18n:
   generated_at: "2026-02-01T19:58:58Z"
@@ -13,7 +13,7 @@ x-i18n:
   workflow: 14
 ---
 
-# `vilaro directory`
+# `velaro directory`
 
 对支持目录功能的渠道进行查找（联系人/对等方、群组和"我"）。
 
@@ -25,15 +25,15 @@ x-i18n:
 
 ## 说明
 
-- `directory` 用于帮助你查找可粘贴到其他命令中的 ID（特别是 `vilaro message send --target ...`）。
+- `directory` 用于帮助你查找可粘贴到其他命令中的 ID（特别是 `velaro message send --target ...`）。
 - 对于许多渠道，结果来源于配置（允许列表/已配置的群组），而非实时的提供商目录。
 - 默认输出为以制表符分隔的 `id`（有时包含 `name`）；脚本中请使用 `--json`。
 
 ## 将结果用于 `message send`
 
 ```bash
-vilaro directory peers list --channel slack --query "U0"
-vilaro message send --channel slack --target user:U012ABCDEF --message "hello"
+velaro directory peers list --channel slack --query "U0"
+velaro message send --channel slack --target user:U012ABCDEF --message "hello"
 ```
 
 ## ID 格式（按渠道）
@@ -50,21 +50,21 @@ vilaro message send --channel slack --target user:U012ABCDEF --message "hello"
 ## Self（"我"）
 
 ```bash
-vilaro directory self --channel zalouser
+velaro directory self --channel zalouser
 ```
 
 ## Peers（联系人/用户）
 
 ```bash
-vilaro directory peers list --channel zalouser
-vilaro directory peers list --channel zalouser --query "name"
-vilaro directory peers list --channel zalouser --limit 50
+velaro directory peers list --channel zalouser
+velaro directory peers list --channel zalouser --query "name"
+velaro directory peers list --channel zalouser --limit 50
 ```
 
 ## 群组
 
 ```bash
-vilaro directory groups list --channel zalouser
-vilaro directory groups list --channel zalouser --query "work"
-vilaro directory groups members --channel zalouser --group-id <id>
+velaro directory groups list --channel zalouser
+velaro directory groups list --channel zalouser --query "work"
+velaro directory groups members --channel zalouser --group-id <id>
 ```

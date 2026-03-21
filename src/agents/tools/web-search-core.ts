@@ -579,7 +579,7 @@ function missingSearchKeyPayload(provider: (typeof SEARCH_PROVIDERS)[number]) {
   if (provider === "brave") {
     return {
       error: "missing_brave_api_key",
-      message: `web_search (brave) needs a Brave Search API key. Run \`${formatCliCommand("vilaro configure --section web")}\` to store it, or set BRAVE_API_KEY in the Gateway environment.`,
+      message: `web_search (brave) needs a Brave Search API key. Run \`${formatCliCommand("velaro configure --section web")}\` to store it, or set BRAVE_API_KEY in the Gateway environment.`,
       docs: "https://docs.vilaro.ai/tools/web",
     };
   }
@@ -1235,7 +1235,7 @@ async function runPerplexitySearchApi(params: {
           Accept: "application/json",
           Authorization: `Bearer ${params.apiKey}`,
           "HTTP-Referer": "https://vilaro.ai",
-          "X-Title": "Vilaro Web Search",
+          "X-Title": "Velaro Web Search",
         },
         body: JSON.stringify(body),
       },
@@ -1300,7 +1300,7 @@ async function runPerplexitySearch(params: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${params.apiKey}`,
           "HTTP-Referer": "https://vilaro.ai",
-          "X-Title": "Vilaro Web Search",
+          "X-Title": "Velaro Web Search",
         },
         body: JSON.stringify(body),
       },

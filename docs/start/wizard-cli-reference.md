@@ -1,7 +1,7 @@
 ---
 summary: "Complete reference for CLI setup flow, auth/model setup, outputs, and internals"
 read_when:
-  - You need detailed behavior for vilaro onboard
+  - You need detailed behavior for velaro onboard
   - You are debugging onboarding results or integrating onboarding clients
 title: "CLI Setup Reference"
 sidebarTitle: "CLI reference"
@@ -9,7 +9,7 @@ sidebarTitle: "CLI reference"
 
 # CLI Setup Reference
 
-This page is the full reference for `vilaro onboard`.
+This page is the full reference for `velaro onboard`.
 For the short guide, see [Setup Wizard (CLI)](/start/wizard).
 
 ## What the wizard does
@@ -34,7 +34,7 @@ It does not install or modify anything on the remote host.
     - If `~/.vilaro/vilaro.json` exists, choose Keep, Modify, or Reset.
     - Re-running the wizard does not wipe anything unless you explicitly choose Reset (or pass `--reset`).
     - CLI `--reset` defaults to `config+creds+sessions`; use `--reset-scope full` to also remove workspace.
-    - If config is invalid or contains legacy keys, the wizard stops and asks you to run `vilaro doctor` before continuing.
+    - If config is invalid or contains legacy keys, the wizard stops and asks you to run `velaro doctor` before continuing.
     - Reset uses `trash` and offers scopes:
       - Config only
       - Config + credentials + sessions
@@ -71,7 +71,7 @@ It does not install or modify anything on the remote host.
     - [BlueBubbles](/channels/bluebubbles): recommended for iMessage; server URL + password + webhook
     - [iMessage](/channels/imessage): legacy `imsg` CLI path + DB access
     - DM security: default is pairing. First DM sends a code; approve via
-      `vilaro pairing approve <channel> <code>` or use allowlists.
+      `velaro pairing approve <channel> <code>` or use allowlists.
   </Step>
   <Step title="Daemon install">
     - macOS: LaunchAgent
@@ -82,8 +82,8 @@ It does not install or modify anything on the remote host.
     - Runtime selection: Node (recommended; required for WhatsApp and Telegram). Bun is not recommended.
   </Step>
   <Step title="Health check">
-    - Starts gateway (if needed) and runs `vilaro health`.
-    - `vilaro status --deep` adds gateway health probes to status output.
+    - Starts gateway (if needed) and runs `velaro health`.
+    - `velaro status --deep` adds gateway health probes to status output.
   </Step>
   <Step title="Skills">
     - Reads available skills and checks requirements.
@@ -264,7 +264,7 @@ Typical fields in `~/.vilaro/vilaro.json`:
 - `wizard.lastRunCommand`
 - `wizard.lastRunMode`
 
-`vilaro agents add` writes `agents.list[]` and optional `bindings`.
+`velaro agents add` writes `agents.list[]` and optional `bindings`.
 
 WhatsApp credentials go under `~/.vilaro/credentials/whatsapp/<accountId>/`.
 Sessions are stored under `~/.vilaro/agents/<agentId>/sessions/`.
@@ -296,4 +296,4 @@ Signal setup behavior:
 
 - Onboarding hub: [Setup Wizard (CLI)](/start/wizard)
 - Automation and scripts: [CLI Automation](/start/wizard-cli-automation)
-- Command reference: [`vilaro onboard`](/cli/onboard)
+- Command reference: [`velaro onboard`](/cli/onboard)

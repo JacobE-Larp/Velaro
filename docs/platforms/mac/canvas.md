@@ -17,17 +17,17 @@ UI surfaces.
 
 Canvas state is stored under Application Support:
 
-- `~/Library/Application Support/Vilaro/canvas/<session>/...`
+- `~/Library/Application Support/Velaro/canvas/<session>/...`
 
 The Canvas panel serves those files via a **custom URL scheme**:
 
-- `vilaro-canvas://<session>/<path>`
+- `velaro-canvas://<session>/<path>`
 
 Examples:
 
-- `vilaro-canvas://main/` → `<canvasRoot>/main/index.html`
-- `vilaro-canvas://main/assets/app.css` → `<canvasRoot>/main/assets/app.css`
-- `vilaro-canvas://main/widgets/todo/` → `<canvasRoot>/main/widgets/todo/index.html`
+- `velaro-canvas://main/` → `<canvasRoot>/main/index.html`
+- `velaro-canvas://main/assets/app.css` → `<canvasRoot>/main/assets/app.css`
+- `velaro-canvas://main/widgets/todo/` → `<canvasRoot>/main/widgets/todo/index.html`
 
 If no `index.html` exists at the root, the app shows a **built‑in scaffold page**.
 
@@ -53,10 +53,10 @@ Canvas is exposed via the **Gateway WebSocket**, so the agent can:
 CLI examples:
 
 ```bash
-vilaro nodes canvas present --node <id>
-vilaro nodes canvas navigate --node <id> --url "/"
-vilaro nodes canvas eval --node <id> --js "document.title"
-vilaro nodes canvas snapshot --node <id>
+velaro nodes canvas present --node <id>
+velaro nodes canvas navigate --node <id> --url "/"
+velaro nodes canvas eval --node <id> --js "document.title"
+velaro nodes canvas snapshot --node <id>
 ```
 
 Notes:
@@ -95,25 +95,25 @@ cat > /tmp/a2ui-v0.8.jsonl <<'EOFA2'
 {"beginRendering":{"surfaceId":"main","root":"root"}}
 EOFA2
 
-vilaro nodes canvas a2ui push --jsonl /tmp/a2ui-v0.8.jsonl --node <id>
+velaro nodes canvas a2ui push --jsonl /tmp/a2ui-v0.8.jsonl --node <id>
 ```
 
 Quick smoke:
 
 ```bash
-vilaro nodes canvas a2ui push --node <id> --text "Hello from A2UI"
+velaro nodes canvas a2ui push --node <id> --text "Hello from A2UI"
 ```
 
 ## Triggering agent runs from Canvas
 
 Canvas can trigger new agent runs via deep links:
 
-- `vilaro://agent?...`
+- `velaro://agent?...`
 
 Example (in JS):
 
 ```js
-window.location.href = "vilaro://agent?message=Review%20this%20design";
+window.location.href = "velaro://agent?message=Review%20this%20design";
 ```
 
 The app prompts for confirmation unless a valid key is provided.

@@ -14,7 +14,7 @@ export async function runNonInteractiveSetup(
   const snapshot = await readConfigFileSnapshot();
   if (snapshot.exists && !snapshot.valid) {
     runtime.error(
-      `Config invalid. Run \`${formatCliCommand("vilaro doctor")}\` to repair it, then re-run setup.`,
+      `Config invalid. Run \`${formatCliCommand("velaro doctor")}\` to repair it, then re-run setup.`,
     );
     runtime.exit(1);
     return;

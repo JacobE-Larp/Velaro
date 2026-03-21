@@ -69,10 +69,10 @@ export async function noteChromeMcpBrowserReadiness(
     noteFn(
       [
         `- Chrome MCP existing-session is configured for profile(s): ${profileLabel}.`,
-        "- Google Chrome was not found on this host. Vilaro does not bundle Chrome.",
+        "- Google Chrome was not found on this host. Velaro does not bundle Chrome.",
         `- Install Google Chrome ${CHROME_MCP_MIN_MAJOR}+ on the same host as the Gateway or node.`,
         "- In Chrome, enable remote debugging at chrome://inspect/#remote-debugging.",
-        "- Keep Chrome running and accept the attach consent prompt the first time Vilaro connects.",
+        "- Keep Chrome running and accept the attach consent prompt the first time Velaro connects.",
         "- Docker, headless, and sandbox browser flows stay on raw CDP; this check only applies to host-local Chrome MCP attach.",
       ].join("\n"),
       "Browser",
@@ -101,7 +101,7 @@ export async function noteChromeMcpBrowserReadiness(
 
   lines.push("- In Chrome, enable remote debugging at chrome://inspect/#remote-debugging.");
   lines.push(
-    "- Keep Chrome running and accept the attach consent prompt the first time Vilaro connects.",
+    "- Keep Chrome running and accept the attach consent prompt the first time Velaro connects.",
   );
 
   noteFn(lines.join("\n"), "Browser");

@@ -40,4 +40,4 @@ If you change this file, tell the user — it's your soul, and they should know.
 
 ---
 
-_Powered by Vilaro. This file is yours to evolve._
+_Powered by Velaro. This file is yours to evolve._

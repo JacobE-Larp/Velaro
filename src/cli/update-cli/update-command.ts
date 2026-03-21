@@ -283,7 +283,7 @@ async function tryInstallShellCompletion(opts: {
       if (!opts.skipPrompt) {
         defaultRuntime.log(
           theme.muted(
-            `Skipped. Run \`${replaceCliName(formatCliCommand("vilaro completion --install"), CLI_NAME)}\` later to enable.`,
+            `Skipped. Run \`${replaceCliName(formatCliCommand("velaro completion --install"), CLI_NAME)}\` later to enable.`,
           ),
         );
       }
@@ -644,7 +644,7 @@ async function maybeRestartService(params: {
           }
           defaultRuntime.log(
             theme.muted(
-              `Run \`${replaceCliName(formatCliCommand("vilaro gateway status --deep"), CLI_NAME)}\` for details.`,
+              `Run \`${replaceCliName(formatCliCommand("velaro gateway status --deep"), CLI_NAME)}\` for details.`,
             ),
           );
         }
@@ -655,7 +655,7 @@ async function maybeRestartService(params: {
         defaultRuntime.log(theme.warn(`Daemon restart failed: ${String(err)}`));
         defaultRuntime.log(
           theme.muted(
-            `You may need to restart the service manually: ${replaceCliName(formatCliCommand("vilaro gateway restart"), CLI_NAME)}`,
+            `You may need to restart the service manually: ${replaceCliName(formatCliCommand("velaro gateway restart"), CLI_NAME)}`,
           ),
         );
       }
@@ -668,13 +668,13 @@ async function maybeRestartService(params: {
     if (params.result.mode === "npm" || params.result.mode === "pnpm") {
       defaultRuntime.log(
         theme.muted(
-          `Tip: Run \`${replaceCliName(formatCliCommand("vilaro doctor"), CLI_NAME)}\`, then \`${replaceCliName(formatCliCommand("vilaro gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
+          `Tip: Run \`${replaceCliName(formatCliCommand("velaro doctor"), CLI_NAME)}\`, then \`${replaceCliName(formatCliCommand("velaro gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
         ),
       );
     } else {
       defaultRuntime.log(
         theme.muted(
-          `Tip: Run \`${replaceCliName(formatCliCommand("vilaro gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
+          `Tip: Run \`${replaceCliName(formatCliCommand("velaro gateway restart"), CLI_NAME)}\` to apply updates to a running gateway.`,
         ),
       );
     }
@@ -877,7 +877,7 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
 
   const showProgress = !opts.json && process.stdout.isTTY;
   if (!opts.json) {
-    defaultRuntime.log(theme.heading("Updating Vilaro..."));
+    defaultRuntime.log(theme.heading("Updating Velaro..."));
     defaultRuntime.log("");
   }
 
@@ -945,7 +945,7 @@ export async function updateCommand(opts: UpdateCommandOptions): Promise<void> {
     if (result.reason === "not-git-install") {
       defaultRuntime.log(
         theme.warn(
-          `Skipped: this Vilaro install isn't a git checkout, and the package manager couldn't be detected. Update via your package manager, then run \`${replaceCliName(formatCliCommand("vilaro doctor"), CLI_NAME)}\` and \`${replaceCliName(formatCliCommand("vilaro gateway restart"), CLI_NAME)}\`.`,
+          `Skipped: this Velaro install isn't a git checkout, and the package manager couldn't be detected. Update via your package manager, then run \`${replaceCliName(formatCliCommand("velaro doctor"), CLI_NAME)}\` and \`${replaceCliName(formatCliCommand("velaro gateway restart"), CLI_NAME)}\`.`,
         ),
       );
       defaultRuntime.log(

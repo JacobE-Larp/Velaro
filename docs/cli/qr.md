@@ -1,23 +1,23 @@
 ---
-summary: "CLI reference for `vilaro qr` (generate iOS pairing QR + setup code)"
+summary: "CLI reference for `velaro qr` (generate iOS pairing QR + setup code)"
 read_when:
   - You want to pair the iOS app with a gateway quickly
   - You need setup-code output for remote/manual sharing
 title: "qr"
 ---
 
-# `vilaro qr`
+# `velaro qr`
 
 Generate an iOS pairing QR and setup code from your current Gateway configuration.
 
 ## Usage
 
 ```bash
-vilaro qr
-vilaro qr --setup-code-only
-vilaro qr --json
-vilaro qr --remote
-vilaro qr --url wss://gateway.example/ws
+velaro qr
+velaro qr --setup-code-only
+velaro qr --json
+velaro qr --remote
+velaro qr --url wss://gateway.example/ws
 ```
 
 ## Options
@@ -42,5 +42,5 @@ vilaro qr --url wss://gateway.example/ws
 - If both `gateway.auth.token` and `gateway.auth.password` are configured (including SecretRefs) and `gateway.auth.mode` is unset, setup-code resolution fails until mode is set explicitly.
 - Gateway version skew note: this command path requires a gateway that supports `secrets.resolve`; older gateways return an unknown-method error.
 - After scanning, approve device pairing with:
-  - `vilaro devices list`
-  - `vilaro devices approve <requestId>`
+  - `velaro devices list`
+  - `velaro devices approve <requestId>`

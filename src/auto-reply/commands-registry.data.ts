@@ -506,7 +506,7 @@ function buildChatCommands(): ChatCommandDefinition[] {
     defineChatCommand({
       key: "restart",
       nativeName: "restart",
-      description: "Restart Vilaro.",
+      description: "Restart Velaro.",
       textAlias: "/restart",
       category: "tools",
     }),

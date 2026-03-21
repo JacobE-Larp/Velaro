@@ -1,9 +1,9 @@
 import path from "node:path";
 
-export const DEFAULT_CLI_NAME = "vilaro";
+export const DEFAULT_CLI_NAME = "velaro";
 
-const KNOWN_CLI_NAMES = new Set([DEFAULT_CLI_NAME]);
-const CLI_PREFIX_RE = /^(?:((?:pnpm|npm|bunx|npx)\s+))?(vilaro)\b/;
+const KNOWN_CLI_NAMES = new Set([DEFAULT_CLI_NAME, "vilaro"]);
+const CLI_PREFIX_RE = /^(?:((?:pnpm|npm|bunx|npx)\s+))?(velaro|vilaro)\b/;
 
 export function resolveCliName(argv: string[] = process.argv): string {
   const argv1 = argv[1];

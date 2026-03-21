@@ -1,7 +1,7 @@
 ---
 summary: "Nostr DM channel via NIP-04 encrypted messages"
 read_when:
-  - You want Vilaro to receive DMs via Nostr
+  - You want Velaro to receive DMs via Nostr
   - You're setting up decentralized messaging
 title: "Nostr"
 ---
@@ -10,13 +10,13 @@ title: "Nostr"
 
 **Status:** Optional plugin (disabled by default).
 
-Nostr is a decentralized protocol for social networking. This channel enables Vilaro to receive and respond to encrypted direct messages (DMs) via NIP-04.
+Nostr is a decentralized protocol for social networking. This channel enables Velaro to receive and respond to encrypted direct messages (DMs) via NIP-04.
 
 ## Install (on demand)
 
 ### Onboarding (recommended)
 
-- The setup wizard (`vilaro onboard`) and `vilaro channels add` list optional channel plugins.
+- The setup wizard (`velaro onboard`) and `velaro channels add` list optional channel plugins.
 - Selecting Nostr prompts you to install the plugin on demand.
 
 Install defaults:
@@ -29,13 +29,13 @@ You can always override the choice in the prompt.
 ### Manual install
 
 ```bash
-vilaro plugins install @vilaro/nostr
+velaro plugins install @vilaro/nostr
 ```
 
 Use a local checkout (dev workflows):
 
 ```bash
-vilaro plugins install --link <path-to-vilaro>/extensions/nostr
+velaro plugins install --link <path-to-velaro>/extensions/nostr
 ```
 
 Restart the Gateway after installing or enabling plugins.
@@ -43,8 +43,8 @@ Restart the Gateway after installing or enabling plugins.
 ### Non-interactive setup
 
 ```bash
-vilaro channels add --channel nostr --private-key "$NOSTR_PRIVATE_KEY"
-vilaro channels add --channel nostr --private-key "$NOSTR_PRIVATE_KEY" --relay-urls "wss://relay.damus.io,wss://relay.primal.net"
+velaro channels add --channel nostr --private-key "$NOSTR_PRIVATE_KEY"
+velaro channels add --channel nostr --private-key "$NOSTR_PRIVATE_KEY" --relay-urls "wss://relay.damus.io,wss://relay.primal.net"
 ```
 
 Use `--use-env` to keep `NOSTR_PRIVATE_KEY` in the environment instead of storing the key in config.
@@ -102,14 +102,14 @@ Example:
     "nostr": {
       "privateKey": "${NOSTR_PRIVATE_KEY}",
       "profile": {
-        "name": "vilaro",
-        "displayName": "Vilaro",
+        "name": "velaro",
+        "displayName": "Velaro",
         "about": "Personal assistant DM bot",
         "picture": "https://example.com/avatar.png",
         "banner": "https://example.com/banner.png",
         "website": "https://example.com",
-        "nip05": "vilaro@example.com",
-        "lud16": "vilaro@example.com"
+        "nip05": "velaro@example.com",
+        "lud16": "velaro@example.com"
       }
     }
   }

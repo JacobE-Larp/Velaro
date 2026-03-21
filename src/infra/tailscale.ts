@@ -372,7 +372,7 @@ export async function ensureFunnel(
     runtime.error("Failed to enable Tailscale Funnel. Is it allowed on your tailnet?");
     runtime.error(
       info(
-        `Tip: Funnel is optional for Vilaro. You can keep running the web gateway without it: \`${formatCliCommand("vilaro gateway")}\``,
+        `Tip: Funnel is optional for Velaro. You can keep running the web gateway without it: \`${formatCliCommand("velaro gateway")}\``,
       ),
     );
     if (shouldLogVerbose()) {

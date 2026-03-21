@@ -53,7 +53,7 @@ import {
   validateConfigObjectRawWithPlugins,
   validateConfigObjectWithPlugins,
 } from "./validation.js";
-import { compareVilaroVersions } from "./version.js";
+import { compareVelaroVersions } from "./version.js";
 
 // Re-export for backwards compatibility
 export { CircularIncludeError, ConfigIncludeError } from "./includes.js";
@@ -204,10 +204,10 @@ function formatConfigValidationFailure(pathLabel: string, issueMessage: string):
     `Configuration mismatch: ${policyPath} is "open", but ${allowPath} does not include "*".`,
     "",
     "Fix with:",
-    `  vilaro config set ${allowPath} '["*"]'`,
+    `  velaro config set ${allowPath} '["*"]'`,
     "",
     "Or switch policy:",
-    `  vilaro config set ${policyPath} "pairing"`,
+    `  velaro config set ${policyPath} "pairing"`,
   ].join("\n");
 }
 
@@ -621,13 +621,13 @@ function warnIfConfigFromFuture(cfg: VilaroConfig, logger: Pick<typeof console, 
   if (!touched) {
     return;
   }
-  const cmp = compareVilaroVersions(VERSION, touched);
+  const cmp = compareVelaroVersions(VERSION, touched);
   if (cmp === null) {
     return;
   }
   if (cmp < 0) {
     logger.warn(
-      `Config was last written by a newer Vilaro (${touched}); current version is ${VERSION}.`,
+      `Config was last written by a newer Velaro (${touched}); current version is ${VERSION}.`,
     );
   }
 }

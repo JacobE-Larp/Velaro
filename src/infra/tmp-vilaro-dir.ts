@@ -5,7 +5,7 @@ import path from "node:path";
 export const POSIX_VILARO_TMP_DIR = "/tmp/vilaro";
 const TMP_DIR_ACCESS_MODE = fs.constants.W_OK | fs.constants.X_OK;
 
-type ResolvePreferredVilaroTmpDirOptions = {
+type ResolvePreferredVelaroTmpDirOptions = {
   accessSync?: (path: string, mode?: number) => void;
   chmodSync?: (path: string, mode: number) => void;
   lstatSync?: (path: string) => {
@@ -32,7 +32,7 @@ function isNodeErrorWithCode(err: unknown, code: string): err is MaybeNodeError 
 }
 
 export function resolvePreferredVilaroTmpDir(
-  options: ResolvePreferredVilaroTmpDirOptions = {},
+  options: ResolvePreferredVelaroTmpDirOptions = {},
 ): string {
   const accessSync = options.accessSync ?? fs.accessSync;
   const chmodSync = options.chmodSync ?? fs.chmodSync;
@@ -67,7 +67,7 @@ export function resolvePreferredVilaroTmpDir(
 
   const fallback = (): string => {
     const base = tmpdir();
-    const suffix = uid === undefined ? "vilaro" : `vilaro-${uid}`;
+    const suffix = uid === undefined ? "velaro" : `velaro-${uid}`;
     return path.join(base, suffix);
   };
 
@@ -126,16 +126,16 @@ export function resolvePreferredVilaroTmpDir(
       if (tryRepairWritableBits(fallbackPath)) {
         return fallbackPath;
       }
-      throw new Error(`Unsafe fallback Vilaro temp dir: ${fallbackPath}`);
+      throw new Error(`Unsafe fallback Velaro temp dir: ${fallbackPath}`);
     }
     try {
       mkdirSync(fallbackPath, { recursive: true, mode: 0o700 });
       chmodSync(fallbackPath, 0o700);
     } catch {
-      throw new Error(`Unable to create fallback Vilaro temp dir: ${fallbackPath}`);
+      throw new Error(`Unable to create fallback Velaro temp dir: ${fallbackPath}`);
     }
     if (resolveDirState(fallbackPath) !== "available" && !tryRepairWritableBits(fallbackPath)) {
-      throw new Error(`Unsafe fallback Vilaro temp dir: ${fallbackPath}`);
+      throw new Error(`Unsafe fallback Velaro temp dir: ${fallbackPath}`);
     }
     return fallbackPath;
   };

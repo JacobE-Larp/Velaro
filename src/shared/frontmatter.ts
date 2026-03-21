@@ -31,7 +31,7 @@ export function parseFrontmatterBool(value: string | undefined, fallback: boolea
   return parsed === undefined ? fallback : parsed;
 }
 
-export function resolveVilaroManifestBlock(params: {
+export function resolveVelaroManifestBlock(params: {
   frontmatter: Record<string, unknown>;
   key?: string;
 }): Record<string, unknown> | undefined {
@@ -59,16 +59,16 @@ export function resolveVilaroManifestBlock(params: {
   }
 }
 
-export type VilaroManifestRequires = {
+export type VelaroManifestRequires = {
   bins: string[];
   anyBins: string[];
   env: string[];
   config: string[];
 };
 
-export function resolveVilaroManifestRequires(
+export function resolveVelaroManifestRequires(
   metadataObj: Record<string, unknown>,
-): VilaroManifestRequires | undefined {
+): VelaroManifestRequires | undefined {
   const requiresRaw =
     typeof metadataObj.requires === "object" && metadataObj.requires !== null
       ? (metadataObj.requires as Record<string, unknown>)
@@ -84,7 +84,7 @@ export function resolveVilaroManifestRequires(
   };
 }
 
-export function resolveVilaroManifestInstall<T>(
+export function resolveVelaroManifestInstall<T>(
   metadataObj: Record<string, unknown>,
   parseInstallSpec: (input: unknown) => T | undefined,
 ): T[] {
@@ -94,11 +94,11 @@ export function resolveVilaroManifestInstall<T>(
     .filter((entry): entry is T => Boolean(entry));
 }
 
-export function resolveVilaroManifestOs(metadataObj: Record<string, unknown>): string[] {
+export function resolveVelaroManifestOs(metadataObj: Record<string, unknown>): string[] {
   return normalizeStringList(metadataObj.os);
 }
 
-export type ParsedVilaroManifestInstallBase = {
+export type ParsedVelaroManifestInstallBase = {
   raw: Record<string, unknown>;
   kind: string;
   id?: string;
@@ -106,10 +106,10 @@ export type ParsedVilaroManifestInstallBase = {
   bins?: string[];
 };
 
-export function parseVilaroManifestInstallBase(
+export function parseVelaroManifestInstallBase(
   input: unknown,
   allowedKinds: readonly string[],
-): ParsedVilaroManifestInstallBase | undefined {
+): ParsedVelaroManifestInstallBase | undefined {
   if (!input || typeof input !== "object") {
     return undefined;
   }
@@ -121,7 +121,7 @@ export function parseVilaroManifestInstallBase(
     return undefined;
   }
 
-  const spec: ParsedVilaroManifestInstallBase = {
+  const spec: ParsedVelaroManifestInstallBase = {
     raw,
     kind,
   };
@@ -138,9 +138,9 @@ export function parseVilaroManifestInstallBase(
   return spec;
 }
 
-export function applyVilaroManifestInstallCommonFields<
+export function applyVelaroManifestInstallCommonFields<
   T extends { id?: string; label?: string; bins?: string[] },
->(spec: T, parsed: Pick<ParsedVilaroManifestInstallBase, "id" | "label" | "bins">): T {
+>(spec: T, parsed: Pick<ParsedVelaroManifestInstallBase, "id" | "label" | "bins">): T {
   if (parsed.id) {
     spec.id = parsed.id;
   }

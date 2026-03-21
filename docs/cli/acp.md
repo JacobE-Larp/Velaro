@@ -8,12 +8,12 @@ title: "acp"
 
 # acp
 
-Run the [Agent Client Protocol (ACP)](https://agentclientprotocol.com/) bridge that talks to a Vilaro Gateway.
+Run the [Agent Client Protocol (ACP)](https://agentclientprotocol.com/) bridge that talks to a Velaro Gateway.
 
 This command speaks ACP over stdio for IDEs and forwards prompts to the Gateway
 over WebSocket. It keeps ACP sessions mapped to Gateway session keys.
 
-`vilaro acp` is a Gateway-backed ACP bridge, not a full ACP-native editor
+`velaro acp` is a Gateway-backed ACP bridge, not a full ACP-native editor
 runtime. It focuses on session routing, prompt delivery, and basic streaming
 updates.
 
@@ -28,7 +28,7 @@ updates.
 | Session modes                                                         | Partial     | `session/set_mode` is supported and the bridge exposes initial Gateway-backed session controls for thought level, tool verbosity, reasoning, usage detail, and elevated actions. Broader ACP-native mode/config surfaces are still out of scope. |
 | Session info and usage updates                                        | Partial     | The bridge emits `session_info_update` and best-effort `usage_update` notifications from cached Gateway session snapshots. Usage is approximate and only sent when Gateway token totals are marked fresh.                                        |
 | Tool streaming                                                        | Partial     | `tool_call` / `tool_call_update` events include raw I/O, text content, and best-effort file locations when Gateway tool args/results expose them. Embedded terminals and richer diff-native output are still not exposed.                        |
-| Per-session MCP servers (`mcpServers`)                                | Unsupported | Bridge mode rejects per-session MCP server requests. Configure MCP on the Vilaro gateway or agent instead.                                                                                                                                       |
+| Per-session MCP servers (`mcpServers`)                                | Unsupported | Bridge mode rejects per-session MCP server requests. Configure MCP on the Velaro gateway or agent instead.                                                                                                                                       |
 | Client filesystem methods (`fs/read_text_file`, `fs/write_text_file`) | Unsupported | The bridge does not call ACP client filesystem methods.                                                                                                                                                                                          |
 | Client terminal methods (`terminal/*`)                                | Unsupported | The bridge does not create ACP client terminals or stream terminal ids through tool calls.                                                                                                                                                       |
 | Session plans / thought streaming                                     | Unsupported | The bridge currently emits output text and tool status, not ACP plan or thought updates.                                                                                                                                                         |
@@ -59,22 +59,22 @@ updates.
 ## Usage
 
 ```bash
-vilaro acp
+velaro acp
 
 # Remote Gateway
-vilaro acp --url wss://gateway-host:18789 --token <token>
+velaro acp --url wss://gateway-host:18789 --token <token>
 
 # Remote Gateway (token from file)
-vilaro acp --url wss://gateway-host:18789 --token-file ~/.vilaro/gateway.token
+velaro acp --url wss://gateway-host:18789 --token-file ~/.vilaro/gateway.token
 
 # Attach to an existing session key
-vilaro acp --session agent:main:main
+velaro acp --session agent:main:main
 
 # Attach by label (must already exist)
-vilaro acp --session-label "support inbox"
+velaro acp --session-label "support inbox"
 
 # Reset the session key before the first prompt
-vilaro acp --session agent:main:main --reset-session
+velaro acp --session agent:main:main --reset-session
 ```
 
 ## ACP client (debug)
@@ -83,13 +83,13 @@ Use the built-in ACP client to sanity-check the bridge without an IDE.
 It spawns the ACP bridge and lets you type prompts interactively.
 
 ```bash
-vilaro acp client
+velaro acp client
 
 # Point the spawned bridge at a remote Gateway
-vilaro acp client --server-args --url wss://gateway-host:18789 --token-file ~/.vilaro/gateway.token
+velaro acp client --server-args --url wss://gateway-host:18789 --token-file ~/.vilaro/gateway.token
 
-# Override the server command (default: vilaro)
-vilaro acp client --server "node" --server-args vilaro.mjs acp --url ws://127.0.0.1:19001
+# Override the server command (default: velaro)
+velaro acp client --server "node" --server-args vilaro.mjs acp --url ws://127.0.0.1:19001
 ```
 
 Permission model (client debug mode):
@@ -102,25 +102,25 @@ Permission model (client debug mode):
 ## How to use this
 
 Use ACP when an IDE (or other client) speaks Agent Client Protocol and you want
-it to drive a Vilaro Gateway session.
+it to drive a Velaro Gateway session.
 
 1. Ensure the Gateway is running (local or remote).
 2. Configure the Gateway target (config or flags).
-3. Point your IDE to run `vilaro acp` over stdio.
+3. Point your IDE to run `velaro acp` over stdio.
 
 Example config (persisted):
 
 ```bash
-vilaro config set gateway.remote.url wss://gateway-host:18789
-vilaro config set gateway.remote.token <token>
+velaro config set gateway.remote.url wss://gateway-host:18789
+velaro config set gateway.remote.token <token>
 ```
 
 Example direct run (no config write):
 
 ```bash
-vilaro acp --url wss://gateway-host:18789 --token <token>
+velaro acp --url wss://gateway-host:18789 --token <token>
 # preferred for local process safety
-vilaro acp --url wss://gateway-host:18789 --token-file ~/.vilaro/gateway.token
+velaro acp --url wss://gateway-host:18789 --token-file ~/.vilaro/gateway.token
 ```
 
 ## Selecting agents
@@ -130,9 +130,9 @@ ACP does not pick agents directly. It routes by the Gateway session key.
 Use agent-scoped session keys to target a specific agent:
 
 ```bash
-vilaro acp --session agent:main:main
-vilaro acp --session agent:design:main
-vilaro acp --session agent:qa:bug-123
+velaro acp --session agent:main:main
+velaro acp --session agent:design:main
+velaro acp --session agent:qa:bug-123
 ```
 
 Each ACP session maps to a single Gateway session key. One agent can have many
@@ -146,40 +146,40 @@ error instead of silently ignoring them.
 ## Use from `acpx` (Codex, Claude, other ACP clients)
 
 If you want a coding agent such as Codex or Claude Code to talk to your
-Vilaro bot over ACP, use `acpx` with its built-in `vilaro` target.
+Velaro bot over ACP, use `acpx` with its built-in `velaro` target.
 
 Typical flow:
 
 1. Run the Gateway and make sure the ACP bridge can reach it.
-2. Point `acpx vilaro` at `vilaro acp`.
-3. Target the Vilaro session key you want the coding agent to use.
+2. Point `acpx velaro` at `velaro acp`.
+3. Target the Velaro session key you want the coding agent to use.
 
 Examples:
 
 ```bash
-# One-shot request into your default Vilaro ACP session
-acpx vilaro exec "Summarize the active Vilaro session state."
+# One-shot request into your default Velaro ACP session
+acpx velaro exec "Summarize the active Velaro session state."
 
 # Persistent named session for follow-up turns
-acpx vilaro sessions ensure --name codex-bridge
-acpx vilaro -s codex-bridge --cwd /path/to/repo \
-  "Ask my Vilaro work agent for recent context relevant to this repo."
+acpx velaro sessions ensure --name codex-bridge
+acpx velaro -s codex-bridge --cwd /path/to/repo \
+  "Ask my Velaro work agent for recent context relevant to this repo."
 ```
 
-If you want `acpx vilaro` to target a specific Gateway and session key every
-time, override the `vilaro` agent command in `~/.acpx/config.json`:
+If you want `acpx velaro` to target a specific Gateway and session key every
+time, override the `velaro` agent command in `~/.acpx/config.json`:
 
 ```json
 {
   "agents": {
-    "vilaro": {
-      "command": "env VILARO_HIDE_BANNER=1 VILARO_SUPPRESS_NOTES=1 vilaro acp --url ws://127.0.0.1:18789 --token-file ~/.vilaro/gateway.token --session agent:main:main"
+    "velaro": {
+      "command": "env VILARO_HIDE_BANNER=1 VILARO_SUPPRESS_NOTES=1 velaro acp --url ws://127.0.0.1:18789 --token-file ~/.vilaro/gateway.token --session agent:main:main"
     }
   }
 }
 ```
 
-For a repo-local Vilaro checkout, use the direct CLI entrypoint instead of the
+For a repo-local Velaro checkout, use the direct CLI entrypoint instead of the
 dev runner so the ACP stream stays clean. For example:
 
 ```bash
@@ -187,7 +187,7 @@ env VILARO_HIDE_BANNER=1 VILARO_SUPPRESS_NOTES=1 node vilaro.mjs acp ...
 ```
 
 This is the easiest way to let Codex, Claude Code, or another ACP-aware client
-pull contextual information from an Vilaro agent without scraping a terminal.
+pull contextual information from an Velaro agent without scraping a terminal.
 
 ## Zed editor setup
 
@@ -196,9 +196,9 @@ Add a custom ACP agent in `~/.config/zed/settings.json` (or use Zed’s Settings
 ```json
 {
   "agent_servers": {
-    "Vilaro ACP": {
+    "Velaro ACP": {
       "type": "custom",
-      "command": "vilaro",
+      "command": "velaro",
       "args": ["acp"],
       "env": {}
     }
@@ -211,9 +211,9 @@ To target a specific Gateway or agent:
 ```json
 {
   "agent_servers": {
-    "Vilaro ACP": {
+    "Velaro ACP": {
       "type": "custom",
-      "command": "vilaro",
+      "command": "velaro",
       "args": [
         "acp",
         "--url",
@@ -229,7 +229,7 @@ To target a specific Gateway or agent:
 }
 ```
 
-In Zed, open the Agent panel and select “Vilaro ACP” to start a thread.
+In Zed, open the Agent panel and select “Velaro ACP” to start a thread.
 
 ## Session mapping
 
@@ -277,12 +277,12 @@ Security note:
   - remote mode: `gateway.remote.*` with env/config fallback per remote precedence rules
   - `--url` is override-safe and does not reuse implicit config/env credentials; pass explicit `--token`/`--password` (or file variants)
 - ACP runtime backend child processes receive `VILARO_SHELL=acp`, which can be used for context-specific shell/profile rules.
-- `vilaro acp client` sets `VILARO_SHELL=acp-client` on the spawned bridge process.
+- `velaro acp client` sets `VILARO_SHELL=acp-client` on the spawned bridge process.
 
 ### `acp client` options
 
 - `--cwd <dir>`: working directory for the ACP session.
-- `--server <command>`: ACP server command (default: `vilaro`).
+- `--server <command>`: ACP server command (default: `velaro`).
 - `--server-args <args...>`: extra arguments passed to the ACP server.
 - `--server-verbose`: enable verbose logging on the ACP server.
 - `--verbose, -v`: verbose client logging.

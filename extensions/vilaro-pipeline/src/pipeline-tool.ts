@@ -111,7 +111,7 @@ async function runVilaroSubprocessOnce(params: {
       const str = String(chunk);
       stdoutBytes += Buffer.byteLength(str, "utf8");
       if (stdoutBytes > maxStdoutBytes) {
-        failAndTerminate("vilaro output exceeded maxStdoutBytes");
+        failAndTerminate("velaro output exceeded maxStdoutBytes");
         return;
       }
       stdout += str;
@@ -122,7 +122,7 @@ async function runVilaroSubprocessOnce(params: {
     });
 
     const timer = setTimeout(() => {
-      failAndTerminate("vilaro subprocess timed out");
+      failAndTerminate("velaro subprocess timed out");
     }, timeoutMs);
 
     child.once("error", (err) => {
@@ -133,7 +133,7 @@ async function runVilaroSubprocessOnce(params: {
       if (code !== 0) {
         settle({
           ok: false,
-          error: new Error(`vilaro failed (${code ?? "?"}): ${stderr.trim() || stdout.trim()}`),
+          error: new Error(`velaro failed (${code ?? "?"}): ${stderr.trim() || stdout.trim()}`),
         });
         return;
       }
@@ -165,11 +165,11 @@ function parseEnvelope(stdout: string): VilaroEnvelope {
   }
 
   if (parsed === undefined) {
-    throw new Error("vilaro returned invalid JSON");
+    throw new Error("velaro returned invalid JSON");
   }
 
   if (!parsed || typeof parsed !== "object") {
-    throw new Error("vilaro returned invalid JSON envelope");
+    throw new Error("velaro returned invalid JSON envelope");
   }
 
   const ok = (parsed as { ok?: unknown }).ok;
@@ -177,7 +177,7 @@ function parseEnvelope(stdout: string): VilaroEnvelope {
     return parsed as VilaroEnvelope;
   }
 
-  throw new Error("vilaro returned invalid JSON envelope");
+  throw new Error("velaro returned invalid JSON envelope");
 }
 
 function buildVilaroArgv(action: string, params: Record<string, unknown>): string[] {
@@ -209,10 +209,10 @@ function buildVilaroArgv(action: string, params: Record<string, unknown>): strin
 
 export function createPipelineTool(api: VilaroPluginApi) {
   return {
-    name: "vilaro",
-    label: "Vilaro Workflow",
+    name: "velaro",
+    label: "Velaro Workflow",
     description:
-      "Run Vilaro pipelines as a local-first workflow runtime (typed JSON envelope + resumable approvals).",
+      "Run Velaro pipelines as a local-first workflow runtime (typed JSON envelope + resumable approvals).",
     parameters: Type.Object({
       // NOTE: Prefer string enums in tool schemas; some providers reject unions/anyOf.
       action: Type.Unsafe<"run" | "resume">({ type: "string", enum: ["run", "resume"] }),
@@ -235,7 +235,7 @@ export function createPipelineTool(api: VilaroPluginApi) {
         throw new Error("action required");
       }
 
-      const execPath = "vilaro";
+      const execPath = "velaro";
       const cwd = resolveCwd(params.cwd);
       const timeoutMs = typeof params.timeoutMs === "number" ? params.timeoutMs : 20_000;
       const maxStdoutBytes =
@@ -244,7 +244,7 @@ export function createPipelineTool(api: VilaroPluginApi) {
       const argv = buildVilaroArgv(action, params);
 
       if (api.runtime?.version && api.logger?.debug) {
-        api.logger.debug(`vilaro plugin runtime=${api.runtime.version}`);
+        api.logger.debug(`velaro plugin runtime=${api.runtime.version}`);
       }
 
       const { stdout } = await runVilaroSubprocessOnce({

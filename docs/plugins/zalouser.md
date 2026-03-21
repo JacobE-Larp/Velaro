@@ -1,14 +1,14 @@
 ---
 summary: "Zalo Personal plugin: QR login + messaging via native zca-js (plugin install + channel config + tool)"
 read_when:
-  - You want Zalo Personal (unofficial) support in Vilaro
+  - You want Zalo Personal (unofficial) support in Velaro
   - You are configuring or developing the zalouser plugin
 title: "Zalo Personal Plugin"
 ---
 
 # Zalo Personal (plugin)
 
-Zalo Personal support for Vilaro via a plugin, using native `zca-js` to automate a normal Zalo user account.
+Zalo Personal support for Velaro via a plugin, using native `zca-js` to automate a normal Zalo user account.
 
 > **Warning:** Unofficial automation may lead to account suspension/ban. Use at your own risk.
 
@@ -29,7 +29,7 @@ No external `zca`/`openzca` CLI binary is required.
 ### Option A: install from npm
 
 ```bash
-vilaro plugins install @vilaro/zalouser
+velaro plugins install @vilaro/zalouser
 ```
 
 Restart the Gateway afterwards.
@@ -37,7 +37,7 @@ Restart the Gateway afterwards.
 ### Option B: install from a local folder (dev)
 
 ```bash
-vilaro plugins install ./extensions/zalouser
+velaro plugins install ./extensions/zalouser
 cd ./extensions/zalouser && pnpm install
 ```
 
@@ -61,11 +61,11 @@ Channel config lives under `channels.zalouser` (not `plugins.entries.*`):
 ## CLI
 
 ```bash
-vilaro channels login --channel zalouser
-vilaro channels logout --channel zalouser
-vilaro channels status --probe
-vilaro message send --channel zalouser --target <threadId> --message "Hello from Vilaro"
-vilaro directory peers list --channel zalouser --query "name"
+velaro channels login --channel zalouser
+velaro channels logout --channel zalouser
+velaro channels status --probe
+velaro message send --channel zalouser --target <threadId> --message "Hello from Velaro"
+velaro directory peers list --channel zalouser --query "name"
 ```
 
 ## Agent tool

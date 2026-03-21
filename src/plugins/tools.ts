@@ -2,9 +2,9 @@ import { normalizeToolName } from "../agents/tool-policy.js";
 import type { AnyAgentTool } from "../agents/tools/common.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import { applyTestPluginDefaults, normalizePluginsConfig } from "./config-state.js";
-import { loadVilaroPlugins } from "./loader.js";
+import { loadVelaroPlugins } from "./loader.js";
 import { createPluginLoaderLogger } from "./logger.js";
-import type { VilaroPluginToolContext } from "./types.js";
+import type { VelaroPluginToolContext } from "./types.js";
 
 const log = createSubsystemLogger("plugins");
 
@@ -43,7 +43,7 @@ function isOptionalToolAllowed(params: {
 }
 
 export function resolvePluginTools(params: {
-  context: VilaroPluginToolContext;
+  context: VelaroPluginToolContext;
   existingToolNames?: Set<string>;
   toolAllowlist?: string[];
   suppressNameConflicts?: boolean;
@@ -58,7 +58,7 @@ export function resolvePluginTools(params: {
     return [];
   }
 
-  const registry = loadVilaroPlugins({
+  const registry = loadVelaroPlugins({
     config: effectiveConfig,
     workspaceDir: params.context.workspaceDir,
     env,

@@ -34,7 +34,7 @@ import { createExecApprovalForwarder } from "../infra/exec-approval-forwarder.js
 import { onHeartbeatEvent } from "../infra/heartbeat-events.js";
 import { startHeartbeatRunner, type HeartbeatRunner } from "../infra/heartbeat-runner.js";
 import { getMachineDisplayName } from "../infra/machine-name.js";
-import { ensureVilaroCliOnPath } from "../infra/path-env.js";
+import { ensureVelaroCliOnPath } from "../infra/path-env.js";
 import { setGatewaySigusr1RestartPolicy, setPreRestartDeferralCheck } from "../infra/restart.js";
 import {
   primeRemoteSkillsCache,
@@ -119,7 +119,7 @@ import { maybeSeedControlUiAllowedOriginsAtStartup } from "./startup-control-ui-
 
 export { __resetModelCatalogCacheForTest } from "./server-model-catalog.js";
 
-ensureVilaroCliOnPath();
+ensureVelaroCliOnPath();
 
 const MAX_MEDIA_TTL_HOURS = 24 * 7;
 
@@ -320,7 +320,7 @@ export async function startGatewayServer(
         ? formatConfigIssueLines(configSnapshot.issues, "", { normalizeRoot: true }).join("\n")
         : "Unknown validation issue.";
     throw new Error(
-      `Invalid config at ${configSnapshot.path}.\n${issues}\nRun "${formatCliCommand("vilaro doctor")}" to repair, then retry.`,
+      `Invalid config at ${configSnapshot.path}.\n${issues}\nRun "${formatCliCommand("velaro doctor")}" to repair, then retry.`,
     );
   }
 
@@ -444,7 +444,7 @@ export async function startGatewayServer(
       );
     } else {
       log.warn(
-        "Gateway auth token was missing. Generated a runtime token for this startup without changing config; restart will generate a different token. Persist one with `vilaro config set gateway.auth.mode token` and `vilaro config set gateway.auth.token <token>`.",
+        "Gateway auth token was missing. Generated a runtime token for this startup without changing config; restart will generate a different token. Persist one with `velaro config set gateway.auth.mode token` and `velaro config set gateway.auth.token <token>`.",
       );
     }
   }

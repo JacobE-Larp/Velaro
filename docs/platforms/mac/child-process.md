@@ -10,7 +10,7 @@ title: "Gateway Lifecycle"
 The macOS app **manages the Gateway via launchd** by default and does not spawn
 the Gateway as a child process. It first tries to attach to an already‑running
 Gateway on the configured port; if none is reachable, it enables the launchd
-service via the external `vilaro` CLI (no embedded runtime). This gives you
+service via the external `velaro` CLI (no embedded runtime). This gives you
 reliable auto‑start at login and restart on crashes.
 
 Child‑process mode (Gateway spawned directly by the app) is **not in use** today.
@@ -19,7 +19,7 @@ If you need tighter coupling to the UI, run the Gateway manually in a terminal.
 ## Default behavior (launchd)
 
 - The app installs a per‑user LaunchAgent labeled `ai.vilaro.gateway`
-  (or `ai.vilaro.<profile>` when using `--profile`/`VILARO_PROFILE`; legacy `com.vilaro.*` is supported).
+  (or `ai.velaro.<profile>` when using `--profile`/`VILARO_PROFILE`; legacy `com.velaro.*` is supported).
 - When Local mode is enabled, the app ensures the LaunchAgent is loaded and
   starts the Gateway if needed.
 - Logs are written to the launchd gateway log path (visible in Debug Settings).
@@ -31,7 +31,7 @@ launchctl kickstart -k gui/$UID/ai.vilaro.gateway
 launchctl bootout gui/$UID/ai.vilaro.gateway
 ```
 
-Replace the label with `ai.vilaro.<profile>` when running a named profile.
+Replace the label with `ai.velaro.<profile>` when running a named profile.
 
 ## Unsigned dev builds
 

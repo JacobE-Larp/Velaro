@@ -16,7 +16,7 @@ import { shouldIncludeSkill } from "./config.js";
 import { normalizeSkillFilter } from "./filter.js";
 import {
   parseFrontmatter,
-  resolveVilaroMetadata,
+  resolveVelaroMetadata,
   resolveSkillInvocationPolicy,
 } from "./frontmatter.js";
 import { resolvePluginSkillDirs } from "./plugin-skills.js";
@@ -519,7 +519,7 @@ function loadSkillEntries(
     return {
       skill,
       frontmatter,
-      metadata: resolveVilaroMetadata(frontmatter),
+      metadata: resolveVelaroMetadata(frontmatter),
       invocation: resolveSkillInvocationPolicy(frontmatter),
     };
   });
@@ -625,7 +625,7 @@ function resolveWorkspaceSkillPromptState(
     config: opts?.config,
   });
   const truncationNote = truncated
-    ? `⚠️ Skills truncated: included ${skillsForPrompt.length} of ${resolvedSkills.length}. Run \`vilaro skills check\` to audit.`
+    ? `⚠️ Skills truncated: included ${skillsForPrompt.length} of ${resolvedSkills.length}. Run \`velaro skills check\` to audit.`
     : "";
   const prompt = [
     remoteNote,

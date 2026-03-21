@@ -113,9 +113,9 @@ export function injectCanvasLiveReload(html: string): string {
     const action = { ...userAction, id };
     return postToNode({ userAction: action });
   }
-  globalThis.Vilaro = globalThis.Vilaro ?? {};
-  globalThis.Vilaro.postMessage = postToNode;
-  globalThis.Vilaro.sendUserAction = sendUserAction;
+  globalThis.Velaro = globalThis.Velaro ?? {};
+  globalThis.Velaro.postMessage = postToNode;
+  globalThis.Velaro.sendUserAction = sendUserAction;
   globalThis.vilaroPostMessage = postToNode;
   globalThis.vilaroSendUserAction = sendUserAction;
 

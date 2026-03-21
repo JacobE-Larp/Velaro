@@ -602,7 +602,7 @@ export async function runCronIsolatedAgentTurn(params: {
             agentId,
             trigger: "cron",
             // Cron jobs are trusted local automation, so isolated runs should
-            // inherit owner-only tooling like local `vilaro agent` runs.
+            // inherit owner-only tooling like local `velaro agent` runs.
             senderIsOwner: true,
             messageChannel,
             agentAccountId: resolvedDelivery.accountId,

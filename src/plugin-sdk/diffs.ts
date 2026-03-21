@@ -6,6 +6,6 @@ export { resolvePreferredVilaroTmpDir } from "../infra/tmp-vilaro-dir.js";
 export type {
   AnyAgentTool,
   VilaroPluginApi,
-  VilaroPluginConfigSchema,
+  VelaroPluginConfigSchema,
   PluginLogger,
 } from "../plugins/types.js";

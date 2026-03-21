@@ -14,12 +14,12 @@ import {
   requestPluginConversationBinding,
 } from "./conversation-binding.js";
 import type {
-  VilaroPluginCommandDefinition,
+  VelaroPluginCommandDefinition,
   PluginCommandContext,
   PluginCommandResult,
 } from "./types.js";
 
-type RegisteredPluginCommand = VilaroPluginCommandDefinition & {
+type RegisteredPluginCommand = VelaroPluginCommandDefinition & {
   pluginId: string;
   pluginName?: string;
   pluginRoot?: string;
@@ -116,7 +116,7 @@ export type CommandRegistrationResult = {
  * Shared by both the global registration path and snapshot (non-activating) loads.
  */
 export function validatePluginCommandDefinition(
-  command: VilaroPluginCommandDefinition,
+  command: VelaroPluginCommandDefinition,
 ): string | null {
   if (typeof command.handler !== "function") {
     return "Command handler must be a function";
@@ -139,7 +139,7 @@ export function validatePluginCommandDefinition(
  */
 export function registerPluginCommand(
   pluginId: string,
-  command: VilaroPluginCommandDefinition,
+  command: VelaroPluginCommandDefinition,
   opts?: { pluginName?: string; pluginRoot?: string },
 ): CommandRegistrationResult {
   // Prevent registration while commands are being processed
@@ -443,7 +443,7 @@ export function listPluginCommands(): Array<{
 }
 
 function resolvePluginNativeName(
-  command: VilaroPluginCommandDefinition,
+  command: VelaroPluginCommandDefinition,
   provider?: string,
 ): string {
   const providerName = provider?.trim().toLowerCase();

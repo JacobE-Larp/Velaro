@@ -8,14 +8,14 @@ title: "Hooks"
 
 # Hooks
 
-Hooks provide an extensible event-driven system for automating actions in response to agent commands and events. Hooks are automatically discovered from directories and can be managed via CLI commands, similar to how skills work in Vilaro.
+Hooks provide an extensible event-driven system for automating actions in response to agent commands and events. Hooks are automatically discovered from directories and can be managed via CLI commands, similar to how skills work in Velaro.
 
 ## Getting Oriented
 
 Hooks are small scripts that run when something happens. There are two kinds:
 
 - **Hooks** (this page): run inside the Gateway when agent events fire, like `/new`, `/reset`, `/stop`, or lifecycle events.
-- **Webhooks**: external HTTP webhooks that let other systems trigger work in Vilaro. See [Webhook Hooks](/automation/webhook) or use `vilaro webhooks` for Gmail helper commands.
+- **Webhooks**: external HTTP webhooks that let other systems trigger work in Velaro. See [Webhook Hooks](/automation/webhook) or use `velaro webhooks` for Gmail helper commands.
 
 Hooks can also be bundled inside plugins; see [Plugins](/tools/plugin#plugin-hooks).
 
@@ -35,13 +35,13 @@ The hooks system allows you to:
 - Save session context to memory when `/new` is issued
 - Log all commands for auditing
 - Trigger custom automations on agent lifecycle events
-- Extend Vilaro's behavior without modifying core code
+- Extend Velaro's behavior without modifying core code
 
 ## Getting Started
 
 ### Bundled Hooks
 
-Vilaro ships with four bundled hooks that are automatically discovered:
+Velaro ships with four bundled hooks that are automatically discovered:
 
 - **💾 session-memory**: Saves session context to your agent workspace (default `~/.vilaro/workspace/memory/`) when you issue `/new`
 - **📎 bootstrap-extra-files**: Injects additional workspace bootstrap files from configured glob/path patterns during `agent:bootstrap`
@@ -51,30 +51,30 @@ Vilaro ships with four bundled hooks that are automatically discovered:
 List available hooks:
 
 ```bash
-vilaro hooks list
+velaro hooks list
 ```
 
 Enable a hook:
 
 ```bash
-vilaro hooks enable session-memory
+velaro hooks enable session-memory
 ```
 
 Check hook status:
 
 ```bash
-vilaro hooks check
+velaro hooks check
 ```
 
 Get detailed information:
 
 ```bash
-vilaro hooks info session-memory
+velaro hooks info session-memory
 ```
 
 ### Onboarding
 
-During onboarding (`vilaro onboard`), you'll be prompted to enable recommended hooks. The wizard automatically discovers eligible hooks and presents them for selection.
+During onboarding (`velaro onboard`), you'll be prompted to enable recommended hooks. The wizard automatically discovers eligible hooks and presents them for selection.
 
 ## Hook Discovery
 
@@ -82,7 +82,7 @@ Hooks are automatically discovered from three directories (in order of precedenc
 
 1. **Workspace hooks**: `<workspace>/hooks/` (per-agent, highest precedence)
 2. **Managed hooks**: `~/.vilaro/hooks/` (user-installed, shared across workspaces)
-3. **Bundled hooks**: `<vilaro>/dist/hooks/bundled/` (shipped with Vilaro)
+3. **Bundled hooks**: `<velaro>/dist/hooks/bundled/` (shipped with Velaro)
 
 Managed hook directories can be either a **single hook** or a **hook pack** (package directory).
 
@@ -96,18 +96,18 @@ my-hook/
 
 ## Hook Packs (npm/archives)
 
-Hook packs are standard npm packages that export one or more hooks via `vilaro.hooks` in
+Hook packs are standard npm packages that export one or more hooks via `velaro.hooks` in
 `package.json`. Install them with:
 
 ```bash
-vilaro hooks install <path-or-spec>
+velaro hooks install <path-or-spec>
 ```
 
 Npm specs are registry-only (package name + optional exact version or dist-tag).
 Git/URL/file specs and semver ranges are rejected.
 
 Bare specs and `@latest` stay on the stable track. If npm resolves either of
-those to a prerelease, Vilaro stops and asks you to opt in explicitly with a
+those to a prerelease, Velaro stops and asks you to opt in explicitly with a
 prerelease tag such as `@beta`/`@rc` or an exact prerelease version.
 
 Example `package.json`:
@@ -116,7 +116,7 @@ Example `package.json`:
 {
   "name": "@acme/my-hooks",
   "version": "0.1.0",
-  "vilaro": {
+  "velaro": {
     "hooks": ["./hooks/my-hook", "./hooks/other-hook"]
   }
 }
@@ -124,10 +124,10 @@ Example `package.json`:
 
 Each entry points to a hook directory containing `HOOK.md` and `handler.ts` (or `index.ts`).
 Hook packs can ship dependencies; they will be installed under `~/.vilaro/hooks/<id>`.
-Each `vilaro.hooks` entry must stay inside the package directory after symlink
+Each `velaro.hooks` entry must stay inside the package directory after symlink
 resolution; entries that escape are rejected.
 
-Security note: `vilaro hooks install` installs dependencies with `npm install --ignore-scripts`
+Security note: `velaro hooks install` installs dependencies with `npm install --ignore-scripts`
 (no lifecycle scripts). Keep hook pack dependency trees "pure JS/TS" and avoid packages that rely
 on `postinstall` builds.
 
@@ -143,7 +143,7 @@ name: my-hook
 description: "Short description of what this hook does"
 homepage: https://docs.vilaro.ai/automation/hooks#my-hook
 metadata:
-  { "vilaro": { "emoji": "🔗", "events": ["command:new"], "requires": { "bins": ["node"] } } }
+  { "velaro": { "emoji": "🔗", "events": ["command:new"], "requires": { "bins": ["node"] } } }
 ---
 
 # My Hook
@@ -167,7 +167,7 @@ No configuration needed.
 
 ### Metadata Fields
 
-The `metadata.vilaro` object supports:
+The `metadata.velaro` object supports:
 
 - **`emoji`**: Display emoji for CLI (e.g., `"💾"`)
 - **`events`**: Array of events to listen for (e.g., `["command:new", "command:reset"]`)
@@ -226,7 +226,7 @@ Each event includes:
     senderId?: string,
     workspaceDir?: string,
     bootstrapFiles?: WorkspaceBootstrapFile[],
-    cfg?: VilaroConfig,
+    cfg?: VelaroConfig,
     // Message events (see Message Events section for full details):
     from?: string,             // message:received
     to?: string,               // message:sent
@@ -360,7 +360,7 @@ export default handler;
 
 ### Tool Result Hooks (Plugin API)
 
-These hooks are not event-stream listeners; they let plugins synchronously adjust tool results before Vilaro persists them.
+These hooks are not event-stream listeners; they let plugins synchronously adjust tool results before Velaro persists them.
 
 - **`tool_result_persist`**: transform tool results before they are written to the session transcript. Must be synchronous; return the updated tool result payload or `undefined` to keep it as-is. See [Agent Loop](/concepts/agent-loop).
 
@@ -399,7 +399,7 @@ cd ~/.vilaro/hooks/my-hook
 ---
 name: my-hook
 description: "Does something useful"
-metadata: { "vilaro": { "emoji": "🎯", "events": ["command:new"] } }
+metadata: { "velaro": { "emoji": "🎯", "events": ["command:new"] } }
 ---
 
 # My Custom Hook
@@ -426,10 +426,10 @@ export default handler;
 
 ```bash
 # Verify hook is discovered
-vilaro hooks list
+velaro hooks list
 
 # Enable it
-vilaro hooks enable my-hook
+velaro hooks enable my-hook
 
 # Restart your gateway process (menu bar app restart on macOS, or restart your dev process)
 
@@ -525,46 +525,46 @@ Note: `module` must be a workspace-relative path. Absolute paths and traversal o
 
 ```bash
 # List all hooks
-vilaro hooks list
+velaro hooks list
 
 # Show only eligible hooks
-vilaro hooks list --eligible
+velaro hooks list --eligible
 
 # Verbose output (show missing requirements)
-vilaro hooks list --verbose
+velaro hooks list --verbose
 
 # JSON output
-vilaro hooks list --json
+velaro hooks list --json
 ```
 
 ### Hook Information
 
 ```bash
 # Show detailed info about a hook
-vilaro hooks info session-memory
+velaro hooks info session-memory
 
 # JSON output
-vilaro hooks info session-memory --json
+velaro hooks info session-memory --json
 ```
 
 ### Check Eligibility
 
 ```bash
 # Show eligibility summary
-vilaro hooks check
+velaro hooks check
 
 # JSON output
-vilaro hooks check --json
+velaro hooks check --json
 ```
 
 ### Enable/Disable
 
 ```bash
 # Enable a hook
-vilaro hooks enable session-memory
+velaro hooks enable session-memory
 
 # Disable a hook
-vilaro hooks disable command-logger
+velaro hooks disable command-logger
 ```
 
 ## Bundled hook reference
@@ -605,7 +605,7 @@ Saves session context to memory when you issue `/new`.
 **Enable**:
 
 ```bash
-vilaro hooks enable session-memory
+velaro hooks enable session-memory
 ```
 
 ### bootstrap-extra-files
@@ -646,7 +646,7 @@ Injects additional bootstrap files (for example monorepo-local `AGENTS.md` / `TO
 **Enable**:
 
 ```bash
-vilaro hooks enable bootstrap-extra-files
+velaro hooks enable bootstrap-extra-files
 ```
 
 ### command-logger
@@ -688,7 +688,7 @@ grep '"action":"new"' ~/.vilaro/logs/commands.log | jq .
 **Enable**:
 
 ```bash
-vilaro hooks enable command-logger
+velaro hooks enable command-logger
 ```
 
 ### boot-md
@@ -709,7 +709,7 @@ Internal hooks must be enabled for this to run.
 **Enable**:
 
 ```bash
-vilaro hooks enable boot-md
+velaro hooks enable boot-md
 ```
 
 ## Best Practices
@@ -766,13 +766,13 @@ const handler: HookHandler = async (event) => {
 Specify exact events in metadata when possible:
 
 ```yaml
-metadata: { "vilaro": { "events": ["command:new"] } } # Specific
+metadata: { "velaro": { "events": ["command:new"] } } # Specific
 ```
 
 Rather than:
 
 ```yaml
-metadata: { "vilaro": { "events": ["command"] } } # General - more overhead
+metadata: { "velaro": { "events": ["command"] } } # General - more overhead
 ```
 
 ## Debugging
@@ -793,7 +793,7 @@ Registered hook: boot-md -> gateway:startup
 List all discovered hooks:
 
 ```bash
-vilaro hooks list --verbose
+velaro hooks list --verbose
 ```
 
 ### Check Registration
@@ -812,7 +812,7 @@ const handler: HookHandler = async (event) => {
 Check why a hook isn't eligible:
 
 ```bash
-vilaro hooks info my-hook
+velaro hooks info my-hook
 ```
 
 Look for missing requirements in the output.
@@ -922,7 +922,7 @@ Session reset
 3. List all discovered hooks:
 
    ```bash
-   vilaro hooks list
+   velaro hooks list
    ```
 
 ### Hook Not Eligible
@@ -930,7 +930,7 @@ Session reset
 Check requirements:
 
 ```bash
-vilaro hooks info my-hook
+velaro hooks info my-hook
 ```
 
 Look for missing:
@@ -945,7 +945,7 @@ Look for missing:
 1. Verify hook is enabled:
 
    ```bash
-   vilaro hooks list
+   velaro hooks list
    # Should show ✓ next to enabled hooks
    ```
 
@@ -1003,7 +1003,7 @@ node -e "import('./path/to/handler.ts').then(console.log)"
    ---
    name: my-hook
    description: "My custom hook"
-   metadata: { "vilaro": { "emoji": "🎯", "events": ["command:new"] } }
+   metadata: { "velaro": { "emoji": "🎯", "events": ["command:new"] } }
    ---
 
    # My Hook
@@ -1029,7 +1029,7 @@ node -e "import('./path/to/handler.ts').then(console.log)"
 4. Verify and restart your gateway process:
 
    ```bash
-   vilaro hooks list
+   velaro hooks list
    # Should show: 🎯 my-hook ✓
    ```
 

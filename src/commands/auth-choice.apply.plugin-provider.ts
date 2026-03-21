@@ -1,4 +1,4 @@
-import { resolveVilaroAgentDir } from "../agents/agent-paths.js";
+import { resolveVelaroAgentDir } from "../agents/agent-paths.js";
 import {
   resolveDefaultAgentId,
   resolveAgentDir,
@@ -83,7 +83,7 @@ export async function runProviderPluginAuthMethod(params: {
   const agentDir =
     params.agentDir ??
     (agentId === defaultAgentId
-      ? resolveVilaroAgentDir()
+      ? resolveVelaroAgentDir()
       : resolveAgentDir(params.config, agentId));
   const workspaceDir =
     params.workspaceDir ??
@@ -223,7 +223,7 @@ export async function applyAuthChoicePluginProvider(
   const defaultAgentId = resolveDefaultAgentId(nextConfig);
   const agentDir =
     params.agentDir ??
-    (agentId === defaultAgentId ? resolveVilaroAgentDir() : resolveAgentDir(nextConfig, agentId));
+    (agentId === defaultAgentId ? resolveVelaroAgentDir() : resolveAgentDir(nextConfig, agentId));
   const workspaceDir =
     resolveAgentWorkspaceDir(nextConfig, agentId) ?? resolveDefaultAgentWorkspaceDir();
 

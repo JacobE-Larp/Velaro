@@ -100,7 +100,7 @@ async function restartGatewayWithoutServiceManager(port: number) {
   }
   if (pids.length > 1) {
     throw new Error(
-      `multiple gateway processes are listening on port ${port}: ${formatGatewayPidList(pids)}; use "vilaro gateway status --deep" before retrying restart`,
+      `multiple gateway processes are listening on port ${port}: ${formatGatewayPidList(pids)}; use "velaro gateway status --deep" before retrying restart`,
     );
   }
   signalVerifiedGatewayPidSync(pids[0], "SIGUSR1");
@@ -194,8 +194,8 @@ export async function runDaemonRestart(opts: DaemonLifecycleOptions = {}): Promi
         }
 
         fail(`Gateway restart timed out after ${restartWaitSeconds}s waiting for health checks.`, [
-          formatCliCommand("vilaro gateway status --deep"),
-          formatCliCommand("vilaro doctor"),
+          formatCliCommand("velaro gateway status --deep"),
+          formatCliCommand("velaro doctor"),
         ]);
       }
 
@@ -256,8 +256,8 @@ export async function runDaemonRestart(opts: DaemonLifecycleOptions = {}): Promi
       }
 
       fail(`Gateway restart timed out after ${restartWaitSeconds}s waiting for health checks.`, [
-        formatCliCommand("vilaro gateway status --deep"),
-        formatCliCommand("vilaro doctor"),
+        formatCliCommand("velaro gateway status --deep"),
+        formatCliCommand("velaro doctor"),
       ]);
     },
   });

@@ -19,17 +19,17 @@ x-i18n:
 ## 是什么
 
 - 拥有单一 Baileys/Telegram 连接和控制/事件平面的常驻进程。
-- 替代旧版 `gateway` 命令。CLI 入口点：`vilaro gateway`。
+- 替代旧版 `gateway` 命令。CLI 入口点：`velaro gateway`。
 - 运行直到停止；出现致命错误时以非零退出码退出，以便 supervisor 重启它。
 
 ## 如何运行（本地）
 
 ```bash
-vilaro gateway --port 18789
+velaro gateway --port 18789
 # 在 stdio 中获取完整的调试/追踪日志：
-vilaro gateway --port 18789 --verbose
+velaro gateway --port 18789 --verbose
 # 如果端口被占用，终止监听器然后启动：
-vilaro gateway --force
+velaro gateway --force
 # 开发循环（TS 更改时自动重载）：
 pnpm gateway:watch
 ```
@@ -70,13 +70,13 @@ pnpm gateway:watch
 
 服务名称是配置文件感知的：
 
-- macOS：`bot.molt.<profile>`（旧版 `com.vilaro.*` 可能仍然存在）
+- macOS：`bot.molt.<profile>`（旧版 `com.velaro.*` 可能仍然存在）
 - Linux：`vilaro-gateway-<profile>.service`
-- Windows：`Vilaro Gateway (<profile>)`
+- Windows：`Velaro Gateway (<profile>)`
 
 安装元数据嵌入在服务配置中：
 
-- `VILARO_SERVICE_MARKER=vilaro`
+- `VILARO_SERVICE_MARKER=velaro`
 - `VILARO_SERVICE_KIND=gateway`
 - `VILARO_SERVICE_VERSION=<version>`
 
@@ -87,11 +87,11 @@ pnpm gateway:watch
 快速路径：运行完全隔离的 dev 实例（配置/状态/工作区）而不触及你的主设置。
 
 ```bash
-vilaro --dev setup
-vilaro --dev gateway --allow-unconfigured
+velaro --dev setup
+velaro --dev gateway --allow-unconfigured
 # 然后定位到 dev 实例：
-vilaro --dev status
-vilaro --dev health
+velaro --dev status
+velaro --dev health
 ```
 
 默认值（可通过 env/flags/config 覆盖）：
@@ -121,15 +121,15 @@ vilaro --dev health
 按配置文件安装服务：
 
 ```bash
-vilaro --profile main gateway install
-vilaro --profile rescue gateway install
+velaro --profile main gateway install
+velaro --profile rescue gateway install
 ```
 
 示例：
 
 ```bash
-VILARO_CONFIG_PATH=~/.vilaro/a.json VILARO_STATE_DIR=~/.vilaro-a vilaro gateway --port 19001
-VILARO_CONFIG_PATH=~/.vilaro/b.json VILARO_STATE_DIR=~/.vilaro-b vilaro gateway --port 19002
+VILARO_CONFIG_PATH=~/.vilaro/a.json VILARO_STATE_DIR=~/.vilaro-a velaro gateway --port 19001
+VILARO_CONFIG_PATH=~/.vilaro/b.json VILARO_STATE_DIR=~/.vilaro-b velaro gateway --port 19002
 ```
 
 ## 协议（运维视角）
@@ -145,7 +145,7 @@ VILARO_CONFIG_PATH=~/.vilaro/b.json VILARO_STATE_DIR=~/.vilaro-b vilaro gateway 
 
 ## 方法（初始集）
 
-- `health` — 完整健康快照（与 `vilaro health --json` 形状相同）。
+- `health` — 完整健康快照（与 `velaro health --json` 形状相同）。
 - `status` — 简短摘要。
 - `system-presence` — 当前 presence 列表。
 - `system-event` — 发布 presence/系统注释（结构化）。
@@ -205,26 +205,26 @@ VILARO_CONFIG_PATH=~/.vilaro/b.json VILARO_STATE_DIR=~/.vilaro-b vilaro gateway 
 ## 监管（macOS 示例）
 
 - 使用 launchd 保持服务存活：
-  - Program：`vilaro` 的路径
+  - Program：`velaro` 的路径
   - Arguments：`gateway`
   - KeepAlive：true
   - StandardOut/Err：文件路径或 `syslog`
 - 失败时，launchd 重启；致命的配置错误应保持退出，以便运维人员注意到。
 - LaunchAgents 是按用户的，需要已登录的会话；对于无头设置，使用自定义 LaunchDaemon（未随附）。
-  - `vilaro gateway install` 写入 `~/Library/LaunchAgents/bot.molt.gateway.plist`
-    （或 `bot.molt.<profile>.plist`；旧版 `com.vilaro.*` 会被清理）。
-  - `vilaro doctor` 审计 LaunchAgent 配置，可以将其更新为当前默认值。
+  - `velaro gateway install` 写入 `~/Library/LaunchAgents/bot.molt.gateway.plist`
+    （或 `bot.molt.<profile>.plist`；旧版 `com.velaro.*` 会被清理）。
+  - `velaro doctor` 审计 LaunchAgent 配置，可以将其更新为当前默认值。
 
 ## Gateway 网关服务管理（CLI）
 
 使用 Gateway 网关 CLI 进行 install/start/stop/restart/status：
 
 ```bash
-vilaro gateway status
-vilaro gateway install
-vilaro gateway stop
-vilaro gateway restart
-vilaro logs --follow
+velaro gateway status
+velaro gateway install
+velaro gateway stop
+velaro gateway restart
+velaro logs --follow
 ```
 
 注意事项：
@@ -237,40 +237,40 @@ vilaro logs --follow
 - `gateway status` 打印配置路径 + 探测目标以避免"localhost vs LAN 绑定"混淆和配置文件不匹配。
 - `gateway status` 在服务看起来正在运行但端口已关闭时包含最后一行 Gateway 网关错误。
 - `logs` 通过 RPC 尾随 Gateway 网关文件日志（无需手动 `tail`/`grep`）。
-- 如果检测到其他类似 Gateway 网关的服务，CLI 会发出警告，除非它们是 Vilaro 配置文件服务。
+- 如果检测到其他类似 Gateway 网关的服务，CLI 会发出警告，除非它们是 Velaro 配置文件服务。
   我们仍然建议大多数设置**每台机器一个 Gateway 网关**；使用隔离的配置文件/端口进行冗余或救援机器人。参见[多个 Gateway 网关](/gateway/multiple-gateways)。
-  - 清理：`vilaro gateway uninstall`（当前服务）和 `vilaro doctor`（旧版迁移）。
-- `gateway install` 在已安装时是无操作的；使用 `vilaro gateway install --force` 重新安装（配置文件/env/路径更改）。
+  - 清理：`velaro gateway uninstall`（当前服务）和 `velaro doctor`（旧版迁移）。
+- `gateway install` 在已安装时是无操作的；使用 `velaro gateway install --force` 重新安装（配置文件/env/路径更改）。
 
 捆绑的 mac 应用：
 
-- Vilaro.app 可以捆绑基于 Node 的 Gateway 网关中继并安装标记为
-  `bot.molt.gateway`（或 `bot.molt.<profile>`；旧版 `com.vilaro.*` 标签仍能干净卸载）的按用户 LaunchAgent。
-- 要干净地停止它，使用 `vilaro gateway stop`（或 `launchctl bootout gui/$UID/bot.molt.gateway`）。
-- 要重启，使用 `vilaro gateway restart`（或 `launchctl kickstart -k gui/$UID/bot.molt.gateway`）。
-  - `launchctl` 仅在 LaunchAgent 已安装时有效；否则先使用 `vilaro gateway install`。
+- Velaro.app 可以捆绑基于 Node 的 Gateway 网关中继并安装标记为
+  `bot.molt.gateway`（或 `bot.molt.<profile>`；旧版 `com.velaro.*` 标签仍能干净卸载）的按用户 LaunchAgent。
+- 要干净地停止它，使用 `velaro gateway stop`（或 `launchctl bootout gui/$UID/bot.molt.gateway`）。
+- 要重启，使用 `velaro gateway restart`（或 `launchctl kickstart -k gui/$UID/bot.molt.gateway`）。
+  - `launchctl` 仅在 LaunchAgent 已安装时有效；否则先使用 `velaro gateway install`。
   - 运行命名配置文件时，将标签替换为 `bot.molt.<profile>`。
 
 ## 监管（systemd 用户单元）
 
-Vilaro 在 Linux/WSL2 上默认安装 **systemd 用户服务**。我们
+Velaro 在 Linux/WSL2 上默认安装 **systemd 用户服务**。我们
 建议单用户机器使用用户服务（更简单的 env，按用户配置）。
 对于多用户或常驻服务器使用**系统服务**（无需 lingering，
 共享监管）。
 
-`vilaro gateway install` 写入用户单元。`vilaro doctor` 审计
+`velaro gateway install` 写入用户单元。`velaro doctor` 审计
 单元并可以将其更新以匹配当前推荐的默认值。
 
 创建 `~/.config/systemd/user/vilaro-gateway[-<profile>].service`：
 
 ```
 [Unit]
-Description=Vilaro Gateway (profile: <profile>, v<version>)
+Description=Velaro Gateway (profile: <profile>, v<version>)
 After=network-online.target
 Wants=network-online.target
 
 [Service]
-ExecStart=/usr/local/bin/vilaro gateway --port 18789
+ExecStart=/usr/local/bin/velaro gateway --port 18789
 Restart=always
 RestartSec=5
 Environment=VILARO_GATEWAY_TOKEN=
@@ -322,14 +322,14 @@ Windows 安装应使用 **WSL2** 并遵循上面的 Linux systemd 部分。
 
 ## CLI 辅助工具
 
-- `vilaro gateway health|status` — 通过 Gateway 网关 WS 请求 health/status。
-- `vilaro message send --target <num> --message "hi" [--media ...]` — 通过 Gateway 网关发送（对 WhatsApp 是幂等的）。
-- `vilaro agent --message "hi" --to <num>` — 运行智能体轮次（默认等待最终结果）。
-- `vilaro gateway call <method> --params '{"k":"v"}'` — 用于调试的原始方法调用器。
-- `vilaro gateway stop|restart` — 停止/重启受监管的 Gateway 网关服务（launchd/systemd）。
+- `velaro gateway health|status` — 通过 Gateway 网关 WS 请求 health/status。
+- `velaro message send --target <num> --message "hi" [--media ...]` — 通过 Gateway 网关发送（对 WhatsApp 是幂等的）。
+- `velaro agent --message "hi" --to <num>` — 运行智能体轮次（默认等待最终结果）。
+- `velaro gateway call <method> --params '{"k":"v"}'` — 用于调试的原始方法调用器。
+- `velaro gateway stop|restart` — 停止/重启受监管的 Gateway 网关服务（launchd/systemd）。
 - Gateway 网关辅助子命令假设 `--url` 上有运行中的 Gateway 网关；它们不再自动生成一个。
 
 ## 迁移指南
 
-- 淘汰 `vilaro gateway` 和旧版 TCP 控制端口的使用。
+- 淘汰 `velaro gateway` 和旧版 TCP 控制端口的使用。
 - 更新客户端以使用带有强制 connect 和结构化 presence 的 WS 协议。

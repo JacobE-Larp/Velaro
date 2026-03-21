@@ -33,7 +33,7 @@ import { buildTtsSystemPromptHint } from "../../../tts/tts.js";
 import { resolveUserPath } from "../../../utils.js";
 import { normalizeMessageChannel } from "../../../utils/message-channel.js";
 import { isReasoningTagProvider } from "../../../utils/provider-utils.js";
-import { resolveVilaroAgentDir } from "../../agent-paths.js";
+import { resolveVelaroAgentDir } from "../../agent-paths.js";
 import { resolveSessionAgentIds } from "../../agent-scope.js";
 import { createAnthropicPayloadLogger } from "../../anthropic-payload-log.js";
 import {
@@ -50,7 +50,7 @@ import {
 } from "../../channel-tools.js";
 import { ensureCustomApiRegistered } from "../../custom-api-registry.js";
 import { DEFAULT_CONTEXT_TOKENS } from "../../defaults.js";
-import { resolveVilaroDocsPath } from "../../docs-path.js";
+import { resolveVelaroDocsPath } from "../../docs-path.js";
 import { isTimeoutError } from "../../failover-error.js";
 import { resolveImageSanitizationLimits } from "../../image-sanitization.js";
 import { resolveModelAuthMode } from "../../model-auth.js";
@@ -72,7 +72,7 @@ import { subscribeEmbeddedPiSession } from "../../pi-embedded-subscribe.js";
 import { createPreparedEmbeddedPiSettingsManager } from "../../pi-project-settings.js";
 import { applyPiAutoCompactionGuard } from "../../pi-settings.js";
 import { toClientToolDefinitions } from "../../pi-tool-definition-adapter.js";
-import { createVilaroCodingTools, resolveToolLoopDetectionConfig } from "../../pi-tools.js";
+import { createVelaroCodingTools, resolveToolLoopDetectionConfig } from "../../pi-tools.js";
 import { resolveSandboxContext } from "../../sandbox.js";
 import { resolveSandboxRuntimeStatus } from "../../sandbox/runtime-status.js";
 import { isXaiProvider } from "../../schema/clean-for-xai.js";
@@ -1466,7 +1466,7 @@ export async function runEmbeddedAttempt(
       ? ["Reminder: commit your changes in this workspace after edits."]
       : undefined;
 
-    const agentDir = params.agentDir ?? resolveVilaroAgentDir();
+    const agentDir = params.agentDir ?? resolveVelaroAgentDir();
 
     const { defaultAgentId, sessionAgentId } = resolveSessionAgentIds({
       sessionKey: params.sessionKey,
@@ -1488,7 +1488,7 @@ export async function runEmbeddedAttempt(
     const modelHasVision = params.model.input?.includes("image") ?? false;
     const toolsRaw = params.disableTools
       ? []
-      : createVilaroCodingTools({
+      : createVelaroCodingTools({
           agentId: sessionAgentId,
           exec: {
             ...params.execOverrides,
@@ -1641,7 +1641,7 @@ export async function runEmbeddedAttempt(
     });
     const isDefaultAgent = sessionAgentId === defaultAgentId;
     const promptMode = resolvePromptModeForSession(params.sessionKey);
-    const docsPath = await resolveVilaroDocsPath({
+    const docsPath = await resolveVelaroDocsPath({
       workspaceDir: effectiveWorkspace,
       argv1: process.argv[1],
       cwd: process.cwd(),

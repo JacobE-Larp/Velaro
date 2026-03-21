@@ -180,9 +180,9 @@ export async function runNonInteractiveLocalSetup(params: {
           daemonInstall.skippedReason === "systemd-user-unavailable"
             ? [
                 "Fix: rerun without `--install-daemon` for one-shot setup, or enable a working user-systemd session and retry.",
-                "If your auth profile uses env-backed refs, keep those env vars set in the shell that runs `vilaro gateway run` or `vilaro agent --local`.",
+                "If your auth profile uses env-backed refs, keep those env vars set in the shell that runs `velaro gateway run` or `velaro agent --local`.",
               ]
-            : [`Run \`${formatCliCommand("vilaro gateway status --deep")}\` for more detail.`],
+            : [`Run \`${formatCliCommand("velaro gateway status --deep")}\` for more detail.`],
       });
       runtime.exit(1);
       return;
@@ -226,12 +226,12 @@ export async function runNonInteractiveLocalSetup(params: {
         hints: !opts.installDaemon
           ? [
               "Non-interactive local setup only waits for an already-running gateway unless you pass --install-daemon.",
-              `Fix: start \`${formatCliCommand("vilaro gateway run")}\`, re-run with \`--install-daemon\`, or use \`--skip-health\`.`,
+              `Fix: start \`${formatCliCommand("velaro gateway run")}\`, re-run with \`--install-daemon\`, or use \`--skip-health\`.`,
               process.platform === "win32"
                 ? "Native Windows managed gateway install tries Scheduled Tasks first and falls back to a per-user Startup-folder login item when task creation is denied."
                 : undefined,
             ].filter((value): value is string => Boolean(value))
-          : [`Run \`${formatCliCommand("vilaro gateway status --deep")}\` for more detail.`],
+          : [`Run \`${formatCliCommand("velaro gateway status --deep")}\` for more detail.`],
       });
       runtime.exit(1);
       return;
@@ -260,7 +260,7 @@ export async function runNonInteractiveLocalSetup(params: {
 
   if (!opts.json) {
     runtime.log(
-      `Tip: run \`${formatCliCommand("vilaro configure --section web")}\` to store your Brave API key for web_search. Docs: https://docs.vilaro.ai/tools/web`,
+      `Tip: run \`${formatCliCommand("velaro configure --section web")}\` to store your Brave API key for web_search. Docs: https://docs.vilaro.ai/tools/web`,
     );
   }
 }

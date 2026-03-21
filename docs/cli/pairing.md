@@ -1,11 +1,11 @@
 ---
-summary: "CLI reference for `vilaro pairing` (approve/list pairing requests)"
+summary: "CLI reference for `velaro pairing` (approve/list pairing requests)"
 read_when:
   - You’re using pairing-mode DMs and need to approve senders
 title: "pairing"
 ---
 
-# `vilaro pairing`
+# `velaro pairing`
 
 Approve or inspect DM pairing requests (for channels that support pairing).
 
@@ -16,12 +16,12 @@ Related:
 ## Commands
 
 ```bash
-vilaro pairing list telegram
-vilaro pairing list --channel telegram --account work
-vilaro pairing list telegram --json
+velaro pairing list telegram
+velaro pairing list --channel telegram --account work
+velaro pairing list telegram --json
 
-vilaro pairing approve telegram <code>
-vilaro pairing approve --channel telegram --account work <code> --notify
+velaro pairing approve telegram <code>
+velaro pairing approve --channel telegram --account work <code> --notify
 ```
 
 ## Notes

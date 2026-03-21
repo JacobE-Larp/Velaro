@@ -1,5 +1,5 @@
 ---
-summary: "Where Vilaro loads environment variables and the precedence order"
+summary: "Where Velaro loads environment variables and the precedence order"
 read_when:
   - You need to know which env vars are loaded, and in what order
   - You are debugging missing API keys in the Gateway
@@ -9,7 +9,7 @@ title: "Environment Variables"
 
 # Environment variables
 
-Vilaro pulls environment variables from multiple sources. The rule is **never override existing values**.
+Velaro pulls environment variables from multiple sources. The rule is **never override existing values**.
 
 ## Precedence (highest → lowest)
 
@@ -58,11 +58,11 @@ Env var equivalents:
 
 ## Runtime-injected env vars
 
-Vilaro also injects context markers into spawned child processes:
+Velaro also injects context markers into spawned child processes:
 
 - `VILARO_SHELL=exec`: set for commands run through the `exec` tool.
 - `VILARO_SHELL=acp`: set for ACP runtime backend process spawns (for example `acpx`).
-- `VILARO_SHELL=acp-client`: set for `vilaro acp client` when it spawns the ACP bridge process.
+- `VILARO_SHELL=acp-client`: set for `velaro acp client` when it spawns the ACP bridge process.
 - `VILARO_SHELL=tui-local`: set for local TUI `!` shell commands.
 
 These are runtime markers (not required user config). They can be used in shell/profile logic
@@ -72,7 +72,7 @@ to apply context-specific rules.
 
 - `VILARO_THEME=light`: force the light TUI palette when your terminal has a light background.
 - `VILARO_THEME=dark`: force the dark TUI palette.
-- `COLORFGBG`: if your terminal exports it, Vilaro uses the background color hint to auto-pick the TUI palette.
+- `COLORFGBG`: if your terminal exports it, Velaro uses the background color hint to auto-pick the TUI palette.
 
 ## Env var substitution in config
 
@@ -94,7 +94,7 @@ See [Configuration: Env var substitution](/gateway/configuration#env-var-substit
 
 ## Secret refs vs `${ENV}` strings
 
-Vilaro supports two env-driven patterns:
+Velaro supports two env-driven patterns:
 
 - `${VAR}` string substitution in config values.
 - SecretRef objects (`{ source: "env", provider: "default", id: "VAR" }`) for fields that support secrets references.
@@ -105,7 +105,7 @@ Both resolve from process env at activation time. SecretRef details are document
 
 | Variable             | Purpose                                                                                                                                                                      |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `VILARO_HOME`        | Override the home directory used for all internal path resolution (`~/.vilaro/`, agent dirs, sessions, credentials). Useful when running Vilaro as a dedicated service user. |
+| `VILARO_HOME`        | Override the home directory used for all internal path resolution (`~/.vilaro/`, agent dirs, sessions, credentials). Useful when running Velaro as a dedicated service user. |
 | `VILARO_STATE_DIR`   | Override the state directory (default `~/.vilaro`).                                                                                                                          |
 | `VILARO_CONFIG_PATH` | Override the config file path (default `~/.vilaro/vilaro.json`).                                                                                                             |
 

@@ -1,17 +1,17 @@
 ---
-summary: "Vilaro on Raspberry Pi (budget self-hosted setup)"
+summary: "Velaro on Raspberry Pi (budget self-hosted setup)"
 read_when:
-  - Setting up Vilaro on a Raspberry Pi
-  - Running Vilaro on ARM devices
+  - Setting up Velaro on a Raspberry Pi
+  - Running Velaro on ARM devices
   - Building a cheap always-on personal AI
 title: "Raspberry Pi"
 ---
 
-# Vilaro on Raspberry Pi
+# Velaro on Raspberry Pi
 
 ## Goal
 
-Run a persistent, always-on Vilaro Gateway on a Raspberry Pi for **~$35-80** one-time cost (no monthly fees).
+Run a persistent, always-on Velaro Gateway on a Raspberry Pi for **~$35-80** one-time cost (no monthly fees).
 
 Perfect for:
 
@@ -107,7 +107,7 @@ echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 ```
 
-## 6) Install Vilaro
+## 6) Install Velaro
 
 ### Option A: Standard Install (Recommended)
 
@@ -119,7 +119,7 @@ curl -fsSL https://vilaro.ai/install.sh | bash
 
 ```bash
 git clone https://github.com/vilaro/vilaro.git
-cd vilaro
+cd velaro
 npm install
 npm run build
 npm link
@@ -130,7 +130,7 @@ The hackable install gives you direct access to logs and code — useful for deb
 ## 7) Run Onboarding
 
 ```bash
-vilaro onboard --install-daemon
+velaro onboard --install-daemon
 ```
 
 Follow the wizard:
@@ -144,23 +144,23 @@ Follow the wizard:
 
 ```bash
 # Check status
-vilaro status
+velaro status
 
 # Check service
-sudo systemctl status vilaro
+sudo systemctl status velaro
 
 # View logs
-journalctl -u vilaro -f
+journalctl -u velaro -f
 ```
 
-## 9) Access the Vilaro Dashboard
+## 9) Access the Velaro Dashboard
 
 Replace `user@gateway-host` with your Pi username and hostname or IP address.
 
 On your computer, ask the Pi to print a fresh dashboard URL:
 
 ```bash
-ssh user@gateway-host 'vilaro dashboard --no-open'
+ssh user@gateway-host 'velaro dashboard --no-open'
 ```
 
 The command prints `Dashboard URL:`. Depending on how `gateway.auth.token`
@@ -200,9 +200,9 @@ See [Pi USB boot guide](https://www.raspberrypi.com/documentation/computers/rasp
 On lower-power Pi hosts, enable Node's module compile cache so repeated CLI runs are faster:
 
 ```bash
-grep -q 'NODE_COMPILE_CACHE=/var/tmp/vilaro-compile-cache' ~/.bashrc || cat >> ~/.bashrc <<'EOF' # pragma: allowlist secret
-export NODE_COMPILE_CACHE=/var/tmp/vilaro-compile-cache
-mkdir -p /var/tmp/vilaro-compile-cache
+grep -q 'NODE_COMPILE_CACHE=/var/tmp/velaro-compile-cache' ~/.bashrc || cat >> ~/.bashrc <<'EOF' # pragma: allowlist secret
+export NODE_COMPILE_CACHE=/var/tmp/velaro-compile-cache
+mkdir -p /var/tmp/velaro-compile-cache
 export VILARO_NO_RESPAWN=1
 EOF
 source ~/.bashrc
@@ -217,17 +217,17 @@ Notes:
 
 ### systemd startup tuning (optional)
 
-If this Pi is mostly running Vilaro, add a service drop-in to reduce restart
+If this Pi is mostly running Velaro, add a service drop-in to reduce restart
 jitter and keep startup env stable:
 
 ```bash
-sudo systemctl edit vilaro
+sudo systemctl edit velaro
 ```
 
 ```ini
 [Service]
 Environment=VILARO_NO_RESPAWN=1
-Environment=NODE_COMPILE_CACHE=/var/tmp/vilaro-compile-cache
+Environment=NODE_COMPILE_CACHE=/var/tmp/velaro-compile-cache
 Restart=always
 RestartSec=2
 TimeoutStartSec=90
@@ -237,10 +237,10 @@ Then apply:
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl restart vilaro
+sudo systemctl restart velaro
 ```
 
-If possible, keep Vilaro state/cache on SSD-backed storage to avoid SD-card
+If possible, keep Velaro state/cache on SSD-backed storage to avoid SD-card
 random-I/O bottlenecks during cold starts.
 
 How `Restart=` policies help automated recovery:
@@ -275,7 +275,7 @@ htop
 
 ### Binary Compatibility
 
-Most Vilaro features work on ARM64, but some external binaries may need ARM builds:
+Most Velaro features work on ARM64, but some external binaries may need ARM builds:
 
 | Tool               | ARM64 Status | Notes                               |
 | ------------------ | ------------ | ----------------------------------- |
@@ -325,13 +325,13 @@ The setup wizard sets this up, but to verify:
 
 ```bash
 # Check service is enabled
-sudo systemctl is-enabled vilaro
+sudo systemctl is-enabled velaro
 
 # Enable if not
-sudo systemctl enable vilaro
+sudo systemctl enable velaro
 
 # Start on boot
-sudo systemctl start vilaro
+sudo systemctl start velaro
 ```
 
 ---
@@ -358,12 +358,12 @@ free -h
 
 ```bash
 # Check logs
-journalctl -u vilaro --no-pager -n 100
+journalctl -u velaro --no-pager -n 100
 
 # Common fix: rebuild
-cd ~/vilaro  # if using hackable install
+cd ~/velaro  # if using hackable install
 npm run build
-sudo systemctl restart vilaro
+sudo systemctl restart velaro
 ```
 
 ### ARM Binary Issues
