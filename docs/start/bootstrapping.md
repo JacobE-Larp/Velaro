@@ -37,5 +37,5 @@ host (for example, `user@gateway-host:~/.vilaro/workspace`).
 
 ## Related docs
 
-- macOS app onboarding: [Onboarding](/start/onboarding)
+- macOS app onboarding: [Onboarding (macOS App)](/start/onboarding-macos)
 - Workspace layout: [Agent workspace](/concepts/agent-workspace)

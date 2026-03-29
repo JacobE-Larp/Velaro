@@ -120,6 +120,6 @@ For the deeper technical reference, including RPC details, see
 ## Related docs
 
 - CLI command reference: [`velaro onboard`](/cli/onboard)
-- Onboarding overview: [Onboarding Overview](/start/onboarding-overview)
-- macOS app onboarding: [Onboarding](/start/onboarding)
+- Setup paths overview: [Getting Started](/start/getting-started)
+- macOS app onboarding: [Onboarding (macOS App)](/start/onboarding-macos)
 - Agent first-run ritual: [Agent Bootstrapping](/start/bootstrapping)

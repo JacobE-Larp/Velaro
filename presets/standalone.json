@@ -1,0 +1,11 @@
+{
+  "agents": {
+    "list": [
+      {
+        "id": "main",
+        "name": "Velaro",
+        "default": true
+      }
+    ]
+  }
+}

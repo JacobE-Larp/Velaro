@@ -12,7 +12,7 @@ sidebarTitle: "Onboarding: macOS App"
 This doc describes the **current** first‑run setup flow. The goal is a
 smooth “day 0” experience: pick where the Gateway runs, connect auth, run the
 wizard, and let the agent bootstrap itself.
-For a general overview of onboarding paths, see [Onboarding Overview](/start/onboarding-overview).
+For setup path options, see [Getting Started](/start/getting-started).
 
 <Steps>
 <Step title="Approve macOS warning">

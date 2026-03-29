@@ -12,10 +12,9 @@ Interactive setup wizard (local or remote Gateway setup).
 ## Related guides
 
 - CLI onboarding hub: [Setup Wizard (CLI)](/start/wizard)
-- Onboarding overview: [Onboarding Overview](/start/onboarding-overview)
 - CLI onboarding reference: [CLI Setup Reference](/start/wizard-cli-reference)
 - CLI automation: [CLI Automation](/start/wizard-cli-automation)
-- macOS onboarding: [Onboarding (macOS App)](/start/onboarding)
+- macOS onboarding: [Onboarding (macOS App)](/start/onboarding-macos)
 
 ## Examples
 

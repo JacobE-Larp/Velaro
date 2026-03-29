@@ -17,8 +17,8 @@ Use these hubs to discover every page, including deep dives and reference docs t
 
 - [Index](/)
 - [Getting Started](/start/getting-started)
-- [Quick start](/start/quickstart)
-- [Onboarding](/start/onboarding)
+- [Onboarding (macOS App)](/start/onboarding-macos)
+- [Operator Setup](/start/operator-setup)
 - [Wizard](/start/wizard)
 - [Setup](/start/setup)
 - [Dashboard (local Gateway)](http://127.0.0.1:18789/)
@@ -26,7 +26,6 @@ Use these hubs to discover every page, including deep dives and reference docs t
 - [Docs directory](/start/docs-directory)
 - [Configuration](/gateway/configuration)
 - [Configuration examples](/gateway/configuration-examples)
-- [Velaro assistant](/start/velaro)
 - [Showcase](/start/showcase)
 - [Lore](/start/lore)
 

@@ -1,0 +1,47 @@
+{
+  "agents": {
+    "list": [
+      {
+        "id": "manager",
+        "name": "Manager",
+        "default": true
+      },
+      {
+        "id": "coder",
+        "name": "Coder"
+      },
+      {
+        "id": "researcher",
+        "name": "Researcher"
+      },
+      {
+        "id": "support",
+        "name": "Support"
+      }
+    ]
+  },
+  "plugins": {
+    "entries": {
+      "multi-agent": {
+        "enabled": true,
+        "config": {
+          "agents": {
+            "manager": {
+              "role": "head",
+              "delegatesTo": ["coder", "researcher", "support"]
+            },
+            "coder": {
+              "role": "specialist"
+            },
+            "researcher": {
+              "role": "specialist"
+            },
+            "support": {
+              "role": "specialist"
+            }
+          }
+        }
+      }
+    }
+  }
+}

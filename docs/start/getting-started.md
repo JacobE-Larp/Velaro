@@ -25,6 +25,12 @@ Docs: [Dashboard](/web/dashboard) and [Control UI](/web/control-ui).
 Check your Node version with `node --version` if you are unsure.
 </Tip>
 
+## Setup paths
+
+- **CLI wizard** — this doc. Works on macOS, Linux, and Windows (WSL2).
+- **macOS app** — guided first-run on Apple silicon or Intel Macs: [Onboarding (macOS App)](/start/onboarding-macos).
+- **Operator deployment** — pre-configure for a client or team before handoff: [Operator Setup](/start/operator-setup).
+
 ## Quick setup (CLI)
 
 <Steps>
@@ -99,6 +105,56 @@ If the Control UI loads, your Gateway is ready for use.
     ```
 
   </Accordion>
+  <Accordion title="Use a custom provider endpoint">
+    If your provider is not in the wizard's list, choose **Custom Provider** in `velaro onboard`.
+    You will be asked to:
+
+    - Pick OpenAI-compatible, Anthropic-compatible, or **Unknown** (auto-detect).
+    - Enter a base URL and API key (if required by the provider).
+    - Provide a model ID and optional alias.
+    - Choose an Endpoint ID so multiple custom endpoints can coexist.
+
+    Full steps: [Setup Wizard](/start/wizard).
+
+  </Accordion>
+  <Accordion title="Use Claude Code as the AI backend (optional — ACPX)">
+    By default, Velaro calls a model provider API directly (Anthropic, OpenAI, etc.).
+    If you want to use **Claude Code** as the AI runtime for your agent — with full ACP
+    session integration, persistent tool streaming, and resumable sessions — enable the
+    ACPX plugin.
+
+    **Prerequisites:** the ACPX extension is bundled in `extensions/acpx/`. No extra install
+    needed. acpx is bundled with the extension.
+
+    **Enable in `~/.vilaro/velaro.json`:**
+
+    ```json
+    {
+      "plugins": {
+        "entries": {
+          "acpx": {
+            "enabled": true,
+            "config": {
+              "permissionMode": "approve-reads"
+            }
+          }
+        }
+      }
+    }
+    ```
+
+    Or copy the starter preset: `cp presets/acpx-claude.json ~/.vilaro/velaro.json`
+
+    **Permission modes:**
+    - `approve-reads` (default) — auto-approves read operations, asks for writes
+    - `approve-all` — approves everything without prompting (fully automated setups)
+    - `deny-all` — denies all permission prompts (most restrictive)
+
+    This path is entirely optional. The default API-direct setup works without it and
+    is simpler for most users. Use ACPX when you specifically want Claude Code's
+    session model, tool streaming, or MCP server injection.
+
+  </Accordion>
 </AccordionGroup>
 
 ## Useful environment variables
@@ -117,7 +173,7 @@ Full environment variable reference: [Environment vars](/help/environment).
   <Card title="Setup Wizard (details)" href="/start/wizard">
     Full CLI wizard reference and advanced options.
   </Card>
-  <Card title="macOS app onboarding" href="/start/onboarding">
+  <Card title="macOS app onboarding" href="/start/onboarding-macos">
     First run flow for the macOS app.
   </Card>
 </Columns>

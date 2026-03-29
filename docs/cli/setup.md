@@ -13,7 +13,7 @@ Initialize `~/.vilaro/vilaro.json` and the agent workspace.
 Related:
 
 - Getting started: [Getting started](/start/getting-started)
-- Wizard: [Onboarding](/start/onboarding)
+- Wizard: [Setup Wizard](/start/wizard)
 
 ## Examples
 

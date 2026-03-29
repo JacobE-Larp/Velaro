@@ -1,0 +1,38 @@
+{
+  "agents": {
+    "list": [
+      {
+        "id": "main",
+        "name": "Velaro",
+        "default": true
+      },
+      {
+        "id": "manager",
+        "name": "Manager"
+      }
+    ]
+  },
+  "plugins": {
+    "entries": {
+      "runtime-handoff": {
+        "enabled": true,
+        "config": {
+          "enabled": true,
+          "runtimes": {
+            "claude-code": {
+              "id": "claude-code",
+              "name": "Claude Code",
+              "type": "cli",
+              "enabled": true,
+              "description": "Claude Code CLI for software engineering tasks (coding, file ops, tests).",
+              "command": "claude",
+              "argsTemplate": ["--print", "--dangerously-skip-permissions", "{{task}}"],
+              "timeoutSeconds": 120,
+              "allowedAgents": ["main", "manager"]
+            }
+          }
+        }
+      }
+    }
+  }
+}
