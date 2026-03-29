@@ -1,0 +1,37 @@
+{
+  "id": "multi-agent",
+  "name": "Multi-Agent",
+  "description": "Role-based multi-agent coordination: head agent delegates tasks to specialist sub-agents.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "agents": {
+        "type": "object",
+        "description": "Per-agent metadata keyed by agent ID.",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "role": {
+              "type": "string",
+              "enum": ["head", "specialist"],
+              "description": "Agent role. 'head' can delegate; 'specialist' receives delegated tasks."
+            },
+            "delegatesTo": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Agent IDs this head agent is allowed to delegate to."
+            }
+          }
+        }
+      }
+    }
+  },
+  "uiHints": {
+    "agents": {
+      "label": "Agent Role Config",
+      "help": "Map of agentId → { role, delegatesTo }. Set role='head' on the manager and 'specialist' on sub-agents."
+    }
+  }
+}

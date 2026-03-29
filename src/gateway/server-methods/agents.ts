@@ -4,6 +4,7 @@ import {
   listAgentIds,
   resolveAgentDir,
   resolveAgentWorkspaceDir,
+  resolveDefaultAgentId,
 } from "../../agents/agent-scope.js";
 import {
   DEFAULT_AGENTS_FILENAME,
@@ -45,6 +46,10 @@ import {
   validateAgentsListParams,
   validateAgentsUpdateParams,
 } from "../protocol/index.js";
+import type {
+  VelaroAgentRow,
+  VelaroAgentsListResult,
+} from "../protocol/schema/agents-models-skills.js";
 import { listAgentsForGateway } from "../session-utils.js";
 import type { GatewayRequestHandlers, RespondFn } from "./types.js";
 
@@ -770,5 +775,96 @@ export const agentsHandlers: GatewayRequestHandlers = {
       },
       undefined,
     );
+  },
+  "velaro.agents.list": ({ respond }) => {
+    const cfg = loadConfig();
+
+    // Read multi-agent plugin config for role/delegation metadata.
+    const pluginAgentsMeta = cfg.plugins?.entries?.["multi-agent"]?.config?.agents;
+    const agentsMeta =
+      pluginAgentsMeta && typeof pluginAgentsMeta === "object" && !Array.isArray(pluginAgentsMeta)
+        ? (pluginAgentsMeta as Record<string, { role?: string; delegatesTo?: string[] }>)
+        : {};
+
+    // Read runtime-handoff plugin config for allowedRuntimes per agent.
+    const runtimeHandoffCfg = cfg.plugins?.entries?.["runtime-handoff"]?.config;
+    const runtimeHandoffEnabled =
+      runtimeHandoffCfg == null || (runtimeHandoffCfg as { enabled?: boolean }).enabled !== false;
+    const rawRuntimes =
+      runtimeHandoffEnabled &&
+      runtimeHandoffCfg != null &&
+      typeof runtimeHandoffCfg === "object" &&
+      !Array.isArray(runtimeHandoffCfg)
+        ? ((runtimeHandoffCfg as { runtimes?: unknown }).runtimes ?? {})
+        : {};
+
+    // Build a map of agentId -> runtimeId[] for runtimes the agent can access.
+    const agentRuntimesMap = new Map<string, string[]>();
+    if (rawRuntimes && typeof rawRuntimes === "object" && !Array.isArray(rawRuntimes)) {
+      for (const [runtimeId, raw] of Object.entries(rawRuntimes as Record<string, unknown>)) {
+        if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
+          continue;
+        }
+        const entry = raw as Record<string, unknown>;
+        if (entry.enabled === false) {
+          continue;
+        }
+        const allowedAgents = Array.isArray(entry.allowedAgents) ? entry.allowedAgents : [];
+        for (const agentId of allowedAgents) {
+          if (typeof agentId !== "string") {
+            continue;
+          }
+          const existing = agentRuntimesMap.get(agentId) ?? [];
+          existing.push(runtimeId);
+          agentRuntimesMap.set(agentId, existing);
+        }
+      }
+    }
+
+    const defaultId = normalizeAgentId(resolveDefaultAgentId(cfg));
+    const configuredList = cfg.agents?.list ?? [];
+
+    const agents: VelaroAgentRow[] = configuredList.map((entry) => {
+      const id = normalizeAgentId(entry.id);
+      const meta = agentsMeta[id] ?? {};
+      const rawRole = typeof meta.role === "string" ? meta.role : undefined;
+      const role: VelaroAgentRow["role"] =
+        rawRole === "head" ? "head" : rawRole === "specialist" ? "specialist" : "standalone";
+      const delegatesTo = Array.isArray(meta.delegatesTo)
+        ? meta.delegatesTo.filter((d): d is string => typeof d === "string")
+        : undefined;
+      const canDelegate = role === "head" && (delegatesTo?.length ?? 0) > 0;
+      const allowedRuntimes = agentRuntimesMap.get(id);
+
+      return {
+        id,
+        name: typeof entry.name === "string" && entry.name.trim() ? entry.name.trim() : undefined,
+        role,
+        isHead: role === "head",
+        default: id === defaultId,
+        // All configured agents are "available" while the gateway is running.
+        // Per-agent "active" detection requires per-run agent tracking not yet available.
+        status: "available",
+        delegatesTo: canDelegate ? delegatesTo : undefined,
+        canDelegate,
+        ...(allowedRuntimes !== undefined ? { allowedRuntimes } : {}),
+      };
+    });
+
+    const headCount = agents.filter((a) => a.isHead).length;
+    const result: VelaroAgentsListResult = {
+      agents,
+      summary: {
+        total: agents.length,
+        configured: agents.length,
+        available: agents.length,
+        active: 0,
+        head: headCount,
+        subAgents: agents.length - headCount,
+        defaultAgentId: defaultId,
+      },
+    };
+
+    respond(true, result, undefined);
   },
 };

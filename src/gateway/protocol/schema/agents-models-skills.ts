@@ -268,3 +268,134 @@ export const ToolsCatalogResultSchema = Type.Object(
   },
   { additionalProperties: false },
 );
+
+// velaro.agents.list — enriched multi-agent listing with role and delegation metadata.
+
+export const VelaroAgentsListParamsSchema = Type.Object({}, { additionalProperties: false });
+
+export type VelaroAgentsListParams = Record<string, never>;
+
+export const VelaroAgentRowSchema = Type.Object(
+  {
+    id: NonEmptyString,
+    name: Type.Optional(NonEmptyString),
+    role: Type.Union([
+      Type.Literal("head"),
+      Type.Literal("specialist"),
+      Type.Literal("standalone"),
+    ]),
+    isHead: Type.Boolean(),
+    default: Type.Boolean(),
+    status: Type.Union([
+      Type.Literal("configured"),
+      Type.Literal("available"),
+      Type.Literal("active"),
+    ]),
+    delegatesTo: Type.Optional(Type.Array(NonEmptyString)),
+    canDelegate: Type.Boolean(),
+    /** Runtime IDs this agent is allowed to hand off to (from runtime-handoff plugin config). */
+    allowedRuntimes: Type.Optional(Type.Array(NonEmptyString)),
+  },
+  { additionalProperties: false },
+);
+
+export type VelaroAgentRow = {
+  id: string;
+  name?: string;
+  role: "head" | "specialist" | "standalone";
+  isHead: boolean;
+  default: boolean;
+  status: "configured" | "available" | "active";
+  delegatesTo?: string[];
+  canDelegate: boolean;
+  allowedRuntimes?: string[];
+};
+
+export const VelaroAgentsSummarySchema = Type.Object(
+  {
+    total: Type.Integer({ minimum: 0 }),
+    configured: Type.Integer({ minimum: 0 }),
+    available: Type.Integer({ minimum: 0 }),
+    active: Type.Integer({ minimum: 0 }),
+    head: Type.Integer({ minimum: 0 }),
+    subAgents: Type.Integer({ minimum: 0 }),
+    defaultAgentId: Type.String(),
+  },
+  { additionalProperties: false },
+);
+
+export const VelaroAgentsListResultSchema = Type.Object(
+  {
+    agents: Type.Array(VelaroAgentRowSchema),
+    summary: VelaroAgentsSummarySchema,
+  },
+  { additionalProperties: false },
+);
+
+export type VelaroAgentsListResult = {
+  agents: VelaroAgentRow[];
+  summary: {
+    total: number;
+    configured: number;
+    available: number;
+    active: number;
+    head: number;
+    subAgents: number;
+    defaultAgentId: string;
+  };
+};
+
+// velaro.runtimes.list — list configured execution runtimes from runtime-handoff plugin.
+
+export const VelaroRuntimesListParamsSchema = Type.Object({}, { additionalProperties: false });
+
+export type VelaroRuntimesListParams = Record<string, never>;
+
+export const VelaroRuntimeRowSchema = Type.Object(
+  {
+    id: NonEmptyString,
+    name: Type.Optional(NonEmptyString),
+    description: Type.Optional(Type.String()),
+    type: Type.Optional(NonEmptyString),
+    enabled: Type.Boolean(),
+    command: Type.Optional(NonEmptyString),
+    allowedAgents: Type.Optional(Type.Array(NonEmptyString)),
+    timeoutSeconds: Type.Optional(Type.Integer({ minimum: 1 })),
+  },
+  { additionalProperties: false },
+);
+
+export type VelaroRuntimeRow = {
+  id: string;
+  name?: string;
+  description?: string;
+  type?: string;
+  enabled: boolean;
+  command?: string;
+  allowedAgents?: string[];
+  timeoutSeconds?: number;
+};
+
+export const VelaroRuntimesSummarySchema = Type.Object(
+  {
+    total: Type.Integer({ minimum: 0 }),
+    enabled: Type.Integer({ minimum: 0 }),
+  },
+  { additionalProperties: false },
+);
+
+export const VelaroRuntimesListResultSchema = Type.Object(
+  {
+    runtimes: Type.Array(VelaroRuntimeRowSchema),
+    summary: VelaroRuntimesSummarySchema,
+  },
+  { additionalProperties: false },
+);
+
+export type VelaroRuntimesListResult = {
+  runtimes: VelaroRuntimeRow[];
+  summary: {
+    total: number;
+    enabled: number;
+  };
+};

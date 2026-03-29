@@ -1,0 +1,11 @@
+{
+  "name": "@velaro/multi-agent",
+  "version": "2026.3.22",
+  "description": "Velaro multi-agent coordination plugin (head/specialist roles, delegation)",
+  "type": "module",
+  "vilaro": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

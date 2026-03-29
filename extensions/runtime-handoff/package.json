@@ -1,0 +1,11 @@
+{
+  "name": "@velaro/runtime-handoff",
+  "version": "2026.3.22",
+  "description": "Velaro runtime handoff plugin — delegates agent tasks to execution runtimes (claude-code, etc.)",
+  "type": "module",
+  "vilaro": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

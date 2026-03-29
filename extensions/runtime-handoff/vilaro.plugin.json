@@ -1,0 +1,47 @@
+{
+  "id": "runtime-handoff",
+  "name": "Runtime Handoff",
+  "description": "Lets agents delegate tasks to configured execution runtimes (e.g. claude-code, browser-operator).",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "description": "Master switch. Set false to disable all runtime handoff globally."
+      },
+      "runtimes": {
+        "type": "object",
+        "description": "Runtime definitions keyed by runtime ID.",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": { "type": "string" },
+            "name": { "type": "string" },
+            "type": { "type": "string", "enum": ["cli"] },
+            "enabled": { "type": "boolean" },
+            "description": { "type": "string" },
+            "command": { "type": "string" },
+            "argsTemplate": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Argument list. Use {{task}} as a placeholder for the task string."
+            },
+            "timeoutSeconds": { "type": "number", "minimum": 1 },
+            "allowedAgents": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Agent IDs allowed to use this runtime. Empty or omitted = no agents allowed."
+            },
+            "metadata": { "type": "object" }
+          }
+        }
+      }
+    }
+  },
+  "uiHints": {
+    "enabled": { "label": "Enabled", "help": "Master switch for runtime handoff." },
+    "runtimes": { "label": "Runtime Definitions", "help": "Map of runtimeId → runtime config." }
+  }
+}

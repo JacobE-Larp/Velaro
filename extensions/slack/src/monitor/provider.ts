@@ -1,5 +1,6 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import SlackBolt from "@slack/bolt";
+import * as SlackBoltNS from "@slack/bolt";
 import { resolveTextChunkLimit } from "../../../../src/auto-reply/chunk.js";
 import { DEFAULT_GROUP_HISTORY_LIMIT } from "../../../../src/auto-reply/reply/history.js";
 import {
@@ -46,14 +47,39 @@ import {
 import { registerSlackMonitorSlashCommands } from "./slash.js";
 import type { MonitorSlackOpts } from "./types.js";
 
-const slackBoltModule = SlackBolt as typeof import("@slack/bolt") & {
-  default?: typeof import("@slack/bolt");
-};
-// Bun allows named imports from CJS; Node ESM doesn't. Use default+fallback for compatibility.
-// Fix: Check if module has App property directly (Node 25.x ESM/CJS compat issue)
-const slackBolt =
-  (slackBoltModule.App ? slackBoltModule : slackBoltModule.default) ?? slackBoltModule;
-const { App, HTTPReceiver } = slackBolt;
+// @slack/bolt (CJS) sets __esModule:true on its exports. This causes jiti to resolve
+// `import SlackBolt from "@slack/bolt"` to module.exports.default (= App class itself),
+// not the full module namespace. The namespace import (`* as`) bypasses this and gives
+// the full module.exports in jiti. In Node.js native ESM, the default import returns
+// module.exports directly (ignores __esModule), but HTTPReceiver may be absent from the
+// static `* as` analysis. We probe both sources so each runtime gets what it needs.
+const _boltDefault = SlackBolt as any;
+const _boltNS = SlackBoltNS as any;
+
+const App: typeof import("@slack/bolt").App =
+  _boltNS.App ?? // jiti: namespace = full module.exports
+  _boltDefault.App; // Node ESM: default = full module.exports
+
+const HTTPReceiver: typeof import("@slack/bolt").HTTPReceiver =
+  _boltDefault.HTTPReceiver ?? // Node ESM: default = full module.exports
+  _boltNS.HTTPReceiver; // jiti: namespace = full module.exports
+
+if (typeof App !== "function") {
+  const dKeys = Object.keys(_boltDefault ?? {})
+    .slice(0, 10)
+    .join(", ");
+  const nsKeys = Object.keys(_boltNS ?? {})
+    .slice(0, 10)
+    .join(", ");
+  throw new Error(
+    `[Slack] @slack/bolt App is not a constructor — ESM/CJS interop failed.\n` +
+      `  default import keys: [${dKeys}]\n` +
+      `  namespace import keys: [${nsKeys}]\n` +
+      `  Node.js version: ${process.version}\n` +
+      `  @slack/bolt version: 4.6.0\n` +
+      `  This is likely a jiti or module loader interop issue.`,
+  );
+}
 
 const SLACK_WEBHOOK_MAX_BODY_BYTES = 1024 * 1024;
 const SLACK_WEBHOOK_BODY_TIMEOUT_MS = 30_000;

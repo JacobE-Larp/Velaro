@@ -38,6 +38,8 @@ const BASE_METHODS = [
   "models.list",
   "tools.catalog",
   "agents.list",
+  "velaro.agents.list",
+  "velaro.runtimes.list",
   "agents.create",
   "agents.update",
   "agents.delete",

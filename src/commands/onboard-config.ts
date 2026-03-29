@@ -9,10 +9,17 @@ export function applyLocalSetupWorkspaceConfig(
   baseConfig: VilaroConfig,
   workspaceDir: string,
 ): VilaroConfig {
+  const patch: Partial<VilaroConfig> = {};
+  if (!baseConfig.agents?.list?.length) {
+    patch.agents = {
+      list: [{ id: "main", name: "Velaro", default: true }],
+    };
+  }
   return {
     ...baseConfig,
     agents: {
       ...baseConfig.agents,
+      ...patch.agents,
       defaults: {
         ...baseConfig.agents?.defaults,
         workspace: workspaceDir,
